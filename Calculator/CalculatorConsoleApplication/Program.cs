@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Runtime.Remoting.Messaging;
 using Calculator.Logic;
+using Calculator.Logic.Model;
+using Calculator.Logic.Parsing;
 
 namespace CalculatorConsoleApplication
 {
@@ -7,11 +10,18 @@ namespace CalculatorConsoleApplication
     {
         static void Main(string[] args)
         {
-            var result = ArgumentParser.Tokenize(args);
-            foreach (var variable in result)
-            {
-                Console.Write(variable);
-            }
+            GetStringAndPrintResult();
+        }
+
+        static void GetStringAndPrintResult()
+        {
+            var input = Console.ReadLine();
+            var token = new Tokenizer(input);
+            token.Tokenize();
+            var model = new ModelBuilder();
+            var evaluate = model.BuildFrom(token.Tokens);
+            var result = EvaluatingExpressionVisitor.Evaluate(evaluate);
+            Console.WriteLine(result);
             Console.ReadKey();
         }
     }
