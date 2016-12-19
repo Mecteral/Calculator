@@ -1,0 +1,30 @@
+1+2+3
+Addition { Left= 1, RIght=Addition(Left=2, RIght=3) }
+
+1+2
+
+Addition
+ -Left=ConstantNumber(Value=1)
+ -Right=ConstantNumber(Value=2)
+
+
+
+(1+2)*(3+4)
+
+
+Multiplication
+ -Left=		ParentheseExpression
+			-Inner= 	Addition
+					-Left=	ConstantNumber(Value=1)
+					-Right=	ConstantNumber(Value=2)
+ -Right= 	ParentheseExpression
+			-Inner= 	Addition
+					-Left=	ConstantNumber(Value=3)
+					-Right=	ConstantNumber(Value=4)
+
+
+
+
+(a+b)*3 + 2a
+3a +3b +2a
+5a +3b

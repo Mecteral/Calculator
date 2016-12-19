@@ -1,0 +1,18 @@
+Einerseits natürlich die Sache mit dem Buch fertig machen.
+
+Zusätzlich:
+
+Entwirf das Klassen-Modell für folgende Aufgabe. Mit Klassen-Modell meine ich, dass Du classes und interfaces sowie ihre public und eventuell protected methods und properties schreibst, dabei aber mit leeren Bodies. (Damit es kompiliert, schreibst halt bei methods mit return value etwas wie "return 0" oder "return null" etc).
+ 
+ 
+Ein einfacher Kommandozeilen-Taschenrechner, der in seinen Arguments einen Ausdruck erhält und das Resultat auf stdout ausspuckt (bzw. etwaige Fehler in der Eingabe auf stderr.) Der Rechner soll Addition, Subtraction, Multiplikation, Division, negative Zahlen, Decimalzahlen und Klammern beherrschen und dabei die "Punkt-vor-Strich"-Regel beachten.
+ 
+ Ein Beispiel-Aufruf wäre:
+ 
+ calculate (3+5)*2-40/2.5
+ 
+ da wäre der Output 0.
+ 
+ 
+Bitte entwickle das Projekt in dem Folder, den ich per Dropbox mit Dir geshared habe. Schreib mir eine Nachricht auf Whatsapp, sobald fertig. 
+Der weitere Vorgang wird dann sein, dass ich Dir das Modell ggf. verändere, danach Dir gezielte Teilaufgaben der Implementation gebe.
