@@ -97,12 +97,13 @@ namespace Calculator.Logic.Tests.Parsing
         }
 
         [Test]
-        public void Tokenizer_Creates_VariableToken()
+        public void Tokenizer_Creates_Numbertoken_And_VariableToken()
         {
-            var underTest = "a";
+            var underTest = "2a";
             var result = new Tokenizer(underTest);
             result.Tokenize();
-            result.Tokens.First().Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
+            result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(2);
+            result.Tokens.ElementAt(1).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
         }
         [Test]
         public void Tokenizer_Creates_VariableToken_With_Multiple_Variables()

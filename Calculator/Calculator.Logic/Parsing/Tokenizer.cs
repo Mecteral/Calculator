@@ -54,7 +54,8 @@ namespace Calculator.Logic.Parsing
 
         static IEnumerable<string> SplitString(string input)
         {
-            input = AddWhiteSpacesAroundVariables(input);
+            if(input.Any(char.IsLetter))
+                input = AddWhiteSpacesAroundVariables(input);
             input = AddWhitespaceForSplit(input);
             const string pattern = @"\s+";
             return WithoutEmptyEntries(Regex.Split(input, pattern));
