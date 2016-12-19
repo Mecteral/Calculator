@@ -81,10 +81,18 @@ Add configuration
 - add capability to trigger calc via hotkey, enter what you want calculated/simplified, press enter, see result, click away window
 
 ## POLISHING/MATURING
-- polishing: which features are missing for real usability? what would ppl expect? make a list. discuss the list. estimate effort vs business-value. implement.
+- polishing: which features are missing for real usability? what would ppl expect? make a list. discuss the list. estimate effort vs business-value. implement. 
+- - validation of user input
+- - - multiple consecutive operators
+- - - missing parentheses
+- - - unknown characters
+- - - not parsable numbers
+- - allow usage of greek letters
+- - function definitions
+- - graphing of functions
 - code-polishing: refactor code as much as you can. if some cool functions/types are in there not really specific to calculator:
--- identify
--- create library for them; put on github; learn nuget, publish package
+- - identify
+- - create library for them; put on github; learn nuget, publish package
 
 ## FIRST PUBLISHING
 ### add auto-updater
