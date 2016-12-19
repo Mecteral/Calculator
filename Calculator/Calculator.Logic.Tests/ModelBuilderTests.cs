@@ -14,14 +14,14 @@ namespace Calculator.Logic.Tests
 
         static IExpression Test(params IToken[] input) => new ModelBuilder().BuildFrom(input);
 
-        static ParenthesesToken Close => new ParenthesesToken(")");
-        static ParenthesesToken Open => new ParenthesesToken("(");
+        static ParenthesesToken Close => new ParenthesesToken(')');
+        static ParenthesesToken Open => new ParenthesesToken('(');
         static NumberToken Number(double number) => new NumberToken(number.ToString(CultureInfo.InvariantCulture));
-        static OperatorToken Plus => new OperatorToken("+");
-        static OperatorToken Minus => new OperatorToken("-");
-        static OperatorToken Times => new OperatorToken("*");
-        static OperatorToken DividedBy => new OperatorToken("/");
-        static VariableToken Variable(string variable) => new VariableToken(variable);
+        static OperatorToken Plus => new OperatorToken('+');
+        static OperatorToken Minus => new OperatorToken('-');
+        static OperatorToken Times => new OperatorToken('*');
+        static OperatorToken DividedBy => new OperatorToken('/');
+        static VariableToken Variable(char variable) => new VariableToken(variable);
 
         [Test]
         public void Complex_Case()
@@ -128,7 +128,7 @@ namespace Calculator.Logic.Tests
         public void Variable_Minus_Number_Builds_Subtraction()
         {
             //a-4
-            var subtraction = TestExpecting<Subtraction>(Variable("a"), Minus, Number(4));
+            var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
             subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }

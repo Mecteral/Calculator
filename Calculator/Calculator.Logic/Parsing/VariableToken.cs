@@ -15,9 +15,9 @@ namespace Calculator.Logic.Parsing
     {
         public string Variable { get; private set; }
 
-        public VariableToken(string asText)
+        public VariableToken(char asText)
         {
-            Variable = Alphabetize(asText);
+            Variable += asText;
         }
 
         public void Accept(ITokenVisitor visitor)
@@ -25,12 +25,6 @@ namespace Calculator.Logic.Parsing
             visitor.Visit(this);
         }
 
-        static string Alphabetize(string input)
-        {
-            var cArray = input.ToCharArray();
-            Array.Sort(cArray);
-            return new string(cArray);
-        }
 
     }
 }

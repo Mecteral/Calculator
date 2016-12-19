@@ -5,20 +5,20 @@
     /// </summary>
     public class OperatorToken : IToken
     {
-        public OperatorToken(string asText)
+        public OperatorToken(char asText)
         {
             switch (asText)
             {
-                case "+":
+                case '+':
                     Operator = Operator.Add;
                     break;
-                case "-":
+                case '-':
                     Operator = Operator.Subtract;
                     break;
-                case "*":
+                case '*':
                     Operator = Operator.Multiply;
                     break;
-                case "/":
+                case '/':
                     Operator = Operator.Divide;
                     break;
             }

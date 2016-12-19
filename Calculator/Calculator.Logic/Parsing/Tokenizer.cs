@@ -1,7 +1,5 @@
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Calculator.Logic.Parsing
 {
@@ -11,68 +9,72 @@ namespace Calculator.Logic.Parsing
     public class Tokenizer
     {
         readonly string mInput;
-        public IEnumerable<IToken> Tokens { get; private set; }
+        readonly List<IToken> mTempTokens = new List<IToken>();
+        string mNumber;
+        bool mWasNumber;
 
         public Tokenizer(string input)
         {
             mInput = input;
         }
 
+        public IEnumerable<IToken> Tokens { get; private set; }
+
         public void Tokenize()
         {
             Tokens = FillTokens();
         }
+
         IEnumerable<IToken> FillTokens()
         {
-            var tempTokens = new List<IToken>();
-            var wasNumber = false;
-            string number = null;
             foreach (var c in mInput)
             {
                 if (c == '+' || c == '-' || c == '*' || c == '/')
-                {
-                    if (wasNumber)
-                    {
-                        tempTokens.Add(new NumberToken(number));
-                        number = null;
-                        wasNumber = false;
-                    }
-                    tempTokens.Add(new OperatorToken(c.ToString()));
-                }
+                    AddOperatorToken(c);
                 else if (c == '(' || c == ')')
-                {
-                    if (wasNumber)
-                    {
-                        tempTokens.Add(new NumberToken(number));
-                        number = null;
-                        wasNumber = false;
-                    }
-                    tempTokens.Add(new ParenthesesToken(c.ToString()));
-                }
+                    AddParenthesisToken(c);
                 else if (char.IsLetter(c))
-                {
-                    if (wasNumber)
-                    {
-                        tempTokens.Add(new NumberToken(number));
-                        number = null;
-                        wasNumber = false;
-                    }
-                    if (tempTokens.Count == 0 || !(tempTokens.Last() is NumberToken))
-                        tempTokens.Add(new NumberToken("1"));
-                    tempTokens.Add(new OperatorToken("*"));
-                    tempTokens.Add(new VariableToken(c.ToString()));
-                }
+                    AddVariableToken(c);
                 else if (char.IsNumber(c) || c == '.' || c == ',')
                 {
-                    wasNumber = true;
-                    number += c;
+                    mWasNumber = true;
+                    mNumber += c;
                 }
             }
-            if (number != null)
+            if (mNumber != null)
+                mTempTokens.Add(new NumberToken(mNumber));
+            return mTempTokens;
+        }
+
+        void AddNumberTokenIfNecessary()
+        {
+            if (mWasNumber)
             {
-                tempTokens.Add(new NumberToken(number));
+                mTempTokens.Add(new NumberToken(mNumber));
+                mNumber = null;
+                mWasNumber = false;
             }
-            return tempTokens;
+        }
+
+        void AddOperatorToken(char c)
+        {
+            AddNumberTokenIfNecessary();
+            mTempTokens.Add(new OperatorToken(c));
+        }
+
+        void AddParenthesisToken(char c)
+        {
+            AddNumberTokenIfNecessary();
+            mTempTokens.Add(new ParenthesesToken(c));
+        }
+
+        void AddVariableToken(char c)
+        {
+            AddNumberTokenIfNecessary();
+            if (mTempTokens.Count == 0 || !(mTempTokens.Last() is NumberToken))
+                mTempTokens.Add(new NumberToken("1"));
+            mTempTokens.Add(new OperatorToken('*'));
+            mTempTokens.Add(new VariableToken(c));
         }
     }
 }

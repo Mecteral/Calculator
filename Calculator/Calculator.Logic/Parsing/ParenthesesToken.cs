@@ -6,14 +6,14 @@
     public class ParenthesesToken : IToken
     {
         public bool IsOpening { get; private set; }
-        public ParenthesesToken(string asText)
+        public ParenthesesToken(char asText)
         {
             switch (asText)
             {
-                case "(":
+                case '(':
                     IsOpening = true;
                     break;
-                case ")":
+                case ')':
                     IsOpening = false;
                     break;
             }
