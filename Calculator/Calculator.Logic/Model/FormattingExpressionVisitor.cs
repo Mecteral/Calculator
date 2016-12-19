@@ -5,6 +5,7 @@ namespace Calculator.Logic.Model
     public class FormattingExpressionVisitor : AnExpressionVisitorWithResult<FormattingExpressionVisitor, string>
     {
         public static string Format(IExpression expression) => GetResultFor(expression);
+        protected override string UseVariable(string variable) => variable;
         protected override string UseParenthesed(string wrapped) => $"({wrapped})";
 
         protected override string UseSubtraction(string left, string right) => $"{left} - {right}";

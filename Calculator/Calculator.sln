@@ -12,8 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{90513C76-C214-4B4E-8B6A-3822ED5CE821}"
 	ProjectSection(SolutionItems) = preProject
 		CodingStyle.md = CodingStyle.md
-		Roadmap.md = Roadmap.md
-		Tasks.md = Tasks.md
 	EndProjectSection
 EndProject
 Global

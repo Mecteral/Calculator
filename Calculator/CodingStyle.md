@@ -10,7 +10,9 @@ I'll update this file with new rules regularly. Check back whenever you see it's
 
 Generally take care to use correct spelling. Code is read much more often than written and bad spelling is irritating when reading.
 Prefer descriptively named constants and functions over repeated use of constant strings/numbers/characters. For examples, look at how I refactored the Tokenizer.
-
+Avoid names like `mResultString` which include a description of the type - the type is obvious, anyway, in a strongly typed language like C#.
+And then sometimes it might change: imagine you call a parameter `inputList` because it's a `List<>`, 
+then you realize that you actually don't need any of `List<>`'s interface and change the type to the more general `IEnumerable<>` - you would now have to rename the parameter.
 
 ### Namespaces
 Namespaces should be pascal-cased . However, avoid combining multiple words for namespace names wherever possible.
