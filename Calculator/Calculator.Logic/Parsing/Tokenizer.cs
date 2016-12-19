@@ -10,86 +10,69 @@ namespace Calculator.Logic.Parsing
     /// </summary>
     public class Tokenizer
     {
-        static readonly char[] sCharactersNeedingWhitespace = {'+', '-', '*', '/', '(', ')'};
         readonly string mInput;
+        public IEnumerable<IToken> Tokens { get; private set; }
 
         public Tokenizer(string input)
         {
             mInput = input;
         }
 
-        public IEnumerable<IToken> Tokens { get; private set; }
-
         public void Tokenize()
         {
-            Tokens = SplitString(mInput).Select(GetTokenFor).ToList();
+            Tokens = FillTokens();
         }
-
-        static IToken GetTokenFor(string text)
+        IEnumerable<IToken> FillTokens()
         {
-            IToken result;
-            switch (text)
+            var tempTokens = new List<IToken>();
+            var wasNumber = false;
+            string number = null;
+            foreach (var c in mInput)
             {
-                case "(":
-                case ")":
-                    result = new ParenthesesToken(text);
-                    break;
-                case "*":
-                case "/":
-                case "+":
-                case "-":
-                    result = new OperatorToken(text);
-                    break;
-                default:
-                    if (text.Any(char.IsLetter))
-                        result = new VariableToken(text);
-                    else
-                        result = new NumberToken(text);
-                    break;
-            }
-            return result;
-        }
-        static IEnumerable<string> WithoutEmptyEntries(IEnumerable<string> strings)
-            => strings.Where(t => !string.IsNullOrWhiteSpace(t));
-
-        static IEnumerable<string> SplitString(string input)
-        {
-            if(input.Any(char.IsLetter))
-                input = AddWhiteSpacesAroundVariables(input);
-            input = AddWhitespaceForSplit(input);
-            const string pattern = @"\s+";
-            return WithoutEmptyEntries(Regex.Split(input, pattern));
-        }
-
-        static string AddWhitespaceForSplit(string input)
-            => string.Join(string.Empty, input.Select(SurroundWithSpacesIfNecessary));
-
-        static string SurroundWithSpacesIfNecessary(char c)
-            => sCharactersNeedingWhitespace.Contains(c) ? $" {c} " : c.ToString();
-
-        static string AddWhiteSpacesAroundVariables(string input)
-        {
-            var wasLetter = false;
-            var result = "";
-            foreach (var c in input)
-            {
-                if (char.IsLetter(c))
+                if (c == '+' || c == '-' || c == '*' || c == '/')
                 {
-                    if (wasLetter)
-                        result += c;
-                    else
+                    if (wasNumber)
                     {
-                        result += $" {c}";
-                        wasLetter = true;
+                        tempTokens.Add(new NumberToken(number));
+                        number = null;
+                        wasNumber = false;
                     }
+                    tempTokens.Add(new OperatorToken(c.ToString()));
                 }
-                else
+                else if (c == '(' || c == ')')
                 {
-                    result += c;
-                    wasLetter = false;
+                    if (wasNumber)
+                    {
+                        tempTokens.Add(new NumberToken(number));
+                        number = null;
+                        wasNumber = false;
+                    }
+                    tempTokens.Add(new ParenthesesToken(c.ToString()));
+                }
+                else if (char.IsLetter(c))
+                {
+                    if (wasNumber)
+                    {
+                        tempTokens.Add(new NumberToken(number));
+                        number = null;
+                        wasNumber = false;
+                    }
+                    if (tempTokens.Count == 0 || !(tempTokens.Last() is NumberToken))
+                        tempTokens.Add(new NumberToken("1"));
+                    tempTokens.Add(new OperatorToken("*"));
+                    tempTokens.Add(new VariableToken(c.ToString()));
+                }
+                else if (char.IsNumber(c) || c == '.' || c == ',')
+                {
+                    wasNumber = true;
+                    number += c;
                 }
             }
-            return result;
+            if (number != null)
+            {
+                tempTokens.Add(new NumberToken(number));
+            }
+            return tempTokens;
         }
     }
 }

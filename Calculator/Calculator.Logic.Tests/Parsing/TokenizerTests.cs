@@ -103,25 +103,20 @@ namespace Calculator.Logic.Tests.Parsing
             var result = new Tokenizer(underTest);
             result.Tokenize();
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(2);
-            result.Tokens.ElementAt(1).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
+            result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
         }
         [Test]
-        public void Tokenizer_Creates_VariableToken_With_Multiple_Variables()
+        public void Tokenizer_Creates_VariableToken_In_Multiplication()
         {
-            var underTest = "abc";
+            var underTest = "a";
             var result = new Tokenizer(underTest);
             result.Tokenize();
-            result.Tokens.First().Should().BeOfType<VariableToken>().Which.Variable.Should().Be("abc");
+            result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(1);
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
+            result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
         }
 
-        [Test]
-        public void Tokenizer_Alphabetezises_Variables()
-        {
-            var underTest = "cba";
-            var result = new Tokenizer(underTest);
-            result.Tokenize();
-            result.Tokens.First().Should().BeOfType<VariableToken>().Which.Variable.Should().Be("abc");
-        }
         [Test]
         public void Tokenizer_Creates_Correct_TokenEnumerable()
         {
