@@ -40,7 +40,7 @@ namespace Calculator.Logic.Model
 
         public void Visit(Variable variable)
         {
-            Result = UseVariable(variable.Value, variable.Variables);
+            throw new System.NotImplementedException();
         }
 
         void IExpressionVisitor.Visit(Constant constant)
@@ -66,7 +66,5 @@ namespace Calculator.Logic.Model
         protected abstract TResult UseDivision(TResult left, TResult right);
 
         protected abstract TResult UseConstant(double value);
-
-        protected abstract TResult UseVariable(double value, string variable);
     }
 }

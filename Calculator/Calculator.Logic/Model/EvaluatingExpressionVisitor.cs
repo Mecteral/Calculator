@@ -14,6 +14,5 @@
         protected override double UseDivision(double left, double right) => left/right;
 
         protected override double UseConstant(double value) => value;
-        protected override double UseVariable(double value, string variable) => value;
     }
 }

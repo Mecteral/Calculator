@@ -15,6 +15,5 @@ namespace Calculator.Logic.Model
         protected override string UseDivision(string left, string right) => $"{left}/{right}";
 
         protected override string UseConstant(double value) => value.ToString(CultureInfo.InvariantCulture);
-        protected override string UseVariable(double value, string variable) => $"{value.ToString(CultureInfo.InvariantCulture)} {variable}";
     }
 }
