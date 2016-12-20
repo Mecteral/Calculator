@@ -73,7 +73,7 @@ namespace Calculator.Logic
         static int FindExpressionIndexForParenthesesIndex(int parenthesisIndex, ParenthesesNode child)
         {
             var parenthesisCount = 0;
-            //Cant use foreach as i is returned
+            //Cant use foreach as expressionIndex is returned
             for (var expressionIndex = 0; expressionIndex < child.Parent.Expressions.Count; expressionIndex++)
             {
                 if (child.Parent.Expressions[expressionIndex] is ParenthesedExpression)
