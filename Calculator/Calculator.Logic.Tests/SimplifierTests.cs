@@ -26,7 +26,13 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification()
         {
-            Check("2+2", "4");
+            Check("2-2", "0");
+        }
+
+        [Test]
+        public void bla()
+        {
+            Check("2a+(3+2)", "2*a + (5)");
         }
         
     }

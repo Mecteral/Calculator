@@ -106,6 +106,7 @@ namespace Calculator.Logic
                         IterateChildren(mNode);
                     }
                     mNode.ParenthesedExpression.Wrapped = PointBeforeAdditionOrSubtraction(mNode.Expressions);
+                    mNode.ParenthesedExpression.Wrapped.Parent = mNode.ParenthesedExpression;
                     mRootNodes.RemoveAt(0);
                     mExpressions[i] = mNode.ParenthesedExpression;
                 }
