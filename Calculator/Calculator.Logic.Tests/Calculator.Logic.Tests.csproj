@@ -71,6 +71,7 @@
     <Compile Include="Model\TestExpressions.cs" />
     <Compile Include="Parsing\TokenizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
   </ItemGroup>
   <ItemGroup>

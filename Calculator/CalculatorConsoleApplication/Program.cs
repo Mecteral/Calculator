@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.Remoting.Messaging;
+using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
@@ -11,41 +11,28 @@ namespace CalculatorConsoleApplication
         static void Main(string[] args)
         {
             var token = GetStringAndCreateTokens();
-            if (IsSimplificationIsNecessary(token))
-            {
-                
-            }
+            if (IsSimplificationNecessary(token))
+                UseSimplifier(token);
             else
-                GetStringAndPrintResult(token);
-        }
-
-        static void GetStringAndPrintResult(Tokenizer token)
-        {
-            GetStringAndCreateTokens();
-            var model = new ModelBuilder();
-            var evaluate = model.BuildFrom(token.Tokens);
-            var result = EvaluatingExpressionVisitor.Evaluate(evaluate);
-            Console.WriteLine(result);
+                Console.WriteLine(UseEvaluationExpressionVisitor(token));
             Console.ReadKey();
         }
 
         static Tokenizer GetStringAndCreateTokens()
         {
-            var input = Console.ReadLine();
-            var token = new Tokenizer(input);
+            var token = new Tokenizer(GetUserInput());
             token.Tokenize();
             return token;
         }
 
-        static bool IsSimplificationIsNecessary(Tokenizer tokenized)
-        {
-            var isSimplificationNeeded = false;
-            foreach (var token in tokenized.Tokens)
-            {
-                if (token is VariableToken)
-                    isSimplificationNeeded = true;
-            }
-            return isSimplificationNeeded;
-        }
+        static IExpression CreateInMemoryModel(Tokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
+
+        static bool IsSimplificationNecessary(Tokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
+
+        static void UseSimplifier(Tokenizer token) => new Simplifier(CreateInMemoryModel(token));
+
+        static double UseEvaluationExpressionVisitor(Tokenizer token) => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
+
+        static string GetUserInput() => Console.ReadLine();
     }
 }

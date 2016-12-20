@@ -11,9 +11,14 @@ namespace Calculator.Logic
     {
         IExpression mExpression;
 
-        Simplifier(IExpression expression)
+        public Simplifier(IExpression expression)
         {
             mExpression = expression;
+        }
+
+        public void Simplify()
+        {
+            
         }
         public void Visit(ParenthesedExpression parenthesed)
         {
@@ -49,5 +54,7 @@ namespace Calculator.Logic
         {
             throw new NotImplementedException();
         }
+
+        bool UsedVariable(IExpression expression) => expression is Variable ? true : false;
     }
 }
