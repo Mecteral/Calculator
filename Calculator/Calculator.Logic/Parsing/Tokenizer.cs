@@ -73,7 +73,8 @@ namespace Calculator.Logic.Parsing
             AddNumberTokenIfNecessary();
             if (mTempTokens.Count == 0 || !(mTempTokens.Last() is NumberToken))
                 mTempTokens.Add(new NumberToken("1"));
-            mTempTokens.Add(new OperatorToken('*'));
+            if (!(mTempTokens.Last() is OperatorToken))
+                mTempTokens.Add(new OperatorToken('*'));
             mTempTokens.Add(new VariableToken(c));
         }
     }

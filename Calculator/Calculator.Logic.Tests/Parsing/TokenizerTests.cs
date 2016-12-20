@@ -118,6 +118,20 @@ namespace Calculator.Logic.Tests.Parsing
         }
 
         [Test]
+        public void Tokenizer_Creates_VariableToken_Plus_VariableToken()
+        {
+            var underTest = "a+a";
+            var result = new Tokenizer(underTest);
+            result.Tokenize();
+            result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(1);
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
+            result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
+            result.Tokens.ElementAt(3).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Add);
+            result.Tokens.ElementAt(4).Should().BeOfType<NumberToken>().Which.Value.Should().Be(1);
+            result.Tokens.ElementAt(5).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
+            result.Tokens.ElementAt(6).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
+        }
+        [Test]
         public void Tokenizer_Creates_Correct_TokenEnumerable()
         {
             var underTest = "((1.1+22)*3.1/4-5.1)";
