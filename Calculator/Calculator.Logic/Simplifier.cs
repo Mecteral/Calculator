@@ -64,8 +64,10 @@ namespace Calculator.Logic
 
         static bool IsCalculateable(IArithmeticOperation operation) => (operation.Left is Constant && operation.Right is Constant);
 
-        static void CalculateResultIfPossible(IArithmeticOperation operation)
+        void CalculateResultIfPossible(IArithmeticOperation operation)
         {
+            operation.Left.Accept(this);
+            operation.Right.Accept(this);
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};

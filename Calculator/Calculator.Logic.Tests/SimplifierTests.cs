@@ -24,16 +24,21 @@ namespace Calculator.Logic.Tests
         static Simplifier UseSimplifier(Tokenizer token) => new Simplifier(CreateInMemoryModel(token));
 
         [Test]
-        public void Simplification()
+        public void Simplification_Without_Variables()
         {
             Check("2-2", "0");
         }
 
         [Test]
-        public void bla()
+        public void Simplification_Of_ParenthesedExpression()
         {
             Check("2a+(3+2)", "2*a + (5)");
         }
-        
+
+        [Test]
+        public void Simplification_Of_Nested_Additions()
+        {
+            Check("2+2+2+2a", "6 + 2*a");
+        }
     }
 }
