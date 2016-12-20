@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic
 {
@@ -136,6 +137,8 @@ namespace Calculator.Logic
         {
             mCurrentOperation.Left = expressions[i - 1];
             mCurrentOperation.Right = expressions[i + 1];
+            mCurrentOperation.Left.Parent = mCurrentOperation;
+            mCurrentOperation.Right.Parent = mCurrentOperation;
             expressions.RemoveAt(i + 1);
             expressions.RemoveAt(i - 1);
         }

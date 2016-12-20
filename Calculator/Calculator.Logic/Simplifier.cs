@@ -7,10 +7,11 @@ using Calculator.Logic.Model;
 
 namespace Calculator.Logic
 {
-    public class Simplifier : IExpressionVisitor
+    public class Simplifier
     {
-        IExpression mExpression;
-
+        readonly IExpression mExpression;
+        IExpression mCurrent;
+        IEnumerable<IExpression> mToEvaluate = new List<IExpression>();
         public Simplifier(IExpression expression)
         {
             mExpression = expression;
@@ -18,43 +19,8 @@ namespace Calculator.Logic
 
         public void Simplify()
         {
-            
+            mCurrent = mExpression;
         }
-        public void Visit(ParenthesedExpression parenthesed)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Subtraction subtraction)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Multiplication multiplication)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Addition addition)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Constant constant)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Division division)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Visit(Variable variable)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool UsedVariable(IExpression expression) => expression is Variable ? true : false;
+        static bool IsVariable(IExpression expression) => expression is Variable;
     }
 }

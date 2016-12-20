@@ -10,6 +10,10 @@ namespace Calculator.Logic.Tests
     [TestFixture]
     public class SimplifierTests
     {
-
+        [Test]
+        public void Simplification()
+        {
+            
+        }
     }
 }

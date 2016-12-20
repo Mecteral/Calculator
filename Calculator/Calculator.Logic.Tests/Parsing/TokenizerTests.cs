@@ -118,7 +118,7 @@ namespace Calculator.Logic.Tests.Parsing
         }
 
         [Test]
-        public void Tokenizer_Creates_VariableToken_Plus_VariableToken()
+        public void Tokenizer_Creates_VariableToken_Plus_VariableToken_In_Multiplications()
         {
             var underTest = "a+a";
             var result = new Tokenizer(underTest);
