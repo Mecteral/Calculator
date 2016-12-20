@@ -26,13 +26,9 @@ namespace CalculatorConsoleApplication
         }
 
         static IExpression CreateInMemoryModel(Tokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
-
-        static bool IsSimplificationNecessary(Tokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
-
         static void UseSimplifier(Tokenizer token) => new Simplifier(CreateInMemoryModel(token));
-
-        static double UseEvaluationExpressionVisitor(Tokenizer token) => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
-
         static string GetUserInput() => Console.ReadLine();
+        static bool IsSimplificationNecessary(Tokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
+        static double UseEvaluationExpressionVisitor(Tokenizer token) => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
     }
 }
