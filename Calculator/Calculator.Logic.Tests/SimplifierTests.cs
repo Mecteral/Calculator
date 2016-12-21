@@ -26,7 +26,6 @@ namespace Calculator.Logic.Tests
             return tokens;
         }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
-        static Simplifier UseSimplifier(IEnumerable<IToken> tokens) => Simplify(CreateInMemoryModel(tokens));
         static Simplifier Simplify(IExpression expression) => new Simplifier(expression);
         [Test]
         public void Simplification_Of_Nested_Additions()
@@ -47,7 +46,8 @@ namespace Calculator.Logic.Tests
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
-            Simplify(input);
+            var underTest= new Simplifier(input);
+            underTest.Simplify();
             ((Addition) input).Left.Should().BeOfType<Addition>();
         }
 
