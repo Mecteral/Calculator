@@ -95,9 +95,26 @@ namespace Calculator.Logic
                     mExpression = constant;
                 }
             }
-            if (operation.Left is Addition || operation.Left is Subtraction)
+            if ((operation.Left is Addition || operation.Left is Subtraction) && operation.Right is Constant)
             {
-                
+                var operationLeft = (IArithmeticOperation) operation.Left;
+                if (operationLeft.Right is Constant)
+                {
+                    if (operation.Parent != null)
+                    {
+                        var parent = (IArithmeticOperation) operation.Parent;
+                        parent.Left = operationLeft;
+                    }
+                    operation.Left.Parent = operation.Parent;
+                    operation.Left = operationLeft.Right;
+                    var constant = new Constant { Value = EvaluatingExpressionVisitor.Evaluate(operation) };
+                    operationLeft.Right = constant;
+                    operationLeft.Right.Parent = operationLeft;
+                    if (operationLeft.Parent == null)
+                    {
+                        mExpression = operationLeft;
+                    }
+                }
             }
         }
     }

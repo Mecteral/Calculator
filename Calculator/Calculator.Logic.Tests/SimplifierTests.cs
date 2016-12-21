@@ -53,7 +53,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification_Of_Nested_Operations_On_Both_Sides_Of_Variables()
         {
-            Check("1+2+3+4+5a+6+7+8", "10 + 5*a + 21");
+            Check("1+2+3+4+5a+6+7+8+9a", "10 + 5*a + 21 + 9*a");
         }
 
         [Test]
