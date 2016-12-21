@@ -25,16 +25,11 @@ namespace CalculatorConsoleApplication
             return token;
         }
 
-        static IExpression CreateInMemoryModel(Tokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
-        static IExpression UseSimplifier(Tokenizer token) => Simplifier.Simplify(CreateInMemoryModel(token));
+        static IExpression CreateInMemoryModel(ITokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
+        static IExpression UseSimplifier(ITokenizer token) => Simplifier.Simplify(CreateInMemoryModel(token));
         static string GetUserInput() => Console.ReadLine();
-        static bool IsSimplificationNecessary(Tokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
-        static double UseEvaluationExpressionVisitor(Tokenizer token) => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
-
-        static string UseFormattingExpressionVisitor(IExpression expression)
-        {
-            return new FormattingExpressionVisitor().Format(expression);
-        }
-
+        static bool IsSimplificationNecessary(ITokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
+        static double UseEvaluationExpressionVisitor(ITokenizer token) => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
+        static string UseFormattingExpressionVisitor(IExpression expression) => new FormattingExpressionVisitor().Format(expression);
     }
 }

@@ -128,7 +128,7 @@ namespace Calculator.Logic
                     var constant = new Constant { Value = EvaluatingExpressionVisitor.Evaluate(operation) };
                     operationLeft.Right = constant;
                     operationLeft.Right.Parent = operationLeft;
-                    if (operationLeft.Parent == null)
+                    if (operation.Parent == null)
                     {
                         mExpression = operationLeft;
                     }

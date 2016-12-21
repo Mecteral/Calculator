@@ -72,5 +72,17 @@ namespace Calculator.Logic.Tests
         {
             Check("3/2-4a+4/4/2", "1.5 - 4*a + 0.5");
         }
+
+        [Test]
+        public void Simplification_Works_With_Parentheses()
+        {
+            Check("(1+2)*3+4a+5*(6+7)", "9 + 4*a + 65");
+        }
+
+        [Test]
+        public void Simplification_Of_Expression_Where_Variable_Is_First_Element()
+        {
+            Check("5a+3+4", "5*a + 7");
+        }
     }
 }
