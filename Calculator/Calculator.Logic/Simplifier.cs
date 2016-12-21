@@ -18,11 +18,11 @@ namespace Calculator.Logic
             mExpression = expression;
         }
 
-        public string Simplify()
+        public IExpression Simplify()
         {
             mCurrent = mExpression;
             mCurrent.Accept(this);
-            return FormattingExpressionVisitor.Format(mCurrent);
+            return mCurrent;
         }
         static bool IsVariable(IExpression expression) => expression is Variable;
 

@@ -12,8 +12,11 @@ namespace Calculator.Logic.Tests
         static void Check(string input, string expected)
         {
             var tokens = Tokenize(input);
-            var simplified = UseSimplifier(tokens);
-            simplified.Simplify().Should().Be(expected);
+            var inputTree = CreateInMemoryModel(tokens);
+            var underTest= new Simplifier(inputTree);
+            var simplified = underTest.Simplify();
+            var asString = FormattingExpressionVisitor.Format(simplified);
+            asString.Should().Be(expected);
         }
         static IEnumerable<IToken> Tokenize(string input)
         {
