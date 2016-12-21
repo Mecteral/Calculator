@@ -90,5 +90,11 @@ namespace Calculator.Logic.Tests
         {
             Check("(3)+2a", "3 + 2*a");
         }
+
+        [Test]
+        public void Simplifier_Works_As_Calculator()
+        {
+            Check("1+2-3+5*6/6", "5");
+        }
     }
 }
