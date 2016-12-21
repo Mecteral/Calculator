@@ -84,5 +84,11 @@ namespace Calculator.Logic.Tests
         {
             Check("5a+3+4", "5*a + 7");
         }
+
+        [Test]
+        public void Simplification_Of_Constants_in_Parentheses()
+        {
+            Check("(3)+2a", "3 + 2*a");
+        }
     }
 }

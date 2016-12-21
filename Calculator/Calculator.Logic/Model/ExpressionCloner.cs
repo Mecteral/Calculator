@@ -7,9 +7,9 @@ using Calculator.Logic.Parsing;
 
 namespace Calculator.Logic.Model
 {
-    public class ExpressionCloner
+    public static class ExpressionCloner
     {
-        public IExpression Clone(IExpression expression)
+        public static IExpression Clone(IExpression expression)
         {
             var formatter = new FormattingExpressionVisitor();
             var token = new Tokenizer();
