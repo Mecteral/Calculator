@@ -9,14 +9,12 @@ namespace Calculator.Logic.Model
 {
     public class ExpressionCloner
     {
-        IExpression mExpression;
         public IExpression Clone(IExpression expression)
         {
             var formatter = new FormattingExpressionVisitor();
             var token = new Tokenizer();
             token.Tokenize(formatter.Format(expression));
-            mExpression = new ModelBuilder().BuildFrom(token.Tokens);
-            return mExpression;
+            return new ModelBuilder().BuildFrom(token.Tokens);
         }
     }
 }
