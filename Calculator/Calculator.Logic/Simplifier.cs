@@ -1,28 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using Calculator.Logic.Model;
+using Calculator.Logic.Parsing;
 
 namespace Calculator.Logic
 {
     public class Simplifier : IExpressionVisitor
     {
-        readonly IExpression mExpression;
-        IExpression mCurrent;
+        IExpression mExpression;
         IEnumerable<IExpression> mToEvaluate = new List<IExpression>();
         public Simplifier(IExpression expression)
         {
-            mExpression = expression;
+            mExpression = new ExpressionCloner().Clone(expression);
         }
-
+        public IExpression Simplify(IExpression input)
+        {
+            var simplifier = new Simplifier(input);
+            return simplifier.Simplify();
+        }
         public IExpression Simplify()
         {
-            mCurrent = mExpression;
-            mCurrent.Accept(this);
-            return mCurrent;
+            mExpression.Accept(this);
+            return mExpression;
         }
 
         public void Visit(Subtraction subtraction)
@@ -88,8 +92,12 @@ namespace Calculator.Logic
                 }
                 else
                 {
-                    mCurrent = constant;
+                    mExpression = constant;
                 }
+            }
+            if (operation.Left is Addition || operation.Left is Subtraction)
+            {
+                
             }
         }
     }

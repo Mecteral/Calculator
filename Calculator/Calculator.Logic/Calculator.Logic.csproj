@@ -57,6 +57,7 @@
     <Compile Include="Model\Constant.cs" />
     <Compile Include="Model\Division.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
+    <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IArithmeticOperation.cs" />
@@ -79,7 +80,6 @@
     <Compile Include="Parsing\VariableToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simplifier.cs" />
-    <Compile Include="SimplifierWrapper.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="StringSimplifier.cs" />
   </ItemGroup>

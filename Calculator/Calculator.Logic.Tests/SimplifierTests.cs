@@ -26,7 +26,6 @@ namespace Calculator.Logic.Tests
             return tokens;
         }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
-        static Simplifier Simplify(IExpression expression) => new Simplifier(expression);
         [Test]
         public void Simplification_Of_Nested_Additions()
         {
