@@ -24,7 +24,6 @@ namespace Calculator.Logic
             mCurrent.Accept(this);
             return mCurrent;
         }
-        static bool IsVariable(IExpression expression) => expression is Variable;
 
         public void Visit(Subtraction subtraction)
         {
