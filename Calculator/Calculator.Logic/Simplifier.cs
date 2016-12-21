@@ -18,6 +18,8 @@ namespace Calculator.Logic
         {
             mExpression = new ExpressionCloner().Clone(expression);
         }
+
+        public Simplifier(){}
         public IExpression Simplify(IExpression input)
         {
             var simplifier = new Simplifier(input);

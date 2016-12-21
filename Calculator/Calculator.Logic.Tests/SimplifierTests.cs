@@ -59,7 +59,18 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification_Of_Parentheses_Next_To_Variables()
         {
-            Check("(1*2/2+3-4)-2a+(1*2/2+3-4a)", "(0) - 2*a + (4 - 4*a)");
+            Check("(1*2/2+3-4)-2a+(1*2/2+3-4a +5*6)", "(0) - 2*a + (4 - 4*a + 30)");
+        }
+
+        [Test]
+        public void Simplification_Works_With_Multiplication()
+        {
+            Check("1*2*3-4a+5*6*7", "6 - 4*a + 210");
+        }
+        [Test]
+        public void Simplification_Works_With_Division()
+        {
+            Check("3/2-4a+4/4/2", "1.5 - 4*a + 0.5");
         }
     }
 }
