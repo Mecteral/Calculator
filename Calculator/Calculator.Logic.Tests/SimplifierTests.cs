@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
 using FluentAssertions;
@@ -15,30 +11,27 @@ namespace Calculator.Logic.Tests
     {
         static void Check(string underTest, string expected)
         {
-            var token = new Tokenizer(underTest);
-            token.Tokenize();
-            var simplified = UseSimplifier(token);
+            var tokenizer = new Tokenizer(underTest);
+            tokenizer.Tokenize();
+            var simplified = UseSimplifier(tokenizer.Tokens);
             simplified.Simplify().Should().Be(expected);
         }
-        static IExpression CreateInMemoryModel(Tokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
-        static Simplifier UseSimplifier(Tokenizer token) => new Simplifier(CreateInMemoryModel(token));
-
+        static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
+        static Simplifier UseSimplifier(IEnumerable<IToken> tokens) => new Simplifier(CreateInMemoryModel(tokens));
         [Test]
-        public void Simplification_Without_Variables()
+        public void Simplification_Of_Nested_Additions()
         {
-            Check("2-2", "0");
+            Check("2+2+2+2a", "6 + 2*a");
         }
-
         [Test]
         public void Simplification_Of_ParenthesedExpression()
         {
             Check("2a+(3+2)", "2*a + (5)");
         }
-
         [Test]
-        public void Simplification_Of_Nested_Additions()
+        public void Simplification_Without_Variables()
         {
-            Check("2+2+2+2a", "6 + 2*a");
+            Check("2-2", "0");
         }
     }
 }

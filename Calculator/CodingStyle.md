@@ -180,4 +180,35 @@ Chances are it actually is serving multiple responsibilities which could and sho
 - Classes should rarely directly depend on other classes. Instead, they should depend on interfaces or delegates.
 This allows for better testing (you can mock interfaces in unit-tests) and reduces coupling. Besides, it makes it easier to switch to a
 different implementation of the interface if circumstances/requirements/specifications change. 
+- Pass the lowest level objects possible. For example, instead of:
+```c#
+public class Tokenizer
+{
+    public IEnumerable<Token> Tokens {get;}
+}
+
+//...
+void SomeMethod(Tokenizer tokenizer)
+{
+    // only usage of tokenizer:
+    mCount= tokenizer.Tokens.Count();
+}
+```
+
+do this:
+```c#
+public class Tokenizer
+{
+    public IEnumerable<Token> Tokens {get;}
+}
+
+//...
+void SomeMethod(IEnumerable<Token> tokens)
+{
+    // only usage of tokenizer:
+    mCount= tokens.Count();
+}
+```
+
+
 
