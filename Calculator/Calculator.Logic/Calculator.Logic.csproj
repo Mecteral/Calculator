@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IModelBuilder.cs" />
     <Compile Include="ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
     <Compile Include="Model\Addition.cs" />

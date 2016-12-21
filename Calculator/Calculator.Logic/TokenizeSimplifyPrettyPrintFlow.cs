@@ -10,7 +10,8 @@ namespace Calculator.Logic
         readonly IExpressionFormatter mFormatter;
         public string Simplify(string input)
         {
-            //mTokenizer.Tokenize()
+            mTokenizer.Tokenize(input);
+            
             return null;
         }
     }
