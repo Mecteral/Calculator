@@ -11,7 +11,7 @@ namespace Calculator.Logic
     public class Simplifier : IExpressionVisitor
     {
         readonly IExpression mExpression;
-        static IExpression mCurrent;
+        IExpression mCurrent;
         IEnumerable<IExpression> mToEvaluate = new List<IExpression>();
         public Simplifier(IExpression expression)
         {
@@ -24,7 +24,6 @@ namespace Calculator.Logic
             mCurrent.Accept(this);
             return FormattingExpressionVisitor.Format(mCurrent);
         }
-        static bool IsVariable(IExpression expression) => expression is Variable;
 
         public void Visit(Subtraction subtraction)
         {

@@ -40,5 +40,17 @@ namespace Calculator.Logic.Tests
         {
             Check("2+2+2+2a", "6 + 2*a");
         }
+
+        [Test]
+        public void Simplification_Of_Nested_Operations_On_Both_Sides_Of_Variables()
+        {
+            Check("1+2+3+4+5a+6+7+8", "10 + 5*a + 21");
+        }
+
+        [Test]
+        public void Simplification_Of_Parentheses_Next_To_Variables()
+        {
+            Check("(1*2/2+3-4)-2a+(1*2/2+3-4a)", "(0) - 2*a + (4 - 4*a)");
+        }
     }
 }
