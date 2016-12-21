@@ -11,7 +11,7 @@ namespace Calculator.Logic
     public class Simplifier : IExpressionVisitor
     {
         readonly IExpression mExpression;
-        static IExpression mCurrent;
+        IExpression mCurrent;
         IEnumerable<IExpression> mToEvaluate = new List<IExpression>();
         public Simplifier(IExpression expression)
         {
