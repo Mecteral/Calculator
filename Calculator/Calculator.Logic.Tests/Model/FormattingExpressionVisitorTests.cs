@@ -9,7 +9,7 @@ namespace Calculator.Logic.Tests.Model
     {
         static void Check(IExpression input, string expected)
         {
-            FormattingExpressionVisitor.Format(input).Should().Be(expected);
+            new FormattingExpressionVisitor().Format(input).Should().Be(expected);
         }
 
         [Test]

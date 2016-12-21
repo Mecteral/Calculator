@@ -34,7 +34,7 @@ namespace Calculator.Logic.Tests
                 Number(9), Close, Close, Close
             };
             var exp = Test(input);
-            FormattingExpressionVisitor.Format(exp).Should().Be("(1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))");
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))");
         }
         [Test]
         public void Complex_Case_With_Two_Parentheses_In_Parentheses()
@@ -45,7 +45,7 @@ namespace Calculator.Logic.Tests
                 Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close, Close
             };
             var exp = Test(input);
-            FormattingExpressionVisitor.Format(exp).Should().Be("((1*2)/(3 - 4))");
+            new FormattingExpressionVisitor().Format(exp).Should().Be("((1*2)/(3 - 4))");
         }
 
         [Test]

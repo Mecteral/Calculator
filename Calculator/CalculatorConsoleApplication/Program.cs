@@ -20,8 +20,8 @@ namespace CalculatorConsoleApplication
 
         static Tokenizer GetStringAndCreateTokens()
         {
-            var token = new Tokenizer(GetUserInput());
-            token.Tokenize();
+            var token = new Tokenizer();
+            token.Tokenize(GetUserInput());
             return token;
         }
 

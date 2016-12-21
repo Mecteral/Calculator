@@ -6,22 +6,20 @@ namespace Calculator.Logic.Parsing
     /// <summary>
     /// Takes in a string and returns IEnumerable of ITokens
     /// </summary>
-    public class Tokenizer
+    public class Tokenizer : ITokenizer
     {
-        readonly string mInput;
+        string mInput;
         readonly List<IToken> mTempTokens = new List<IToken>();
         string mNumber;
         bool mWasNumber;
 
-        public Tokenizer(string input)
-        {
-            mInput = input;
-        }
 
         public IEnumerable<IToken> Tokens { get; private set; }
 
-        public void Tokenize()
+        public void Tokenize(string input)
         {
+            mTempTokens.Clear();
+            mInput = input;
             Tokens = FillTokens();
         }
 

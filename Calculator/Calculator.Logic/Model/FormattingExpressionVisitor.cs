@@ -2,9 +2,9 @@
 
 namespace Calculator.Logic.Model
 {
-    public class FormattingExpressionVisitor : AnExpressionVisitorWithResult<FormattingExpressionVisitor, string>
+    public class FormattingExpressionVisitor : AnExpressionVisitorWithResult<FormattingExpressionVisitor, string>, IExpressionFormatter
     {
-        public static string Format(IExpression expression) => GetResultFor(expression);
+        public string Format(IExpression expression) => GetResultFor(expression);
         protected override string UseVariable(string variable) => variable;
         protected override string UseParenthesed(string wrapped) => $"({wrapped})";
 

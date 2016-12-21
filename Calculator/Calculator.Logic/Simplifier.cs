@@ -8,7 +8,7 @@ using Calculator.Logic.Model;
 
 namespace Calculator.Logic
 {
-    public class Simplifier : IExpressionVisitor
+    public class Simplifier : IExpressionVisitor, ISimplifier
     {
         readonly IExpression mExpression;
         IExpression mCurrent;

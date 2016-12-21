@@ -15,13 +15,13 @@ namespace Calculator.Logic.Tests
             var inputTree = CreateInMemoryModel(tokens);
             var underTest= new Simplifier(inputTree);
             var simplified = underTest.Simplify();
-            var asString = FormattingExpressionVisitor.Format(simplified);
+            var asString = new FormattingExpressionVisitor().Format(simplified);
             asString.Should().Be(expected);
         }
         static IEnumerable<IToken> Tokenize(string input)
         {
-            var tokenizer = new Tokenizer(input);
-            tokenizer.Tokenize();
+            var tokenizer = new Tokenizer();
+            tokenizer.Tokenize(input);
             var tokens = tokenizer.Tokens;
             return tokens;
         }
