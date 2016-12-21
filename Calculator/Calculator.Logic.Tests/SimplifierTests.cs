@@ -9,15 +9,22 @@ namespace Calculator.Logic.Tests
     [TestFixture]
     public class SimplifierTests
     {
-        static void Check(string underTest, string expected)
+        static void Check(string input, string expected)
         {
-            var tokenizer = new Tokenizer(underTest);
-            tokenizer.Tokenize();
-            var simplified = UseSimplifier(tokenizer.Tokens);
+            var tokens = Tokenize(input);
+            var simplified = UseSimplifier(tokens);
             simplified.Simplify().Should().Be(expected);
         }
+        static IEnumerable<IToken> Tokenize(string input)
+        {
+            var tokenizer = new Tokenizer(input);
+            tokenizer.Tokenize();
+            var tokens = tokenizer.Tokens;
+            return tokens;
+        }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
-        static Simplifier UseSimplifier(IEnumerable<IToken> tokens) => new Simplifier(CreateInMemoryModel(tokens));
+        static Simplifier UseSimplifier(IEnumerable<IToken> tokens) => Simplify(CreateInMemoryModel(tokens));
+        static Simplifier Simplify(IExpression expression) => new Simplifier(expression);
         [Test]
         public void Simplification_Of_Nested_Additions()
         {
@@ -32,6 +39,13 @@ namespace Calculator.Logic.Tests
         public void Simplification_Without_Variables()
         {
             Check("2-2", "0");
+        }
+        [Test]
+        public void Simplify_Does_Not_Change_Input_Expression_Tree()
+        {
+            var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
+            Simplify(input);
+            ((Addition) input).Left.Should().BeOfType<Addition>();
         }
     }
 }
