@@ -81,7 +81,7 @@
     <Compile Include="Simplifier.cs" />
     <Compile Include="SimplifierWrapper.cs" />
     <Compile Include="TokenFormatter.cs" />
-    <Compile Include="TokenizeSimplifyPrettyPrintFlow.cs" />
+    <Compile Include="StringSimplifier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
