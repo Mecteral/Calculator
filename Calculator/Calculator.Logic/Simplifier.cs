@@ -20,7 +20,7 @@ namespace Calculator.Logic
         }
 
         public Simplifier(){}
-        public IExpression Simplify(IExpression input)
+        public static IExpression Simplify(IExpression input)
         {
             var simplifier = new Simplifier(input);
             return simplifier.Simplify();
@@ -73,6 +73,22 @@ namespace Calculator.Logic
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
+            if (operation.Left is ParenthesedExpression)
+            {
+                var parenthesis = (ParenthesedExpression)operation.Left;
+                if (parenthesis.Wrapped is Constant)
+                {
+                    operation.Left = parenthesis.Wrapped;
+                }
+            }
+            if (operation.Right is ParenthesedExpression)
+            {
+                var parenthesis = (ParenthesedExpression)operation.Right;
+                if (parenthesis.Wrapped is Constant)
+                {
+                    operation.Right = parenthesis.Wrapped;
+                }
+            }
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
