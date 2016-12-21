@@ -79,6 +79,7 @@
     <Compile Include="Parsing\VariableToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simplifier.cs" />
+    <Compile Include="SimplifierWrapper.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="TokenizeSimplifyPrettyPrintFlow.cs" />
   </ItemGroup>

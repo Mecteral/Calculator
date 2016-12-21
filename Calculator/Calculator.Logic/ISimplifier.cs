@@ -2,7 +2,8 @@
 
 namespace Calculator.Logic
 {
-    public interface ISimplifier {
-        IExpression Simplify();
+    public interface ISimplifier
+    {
+        IExpression Simplify(IExpression input);
     }
 }
