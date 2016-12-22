@@ -141,5 +141,15 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
         }
+        [Test]
+        public void Negation_Of_Numbers_In_Parentheses_Builds_Zero_Minus_Number()
+        {
+            var input = new IToken[]
+            {
+                Open, Minus, Number(1), Close
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(0 - 1)");
+        }
     }
 }
