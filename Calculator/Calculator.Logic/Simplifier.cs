@@ -4,14 +4,14 @@ namespace Calculator.Logic
 {
     public class Simplifier : IExpressionVisitor
     {
+        public static IExpression SimplifiedCalculationExpression { get; set; }
         public static IExpression DirectCalculationExpression { get; set; }
         public static IExpression OriginalExpression { get; set; }
         public static IExpression Simplify(IExpression input)
         {
-            var directSimplifier = DirectCalculationSimplifier.Simplify(input);
             OriginalExpression = input;
-            DirectCalculationExpression = directSimplifier;
-            return directSimplifier;
+            DirectCalculationExpression = DirectCalculationSimplifier.Simplify(input);
+            return DirectCalculationExpression;
         }
 
         public void Visit(ParenthesedExpression parenthesed)

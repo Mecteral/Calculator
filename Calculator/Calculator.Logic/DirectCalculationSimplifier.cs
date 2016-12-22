@@ -16,8 +16,6 @@ namespace Calculator.Logic
             mExpression = ExpressionCloner.Clone(expression);
         }
 
-        public DirectCalculationSimplifier() { }
-
         public IExpression Simplify()
         {
             mExpression.Accept(this);

@@ -132,5 +132,14 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
+        [Test]
+        public void Negation_Of_Numbers_Builds_Zero_Minus_Number()
+        {
+            //-1
+            var subtraction = TestExpecting<Subtraction>(Minus, Number(1));
+            subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
+        }
     }
 }

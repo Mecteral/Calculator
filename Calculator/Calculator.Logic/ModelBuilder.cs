@@ -130,6 +130,7 @@ namespace Calculator.Logic
         }
         void Add(IExpression expression)
         {
+            Negate(expression);
             if (IsWrapped) mNode.Expressions.Add(expression);
             else mExpressions.Add(expression);
         }
@@ -149,6 +150,14 @@ namespace Calculator.Logic
             mNode = new ParenthesesNode();
             mExpressions.Add(new ParenthesedExpression());
             mRootNodes.Add(mNode);
+        }
+
+        void Negate(IExpression subtraction)
+        {
+            if (subtraction is Subtraction && (mExpressions.Count == 0 || !(mExpressions.Last() is Constant) && !(mExpressions.Last() is Variable) && !(mExpressions.Last() is ParenthesedExpression)))
+                mExpressions.Add(new Constant {Value = 0});
+            else if (subtraction is Subtraction && IsWrapped && (mNode.Expressions.Count == 0 || !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) && !(mNode.Expressions.Last() is ParenthesedExpression)))
+                mNode.Expressions.Add(new Constant { Value = 0 });
         }
     }
 }
