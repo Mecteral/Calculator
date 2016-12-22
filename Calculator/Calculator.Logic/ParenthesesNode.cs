@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Calculator.Logic.Model;
+using Calculator.Model;
 
 namespace Calculator.Logic
 {
@@ -10,7 +10,6 @@ namespace Calculator.Logic
         public IList<IExpression> Expressions { get; set; } = new List<IExpression>();
         public ParenthesesNode Parent { get; set; }
         public bool HasChild { get; private set; }
-
         public void AddChild(ParenthesesNode child)
         {
             Children.Add(child);

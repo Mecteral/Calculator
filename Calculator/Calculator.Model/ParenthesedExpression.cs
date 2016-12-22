@@ -1,15 +1,21 @@
-using System.Collections.Generic;
-
-namespace Calculator.Logic.Model
+namespace Calculator.Model
 {
     /// <summary>
     /// Parenthesed Expression contains Wrapped IExpression
     /// </summary>
     public class ParenthesedExpression : IExpression
     {
-        public IEnumerable<IExpression> Children { get; set; } = new List<IExpression>();
+        IExpression mWrapped;
         public IExpression Parent { get; set; }
-        public IExpression Wrapped { get; set; }
+        public IExpression Wrapped
+        {
+            get { return mWrapped; }
+            set
+            {
+                mWrapped = value;
+                mWrapped.Parent = this;
+            }
+        }
         public void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
     }
 }

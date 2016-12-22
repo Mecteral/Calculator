@@ -1,4 +1,5 @@
 ﻿using Calculator.Logic.Model;
+using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -11,43 +12,36 @@ namespace Calculator.Logic.Tests.Model
         {
             new FormattingExpressionVisitor().Format(input).Should().Be(expected);
         }
-
         [Test]
         public void Format_Addition()
         {
             Check(TestExpressions.Add3To4, "3 + 4");
         }
-
         [Test]
         public void Format_Constant()
         {
             Check(TestExpressions.Pi, "3.141");
         }
-
         [Test]
         public void Format_Division()
         {
             Check(TestExpressions.Divide3By4, "3/4");
         }
-
         [Test]
         public void Format_Multiplication()
         {
             Check(TestExpressions.Multiply3Times4, "3*4");
         }
-
         [Test]
         public void Format_Parenthesed()
         {
             Check(TestExpressions.Parenthesed3Minus4, "(3 - 4)");
         }
-
         [Test]
         public void Format_Subtraction()
         {
             Check(TestExpressions.Subtract4From3, "3 - 4");
         }
-
         [Test]
         public void Nested_Case()
         {

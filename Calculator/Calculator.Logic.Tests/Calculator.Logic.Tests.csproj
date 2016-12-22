@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Calculator.Logic.Tests</RootNamespace>
     <AssemblyName>Calculator.Logic.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -80,6 +81,10 @@
     <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
       <Project>{881dae72-f0fc-4367-b308-eb585d5468ff}</Project>
       <Name>Calculator.Logic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj">
+      <Project>{ca6f73de-4ee2-433c-883f-0f943158e0f1}</Project>
+      <Name>Calculator.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

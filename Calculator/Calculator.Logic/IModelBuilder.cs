@@ -1,10 +1,11 @@
 using System.Collections.Generic;
-using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Model;
 
 namespace Calculator.Logic
 {
-    public interface IModelBuilder {
+    public interface IModelBuilder
+    {
         IExpression BuildFrom(IEnumerable<IToken> tokens);
     }
 }

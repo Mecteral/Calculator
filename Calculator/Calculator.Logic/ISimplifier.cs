@@ -1,4 +1,4 @@
-﻿using Calculator.Logic.Model;
+﻿using Calculator.Model;
 
 namespace Calculator.Logic
 {

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Calculator.Logic.Model
+﻿namespace Calculator.Model
 {
     public interface IExpression
     {

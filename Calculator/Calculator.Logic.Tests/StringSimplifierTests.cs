@@ -1,5 +1,6 @@
 ﻿using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Model;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;

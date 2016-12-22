@@ -1,3 +1,5 @@
+using Calculator.Model;
+
 namespace Calculator.Logic.Model
 {
     public abstract class AnExpressionVisitorWithResult<TSelf, TResult> : IExpressionVisitor

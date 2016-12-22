@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Calculator.Logic</RootNamespace>
     <AssemblyName>Calculator.Logic</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,23 +53,12 @@
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
-    <Compile Include="Model\Addition.cs" />
-    <Compile Include="Model\AnArithmeticOperation.cs" />
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
-    <Compile Include="Model\Constant.cs" />
-    <Compile Include="Model\Division.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
-    <Compile Include="Model\IArithmeticOperation.cs" />
-    <Compile Include="Model\IExpression.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="Model\IExpressionVisitor.cs" />
-    <Compile Include="Model\Multiplication.cs" />
-    <Compile Include="Model\ParenthesedExpression.cs" />
-    <Compile Include="Model\Subtraction.cs" />
-    <Compile Include="Model\Variable.cs" />
     <Compile Include="ParenthesesNode.cs" />
     <Compile Include="Parsing\IToken.cs" />
     <Compile Include="Parsing\ITokenizer.cs" />
@@ -87,6 +77,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj">
+      <Project>{ca6f73de-4ee2-433c-883f-0f943158e0f1}</Project>
+      <Name>Calculator.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

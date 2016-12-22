@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Calculator.Logic.Parsing;
+﻿using Calculator.Logic.Parsing;
+using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {
