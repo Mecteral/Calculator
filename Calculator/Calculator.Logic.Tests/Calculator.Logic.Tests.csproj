@@ -64,6 +64,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DirectCalculationSimplifierTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />
     <Compile Include="Model\ExpressionExtensionsTests.cs" />
