@@ -82,7 +82,6 @@ namespace Calculator.Logic
                     mNode = mRootNodes[0];
                     if (mNode.HasChild) { IterateChildren(mNode); }
                     mNode.ParenthesedExpression.Wrapped = PointBeforeAdditionOrSubtraction(mNode.Expressions);
-                    mNode.ParenthesedExpression.Wrapped.Parent = mNode.ParenthesedExpression;
                     mRootNodes.RemoveAt(0);
                     mExpressions[i] = mNode.ParenthesedExpression;
                 }
@@ -108,8 +107,6 @@ namespace Calculator.Logic
         {
             mCurrentOperation.Left = expressions[i - 1];
             mCurrentOperation.Right = expressions[i + 1];
-            mCurrentOperation.Left.Parent = mCurrentOperation;
-            mCurrentOperation.Right.Parent = mCurrentOperation;
             expressions.RemoveAt(i + 1);
             expressions.RemoveAt(i - 1);
         }

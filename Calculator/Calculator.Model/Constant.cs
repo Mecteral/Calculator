@@ -3,10 +3,9 @@
     /// <summary>
     /// Is a Constant Number of type IExpression
     /// </summary>
-    public class Constant : IExpression
+    public class Constant : AnExpression
     {
         public double Value { get; set; }
-        public IExpression Parent { get; set; }
-        public void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
+        public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
     }
 }

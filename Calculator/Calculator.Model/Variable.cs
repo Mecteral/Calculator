@@ -1,9 +1,8 @@
 ﻿namespace Calculator.Model
 {
-    public class Variable : IExpression
+    public class Variable : AnExpression, IExpression
     {
-        public IExpression Parent { get; set; }
         public string Variables { get; set; }
-        public void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
+        public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
     }
 }

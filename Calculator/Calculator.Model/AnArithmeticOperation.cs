@@ -3,7 +3,7 @@
     /// <summary>
     /// Abstract Class for all Operators ( Multiply , Divide , Minus , Plus )
     /// </summary>
-    public abstract class AnArithmeticOperation : IArithmeticOperation
+    public abstract class AnArithmeticOperation : AnExpression, IArithmeticOperation
     {
         IExpression mLeft;
         IExpression mRight;
@@ -13,7 +13,7 @@
             set
             {
                 mLeft = value;
-                mLeft.Parent = this;
+                ((AnExpression) mLeft).Parent = this;
             }
         }
         public IExpression Right
@@ -22,10 +22,8 @@
             set
             {
                 mRight = value;
-                mRight.Parent = this;
+                ((AnExpression) mRight).Parent = this;
             }
         }
-        public IExpression Parent { get; set; }
-        public abstract void Accept(IExpressionVisitor visitor);
     }
 }

@@ -82,11 +82,9 @@ namespace Calculator.Logic
                     var parent = (IArithmeticOperation) operation.Parent;
                     parent.Left = operationLeft;
                 }
-                operation.Left.Parent = operation.Parent;
                 operation.Left = operationLeft.Right;
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
                 operationLeft.Right = constant;
-                operationLeft.Right.Parent = operationLeft;
                 if (operation.Parent == null) { mExpression = operationLeft; }
             }
         }

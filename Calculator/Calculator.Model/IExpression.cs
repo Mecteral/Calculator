@@ -2,7 +2,7 @@
 {
     public interface IExpression
     {
-        IExpression Parent { get; set; }
+        IExpression Parent { get; }
         void Accept(IExpressionVisitor visitor);
     }
 }
