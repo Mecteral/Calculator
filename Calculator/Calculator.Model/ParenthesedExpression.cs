@@ -6,7 +6,6 @@ namespace Calculator.Model
     public class ParenthesedExpression : AnExpression
     {
         IExpression mWrapped;
-        public IExpression Parent { get; set; }
         public IExpression Wrapped
         {
             get { return mWrapped; }

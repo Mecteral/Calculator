@@ -13,12 +13,14 @@ namespace Calculator.Model.Tests
         public void Setting_Left_Sets_Parent_Of_Value()
         {
             var underTest = new T {Left = new Constant()};
+
             underTest.Left.Parent.Should().BeSameAs(underTest);
         }
         [Test]
         public void Setting_Right_Sets_Parent_Of_Value()
         {
             var underTest = new T {Right = new Constant()};
+
             underTest.Right.Parent.Should().BeSameAs(underTest);
         }
     }
