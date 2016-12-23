@@ -7,6 +7,7 @@ using Calculator.Model;
 
 namespace CalculatorConsoleApplication
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
         static void Main(string[] args)

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Calculator.Logic.Model;
 using Calculator.Logic.Utilities;
 using Calculator.Model;
@@ -61,41 +62,54 @@ namespace Calculator.Logic
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-                if (operation.Parent != null) HandleOperationWithParent(operation, constant);
+                if (operation.Parent != null) ReplaceChild(operation, constant);
                 else mExpression = constant;
             }
-            else if ((operation.Left is Addition || operation.Left is Subtraction) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
+            else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
         }
-        static void HandleOperationWithParent(IArithmeticOperation operation, Constant constant)
+        static bool HasAdditiveOperationAsLeft(IArithmeticOperation operation)
         {
-            if (operation.Parent is IArithmeticOperation) HandleParentAsArithmeticOperation(operation, constant);
-            else
+            return (operation.Left is Addition || operation.Left is Subtraction);
+        }
+        static void ReplaceChild(IExpression oldChild, IExpression newChild)
+        {
+            var arithmeticOperation = oldChild.Parent as IArithmeticOperation;
+            if (arithmeticOperation != null)
             {
-                var parent = (ParenthesedExpression) operation.Parent;
-                parent.Wrapped = constant;
+                ReplaceOperandIn(arithmeticOperation, oldChild, newChild);
+                return;
             }
+            var parenthesis = oldChild.Parent as ParenthesedExpression;
+            if (null != parenthesis)
+            {
+                ReplaceWrappedInParenthesis(parenthesis, newChild);
+                return;
+            }
+            throw new InvalidOperationException();
         }
-        static void HandleParentAsArithmeticOperation(IArithmeticOperation operation, Constant constant)
+        static void ReplaceWrappedInParenthesis(ParenthesedExpression parent, IExpression newChild)
         {
-            var parent = (IArithmeticOperation) operation.Parent;
-            if (parent.Left == operation) parent.Left = constant;
-            else parent.Right = constant;
+            parent.Wrapped = newChild;
+        }
+        static void ReplaceOperandIn(IArithmeticOperation parent, IExpression oldChild, IExpression newChild)
+        {
+            if (parent.Left == oldChild) parent.Left = newChild;
+            else parent.Right = newChild;
         }
         void CalculateRightHandAdditionAndSubtractions(IArithmeticOperation operation)
         {
             var operationLeft = (IArithmeticOperation) operation.Left;
-            if (operationLeft.Right is Constant)
+            if (!(operationLeft.Right is Constant)) return;
+
+            if (operation.Parent != null)
             {
-                if (operation.Parent != null)
-                {
-                    var parent = (IArithmeticOperation) operation.Parent;
-                    parent.Left = operationLeft;
-                }
-                operation.Left = operationLeft.Right;
-                var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-                operationLeft.Right = constant;
-                if (operation.Parent == null) { mExpression = operationLeft; }
+                var parent = (IArithmeticOperation) operation.Parent;
+                parent.Left = operationLeft;
             }
+            operation.Left = operationLeft.Right;
+            var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
+            operationLeft.Right = constant;
+            if (operation.Parent == null) { mExpression = operationLeft; }
         }
         static void HandleParenthesis(
             IArithmeticOperation operation,
