@@ -1,4 +1,7 @@
-﻿using Calculator.Logic.Model;
+﻿using System;
+using System.Linq.Expressions;
+using Calculator.Logic.Model;
+using Calculator.Logic.Utilities;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -46,9 +49,15 @@ namespace Calculator.Logic
             => operation.Left is Constant && operation.Right is Constant;
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
-            LoopthroughVisitors(operation);
-            if (operation.Left is ParenthesedExpression) HandleParenthesesExpressionOnTheLeftSide(operation);
-            else if (operation.Right is ParenthesedExpression) HandleParenthesesExpressionOnTheRightSide(operation);
+            VisitOperands(operation);
+            if (operation.Left is ParenthesedExpression)
+            {
+                HandleParenthesis(operation, o => o.Left);
+            }
+            else if (operation.Right is ParenthesedExpression)
+            {
+                HandleParenthesis(operation, o => o.Right);
+            }
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
@@ -88,17 +97,17 @@ namespace Calculator.Logic
                 if (operation.Parent == null) { mExpression = operationLeft; }
             }
         }
-        static void HandleParenthesesExpressionOnTheLeftSide(IArithmeticOperation operation)
+        static void HandleParenthesis(
+            IArithmeticOperation operation,
+            Expression<Func<IArithmeticOperation, IExpression>>  propertySelector)
         {
-            var parenthesis = (ParenthesedExpression) operation.Left;
-            if (parenthesis.Wrapped is Constant) { operation.Left = parenthesis.Wrapped; }
+            var parenthesis = (ParenthesedExpression)propertySelector.GetFrom(operation);
+            if (parenthesis.Wrapped is Constant)
+            {
+                propertySelector.SetTo(operation, parenthesis.Wrapped);
+            }
         }
-        static void HandleParenthesesExpressionOnTheRightSide(IArithmeticOperation operation)
-        {
-            var parenthesis = (ParenthesedExpression) operation.Right;
-            if (parenthesis.Wrapped is Constant) { operation.Right = parenthesis.Wrapped; }
-        }
-        void LoopthroughVisitors(IArithmeticOperation operation)
+        void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);

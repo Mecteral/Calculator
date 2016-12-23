@@ -73,6 +73,7 @@
     <Compile Include="Simplifier.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="StringSimplifier.cs" />
+    <Compile Include="Utilities\LambdaExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
