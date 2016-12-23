@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Calculator.Logic.Model;
 using Calculator.Logic.Utilities;
 using Calculator.Model;
@@ -51,14 +50,10 @@ namespace Calculator.Logic
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
             VisitOperands(operation);
-            if (operation.Left is ParenthesedExpression)
-            {
+            if (operation.Left is ParenthesedExpression) {
                 HandleParenthesis(operation, o => o.Left);
             }
-            else if (operation.Right is ParenthesedExpression)
-            {
-                HandleParenthesis(operation, o => o.Right);
-            }
+            else if (operation.Right is ParenthesedExpression) { HandleParenthesis(operation, o => o.Right); }
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
@@ -69,7 +64,7 @@ namespace Calculator.Logic
         }
         static bool HasAdditiveOperationAsLeft(IArithmeticOperation operation)
         {
-            return (operation.Left is Addition || operation.Left is Subtraction);
+            return operation.Left is Addition || operation.Left is Subtraction;
         }
         static void ReplaceChild(IExpression oldChild, IExpression newChild)
         {
@@ -113,13 +108,10 @@ namespace Calculator.Logic
         }
         static void HandleParenthesis(
             IArithmeticOperation operation,
-            Expression<Func<IArithmeticOperation, IExpression>>  propertySelector)
+            Expression<Func<IArithmeticOperation, IExpression>> propertySelector)
         {
-            var parenthesis = (ParenthesedExpression)propertySelector.GetFrom(operation);
-            if (parenthesis.Wrapped is Constant)
-            {
-                propertySelector.SetTo(operation, parenthesis.Wrapped);
-            }
+            var parenthesis = (ParenthesedExpression) propertySelector.GetFrom(operation);
+            if (parenthesis.Wrapped is Constant) { propertySelector.SetTo(operation, parenthesis.Wrapped); }
         }
         void VisitOperands(IArithmeticOperation operation)
         {
