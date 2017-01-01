@@ -1,6 +1,7 @@
 ﻿using System.Globalization;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -11,9 +12,7 @@ namespace Calculator.Logic.Tests
     {
         static T TestExpecting<T>(params IToken[] input) where T : IExpression
             => Test(input).Should().BeOfType<T>().Subject;
-
         static IExpression Test(params IToken[] input) => new ModelBuilder().BuildFrom(input);
-
         static ParenthesesToken Close => new ParenthesesToken(')');
         static ParenthesesToken Open => new ParenthesesToken('(');
         static NumberToken Number(double number) => new NumberToken(number.ToString(CultureInfo.InvariantCulture));
@@ -22,7 +21,6 @@ namespace Calculator.Logic.Tests
         static OperatorToken Times => new OperatorToken('*');
         static OperatorToken DividedBy => new OperatorToken('/');
         static VariableToken Variable(char variable) => new VariableToken(variable);
-
         [Test]
         public void Complex_Case()
         {
@@ -41,19 +39,30 @@ namespace Calculator.Logic.Tests
         {
             // ((1*2)/(3-4))
             var input = new IToken[]
-            {
-                Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close, Close
-            };
+            {Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close, Close};
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("((1*2)/(3 - 4))");
         }
-
+        [Test]
+        public void Negation_Of_Numbers_Builds_Zero_Minus_Number()
+        {
+            //-1
+            var subtraction = TestExpecting<Subtraction>(Minus, Number(1));
+            subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
+        }
+        [Test]
+        public void Negation_Of_Numbers_In_Parentheses_Builds_Zero_Minus_Number()
+        {
+            var input = new IToken[] {Open, Minus, Number(1), Close};
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(0 - 1)");
+        }
         [Test]
         public void Nested_Parentheses_Build_Correctly()
         {
             //((22))
-            var outer = TestExpecting<ParenthesedExpression>(Open, Open,
-                Number(22), Close, Close);
+            var outer = TestExpecting<ParenthesedExpression>(Open, Open, Number(22), Close, Close);
             outer.Wrapped.Should()
                 .BeOfType<ParenthesedExpression>()
                 .Subject.Wrapped.Should()
@@ -61,16 +70,37 @@ namespace Calculator.Logic.Tests
                 .Subject.Value.Should()
                 .Be(22);
         }
-
+        [Test]
+        public void Number_DividedBy_Number_Builds_Division()
+        {
+            //3/4
+            var division = TestExpecting<Division>(Number(3), DividedBy, Number(4));
+            division.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
+            division.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+        [Test]
+        public void Number_Minus_Number_Builds_Subtraction()
+        {
+            //3-4
+            var subtraction = TestExpecting<Subtraction>(Number(3), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+        [Test]
+        public void Number_Plus_Number_Builds_Addition()
+        {
+            //3+4
+            var addition = TestExpecting<Addition>(Number(3), Plus, Number(4));
+            addition.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
+            addition.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
         [Test]
         public void Parenthese_Number_Parenthese_Builds_ParenthesedExpression()
         {
             //(22)
-            var parenthesed = TestExpecting<ParenthesedExpression>(Open, Number(22),
-                Close);
+            var parenthesed = TestExpecting<ParenthesedExpression>(Open, Number(22), Close);
             parenthesed.Wrapped.Should().BeOfType<Constant>().Subject.Value.Should().Be(22);
         }
-
         [Test]
         public void PointBeforeAdditionOrSubtraction()
         {
@@ -90,32 +120,6 @@ namespace Calculator.Logic.Tests
                 .Which.Value.Should()
                 .Be(5);
         }
-
-        [Test]
-        public void Number_DividedBy_Number_Builds_Division()
-        {
-            //3/4
-            var division = TestExpecting<Division>(Number(3), DividedBy, Number(4));
-            division.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
-            division.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-        [Test]
-        public void Number_Plus_Number_Builds_Addition()
-        {
-            //3+4
-            var addition = TestExpecting<Addition>(Number(3), Plus, Number(4));
-            addition.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
-            addition.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-        [Test]
-        public void Number_Minus_Number_Builds_Subtraction()
-        {
-            //3-4
-            var subtraction = TestExpecting<Subtraction>(Number(3), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
-            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-
         [Test]
         public void Single_Number_Token_Builds_ConstantNumber()
         {
@@ -123,7 +127,6 @@ namespace Calculator.Logic.Tests
             var constantNumber = TestExpecting<Constant>(Number(3.131));
             constantNumber.Value.Should().Be(3.131);
         }
-
         [Test]
         public void Variable_Minus_Number_Builds_Subtraction()
         {
@@ -131,25 +134,6 @@ namespace Calculator.Logic.Tests
             var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
             subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-
-        [Test]
-        public void Negation_Of_Numbers_Builds_Zero_Minus_Number()
-        {
-            //-1
-            var subtraction = TestExpecting<Subtraction>(Minus, Number(1));
-            subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
-            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
-        }
-        [Test]
-        public void Negation_Of_Numbers_In_Parentheses_Builds_Zero_Minus_Number()
-        {
-            var input = new IToken[]
-            {
-                Open, Minus, Number(1), Close
-            };
-            var exp = Test(input);
-            new FormattingExpressionVisitor().Format(exp).Should().Be("(0 - 1)");
         }
     }
 }

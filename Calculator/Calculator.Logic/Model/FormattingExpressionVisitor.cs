@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {

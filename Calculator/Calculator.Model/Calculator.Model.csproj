@@ -4,18 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2F5F0F60-3FCF-4912-B232-2425D608D437}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{CA6F73DE-4EE2-433C-883F-0F943158E0F1}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalculatorConsoleApplication</RootNamespace>
-    <AssemblyName>CalculatorConsoleApplication</AssemblyName>
+    <RootNamespace>Calculator.Model</RootNamespace>
+    <AssemblyName>Calculator.Model</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -25,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,14 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\ModernRonin.PraeterArtem.1.3.1\lib\ModernRonin.PraeterArtem.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.0.0\lib\net35\MoreLinq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,22 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Addition.cs" />
+    <Compile Include="AnArithmeticOperation.cs" />
+    <Compile Include="AnExpression.cs" />
+    <Compile Include="Constant.cs" />
+    <Compile Include="Division.cs" />
+    <Compile Include="IArithmeticOperation.cs" />
+    <Compile Include="IExpression.cs" />
+    <Compile Include="IExpressionVisitor.cs" />
+    <Compile Include="Multiplication.cs" />
+    <Compile Include="ParenthesedExpression.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
-      <Project>{881dae72-f0fc-4367-b308-eb585d5468ff}</Project>
-      <Name>Calculator.Logic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Calculator.Model\Calculator.Model.csproj">
-      <Project>{ca6f73de-4ee2-433c-883f-0f943158e0f1}</Project>
-      <Name>Calculator.Model</Name>
-    </ProjectReference>
+    <Compile Include="Subtraction.cs" />
+    <Compile Include="Variable.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

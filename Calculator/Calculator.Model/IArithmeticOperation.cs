@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Calculator.Logic.Model
+﻿namespace Calculator.Model
 {
     /// <summary>
     /// Interface for any Arithmetic Operation

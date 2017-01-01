@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Model;
 
 namespace Calculator.Logic
 {
@@ -102,7 +102,6 @@ namespace Calculator.Logic
                         IterateChildren(mNode);
                     }
                     mNode.ParenthesedExpression.Wrapped = PointBeforeAdditionOrSubtraction(mNode.Expressions);
-                    mNode.ParenthesedExpression.Wrapped.Parent = mNode.ParenthesedExpression;
                     mRootNodes.RemoveAt(0);
                     mExpressions[i] = mNode.ParenthesedExpression;
                 }
@@ -131,8 +130,6 @@ namespace Calculator.Logic
         {
             mCurrentOperation.Left = expressions[i - 1];
             mCurrentOperation.Right = expressions[i + 1];
-            mCurrentOperation.Left.Parent = mCurrentOperation;
-            mCurrentOperation.Right.Parent = mCurrentOperation;
             expressions.RemoveAt(i + 1);
             expressions.RemoveAt(i - 1);
         }
@@ -179,10 +176,10 @@ namespace Calculator.Logic
             mExpressions.Add(new ParenthesedExpression());
             mRootNodes.Add(mNode);
         }
-
         void Negate(IExpression subtraction)
         {
             if (subtraction is Subtraction &&
+<<<<<<< HEAD
                 (mExpressions.Count == 0 || !(mExpressions.Last() is Constant) &&
                  !(mExpressions.Last() is Variable) &&
                  !(mExpressions.Last() is ParenthesedExpression)))
@@ -192,6 +189,15 @@ namespace Calculator.Logic
                       !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) &&
                       !(mNode.Expressions.Last() is ParenthesedExpression)))
                 mNode.Expressions.Add(new Constant {Value = 0});
+=======
+                (mExpressions.Count == 0 ||
+                 !(mExpressions.Last() is Constant) && !(mExpressions.Last() is Variable) &&
+                 !(mExpressions.Last() is ParenthesedExpression))) mExpressions.Add(new Constant {Value = 0});
+            else if (subtraction is Subtraction && IsWrapped &&
+                     (mNode.Expressions.Count == 0 ||
+                      !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) &&
+                      !(mNode.Expressions.Last() is ParenthesedExpression))) mNode.Expressions.Add(new Constant {Value = 0});
+>>>>>>> 3e4735091a5bb971f78c4933f3eda34deed512cc
         }
     }
 }

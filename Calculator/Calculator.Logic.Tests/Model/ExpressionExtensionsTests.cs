@@ -1,4 +1,5 @@
 ﻿using Calculator.Logic.Model;
+using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
 

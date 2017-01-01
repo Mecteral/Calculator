@@ -1,9 +1,9 @@
-namespace Calculator.Logic.Model
+namespace Calculator.Model
 {
     /// <summary>
-    /// IExpression for Multiplication
+    /// IExpression for Division
     /// </summary>
-    public class Multiplication : AnArithmeticOperation
+    public class Division : AnArithmeticOperation
     {
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
     }

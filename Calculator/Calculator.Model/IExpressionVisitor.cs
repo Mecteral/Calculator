@@ -1,4 +1,4 @@
-﻿namespace Calculator.Logic.Model
+﻿namespace Calculator.Model
 {
     /// <summary>
     /// Visitor for IExpressions
