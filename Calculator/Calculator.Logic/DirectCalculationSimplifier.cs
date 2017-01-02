@@ -6,6 +6,9 @@ using Calculator.Model;
 
 namespace Calculator.Logic
 {
+    /// <summary>
+    /// This Class calculates all possible calculations without variables
+    /// </summary>
     public class DirectCalculationSimplifier : IExpressionVisitor
     {
         IExpression mExpression;
