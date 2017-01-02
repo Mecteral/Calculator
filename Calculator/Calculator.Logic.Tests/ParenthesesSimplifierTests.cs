@@ -39,5 +39,11 @@ namespace Calculator.Logic.Tests
         {
             Check("(3)+2a", "3 + 2*a");
         }
+
+        [Test]
+        public void ParenthesesSimplifierDoesntRemoveParethesesFromNestedExpressionsWithOperations()
+        {
+            Check("(3*2a)+2a", "(6*a) + 2*a");
+        }
     }
 }
