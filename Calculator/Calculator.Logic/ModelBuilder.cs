@@ -179,7 +179,6 @@ namespace Calculator.Logic
         void Negate(IExpression subtraction)
         {
             if (subtraction is Subtraction &&
-<<<<<<< HEAD
                 (mExpressions.Count == 0 || !(mExpressions.Last() is Constant) &&
                  !(mExpressions.Last() is Variable) &&
                  !(mExpressions.Last() is ParenthesedExpression)))
@@ -189,15 +188,6 @@ namespace Calculator.Logic
                       !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) &&
                       !(mNode.Expressions.Last() is ParenthesedExpression)))
                 mNode.Expressions.Add(new Constant {Value = 0});
-=======
-                (mExpressions.Count == 0 ||
-                 !(mExpressions.Last() is Constant) && !(mExpressions.Last() is Variable) &&
-                 !(mExpressions.Last() is ParenthesedExpression))) mExpressions.Add(new Constant {Value = 0});
-            else if (subtraction is Subtraction && IsWrapped &&
-                     (mNode.Expressions.Count == 0 ||
-                      !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) &&
-                      !(mNode.Expressions.Last() is ParenthesedExpression))) mNode.Expressions.Add(new Constant {Value = 0});
->>>>>>> 3e4735091a5bb971f78c4933f3eda34deed512cc
         }
     }
 }

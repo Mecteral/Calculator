@@ -13,6 +13,7 @@ namespace Calculator.Model
             {
                 mWrapped = value;
                 ((AnExpression) mWrapped).Parent = this;
+                ((AnExpression) mWrapped).HasParent = true;
             }
         }
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);

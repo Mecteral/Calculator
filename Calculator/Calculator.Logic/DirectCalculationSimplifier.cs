@@ -57,7 +57,7 @@ namespace Calculator.Logic
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-                if (operation.Parent != null) ReplaceChild(operation, constant);
+                if (operation.HasParent) ReplaceChild(operation, constant);
                 else mExpression = constant;
             }
             else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
@@ -96,7 +96,7 @@ namespace Calculator.Logic
             var operationLeft = (IArithmeticOperation) operation.Left;
             if (!(operationLeft.Right is Constant)) return;
 
-            if (operation.Parent != null)
+            if (operation.HasParent)
             {
                 var parent = (IArithmeticOperation) operation.Parent;
                 parent.Left = operationLeft;
@@ -104,7 +104,7 @@ namespace Calculator.Logic
             operation.Left = operationLeft.Right;
             var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
             operationLeft.Right = constant;
-            if (operation.Parent == null) { mExpression = operationLeft; }
+            if (!operation.HasParent) { mExpression = operationLeft; }
         }
         static void HandleParenthesis(
             IArithmeticOperation operation,

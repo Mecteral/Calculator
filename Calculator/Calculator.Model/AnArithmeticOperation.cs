@@ -14,6 +14,7 @@
             {
                 mLeft = value;
                 ((AnExpression) mLeft).Parent = this;
+                ((AnExpression) mLeft).HasParent = true;
             }
         }
         public IExpression Right
@@ -23,6 +24,7 @@
             {
                 mRight = value;
                 ((AnExpression) mRight).Parent = this;
+                ((AnExpression) mRight).HasParent = true;
             }
         }
     }
