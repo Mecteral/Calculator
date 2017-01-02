@@ -53,10 +53,10 @@ namespace Calculator.Logic
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
             VisitOperands(operation);
-            if (operation.Left is ParenthesedExpression) {
+            /*if (operation.Left is ParenthesedExpression) {
                 HandleParenthesis(operation, o => o.Left);
             }
-            else if (operation.Right is ParenthesedExpression) { HandleParenthesis(operation, o => o.Right); }
+            else if (operation.Right is ParenthesedExpression) { HandleParenthesis(operation, o => o.Right); }*/
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
@@ -109,13 +109,13 @@ namespace Calculator.Logic
             operationLeft.Right = constant;
             if (!operation.HasParent) { mExpression = operationLeft; }
         }
-        static void HandleParenthesis(
+        /*static void HandleParenthesis(
             IArithmeticOperation operation,
             Expression<Func<IArithmeticOperation, IExpression>> propertySelector)
         {
             var parenthesis = (ParenthesedExpression) propertySelector.GetFrom(operation);
             if (parenthesis.Wrapped is Constant) { propertySelector.SetTo(operation, parenthesis.Wrapped); }
-        }
+        }*/
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);

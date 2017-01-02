@@ -68,9 +68,11 @@
     <Compile Include="DirectCalculationSimplifierTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />
+    <Compile Include="Model\ExpressionClonerTests.cs" />
     <Compile Include="Model\ExpressionExtensionsTests.cs" />
     <Compile Include="Model\FormattingExpressionVisitorTests.cs" />
     <Compile Include="Model\TestExpressions.cs" />
+    <Compile Include="ParenthesesSimplifierTests.cs" />
     <Compile Include="Parsing\TokenizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplifierTests.cs" />

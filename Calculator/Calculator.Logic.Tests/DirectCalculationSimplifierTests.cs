@@ -30,7 +30,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification_Of_Constants_in_Parentheses()
         {
-            Check("(3)+2a", "3 + 2*a");
+            Check("(3)+2a", "(3) + 2*a");
         }
         [Test]
         public void Simplification_Of_Expression_Where_Variable_Is_First_Element()
@@ -50,12 +50,12 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification_Of_ParenthesedExpression()
         {
-            Check("2a+(3+2)", "2*a + 5");
+            Check("2a+(3+2)", "2*a + (5)");
         }
         [Test]
         public void Simplification_Of_Parentheses_Next_To_Variables()
         {
-            Check("(1*2/2+3-4)-2a+(1*2/2+3-4a +5*6)", "0 - 2*a + (4 - 4*a + 30)");
+            Check("(1*2/2+3-4)-2a+(1*2/2+3-4a +5*6)", "(0) - 2*a + (4 - 4*a + 30)");
         }
         [Test]
         public void Simplification_Without_Variables()
@@ -75,7 +75,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Simplification_Works_With_Parentheses()
         {
-            Check("(1+2)*3+4a+5*(6+7)", "9 + 4*a + 65");
+            Check("(1+2)*3+4a+5*(6+7)", "(3)*3 + 4*a + 5*(13)");
         }
         [Test]
         public void Simplifier_Works_As_Calculator()

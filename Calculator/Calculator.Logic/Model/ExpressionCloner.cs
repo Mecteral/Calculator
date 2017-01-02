@@ -1,16 +1,44 @@
-﻿using Calculator.Logic.Parsing;
+﻿using System.IO;
+using Calculator.Logic.Parsing;
 using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {
-    public static class ExpressionCloner
+    public class ExpressionCloner : AnExpressionVisitorWithResult<ExpressionCloner, IExpression>
     {
-        public static IExpression Clone(IExpression expression)
+        public static IExpression Clone(IExpression expression) => GetResultFor(expression);
+        protected override IExpression UseParenthesed(IExpression wrapped)
         {
-            var formatter = new FormattingExpressionVisitor();
-            var token = new Tokenizer();
-            token.Tokenize(formatter.Format(expression));
-            return new ModelBuilder().BuildFrom(token.Tokens);
+            return new ParenthesedExpression {Wrapped = wrapped};
+        }
+
+        protected override IExpression UseSubtraction(IExpression left, IExpression right)
+        {
+            return new Subtraction {Left = left, Right = right};
+        }
+
+        protected override IExpression UseMultiplication(IExpression left, IExpression right)
+        {
+            return new Multiplication {Left = left,Right = right};
+        }
+
+        protected override IExpression UseAddition(IExpression left, IExpression right)
+        {
+            return new Addition {Left = left, Right = right};
+        }
+
+        protected override IExpression UseDivision(IExpression left, IExpression right)
+        {
+            return new Division {Left = left, Right = right};
+        }
+
+        protected override IExpression UseConstant(double value)
+        {
+            return new Constant {Value = value};
+        }
+        protected override IExpression UseVariable(string variable)
+        {
+            return new Variable {Variables = variable};
         }
     }
 }

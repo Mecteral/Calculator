@@ -60,6 +60,7 @@
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
     <Compile Include="ParenthesesNode.cs" />
+    <Compile Include="ParenthesesSimplifier.cs" />
     <Compile Include="Parsing\IToken.cs" />
     <Compile Include="Parsing\ITokenizer.cs" />
     <Compile Include="Parsing\ITokenVisitor.cs" />
