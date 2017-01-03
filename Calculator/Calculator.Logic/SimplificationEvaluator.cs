@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -10,10 +8,51 @@ namespace Calculator.Logic
     public class SimplificationEvaluator : IExpressionVisitor
     {
         int mExpressionCount;
+
+        public void Visit(ParenthesedExpression parenthesed)
+        {
+            parenthesed.Wrapped.Accept(this);
+            mExpressionCount++;
+        }
+
+        public void Visit(Subtraction subtraction)
+        {
+            VisitOperands(subtraction);
+            mExpressionCount++;
+        }
+
+        public void Visit(Multiplication multiplication)
+        {
+            VisitOperands(multiplication);
+            mExpressionCount++;
+        }
+
+        public void Visit(Addition addition)
+        {
+            VisitOperands(addition);
+            mExpressionCount++;
+        }
+
+        public void Visit(Constant constant)
+        {
+            mExpressionCount++;
+        }
+
+        public void Visit(Division division)
+        {
+            VisitOperands(division);
+            mExpressionCount++;
+        }
+
+        public void Visit(Variable variable)
+        {
+            mExpressionCount++;
+        }
+
         public IExpression FindSmallesExpressionInEnumerable(IEnumerable<IExpression> expressions)
         {
             if (expressions == null)
-                return null;
+                throw new InvalidExpressionException();
             var result = expressions.First();
             foreach (var expression in expressions)
             {
@@ -26,45 +65,17 @@ namespace Calculator.Logic
             return result;
         }
 
-        int CountExpression(IExpression expression)
+        public int CountExpression(IExpression expression)
         {
             mExpressionCount = 0;
             expression.Accept(this);
             return mExpressionCount;
         }
-        public void Visit(ParenthesedExpression parenthesed)
-        {
-            mExpressionCount++;
-        }
 
-        public void Visit(Subtraction subtraction)
+        void VisitOperands(IArithmeticOperation operation)
         {
-            mExpressionCount++;
-        }
-
-        public void Visit(Multiplication multiplication)
-        {
-            mExpressionCount++;
-        }
-
-        public void Visit(Addition addition)
-        {
-            mExpressionCount++;
-        }
-
-        public void Visit(Constant constant)
-        {
-            mExpressionCount++;
-        }
-
-        public void Visit(Division division)
-        {
-            mExpressionCount++;
-        }
-
-        public void Visit(Variable variable)
-        {
-            mExpressionCount++;
+            operation.Left.Accept(this);
+            operation.Right.Accept(this);
         }
     }
 }

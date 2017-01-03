@@ -75,6 +75,7 @@
     <Compile Include="ParenthesesSimplifierTests.cs" />
     <Compile Include="Parsing\TokenizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimplificationEvaluatorTests.cs" />
     <Compile Include="SimplifierTests.cs" />
     <Compile Include="StringSimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
