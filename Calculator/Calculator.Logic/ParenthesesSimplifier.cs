@@ -59,7 +59,7 @@ namespace Calculator.Logic
             return mExpression;
         }
 
-        public  IExpression Simplify(IExpression input)
+        public static IExpression Simplify(IExpression input)
         {
             var simplifier = new ParenthesesSimplifier(input);
             return simplifier.Simplify();

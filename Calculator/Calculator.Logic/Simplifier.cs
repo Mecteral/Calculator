@@ -7,15 +7,28 @@ namespace Calculator.Logic
 {
     public class Simplifier : ISimplifier
     {
-        IEnumerable<IExpression> AllPossibleSimplifications = new List<IExpression>();
+        static IEnumerable<IExpression> AllPossibleSimplifications = new List<IExpression>();
         static IExpression SimplifiedCalculationExpression { get; set; }
         static IExpression DirectCalculationExpression { get; set; }
         static IExpression OriginalExpression { get; set; }
+        static IExpression sSimplifiedExpression;
         public IExpression Simplify(IExpression input)
         {
+            bool hasChanged;
             OriginalExpression = input;
-            DirectCalculationExpression = DirectCalculationSimplifier.Simplify(input);
-            return DirectCalculationExpression;
+            do
+            {
+                DirectCalculationExpression = DirectCalculationSimplifier.Simplify(input);
+                SimplifiedCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
+                if (!sSimplifiedExpression.Equals(SimplifiedCalculationExpression))
+                {
+                    sSimplifiedExpression = SimplifiedCalculationExpression;
+                    hasChanged = true;
+                }
+                else
+                    hasChanged = false;
+            } while (hasChanged);
+            return sSimplifiedExpression;
         }
     }
 }
