@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Calculator.Logic.Model;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -14,16 +15,17 @@ namespace Calculator.Logic
         static IExpression sSimplifiedExpression;
         public IExpression Simplify(IExpression input)
         {
-            bool hasChanged;
             OriginalExpression = input;
-            sSimplifiedExpression = input;
+            var equalityChecker = new ExpressionEqualityChecker();
+            bool hasChanged;
+            sSimplifiedExpression = ExpressionCloner.Clone(input);
             do
             {
-                DirectCalculationExpression = DirectCalculationSimplifier.Simplify(input);
+                DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
                 SimplifiedCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
-                if (!sSimplifiedExpression.Equals(SimplifiedCalculationExpression))
+                if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
                 {
-                    sSimplifiedExpression = SimplifiedCalculationExpression;
+                    sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
                     hasChanged = true;
                 }
                 else

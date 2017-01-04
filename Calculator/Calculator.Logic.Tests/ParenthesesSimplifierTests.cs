@@ -51,5 +51,11 @@ namespace Calculator.Logic.Tests
         {
             Check("(1/2)/3 - 4a", "0.5/3 - 4*a");
         }
+
+        [Test]
+        public void ParenthesesDeletionBeforeMultiplication()
+        {
+            Check("(3)*3a", "3*3*a");
+        }
     }
 }

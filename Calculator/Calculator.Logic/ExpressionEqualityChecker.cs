@@ -10,7 +10,7 @@ namespace Calculator.Logic
 {
     public class ExpressionEqualityChecker : IExpressionVisitor
     {
-        readonly IList<IExpression> mFirstExpressions = new List<IExpression>();
+        IList<IExpression> mFirstExpressions = new List<IExpression>();
         IList<IExpression> mSecondExpressions = new List<IExpression>();
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
         {
@@ -18,7 +18,9 @@ namespace Calculator.Logic
             FillFirstExpressions(mSecondExpressions);
             mSecondExpressions = new List<IExpression>();
             secondExpression.Accept(this);
-            return CheckEqualityOfLists(mFirstExpressions, mSecondExpressions);
+            var result = CheckEqualityOfLists(mFirstExpressions, mSecondExpressions);
+            mFirstExpressions = new List<IExpression>();
+            return result;
         }
         public void Visit(ParenthesedExpression parenthesed)
         {

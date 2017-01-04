@@ -28,9 +28,9 @@ namespace Calculator.Logic.Tests
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
 
         [Test]
-        public void LoopWorks()
+        public void LoopRemovesParenthesesAndCalculatesPossibleCalculationAnew()
         {
-            //Check("(1+2)*3a", "6*a");
+            Check("(1+2)*3a", "9*a");
         }
     }
 }

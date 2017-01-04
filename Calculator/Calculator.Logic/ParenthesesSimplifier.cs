@@ -23,7 +23,10 @@ namespace Calculator.Logic
             RemoveParenthesesIfPossible(subtraction);
         }
 
-        public void Visit(Multiplication multiplication) {}
+        public void Visit(Multiplication multiplication)
+        {
+            RemoveParenthesesIfPossible(multiplication);
+        }
 
         public void Visit(Addition addition)
         {

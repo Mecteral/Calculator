@@ -17,7 +17,8 @@ namespace Calculator.Logic.Tests.Model
                 Right = new Multiplication {Left = new Constant {Value = 3}, Right = new Constant {Value = 4}}
             };
             var result = ExpressionCloner.Clone(underTest);
-            result.ShouldBeEquivalentTo(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
 
         [Test]
@@ -29,7 +30,8 @@ namespace Calculator.Logic.Tests.Model
                 Right = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Variables = "a"}}
             };
             var result = ExpressionCloner.Clone(underTest);
-            result.ShouldBeEquivalentTo(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
 
         [Test]
@@ -46,7 +48,8 @@ namespace Calculator.Logic.Tests.Model
                 Right = new Multiplication {Left = new Constant {Value = 4}, Right = new Variable {Variables = "a"}}
             };
             var result = ExpressionCloner.Clone(underTest);
-            result.ShouldBeEquivalentTo(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
 
         [Test]
@@ -66,7 +69,8 @@ namespace Calculator.Logic.Tests.Model
         {
             var underTest = new Addition {Left = new Constant {Value = 1}, Right = new Constant {Value = 2}};
             var result = ExpressionCloner.Clone(underTest);
-            result.ShouldBeEquivalentTo(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
     }
 }
