@@ -26,5 +26,11 @@ namespace Calculator.Logic.Tests
             return tokens;
         }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
+
+        [Test]
+        public void LoopWorks()
+        {
+            //Check("(1+2)*3a", "6*a");
+        }
     }
 }

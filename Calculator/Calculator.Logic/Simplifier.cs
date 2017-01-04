@@ -16,6 +16,7 @@ namespace Calculator.Logic
         {
             bool hasChanged;
             OriginalExpression = input;
+            sSimplifiedExpression = input;
             do
             {
                 DirectCalculationExpression = DirectCalculationSimplifier.Simplify(input);

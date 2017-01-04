@@ -45,5 +45,11 @@ namespace Calculator.Logic.Tests
         {
             Check("(3*2a)+2a", "(6*a) + 2*a");
         }
+
+        [Test]
+        public void ParenthesesSimplifierWithDivisionAndSubtraction()
+        {
+            Check("(1/2)/3 - 4a", "0.5/3 - 4*a");
+        }
     }
 }
