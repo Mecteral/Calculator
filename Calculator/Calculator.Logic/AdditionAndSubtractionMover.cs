@@ -59,64 +59,83 @@ namespace Calculator.Logic
             if (chainedOperation == null) return;
             if (operation is Addition)
             {
-                if (chainedOperation is Addition)
-                {
-                    var parent = (IArithmeticOperation)chainedOperation.Parent;
-                    if (isRight)
-                    {
-                        parent.Left = chainedOperation.Left;
-                        operation.Right = new Addition {Left = chainedOperation.Right, Right = operation.Right};
-                    }
-                    else
-                    {
-                        parent.Left = chainedOperation.Right;
-                        operation.Right = new Addition { Left = chainedOperation.Left, Right = operation.Right };
-                    }
-                }
-                if (chainedOperation is Subtraction)
-                {
-                    var parent = (IArithmeticOperation)chainedOperation.Parent;
-                    if (isRight)
-                    {
-                        parent.Left = chainedOperation.Left;
-                        operation.Right = new Addition { Left = new Subtraction {Left = new Constant {Value = 0}, Right = chainedOperation.Right } , Right = operation.Right };
-                    }
-                    else
-                    {
-                        parent.Left = chainedOperation.Right;
-                        operation.Right = new Addition { Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
-                    }
-                }
+                HandleAdditionInAddition(operation, chainedOperation);
+                HandleSubtractionInAddition(operation,chainedOperation);
             }
             if (operation is Subtraction)
             {
-                if (chainedOperation is Subtraction)
+                HandelSubtractionInSubtraction(operation, chainedOperation);
+                HandelAdditionInSubtraction(operation, chainedOperation);
+            }
+        }
+
+        void HandleSubtractionInAddition(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
+        {
+            if (chainedOperation is Subtraction)
+            {
+                var parent = (IArithmeticOperation)chainedOperation.Parent;
+                if (isRight)
                 {
-                    var parent = (IArithmeticOperation)chainedOperation.Parent;
-                    if (isRight)
-                    {
-                        parent.Left = chainedOperation.Left;
-                        operation.Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right };
-                    }
-                    else
-                    {
-                        parent.Left = chainedOperation.Right;
-                        operation.Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right };
-                    }
+                    parent.Left = chainedOperation.Left;
+                    operation.Right = new Addition { Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
                 }
-                if (chainedOperation is Addition)
+                else
                 {
-                    var parent = (IArithmeticOperation)chainedOperation.Parent;
-                    if (isRight)
-                    {
-                        parent.Left = chainedOperation.Left;
-                        operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
-                    }
-                    else
-                    {
-                        parent.Left = chainedOperation.Right;
-                        operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
-                    }
+                    parent.Left = chainedOperation.Right;
+                    operation.Right = new Addition { Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
+                }
+            }
+        }
+
+        void HandleAdditionInAddition(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
+        {
+            if (chainedOperation is Addition)
+            {
+                var parent = (IArithmeticOperation)chainedOperation.Parent;
+                if (isRight)
+                {
+                    parent.Left = chainedOperation.Left;
+                    operation.Right = new Addition { Left = chainedOperation.Right, Right = operation.Right };
+                }
+                else
+                {
+                    parent.Left = chainedOperation.Right;
+                    operation.Right = new Addition { Left = chainedOperation.Left, Right = operation.Right };
+                }
+            }
+        }
+        void HandelSubtractionInSubtraction(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
+        {
+            if (chainedOperation is Subtraction)
+            {
+                var parent = (IArithmeticOperation)chainedOperation.Parent;
+                if (isRight)
+                {
+                    parent.Left = chainedOperation.Left;
+                    operation.Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right };
+                }
+                else
+                {
+                    parent.Left = chainedOperation.Right;
+                    operation.Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right };
+                }
+            }
+        }
+
+        void HandelAdditionInSubtraction(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
+        {
+            if (chainedOperation is Addition)
+            {
+                var parent = (IArithmeticOperation)chainedOperation.Parent;
+                if (isRight)
+                {
+                    parent.Left = chainedOperation.Left;
+                    operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
+                }
+                else
+                {
+                    parent.Left = chainedOperation.Right;
+                    operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
                 }
             }
         }
