@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionAndSubtractionMover.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />

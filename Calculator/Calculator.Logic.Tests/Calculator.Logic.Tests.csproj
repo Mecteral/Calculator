@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="DirectCalculationSimplifierTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />

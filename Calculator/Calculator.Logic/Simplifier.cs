@@ -10,7 +10,9 @@ namespace Calculator.Logic
     {
         static IEnumerable<IExpression> AllPossibleSimplifications = new List<IExpression>();
         static IExpression SimplifiedCalculationExpression { get; set; }
+        static IExpression ParentheseslessCalculationExpression { get; set; }
         static IExpression DirectCalculationExpression { get; set; }
+        static IExpression ReorderedExpression { get; set; }
         static IExpression OriginalExpression { get; set; }
         static IExpression sSimplifiedExpression;
         public IExpression Simplify(IExpression input)
@@ -22,10 +24,10 @@ namespace Calculator.Logic
             do
             {
                 DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
-                SimplifiedCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
-                if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
+                ParentheseslessCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
+                if (!equalityChecker.IsEqual(sSimplifiedExpression, ParentheseslessCalculationExpression))
                 {
-                    sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
+                    sSimplifiedExpression = ExpressionCloner.Clone(ParentheseslessCalculationExpression);
                     hasChanged = true;
                 }
                 else
