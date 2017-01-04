@@ -25,9 +25,10 @@ namespace Calculator.Logic
             {
                 DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
                 ParentheseslessCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
-                if (!equalityChecker.IsEqual(sSimplifiedExpression, ParentheseslessCalculationExpression))
+                ReorderedExpression = AdditionAndSubtractionMover.Move(ParentheseslessCalculationExpression);
+                if (!equalityChecker.IsEqual(sSimplifiedExpression, ReorderedExpression))
                 {
-                    sSimplifiedExpression = ExpressionCloner.Clone(ParentheseslessCalculationExpression);
+                    sSimplifiedExpression = ExpressionCloner.Clone(ReorderedExpression);
                     hasChanged = true;
                 }
                 else

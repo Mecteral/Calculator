@@ -19,9 +19,8 @@ namespace Calculator.Logic.Tests
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var underTest = new AdditionAndSubtractionMover();
-            underTest.MoveAdditionsOrSubtractions(inputTree);
-            var asString = new FormattingExpressionVisitor().Format(inputTree);
+            var underTest = AdditionAndSubtractionMover.Move(inputTree);
+            var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }
         static IEnumerable<IToken> Tokenize(string input)

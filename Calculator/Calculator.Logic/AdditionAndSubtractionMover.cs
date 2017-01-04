@@ -10,10 +10,19 @@ namespace Calculator.Logic
 {
     public class AdditionAndSubtractionMover : IExpressionVisitor
     {
-        bool isRight;
-        public void MoveAdditionsOrSubtractions(IExpression expression)
+        static IExpression mMovedExpression;
+        bool mIsRight;
+        public static void MoveAdditionsOrSubtractions(IExpression expression)
         {
-            expression.Accept(this);
+            var mover = new AdditionAndSubtractionMover();
+            expression.Accept(mover);
+        }
+
+        public static IExpression Move(IExpression expression)
+        {
+            mMovedExpression = ExpressionCloner.Clone(expression);
+            MoveAdditionsOrSubtractions(mMovedExpression);
+            return mMovedExpression;
         }
 
         void CheckIfMoveIsAvailable(IArithmeticOperation operation)
@@ -31,12 +40,12 @@ namespace Calculator.Logic
                 var current = operation;
                 if (operation.Right is Constant && !(operation.Left is Constant))
                 {
-                    isRight = true;
+                    mIsRight = true;
                     return current;
                 }
                 else if (operation.Left is Constant && !(operation.Right is Constant))
                 {
-                    isRight = false;
+                    mIsRight = false;
                     return current;
                 }
                 else if (operation.Left is Addition || operation.Left is Subtraction)
@@ -74,7 +83,7 @@ namespace Calculator.Logic
             if (chainedOperation is Subtraction)
             {
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
-                if (isRight)
+                if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
                     operation.Right = new Addition { Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
@@ -92,7 +101,7 @@ namespace Calculator.Logic
             if (chainedOperation is Addition)
             {
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
-                if (isRight)
+                if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
                     operation.Right = new Addition { Left = chainedOperation.Right, Right = operation.Right };
@@ -109,7 +118,7 @@ namespace Calculator.Logic
             if (chainedOperation is Subtraction)
             {
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
-                if (isRight)
+                if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
                     operation.Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right };
@@ -127,7 +136,7 @@ namespace Calculator.Logic
             if (chainedOperation is Addition)
             {
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
-                if (isRight)
+                if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
                     operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
