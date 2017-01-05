@@ -19,7 +19,8 @@ namespace Calculator.Logic.Tests
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var underTest = AdditionAndSubtractionMover.Move(inputTree);
+            var mover = new AdditionAndSubtractionMover();
+            var underTest = mover.Move(inputTree);
             var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }
@@ -59,31 +60,37 @@ namespace Calculator.Logic.Tests
         [Test]
         public void SimpleSubtraction()
         {
-            Check("a-1-2a-3", "1*a - 2*a - 1 - 3");
+            Check("a-1-2a-3", "1*a - 2*a - 0 - 1 - 3");
         }
 
         [Test]
         public void ChainedSubtraction()
         {
-            Check("a-1-2a-3-4a-5", "1*a - 2*a - 1 - 4*a - 3 - 5");
+            Check("a-1-2a-3-4a-5", "1*a - 1 - 2*a - 4*a - 0 - 3 - 5");
         }
 
         [Test]
         public void AdditiontoSubtraction()
         {
-            Check("a+1-2a-3", "1*a - 2*a - 0 + 1 - 3");
+            Check("a+1-2a-3", "1*a - 2*a + 1 - 3");
         }
 
         [Test]
         public void CheckWithDivision()
         {
-            Check("1/1+a+2+3a-4", "1/1 + 1*a + 3*a - 0 + 2 - 4");
+            Check("1/1+a+2+3a-4", "1/1 + 1*a + 3*a + 2 - 4");
         }
 
         [Test]
         public void CheckWithParenthesed()
         {
             Check("(a-2+3a+4)", "(1*a + 3*a + 0 - 2 + 4)");
+        }
+
+        [Test]
+        public void ComplexSubtractionCase()
+        {
+            Check("-a+2-3a+4-5a-6", "0 - 1*a + 2 - 3*a - 5*a + 4 - 6"); 
         }
 
         [Test]
@@ -95,13 +102,25 @@ namespace Calculator.Logic.Tests
         [Test]
         public void SimpleMoveWithAdditionToSubtraction()
         {
-            Check("1+2a-3", "2*a - 0 + 1 - 3");
+            Check("1+2a-3a-4", "2*a - 3*a + 1 - 4");
         }
 
         [Test]
         public void SimpleMoveWithSubtractionToAddition()
         {
-            Check("1-2a+3", "2*a + 0 - 1 + 3");
+            Check("1-2a+3", "0 - 2*a + 1 + 3");
+        }
+
+        [Test]
+        public void SimpleMoveSubtractionToSubtraction()
+        {
+            Check("-1+2a-3+4a-5", "0 - 1 + 2*a + 4*a - 0 - 3 - 5");
+        }
+
+        [Test]
+        public void SimpleAdditionParenthesed()
+        {
+            Check("(1+2a+3)", "(2*a + 1 + 3)");
         }
     }
 }

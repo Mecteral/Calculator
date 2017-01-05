@@ -19,15 +19,17 @@ namespace Calculator.Logic
         {
             OriginalExpression = input;
             var equalityChecker = new ExpressionEqualityChecker();
+            var mover = new AdditionAndSubtractionMover();
             bool hasChanged;
             sSimplifiedExpression = ExpressionCloner.Clone(input);
             do
             {
                 DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
                 ParentheseslessCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
-                ReorderedExpression = AdditionAndSubtractionMover.Move(ParentheseslessCalculationExpression);
+                ReorderedExpression = mover.Move(ParentheseslessCalculationExpression);
                 if (!equalityChecker.IsEqual(sSimplifiedExpression, ReorderedExpression))
                 {
+                    Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
                     sSimplifiedExpression = ExpressionCloner.Clone(ReorderedExpression);
                     hasChanged = true;
                 }
@@ -36,5 +38,6 @@ namespace Calculator.Logic
             } while (hasChanged);
             return sSimplifiedExpression;
         }
+        static string UseFormattingExpressionVisitor(IExpression expression) => new FormattingExpressionVisitor().Format(expression);
     }
 }

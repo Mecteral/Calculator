@@ -12,14 +12,18 @@ namespace Calculator.Logic
     {
         static IExpression mMovedExpression;
         bool mIsRight;
-        public static void MoveAdditionsOrSubtractions(IExpression expression)
+        bool mWasChanged;
+
+        static void MoveAdditionsOrSubtractions(IExpression expression)
         {
+            
             var mover = new AdditionAndSubtractionMover();
             expression.Accept(mover);
         }
 
-        public static IExpression Move(IExpression expression)
+        public IExpression Move(IExpression expression)
         {
+            mWasChanged = false;
             mMovedExpression = ExpressionCloner.Clone(expression);
             MoveAdditionsOrSubtractions(mMovedExpression);
             return mMovedExpression;
@@ -35,9 +39,17 @@ namespace Calculator.Logic
 
         IArithmeticOperation FindMoveableExpression(IArithmeticOperation operation)
         {
-            while (true)
+            while (true && !mWasChanged)
             {
                 var current = operation;
+                if (operation.Right is Multiplication && operation.Left is Constant)
+                {
+                    var constant = (Constant) operation.Left;
+                    if (constant.Value == 0)
+                    {
+                        break;
+                    }
+                }
                 if (operation.Right is Constant && !(operation.Left is Constant))
                 {
                     mIsRight = true;
@@ -90,8 +102,8 @@ namespace Calculator.Logic
                 }
                 else
                 {
-                    parent.Left = chainedOperation.Right;
-                    operation.Right = new Addition { Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
+                    parent.Left = new Subtraction { Left = new Constant { Value = 0 }, Right = chainedOperation.Right };
+                    operation.Right = new Addition { Left = chainedOperation.Left, Right = operation.Right };
                 }
             }
         }
@@ -117,11 +129,14 @@ namespace Calculator.Logic
         {
             if (chainedOperation is Subtraction)
             {
+                CheckIfConstantIsNegative((Constant)operation.Right);
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
                 if (mIsRight)
                 {
+                    
                     parent.Left = chainedOperation.Left;
-                    operation.Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right };
+                    operation.Right = new Subtraction { Left = new Subtraction {Left = new Constant { Value = 0}, Right = chainedOperation.Right }, Right = operation.Right };
+                    mWasChanged = true;
                 }
                 else
                 {
@@ -135,17 +150,28 @@ namespace Calculator.Logic
         {
             if (chainedOperation is Addition)
             {
+                CheckIfConstantIsNegative((Constant)operation.Right);
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
                 if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
-                    operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Right }, Right = operation.Right };
+                    mMovedExpression = new Addition { Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right } };
+                    mWasChanged = true;
                 }
                 else
                 {
                     parent.Left = chainedOperation.Right;
-                    operation.Right = new Subtraction { Left = new Addition { Left = new Constant { Value = 0 }, Right = chainedOperation.Left }, Right = operation.Right };
+                    mMovedExpression = new Addition {Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right } };
+                    mWasChanged = true;
                 }
+            }
+        }
+
+        static void CheckIfConstantIsNegative(Constant constant)
+        {
+            if (constant.Value < 0)
+            {
+                constant.Value = constant.Value * -1;
             }
         }
 
