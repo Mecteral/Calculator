@@ -10,7 +10,7 @@ namespace Calculator.Logic
 {
     public class AdditionAndSubtractionMover : IExpressionVisitor
     {
-        static IExpression mMovedExpression;
+        static IExpression sMovedExpression;
         bool mIsRight;
         bool mWasChanged;
 
@@ -24,14 +24,14 @@ namespace Calculator.Logic
         public IExpression Move(IExpression expression)
         {
             mWasChanged = false;
-            mMovedExpression = ExpressionCloner.Clone(expression);
-            MoveAdditionsOrSubtractions(mMovedExpression);
-            return mMovedExpression;
+            sMovedExpression = ExpressionCloner.Clone(expression);
+            MoveAdditionsOrSubtractions(sMovedExpression);
+            return sMovedExpression;
         }
 
         void CheckIfMoveIsAvailable(IArithmeticOperation operation)
         {
-            if (operation.Right is Constant && operation.Left is Addition || operation.Left is Subtraction)
+            if (operation.Right is Constant && (operation.Left is Addition || operation.Left is Subtraction))
             {
                 MakeMove(operation, FindMoveableExpression((IArithmeticOperation)operation.Left));
             }
@@ -142,6 +142,7 @@ namespace Calculator.Logic
                 {
                     parent.Left = chainedOperation.Right;
                     operation.Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right };
+                    mWasChanged = true;
                 }
             }
         }
@@ -155,14 +156,41 @@ namespace Calculator.Logic
                 if (mIsRight)
                 {
                     parent.Left = chainedOperation.Left;
-                    mMovedExpression = new Addition { Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right } };
+                    var replacement = new Addition { Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Right, Right = operation.Right } };
+                    CheckForParent(operation,chainedOperation, replacement);
                     mWasChanged = true;
                 }
                 else
                 {
                     parent.Left = chainedOperation.Right;
-                    mMovedExpression = new Addition {Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right } };
+                    var replacement = new Addition { Left = operation.Left, Right = new Subtraction { Left = chainedOperation.Left, Right = operation.Right } };
+                    CheckForParent(operation,chainedOperation,replacement);
                     mWasChanged = true;
+                }
+            }
+        }
+
+        static void CheckForParent(IArithmeticOperation operation, IArithmeticOperation chainedOperation, Addition replacement)
+        {
+            if (!operation.HasParent)
+                sMovedExpression = replacement;
+            else
+            {
+                HandleParent(operation, chainedOperation, replacement);
+            }
+        }
+        static void HandleParent(IArithmeticOperation operation, IArithmeticOperation chainedOperation, Addition replacement)
+        {
+            if (operation.Parent is IArithmeticOperation)
+            {
+                var operationParent = (IArithmeticOperation)operation.Parent;
+                if (operationParent.Left.Equals(operation))
+                {
+                    operationParent.Left = replacement;
+                }
+                else
+                {
+                    operationParent.Right = replacement;
                 }
             }
         }
