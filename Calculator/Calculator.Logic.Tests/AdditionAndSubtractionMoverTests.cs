@@ -24,6 +24,16 @@ namespace Calculator.Logic.Tests
             var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }
+
+        static void CheckWithFullSimplification(string input, string expected)
+        {
+            var tokens = Tokenize(input);
+            var inputTree = CreateInMemoryModel(tokens);
+            var simplifier = new Simplifier();
+            var underTest = simplifier.Simplify(inputTree);
+            var asString  = new FormattingExpressionVisitor().Format(underTest);
+            asString.Should().Be(expected);
+        }
         static IEnumerable<IToken> Tokenize(string input)
         {
             var tokenizer = new Tokenizer();
@@ -121,6 +131,12 @@ namespace Calculator.Logic.Tests
         public void SimpleAdditionParenthesed()
         {
             Check("(1+2a+3)", "(2*a + 1 + 3)");
+        }
+
+        [Test]
+        public void MoverWithFullSimplificationSubtraction()
+        {
+            CheckWithFullSimplification("-1+2a-3+4a-4+5a", "2*a + 4*a + -8 + 5*a");
         }
     }
 }
