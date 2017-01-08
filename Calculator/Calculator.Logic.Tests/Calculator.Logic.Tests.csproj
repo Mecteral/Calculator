@@ -81,6 +81,7 @@
     <Compile Include="SimplifierTests.cs" />
     <Compile Include="StringSimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
+    <Compile Include="VariableCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
