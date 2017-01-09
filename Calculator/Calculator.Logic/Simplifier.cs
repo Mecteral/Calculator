@@ -31,12 +31,18 @@ namespace Calculator.Logic
                 SimplifiedCalculationExpression = variableCalculator.Calculate(ReorderedExpression);
                 if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
                 {
-                    Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
+                    //Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
                     sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
                     hasChanged = true;
                 }
                 else
                     hasChanged = false;
+                sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
+                Console.WriteLine(UseFormattingExpressionVisitor(DirectCalculationExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(ParentheseslessCalculationExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(ReorderedExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(SimplifiedCalculationExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
             } while (hasChanged);
             return sSimplifiedExpression;
         }

@@ -280,11 +280,11 @@ namespace Calculator.Logic
                     var parent = (IArithmeticOperation)operation.Parent;
                     if (parent.Left.Equals(operation))
                     {
-                        parent.Left = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Left = new Subtraction {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                     else
                     {
-                        parent.Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Right = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                 }
             }
@@ -318,11 +318,11 @@ namespace Calculator.Logic
                     var parent = (IArithmeticOperation)operation.Parent;
                     if (parent.Left.Equals(operation))
                     {
-                        parent.Left = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Left = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                     else
                     {
-                        parent.Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Right = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                 }
             }
@@ -344,8 +344,8 @@ namespace Calculator.Logic
         {
             var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
             var variable = (Variable)multiplicationOfOperation.Right;
-            var constantOne = (Constant)multiplication.Left;
-            var constantTwo = (Constant)multiplicationOfOperation.Left;
+            var constantOne = (Constant)multiplicationOfOperation.Left;
+            var constantTwo = (Constant)multiplication.Left;
             if (operation.HasParent)
             {
                 if (operation.Parent is ParenthesedExpression)
@@ -358,11 +358,11 @@ namespace Calculator.Logic
                     var parent = (IArithmeticOperation)operation.Parent;
                     if (parent.Left.Equals(operation))
                     {
-                        parent.Left = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Left = new Addition {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                     else
                     {
-                        parent.Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Right = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                 }
             }
@@ -372,7 +372,7 @@ namespace Calculator.Logic
                 {
                     Left = operation.Left,
                     Right = new Multiplication{
-                        Left = new Constant { Value = constantTwo.Value  - constantOne.Value},
+                        Left = new Constant { Value = constantOne.Value - constantTwo.Value },
                         Right = new Variable { Variables = variable.Variables } }
                 };
             }
@@ -395,11 +395,14 @@ namespace Calculator.Logic
                     var parent = (IArithmeticOperation)operation.Parent;
                     if (parent.Left.Equals(operation))
                     {
-                        parent.Left = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        if (parent is Addition)
+                        {
+                            parent.Left = new Addition {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                        }
                     }
                     else
                     {
-                        parent.Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                        parent.Right = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
                     }
                 }
             }
