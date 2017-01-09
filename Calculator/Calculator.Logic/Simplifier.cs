@@ -20,6 +20,7 @@ namespace Calculator.Logic
             OriginalExpression = input;
             var equalityChecker = new ExpressionEqualityChecker();
             var mover = new AdditionAndSubtractionMover();
+            var variableCalculator = new VariableCalculator();
             bool hasChanged;
             sSimplifiedExpression = ExpressionCloner.Clone(input);
             do
@@ -27,10 +28,11 @@ namespace Calculator.Logic
                 DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
                 ParentheseslessCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
                 ReorderedExpression = mover.Move(ParentheseslessCalculationExpression);
-                if (!equalityChecker.IsEqual(sSimplifiedExpression, ReorderedExpression))
+                SimplifiedCalculationExpression = variableCalculator.Calculate(ReorderedExpression);
+                if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
                 {
                     Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
-                    sSimplifiedExpression = ExpressionCloner.Clone(ReorderedExpression);
+                    sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
                     hasChanged = true;
                 }
                 else

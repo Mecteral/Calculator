@@ -77,5 +77,53 @@ namespace Calculator.Logic.Tests
         {
             Check("1+2a+3+4a", "1 + 3 + 6*a");
         }
+
+        [Test]
+        public void SimpleSubtractionOfVariables()
+        {
+            Check("3a-2-1a", "0 - 2 + 2*a");
+        }
+
+        [Test]
+        public void ComplexSubtractionOfVariables()
+        {
+            Check("1-4a-3-1a", "1 - 0 - 3 - 5*a");
+        }
+
+        [Test]
+        public void SimpleAdditionToSubtraction()
+        {
+            Check("3a+2-1a", "2 - -2*a");
+        }
+
+        [Test]
+        public void ComplexAdditionToSubtraction()
+        {
+            Check("1+3a+2-1a", "1 + 2 - -2*a");
+        }
+
+        [Test]
+        public void SimpleSubtractionToAddition()
+        {
+            Check("1a-2+2a", "0 - 2 + 3*a");
+        }
+
+        [Test]
+        public void ComplexSubtractionToAddition()
+        {
+            Check("1-1a-2+2a", "1 - 0 - 2 + 1*a");
+        }
+
+        [Test]
+        public void ComplexCaseWithFullSimplification()
+        {
+            CheckWithFullSimplification("(1/1)+1a-2*3+2a-4a", "-5 - 1*a");
+        }
+
+        [Test]
+        public void FullSimplification()
+        {
+            CheckWithFullSimplification("(1a+2a)*3+4-2a+5-6a", "(3*a)*3 + 9 - 8*a");
+        }
     }
 }

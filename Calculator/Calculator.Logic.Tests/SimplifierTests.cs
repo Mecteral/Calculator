@@ -36,7 +36,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void LoopRearrangesConstantsAndAddsThem()
         {
-            Check("(1+2)*3a+4-2a+3", "9*a - 2*a + 7");
+            Check("(1+2)*3a+4-2a+3", "7*a + 7");
         }
     }
 }
