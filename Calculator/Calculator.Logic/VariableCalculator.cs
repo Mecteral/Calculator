@@ -262,29 +262,27 @@ namespace Calculator.Logic
             }
         }
 
-        void HandleSubtractionToSubtraction(IArithmeticOperation operation, IArithmeticOperation multiplication)
+        
+
+        void HandleReplacement(IArithmeticOperation operation, IArithmeticOperation replacement, IArithmeticOperation parenthesed)
         {
-            var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
-            var variable = (Variable)multiplicationOfOperation.Right;
-            var constantOne = (Constant)multiplication.Left;
-            var constantTwo = (Constant)multiplicationOfOperation.Left;
             if (operation.HasParent)
             {
                 if (operation.Parent is ParenthesedExpression)
                 {
                     var parentheses = (ParenthesedExpression)operation.Parent;
-                    parentheses.Wrapped = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
+                    parentheses.Wrapped = parenthesed;
                 }
                 else
                 {
                     var parent = (IArithmeticOperation)operation.Parent;
                     if (parent.Left.Equals(operation))
                     {
-                        parent.Left = new Subtraction {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                        parent.Left = replacement;
                     }
                     else
                     {
-                        parent.Right = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                        parent.Right = replacement;
                     }
                 }
             }
@@ -292,49 +290,11 @@ namespace Calculator.Logic
             {
                 if (mIsRight)
                 {
-                    sCalculatedExpression = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                    sCalculatedExpression = replacement;
                 }
                 else
                 {
-                    sCalculatedExpression = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                }
-            }
-        }
-        void HanldeSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
-        {
-            var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
-            var variable = (Variable)multiplicationOfOperation.Right;
-            var constantTwo = (Constant)multiplication.Left;
-            var constantOne = (Constant)multiplicationOfOperation.Left;
-            if (operation.HasParent)
-            {
-                if (operation.Parent is ParenthesedExpression)
-                {
-                    var parentheses = (ParenthesedExpression)operation.Parent;
-                    parentheses.Wrapped = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
-                }
-                else
-                {
-                    var parent = (IArithmeticOperation)operation.Parent;
-                    if (parent.Left.Equals(operation))
-                    {
-                        parent.Left = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                    }
-                    else
-                    {
-                        parent.Right = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                    }
-                }
-            }
-            else
-            {
-                if (mIsRight)
-                {
-                    sCalculatedExpression = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                }
-                else
-                {
-                    sCalculatedExpression = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                    sCalculatedExpression = replacement;
                 }
 
             }
@@ -343,73 +303,51 @@ namespace Calculator.Logic
         void HandleSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
-            var variable = (Variable)multiplicationOfOperation.Right;
             var constantOne = (Constant)multiplicationOfOperation.Left;
             var constantTwo = (Constant)multiplication.Left;
-            if (operation.HasParent)
-            {
-                if (operation.Parent is ParenthesedExpression)
-                {
-                    var parentheses = (ParenthesedExpression)operation.Parent;
-                    parentheses.Wrapped = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } };
-                }
-                else
-                {
-                    var parent = (IArithmeticOperation)operation.Parent;
-                    if (parent.Left.Equals(operation))
-                    {
-                        parent.Left = new Addition {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                    }
-                    else
-                    {
-                        parent.Right = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                    }
-                }
-            }
-            else
-            {
-                sCalculatedExpression = new Addition
-                {
-                    Left = operation.Left,
-                    Right = new Multiplication{
-                        Left = new Constant { Value = constantOne.Value - constantTwo.Value },
-                        Right = new Variable { Variables = variable.Variables } }
-                };
-            }
+            var parenthesed = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } };
+            var replacement = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } } };
+            HandleReplacement(operation,replacement,parenthesed);
         }
         void HandleAdditionOfVariables(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
-            var variable = (Variable) multiplicationOfOperation.Right;
             var constantOne = (Constant) multiplication.Left;
             var constantTwo = (Constant) multiplicationOfOperation.Left;
-            if (operation.HasParent)
+            var parenthesed = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } };
+            var replacement = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } } };
+            HandleReplacement(operation,replacement,parenthesed);
+        }
+        void HandleSubtractionToSubtraction(IArithmeticOperation operation, IArithmeticOperation multiplication)
+        {
+            var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
+            var constantOne = (Constant)multiplication.Left;
+            var constantTwo = (Constant)multiplicationOfOperation.Left;
+            var replacement = new Subtraction
             {
-                if (operation.Parent is ParenthesedExpression)
-                {
-                    var parentheses = (ParenthesedExpression)operation.Parent;
-                    parentheses.Wrapped =  new Multiplication { Left = new Constant {Value = constantOne.Value+constantTwo.Value}, Right = new Variable {Variables = variable.Variables} };
-                }
-                else
-                {
-                    var parent = (IArithmeticOperation)operation.Parent;
-                    if (parent.Left.Equals(operation))
+                Left = operation.Left,
+                Right =
+                    new Multiplication
                     {
-                        if (parent is Addition)
-                        {
-                            parent.Left = new Addition {Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                        }
+                        Left = new Constant { Value = constantOne.Value + constantTwo.Value },
+                        Right = new Variable { Variables = mCurrentVariable }
                     }
-                    else
-                    {
-                        parent.Right = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
-                    }
-                }
-            }
-            else
+            };
+            var parenthesed = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } };
+            HandleReplacement(operation, replacement, parenthesed);
+            if (!operation.HasParent && !mIsRight)
             {
-                sCalculatedExpression = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = variable.Variables } } };
+                sCalculatedExpression = new Addition { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } } };
             }
+        }
+        void HanldeSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
+        {
+            var multiplicationOfOperation = (IArithmeticOperation)operation.Right;
+            var constantTwo = (Constant)multiplication.Left;
+            var constantOne = (Constant)multiplicationOfOperation.Left;
+            var replacement = new Subtraction { Left = operation.Left, Right = new Multiplication { Left = new Constant { Value = constantOne.Value - constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } } };
+            var parenthesed = new Multiplication { Left = new Constant { Value = constantOne.Value + constantTwo.Value }, Right = new Variable { Variables = mCurrentVariable } };
+            HandleReplacement(operation, replacement, parenthesed);
         }
 
         IArithmeticOperation FindSuitableAdditionOrSubtraction(IArithmeticOperation operation)

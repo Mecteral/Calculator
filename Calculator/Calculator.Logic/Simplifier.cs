@@ -25,10 +25,14 @@ namespace Calculator.Logic
             sSimplifiedExpression = ExpressionCloner.Clone(input);
             do
             {
-                DirectCalculationExpression = DirectCalculationSimplifier.Simplify(sSimplifiedExpression);
-                ParentheseslessCalculationExpression = ParenthesesSimplifier.Simplify(DirectCalculationExpression);
-                ReorderedExpression = mover.Move(ParentheseslessCalculationExpression);
-                SimplifiedCalculationExpression = variableCalculator.Calculate(ReorderedExpression);
+                DirectCalculationExpression = ExpressionCloner.Clone(DirectCalculationSimplifier.Simplify(sSimplifiedExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(DirectCalculationExpression));
+                ParentheseslessCalculationExpression = ExpressionCloner.Clone(ParenthesesSimplifier.Simplify(DirectCalculationExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(ParentheseslessCalculationExpression));
+                ReorderedExpression = ExpressionCloner.Clone(mover.Move(ParentheseslessCalculationExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(ReorderedExpression));
+                SimplifiedCalculationExpression = ExpressionCloner.Clone(variableCalculator.Calculate(ReorderedExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(SimplifiedCalculationExpression));
                 if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
                 {
                     //Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
@@ -38,11 +42,6 @@ namespace Calculator.Logic
                 else
                     hasChanged = false;
                 sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
-                Console.WriteLine(UseFormattingExpressionVisitor(DirectCalculationExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(ParentheseslessCalculationExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(ReorderedExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(SimplifiedCalculationExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
             } while (hasChanged);
             return sSimplifiedExpression;
         }
