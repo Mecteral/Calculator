@@ -1,4 +1,6 @@
-﻿namespace Calculator.Model
+﻿using System.Diagnostics;
+
+namespace Calculator.Model
 {
     /// <summary>
     /// Is a Constant Number of type IExpression
@@ -7,5 +9,6 @@
     {
         public double Value { get; set; }
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
+        public override string ToString() => $"{Value}";
     }
 }

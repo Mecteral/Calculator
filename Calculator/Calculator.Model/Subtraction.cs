@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace Calculator.Model
 {
     /// <summary>
@@ -6,5 +8,7 @@ namespace Calculator.Model
     public class Subtraction : AnArithmeticOperation
     {
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
+        public override string ToString() => $"{Left}-{Right}";
     }
+    
 }
