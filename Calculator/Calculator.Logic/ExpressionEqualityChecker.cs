@@ -70,25 +70,29 @@ namespace Calculator.Logic
         bool CheckEqualityOfLists()
         {
             if (mFirstExpressions.Count != mSecondExpressions.Count) return false;
-            var limit = 0;
-            limit = mFirstExpressions.Count() <= mSecondExpressions.Count() ? mFirstExpressions.Count() : mSecondExpressions.Count();
-            for (var i = 0; i < limit; i++)
+            
+            for (var i = 0; i < mFirstExpressions.Count; i++)
             {
-                var first = mFirstExpressions.ElementAt(i);
-                var second = mSecondExpressions.ElementAt(i);
-                if (first.GetType() != second.GetType()) return false;
-                if (first is Constant)
-                {
-                    var lhs = (Constant) first;
-                    var rhs = (Constant) second;
-                    if (lhs.Value != rhs.Value) return false;
-                }
-                else if (first is Variable)
-                {
-                    var lhs = (Variable)first;
-                    var rhs = (Variable)second;
-                    if (lhs.Variables != rhs.Variables) return false;
-                }
+                var first = mFirstExpressions[i];
+                var second = mSecondExpressions[i];
+                if (!AreEqual(first, second)) return false;
+            }
+            return true;
+        }
+        static bool AreEqual(IExpression first, IExpression second)
+        {
+            if (first.GetType() != second.GetType()) return false;
+            if (first is Constant)
+            {
+                var lhs = (Constant) first;
+                var rhs = (Constant) second;
+                if (lhs.Value != rhs.Value) return false;
+            }
+            else if (first is Variable)
+            {
+                var lhs = (Variable) first;
+                var rhs = (Variable) second;
+                if (lhs.Variables != rhs.Variables) return false;
             }
             return true;
         }
