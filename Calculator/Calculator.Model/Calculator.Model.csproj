@@ -45,6 +45,7 @@
     <Compile Include="AnExpression.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Division.cs" />
+    <Compile Include="ExpressionExtension.cs" />
     <Compile Include="IArithmeticOperation.cs" />
     <Compile Include="IExpression.cs" />
     <Compile Include="IExpressionVisitor.cs" />

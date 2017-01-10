@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq.Expressions;
 using Calculator.Logic.Model;
-using Calculator.Logic.Utilities;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -56,7 +54,9 @@ namespace Calculator.Logic
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-                if (operation.HasParent) ReplaceChild(operation, constant);
+                if (operation.HasParent)
+                    operation.Parent.ReplaceChild(operation, constant);
+                    //ReplaceChildInParent(operation, constant);
                 else mExpression = constant;
             }
             else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
@@ -65,7 +65,7 @@ namespace Calculator.Logic
         {
             return operation.Left is Addition || operation.Left is Subtraction;
         }
-        static void ReplaceChild(IExpression oldChild, IExpression newChild)
+        static void ReplaceChildInParent(IExpression oldChild, IExpression newChild)
         {
             var arithmeticOperation = oldChild.Parent as IArithmeticOperation;
             if (arithmeticOperation != null)

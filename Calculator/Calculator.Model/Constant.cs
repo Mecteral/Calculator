@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 
 namespace Calculator.Model
 {
@@ -10,5 +11,9 @@ namespace Calculator.Model
         public double Value { get; set; }
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
         public override string ToString() => $"{Value}";
+        public override void ReplaceChild(IExpression oldChild, IExpression newChild)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

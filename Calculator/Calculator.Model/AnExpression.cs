@@ -2,8 +2,9 @@
 {
     public abstract class AnExpression : IExpression
     {
-        public IExpression Parent { get; internal set; }
-        public bool HasParent { get; internal set; }
+        public IExpression Parent { get; protected internal set; }
+        public bool HasParent => null != Parent;
         public abstract void Accept(IExpressionVisitor visitor);
+        public abstract void ReplaceChild(IExpression oldChild, IExpression newChild);
     }
 }

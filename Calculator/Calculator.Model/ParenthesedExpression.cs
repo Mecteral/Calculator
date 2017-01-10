@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 
 namespace Calculator.Model
@@ -14,11 +15,19 @@ namespace Calculator.Model
             set
             {
                 mWrapped = value;
-                ((AnExpression) mWrapped).Parent = this;
-                ((AnExpression) mWrapped).HasParent = true;
+                mWrapped.Parent(this);
             }
         }
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
         public override string ToString() => $"({Wrapped})";
+        public override void ReplaceChild(IExpression oldChild, IExpression newChild)
+        {
+            if (ReferenceEquals(oldChild , mWrapped))
+            {
+                Wrapped = newChild;
+                oldChild.Parent(null);
+            }
+            else throw new ArgumentException();
+        }
     }
 }

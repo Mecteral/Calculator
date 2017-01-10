@@ -1,4 +1,6 @@
-﻿namespace Calculator.Model
+﻿using System;
+
+namespace Calculator.Model
 {
     /// <summary>
     /// Abstract Class for all Operators ( Multiply , Divide , Minus , Plus )
@@ -13,8 +15,7 @@
             set
             {
                 mLeft = value;
-                ((AnExpression) mLeft).Parent = this;
-                ((AnExpression) mLeft).HasParent = true;
+                mLeft.Parent(this);
             }
         }
         public IExpression Right
@@ -23,9 +24,22 @@
             set
             {
                 mRight = value;
-                ((AnExpression) mRight).Parent = this;
-                ((AnExpression) mRight).HasParent = true;
+                mRight.Parent(this);
             }
+        }
+        public override void ReplaceChild(IExpression oldChild, IExpression newChild)
+        {
+            if (ReferenceEquals(oldChild,mLeft))
+            {
+                oldChild.Parent(null);
+                Left = newChild;
+            }
+            else if (ReferenceEquals(oldChild , mRight))
+            {
+                oldChild.Parent(null);
+                Right = newChild;
+            }
+            else throw new ArgumentException();
         }
     }
 }

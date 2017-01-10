@@ -83,6 +83,16 @@ namespace Calculator.Logic.Tests
             Check("1+2-3+5*6/6", "5");
         }
         [Test]
+        public void Regression_01()
+        {
+            Check("1*x-0+3", "1*x+3");
+        }
+        [Test]
+        public void Regression_02()
+        {
+            Check("1*x-0-3", "1*x-3");
+        }
+        [Test]
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
