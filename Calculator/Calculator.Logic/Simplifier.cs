@@ -9,15 +9,10 @@ namespace Calculator.Logic
     public class Simplifier : ISimplifier
     {
         static IEnumerable<IExpression> AllPossibleSimplifications = new List<IExpression>();
-        static IExpression SimplifiedCalculationExpression { get; set; }
-        static IExpression ParentheseslessCalculationExpression { get; set; }
-        static IExpression DirectCalculationExpression { get; set; }
-        static IExpression ReorderedExpression { get; set; }
-        static IExpression OriginalExpression { get; set; }
         static IExpression sSimplifiedExpression;
         public IExpression Simplify(IExpression input)
         {
-            OriginalExpression = input;
+            var originalExpression = input;
             var equalityChecker = new ExpressionEqualityChecker();
             var mover = new AdditionAndSubtractionMover();
             var variableCalculator = new VariableCalculator();
@@ -25,23 +20,27 @@ namespace Calculator.Logic
             sSimplifiedExpression = ExpressionCloner.Clone(input);
             do
             {
-                DirectCalculationExpression = ExpressionCloner.Clone(DirectCalculationSimplifier.Simplify(sSimplifiedExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(DirectCalculationExpression));
-                ParentheseslessCalculationExpression = ExpressionCloner.Clone(ParenthesesSimplifier.Simplify(DirectCalculationExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(ParentheseslessCalculationExpression));
-                ReorderedExpression = ExpressionCloner.Clone(mover.Move(ParentheseslessCalculationExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(ReorderedExpression));
-                SimplifiedCalculationExpression = ExpressionCloner.Clone(variableCalculator.Calculate(ReorderedExpression));
-                Console.WriteLine(UseFormattingExpressionVisitor(SimplifiedCalculationExpression));
-                if (!equalityChecker.IsEqual(sSimplifiedExpression, SimplifiedCalculationExpression))
+                var transformed = ExpressionCloner.Clone(DirectCalculationSimplifier.Simplify(sSimplifiedExpression));
+                Console.WriteLine(UseFormattingExpressionVisitor(transformed));
+
+                transformed = ExpressionCloner.Clone(ParenthesesSimplifier.Simplify(transformed));
+                Console.WriteLine(UseFormattingExpressionVisitor(transformed));
+
+                transformed = ExpressionCloner.Clone(mover.Move(transformed));
+                Console.WriteLine(UseFormattingExpressionVisitor(transformed));
+
+                transformed = ExpressionCloner.Clone(variableCalculator.Calculate(transformed));
+                Console.WriteLine(UseFormattingExpressionVisitor(transformed));
+
+                if (!equalityChecker.IsEqual(sSimplifiedExpression, transformed))
                 {
                     //Console.WriteLine(UseFormattingExpressionVisitor(sSimplifiedExpression));
-                    sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
+                    sSimplifiedExpression = ExpressionCloner.Clone(transformed);
                     hasChanged = true;
                 }
                 else
                     hasChanged = false;
-                sSimplifiedExpression = ExpressionCloner.Clone(SimplifiedCalculationExpression);
+                sSimplifiedExpression = ExpressionCloner.Clone(transformed);
             } while (hasChanged);
             return sSimplifiedExpression;
         }
