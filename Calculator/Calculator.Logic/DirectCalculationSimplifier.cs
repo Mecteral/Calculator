@@ -31,7 +31,8 @@ namespace Calculator.Logic
         }
         public void Visit(ParenthesedExpression parenthesed)
         {
-            if (parenthesed.Wrapped is IArithmeticOperation) CalculateResultIfPossible((IArithmeticOperation) parenthesed.Wrapped);
+            parenthesed.Wrapped.Accept(this);
+            //if (parenthesed.Wrapped is IArithmeticOperation) CalculateResultIfPossible((IArithmeticOperation) parenthesed.Wrapped);
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
@@ -49,7 +50,7 @@ namespace Calculator.Logic
             => operation.Left is Constant && operation.Right is Constant;
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
-            VisitOperands(operation);
+            //VisitOperands(operation);
             if (IsCalculateable(operation))
             {
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
@@ -57,7 +58,8 @@ namespace Calculator.Logic
                     operation.Parent.ReplaceChild(operation, constant);
                 else mExpression = constant;
             }
-            else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
+            else VisitOperands(operation);
+            //else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
         }
         static bool HasAdditiveOperationAsLeft(IArithmeticOperation operation)
         {
