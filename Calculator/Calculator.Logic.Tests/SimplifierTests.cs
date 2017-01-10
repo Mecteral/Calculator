@@ -59,7 +59,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Regression_01()
         {
-            Check("-1 + 2*a - 0 - 3 - 4 + 9*a", "-1 + 2*a + -3 - 4 + 9*a");
+            Check("-1 + 2*a -  3 - 4 + 9*a", "-8 + 11*a");
         }
     }
 }

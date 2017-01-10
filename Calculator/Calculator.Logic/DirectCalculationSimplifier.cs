@@ -32,7 +32,6 @@ namespace Calculator.Logic
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
-            //if (parenthesed.Wrapped is IArithmeticOperation) CalculateResultIfPossible((IArithmeticOperation) parenthesed.Wrapped);
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
@@ -50,36 +49,39 @@ namespace Calculator.Logic
             => operation.Left is Constant && operation.Right is Constant;
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
-            //VisitOperands(operation);
             if (IsCalculateable(operation))
             {
-                var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
+                if (operation is Subtraction && operation.Left is Constant && operation.Right is Constant)
+                {
+                    operation = ChangeSubtractionIfRighthandsideIsNegative(operation);
+                }
+                var replacement = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
                 if (operation.HasParent)
-                    operation.Parent.ReplaceChild(operation, constant);
-                else mExpression = constant;
+                    operation.Parent.ReplaceChild(operation, replacement);
+                else mExpression = replacement;
             }
             else VisitOperands(operation);
-            //else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
         }
-        static bool HasAdditiveOperationAsLeft(IArithmeticOperation operation)
-        {
-            return operation.Left is Addition || operation.Left is Subtraction;
-        }
-        void CalculateRightHandAdditionAndSubtractions(IArithmeticOperation operation)
-        {
-            var operationLeft = (IArithmeticOperation) operation.Left;
-            if (!(operationLeft.Right is Constant)) return;
 
-            if (operation.HasParent)
+        IArithmeticOperation ChangeSubtractionIfRighthandsideIsNegative(IArithmeticOperation operation)
+        {
+            var constant = (Constant)operation.Right;
+            if (constant.Value < 0)
             {
-                var parent = (IArithmeticOperation) operation.Parent;
-                parent.Left = operationLeft;
+                var replaced = new Addition { Left = operation.Left, Right = operation.Right };
+                if (operation.HasParent)
+                {
+                    operation.Parent.ReplaceChild(operation, replaced);
+                    return replaced;
+                }
+                else
+                {
+                    mExpression = replaced;
+                }
             }
-            operation.Left = operationLeft.Right;
-            var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-            operationLeft.Right = constant;
-            if (!operation.HasParent) { mExpression = operationLeft; }
+            return operation;
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);

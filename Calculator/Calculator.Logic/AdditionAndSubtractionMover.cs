@@ -132,12 +132,7 @@ namespace Calculator.Logic
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
                 if (mIsRight)
                 {
-                    
                     parent.Left = chainedOperation.Left;
-                    if (operation.Parent is Subtraction)
-                    {
-                        
-                    }
                     operation.Right = new Subtraction { Left = new Subtraction {Left = new Constant { Value = 0}, Right = chainedOperation.Right }, Right = operation.Right };
                     mWasChanged = true;
                 }
