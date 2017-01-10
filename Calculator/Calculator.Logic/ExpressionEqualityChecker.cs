@@ -14,12 +14,12 @@ namespace Calculator.Logic
         IList<IExpression> mSecondExpressions = new List<IExpression>();
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
         {
+            mSecondExpressions.Clear();
             firstExpression.Accept(this);
-            FillFirstExpressions(mSecondExpressions);
-            mSecondExpressions = new List<IExpression>();
+            mFirstExpressions = mSecondExpressions;
+            mSecondExpressions= new List<IExpression>();
             secondExpression.Accept(this);
             var result = CheckEqualityOfLists();
-            mFirstExpressions = new List<IExpression>();
             return result;
         }
         public void Visit(ParenthesedExpression parenthesed)
@@ -67,18 +67,9 @@ namespace Calculator.Logic
             operation.Left.Accept(this);
             operation.Right.Accept(this);
         }
-
-        void FillFirstExpressions(IEnumerable<IExpression> expressions)
-        {
-            foreach (var expression in expressions)
-            {
-                mFirstExpressions.Add(expression);
-            }
-        }
-
         bool CheckEqualityOfLists()
         {
-//            if (mFirstExpressions.Count != mSecondExpressions.Count) return false;
+            if (mFirstExpressions.Count != mSecondExpressions.Count) return false;
             var limit = 0;
             limit = mFirstExpressions.Count() <= mSecondExpressions.Count() ? mFirstExpressions.Count() : mSecondExpressions.Count();
             for (var i = 0; i < limit; i++)
