@@ -1,5 +1,4 @@
-﻿using System;
-using Calculator.Logic.Model;
+﻿using Calculator.Logic.Model;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -56,7 +55,6 @@ namespace Calculator.Logic
                 var constant = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
                 if (operation.HasParent)
                     operation.Parent.ReplaceChild(operation, constant);
-                    //ReplaceChildInParent(operation, constant);
                 else mExpression = constant;
             }
             else if (HasAdditiveOperationAsLeft(operation) && operation.Right is Constant) CalculateRightHandAdditionAndSubtractions(operation);
@@ -64,31 +62,6 @@ namespace Calculator.Logic
         static bool HasAdditiveOperationAsLeft(IArithmeticOperation operation)
         {
             return operation.Left is Addition || operation.Left is Subtraction;
-        }
-        static void ReplaceChildInParent(IExpression oldChild, IExpression newChild)
-        {
-            var arithmeticOperation = oldChild.Parent as IArithmeticOperation;
-            if (arithmeticOperation != null)
-            {
-                ReplaceOperandIn(arithmeticOperation, oldChild, newChild);
-                return;
-            }
-            var parenthesis = oldChild.Parent as ParenthesedExpression;
-            if (null != parenthesis)
-            {
-                ReplaceWrappedInParenthesis(parenthesis, newChild);
-                return;
-            }
-            throw new InvalidOperationException();
-        }
-        static void ReplaceWrappedInParenthesis(ParenthesedExpression parent, IExpression newChild)
-        {
-            parent.Wrapped = newChild;
-        }
-        static void ReplaceOperandIn(IArithmeticOperation parent, IExpression oldChild, IExpression newChild)
-        {
-            if (parent.Left == oldChild) parent.Left = newChild;
-            else parent.Right = newChild;
         }
         void CalculateRightHandAdditionAndSubtractions(IArithmeticOperation operation)
         {
