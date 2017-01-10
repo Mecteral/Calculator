@@ -129,12 +129,15 @@ namespace Calculator.Logic
         {
             if (chainedOperation is Subtraction)
             {
-                CheckIfConstantIsNegative((Constant)operation.Right);
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
                 if (mIsRight)
                 {
                     
                     parent.Left = chainedOperation.Left;
+                    if (operation.Parent is Subtraction)
+                    {
+                        
+                    }
                     operation.Right = new Subtraction { Left = new Subtraction {Left = new Constant { Value = 0}, Right = chainedOperation.Right }, Right = operation.Right };
                     mWasChanged = true;
                 }
@@ -151,7 +154,6 @@ namespace Calculator.Logic
         {
             if (chainedOperation is Addition)
             {
-                CheckIfConstantIsNegative((Constant)operation.Right);
                 var parent = (IArithmeticOperation)chainedOperation.Parent;
                 if (mIsRight)
                 {
@@ -195,13 +197,6 @@ namespace Calculator.Logic
             }
         }
 
-        static void CheckIfConstantIsNegative(Constant constant)
-        {
-            if (constant.Value < 0)
-            {
-                constant.Value = constant.Value * -1;
-            }
-        }
 
         public void Visit(ParenthesedExpression parenthesed)
         {

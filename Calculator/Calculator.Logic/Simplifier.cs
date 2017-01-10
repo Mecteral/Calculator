@@ -33,7 +33,6 @@ namespace Calculator.Logic
                 {
                     lastStep = transformed;
                 }
-                //lastStep = transformed;
             } while (hasChanged);
             return lastStep;
         }

@@ -13,7 +13,7 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests
 {
     [TestFixture]
-    class VariableCalculatorTests
+    public class VariableCalculatorTests
     {
         static void Check(string input, string expected)
         {
@@ -114,11 +114,6 @@ namespace Calculator.Logic.Tests
             Check("1-1a-2+2a", "1 - 0 - 2 + 1*a");
         }
 
-        [Test]
-        public void ComplexCaseWithFullSimplification()
-        {
-            CheckWithFullSimplification("(1/1)+1a-2*3+2a-4a", "-5 - 1*a");
-        }
 
         [Test]
         public void SimpleAdditionWithConstantAtTheEnd()
@@ -144,10 +139,5 @@ namespace Calculator.Logic.Tests
             Check("1+2a+3-4a-5", "1 + 3 - 2*a - 5");
         }
 
-        [Test]
-        public void FullSimplification()
-        {
-            CheckWithFullSimplification("(1a+2a)*3+4-2a+5-6a", "(3*a)*3 + 9 - 8*a");
-        }
     }
 }

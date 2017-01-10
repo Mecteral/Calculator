@@ -133,16 +133,5 @@ namespace Calculator.Logic.Tests
             Check("(1+2a+3)", "(2*a + 1 + 3)");
         }
 
-        [Test]
-        public void MoverWithFullSimplificationSubtraction()
-        {
-            CheckWithFullSimplification("-1+2a-3+4a-4+5a", "-8 + 11*a");
-        }
-
-        [Test]
-        public void FullSimplificationWithVariableAtTheBeginning()
-        {
-            CheckWithFullSimplification("a+1+2+3", "1*a + 6");
-        }
     }
 }
