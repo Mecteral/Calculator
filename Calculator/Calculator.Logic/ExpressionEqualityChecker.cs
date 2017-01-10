@@ -18,7 +18,7 @@ namespace Calculator.Logic
             FillFirstExpressions(mSecondExpressions);
             mSecondExpressions = new List<IExpression>();
             secondExpression.Accept(this);
-            var result = CheckEqualityOfLists(mFirstExpressions, mSecondExpressions);
+            var result = CheckEqualityOfLists();
             mFirstExpressions = new List<IExpression>();
             return result;
         }
@@ -76,32 +76,35 @@ namespace Calculator.Logic
             }
         }
 
-        static bool CheckEqualityOfLists(IEnumerable<IExpression> first, IEnumerable<IExpression> second)
+        bool CheckEqualityOfLists()
         {
+//            if (mFirstExpressions.Count != mSecondExpressions.Count) return false;
             var limit = 0;
-            limit = first.Count() <= second.Count() ? first.Count() : second.Count();
+            limit = mFirstExpressions.Count() <= mSecondExpressions.Count() ? mFirstExpressions.Count() : mSecondExpressions.Count();
             for (var i = 0; i < limit; i++)
             {
-                if (first.ElementAt(i) is Division)
-                    if (!(second.ElementAt(i) is Division))
+                var first = mFirstExpressions.ElementAt(i);
+                var last = mSecondExpressions.ElementAt(i);
+                if (first is Division)
+                    if (!(last is Division))
                         return false;
-                if (first.ElementAt(i) is Addition)
-                    if (!(second.ElementAt(i) is Addition))
+                if (first is Addition)
+                    if (!(last is Addition))
                         return false;
-                if (first.ElementAt(i) is Multiplication)
-                    if (!(second.ElementAt(i) is Multiplication))
+                if (first is Multiplication)
+                    if (!(last is Multiplication))
                         return false;
-                if (first.ElementAt(i) is Subtraction)
-                    if (!(second.ElementAt(i) is Subtraction))
+                if (first is Subtraction)
+                    if (!(last is Subtraction))
                         return false;
-                if (first.ElementAt(i) is Constant)
-                    if (!(second.ElementAt(i) is Constant))
+                if (first is Constant)
+                    if (!(last is Constant))
                         return false;
-                if (first.ElementAt(i) is Variable)
-                    if (!(second.ElementAt(i) is Variable))
+                if (first is Variable)
+                    if (!(last is Variable))
                         return false;
-                if (first.ElementAt(i) is ParenthesedExpression)
-                    if (!(second.ElementAt(i) is ParenthesedExpression))
+                if (first is ParenthesedExpression)
+                    if (!(last is ParenthesedExpression))
                         return false;
             }
             return true;
