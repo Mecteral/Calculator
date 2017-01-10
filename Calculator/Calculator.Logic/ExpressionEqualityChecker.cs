@@ -84,28 +84,20 @@ namespace Calculator.Logic
             for (var i = 0; i < limit; i++)
             {
                 var first = mFirstExpressions.ElementAt(i);
-                var last = mSecondExpressions.ElementAt(i);
-                if (first is Division)
-                    if (!(last is Division))
-                        return false;
-                if (first is Addition)
-                    if (!(last is Addition))
-                        return false;
-                if (first is Multiplication)
-                    if (!(last is Multiplication))
-                        return false;
-                if (first is Subtraction)
-                    if (!(last is Subtraction))
-                        return false;
+                var second = mSecondExpressions.ElementAt(i);
+                if (first.GetType() != second.GetType()) return false;
                 if (first is Constant)
-                    if (!(last is Constant))
-                        return false;
-                if (first is Variable)
-                    if (!(last is Variable))
-                        return false;
-                if (first is ParenthesedExpression)
-                    if (!(last is ParenthesedExpression))
-                        return false;
+                {
+                    var lhs = (Constant) first;
+                    var rhs = (Constant) second;
+                    if (lhs.Value != rhs.Value) return false;
+                }
+                else if (first is Variable)
+                {
+                    var lhs = (Variable)first;
+                    var rhs = (Variable)second;
+                    if (lhs.Variables != rhs.Variables) return false;
+                }
             }
             return true;
         }
