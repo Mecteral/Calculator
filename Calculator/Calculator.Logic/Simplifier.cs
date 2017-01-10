@@ -28,13 +28,11 @@ namespace Calculator.Logic
                 transformed = variableCalculator.Calculate(transformed);
                 Console.WriteLine(UseFormattingExpressionVisitor(transformed));
 
-                if (!equalityChecker.IsEqual(lastStep, transformed))
+                hasChanged = !equalityChecker.IsEqual(lastStep, transformed);
+                if (hasChanged)
                 {
                     lastStep = transformed;
-                    hasChanged = true;
                 }
-                else
-                    hasChanged = false;
             } while (hasChanged);
             return lastStep;
         }
