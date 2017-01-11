@@ -61,5 +61,11 @@ namespace Calculator.Logic.Tests
         {
             Check("-1 + 2*a -  3 - 4 + 9*a", "-8 + 11*a");
         }
+
+        [Test]
+        public void SimplificationProcessHandlesDifferentVariablesCorrectly()
+        {
+            Check("a+2b+3a+4b", "4*a + 6*b");
+        }
     }
 }
