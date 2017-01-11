@@ -96,45 +96,18 @@ namespace Calculator.Logic
                 {
                     var constantOne = (Constant) operationLeft.Left;
                     var constantTwo = (Constant) operationRight.Left;
+                    var replacement = new Multiplication
+                    {
+                        Left = new Constant {Value = constantOne.Value + constantTwo.Value},
+                        Right = variableOne
+                    };
                     if (operation.HasParent)
                     {
-                        if (operation.Parent is ParenthesedExpression)
-                        {
-                            var parenthesed = (ParenthesedExpression) operation.Parent;
-                            parenthesed.Wrapped = new Multiplication
-                            {
-                                Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                                Right = variableOne
-                            };
-                        }
-                        else
-                        {
-                            var parent = (IArithmeticOperation) operation.Parent;
-                            if (parent.Left.Equals(operation))
-                            {
-                                parent.Left = new Multiplication
-                                {
-                                    Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                                    Right = variableOne
-                                };
-                            }
-                            else
-                            {
-                                parent.Right = new Multiplication
-                                {
-                                    Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                                    Right = variableOne
-                                };
-                            }
-                        }
+                        operation.Parent.ReplaceChild(operation, replacement);
                     }
                     else
                     {
-                        sCalculatedExpression = new Multiplication
-                        {
-                            Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                            Right = variableOne
-                        };
+                        sCalculatedExpression = replacement;
                         mWasChanged = true;
                     }
                 }
