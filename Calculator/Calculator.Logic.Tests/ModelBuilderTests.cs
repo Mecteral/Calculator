@@ -39,7 +39,10 @@ namespace Calculator.Logic.Tests
         {
             // ((1*2)/(3-4))
             var input = new IToken[]
-            {Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close, Close};
+            {
+                Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close,
+                Close
+            };
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("((1*2)/(3 - 4))");
         }

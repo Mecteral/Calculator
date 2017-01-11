@@ -1,6 +1,4 @@
-﻿using System.IO;
-using Calculator.Logic.Parsing;
-using Calculator.Model;
+﻿using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {
@@ -11,27 +9,22 @@ namespace Calculator.Logic.Model
         {
             return new ParenthesedExpression {Wrapped = wrapped};
         }
-
         protected override IExpression UseSubtraction(IExpression left, IExpression right)
         {
             return new Subtraction {Left = left, Right = right};
         }
-
         protected override IExpression UseMultiplication(IExpression left, IExpression right)
         {
-            return new Multiplication {Left = left,Right = right};
+            return new Multiplication {Left = left, Right = right};
         }
-
         protected override IExpression UseAddition(IExpression left, IExpression right)
         {
             return new Addition {Left = left, Right = right};
         }
-
         protected override IExpression UseDivision(IExpression left, IExpression right)
         {
             return new Division {Left = left, Right = right};
         }
-
         protected override IExpression UseConstant(double value)
         {
             return new Constant {Value = value};

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Calculator.Model;
-using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic
 {
@@ -12,56 +7,49 @@ namespace Calculator.Logic
     {
         IList<IExpression> mFirstExpressions = new List<IExpression>();
         IList<IExpression> mSecondExpressions = new List<IExpression>();
-        public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
-        {
-            mSecondExpressions.Clear();
-            firstExpression.Accept(this);
-            mFirstExpressions = mSecondExpressions;
-            mSecondExpressions= new List<IExpression>();
-            secondExpression.Accept(this);
-            var result = CheckEqualityOfLists();
-            return result;
-        }
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
             mSecondExpressions.Add(parenthesed);
         }
-
         public void Visit(Subtraction subtraction)
         {
             VisitOperands(subtraction);
             mSecondExpressions.Add(subtraction);
         }
-
         public void Visit(Multiplication multiplication)
         {
             VisitOperands(multiplication);
             mSecondExpressions.Add(multiplication);
         }
-
         public void Visit(Addition addition)
         {
             VisitOperands(addition);
             mSecondExpressions.Add(addition);
         }
-
         public void Visit(Constant constant)
         {
             mSecondExpressions.Add(constant);
         }
-
         public void Visit(Division division)
         {
             VisitOperands(division);
             mSecondExpressions.Add(division);
         }
-
         public void Visit(Variable variable)
         {
             mSecondExpressions.Add(variable);
         }
-
+        public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
+        {
+            mSecondExpressions.Clear();
+            firstExpression.Accept(this);
+            mFirstExpressions = mSecondExpressions;
+            mSecondExpressions = new List<IExpression>();
+            secondExpression.Accept(this);
+            var result = CheckEqualityOfLists();
+            return result;
+        }
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
@@ -70,7 +58,7 @@ namespace Calculator.Logic
         bool CheckEqualityOfLists()
         {
             if (mFirstExpressions.Count != mSecondExpressions.Count) return false;
-            
+
             for (var i = 0; i < mFirstExpressions.Count; i++)
             {
                 var first = mFirstExpressions[i];

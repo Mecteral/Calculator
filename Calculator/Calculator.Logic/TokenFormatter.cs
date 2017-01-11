@@ -10,7 +10,6 @@ namespace Calculator.Logic
     public class TokenFormatter : ITokenVisitor
     {
         string mResult = "";
-
         public void Visit(OperatorToken operatorToken)
         {
             switch (operatorToken.Operator)
@@ -29,26 +28,21 @@ namespace Calculator.Logic
                     break;
             }
         }
-
         public void Visit(NumberToken numberToken)
         {
             mResult += numberToken.Value.ToString(CultureInfo.InvariantCulture);
         }
-
         public void Visit(ParenthesesToken parenthesesToken)
         {
             mResult += parenthesesToken.IsOpening ? "(" : ")";
         }
-
         public void Visit(VariableToken variableToken)
         {
             mResult += variableToken.Variable;
         }
-
         public string Format(IEnumerable<IToken> tokens)
         {
-            foreach (var token in tokens)
-                token.Accept(this);
+            foreach (var token in tokens) token.Accept(this);
             return mResult;
         }
     }

@@ -37,7 +37,6 @@ namespace Calculator.Logic.Tests
         {
             Check("2+2+2+2a", "4 + 2 + 2*a");
         }
-
         [Test]
         public void Simplification_Of_ParenthesedExpression()
         {

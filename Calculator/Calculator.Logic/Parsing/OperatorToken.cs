@@ -23,8 +23,10 @@
                     break;
             }
         }
-
         public Operator Operator { get; }
-        public void Accept(ITokenVisitor visitor) { visitor.Visit(this); }
+        public void Accept(ITokenVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

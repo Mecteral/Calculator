@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
-using System;
 
 namespace Calculator.Model.Tests
 {
@@ -8,16 +8,16 @@ namespace Calculator.Model.Tests
     public class VariableTests
     {
         [Test]
-        public void ToString_Is_HumanReadble()
-        {
-            new Variable() {Variables = "alpha"}.ToString().Should().Be("alpha");
-        }
-        [Test]
         public void ReplaceChild_Throws()
         {
-            var underTest= new Variable();
+            var underTest = new Variable();
             Action a = () => underTest.ReplaceChild(new Constant(), new Constant());
             a.ShouldThrow<InvalidOperationException>();
+        }
+        [Test]
+        public void ToString_Is_HumanReadble()
+        {
+            new Variable {Variables = "alpha"}.ToString().Should().Be("alpha");
         }
     }
 }

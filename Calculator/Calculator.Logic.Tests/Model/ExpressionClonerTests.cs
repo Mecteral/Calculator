@@ -20,7 +20,6 @@ namespace Calculator.Logic.Tests.Model
             var equalityChecker = new ExpressionEqualityChecker();
             equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
-
         [Test]
         public void ExpressionClonerClonesAdditionWithLeftAdditionAndRightMultiplicationWithVariableAtTheEnd()
         {
@@ -33,7 +32,6 @@ namespace Calculator.Logic.Tests.Model
             var equalityChecker = new ExpressionEqualityChecker();
             equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
-
         [Test]
         public void ExpressionClonerClonesAdditionWithLeftAdditionChainAndRightMultiplicationWithVariableAtTheEnd()
         {
@@ -51,7 +49,6 @@ namespace Calculator.Logic.Tests.Model
             var equalityChecker = new ExpressionEqualityChecker();
             equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
-
         [Test]
         public void ExpressionClonerClonesAdditionWithTwoOperations()
         {
@@ -63,7 +60,6 @@ namespace Calculator.Logic.Tests.Model
             var result = ExpressionCloner.Clone(underTest);
             result.ShouldBeEquivalentTo(underTest);
         }
-
         [Test]
         public void ExpressionClonerClonesSimpleAddition()
         {

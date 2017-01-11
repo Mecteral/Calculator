@@ -31,6 +31,12 @@ namespace Calculator.Logic
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
+        public IExpression Simplify(IExpression input)
+        {
+            mExpression = ExpressionCloner.Clone(input);
+            Calculate();
+            return mExpression;
+        }
         public IExpression Calculate()
         {
             mExpression.Accept(this);
@@ -42,48 +48,34 @@ namespace Calculator.Logic
         {
             if (IsCalculateable(operation))
             {
-                if (operation is Subtraction && operation.Left is Constant && operation.Right is Constant)
-                {
+                if (operation is Subtraction && operation.Left is Constant && operation.Right is Constant) {
                     operation = ChangeSubtractionIfRighthandsideIsNegative(operation);
                 }
                 var replacement = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
-                if (operation.HasParent)
-                    operation.Parent.ReplaceChild(operation, replacement);
+                if (operation.HasParent) operation.Parent.ReplaceChild(operation, replacement);
                 else mExpression = replacement;
             }
             else VisitOperands(operation);
         }
-
         IArithmeticOperation ChangeSubtractionIfRighthandsideIsNegative(IArithmeticOperation operation)
         {
-            var constant = (Constant)operation.Right;
+            var constant = (Constant) operation.Right;
             if (constant.Value < 0)
             {
-                var replaced = new Addition { Left = operation.Left, Right = operation.Right };
+                var replaced = new Addition {Left = operation.Left, Right = operation.Right};
                 if (operation.HasParent)
                 {
                     operation.Parent.ReplaceChild(operation, replaced);
                     return replaced;
                 }
-                else
-                {
-                    mExpression = replaced;
-                }
+                mExpression = replaced;
             }
             return operation;
         }
-
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
-        }
-
-        public IExpression Simplify(IExpression input)
-        {
-            mExpression = ExpressionCloner.Clone(input);
-            Calculate();
-            return mExpression;
         }
     }
 }

@@ -29,12 +29,12 @@ namespace Calculator.Model
         }
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)
         {
-            if (ReferenceEquals(oldChild,mLeft))
+            if (ReferenceEquals(oldChild, mLeft))
             {
                 oldChild.Parent(null);
                 Left = newChild;
             }
-            else if (ReferenceEquals(oldChild , mRight))
+            else if (ReferenceEquals(oldChild, mRight))
             {
                 oldChild.Parent(null);
                 Right = newChild;

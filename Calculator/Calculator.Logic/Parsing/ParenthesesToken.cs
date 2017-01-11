@@ -5,7 +5,6 @@
     /// </summary>
     public class ParenthesesToken : IToken
     {
-        public bool IsOpening { get; private set; }
         public ParenthesesToken(char asText)
         {
             switch (asText)
@@ -18,6 +17,10 @@
                     break;
             }
         }
-        public void Accept(ITokenVisitor visitor) { visitor.Visit(this); }
+        public bool IsOpening { get; private set; }
+        public void Accept(ITokenVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

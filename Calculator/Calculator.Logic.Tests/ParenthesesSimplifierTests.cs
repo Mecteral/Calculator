@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
 using Calculator.Model;
@@ -33,29 +29,25 @@ namespace Calculator.Logic.Tests
             return tokens;
         }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
-
         [Test]
-        public void ParenthesesSimplifierRemovesParenthesesFromSingleConstant()
+        public void ParenthesesDeletionBeforeMultiplication()
         {
-            Check("(3)+2a", "3 + 2*a");
+            Check("(3)*3a", "3*3*a");
         }
-
         [Test]
         public void ParenthesesSimplifierDoesntRemoveParethesesFromNestedExpressionsWithOperations()
         {
             Check("(3*2a)+2a", "(6*a) + 2*a");
         }
-
+        [Test]
+        public void ParenthesesSimplifierRemovesParenthesesFromSingleConstant()
+        {
+            Check("(3)+2a", "3 + 2*a");
+        }
         [Test]
         public void ParenthesesSimplifierWithDivisionAndSubtraction()
         {
             Check("(1/2)/3 - 4a", "0.5/3 - 4*a");
-        }
-
-        [Test]
-        public void ParenthesesDeletionBeforeMultiplication()
-        {
-            Check("(3)*3a", "3*3*a");
         }
     }
 }

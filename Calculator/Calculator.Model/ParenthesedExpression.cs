@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 
 namespace Calculator.Model
 {
@@ -22,7 +21,7 @@ namespace Calculator.Model
         public override string ToString() => $"({Wrapped})";
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)
         {
-            if (ReferenceEquals(oldChild , mWrapped))
+            if (ReferenceEquals(oldChild, mWrapped))
             {
                 Wrapped = newChild;
                 oldChild.Parent(null);

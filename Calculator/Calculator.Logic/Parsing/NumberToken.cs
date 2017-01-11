@@ -12,8 +12,10 @@ namespace Calculator.Logic.Parsing
             asText = asText.Replace(',', '.');
             Value = double.Parse(asText, NumberStyles.Any, CultureInfo.InvariantCulture);
         }
-
         public double Value { get; }
-        public void Accept(ITokenVisitor visitor) { visitor.Visit(this); }
+        public void Accept(ITokenVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
     }
 }

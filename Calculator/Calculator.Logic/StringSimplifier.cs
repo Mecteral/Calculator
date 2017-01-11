@@ -5,11 +5,15 @@ namespace Calculator.Logic
 {
     public class StringSimplifier
     {
-        readonly ISimplifier mSimplifier;
-        readonly ITokenizer mTokenizer;
         readonly IExpressionFormatter mFormatter;
         readonly IModelBuilder mModelBuilder;
-        public StringSimplifier(ISimplifier simplifier, ITokenizer tokenizer, IExpressionFormatter formatter, IModelBuilder modelBuilder)
+        readonly ISimplifier mSimplifier;
+        readonly ITokenizer mTokenizer;
+        public StringSimplifier(
+            ISimplifier simplifier,
+            ITokenizer tokenizer,
+            IExpressionFormatter formatter,
+            IModelBuilder modelBuilder)
         {
             mSimplifier = simplifier;
             mTokenizer = tokenizer;
