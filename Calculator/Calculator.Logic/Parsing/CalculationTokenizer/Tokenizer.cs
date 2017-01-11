@@ -1,8 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Calculator.Logic.Parsing
+namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Takes in a string and returns IEnumerable of ITokens

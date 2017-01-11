@@ -1,4 +1,4 @@
-﻿namespace Calculator.Logic.Parsing
+﻿namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Token of Operations ( Add, Multiply, Substract, Divide)

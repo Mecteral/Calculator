@@ -1,4 +1,4 @@
-﻿namespace Calculator.Logic.Parsing
+﻿namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Contains alphabetized <string> string </string> for Variables and double Value for calculations

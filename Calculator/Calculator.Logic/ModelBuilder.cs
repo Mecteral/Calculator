@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 
 namespace Calculator.Logic

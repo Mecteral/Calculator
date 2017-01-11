@@ -76,7 +76,7 @@
     <Compile Include="Model\FormattingExpressionVisitorTests.cs" />
     <Compile Include="Model\TestExpressions.cs" />
     <Compile Include="ParenthesesSimplifierTests.cs" />
-    <Compile Include="Parsing\TokenizerTests.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\TokenizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplificationEvaluatorTests.cs" />
     <Compile Include="SimplifierTests.cs" />
@@ -97,6 +97,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Parsing\ConversionTokenizer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

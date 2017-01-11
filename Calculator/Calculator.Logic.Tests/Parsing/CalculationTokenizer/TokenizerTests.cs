@@ -1,9 +1,10 @@
 using System.Linq;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Calculator.Logic.Tests.Parsing
+namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
 {
     [TestFixture]
     public class TokenizerTests

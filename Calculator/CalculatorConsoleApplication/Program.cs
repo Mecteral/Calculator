@@ -3,6 +3,7 @@ using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 
 namespace CalculatorConsoleApplication

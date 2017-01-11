@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 
 namespace Calculator.Logic
 {

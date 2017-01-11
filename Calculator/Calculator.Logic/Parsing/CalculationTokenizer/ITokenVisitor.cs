@@ -1,4 +1,4 @@
-﻿namespace Calculator.Logic.Parsing
+﻿namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Visitor for all Tokens ( OperatorToken, NumberToken, ParenthesesToken )
