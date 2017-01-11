@@ -7,31 +7,28 @@ namespace Calculator.Logic
 {
     public class Simplifier : ISimplifier
     {
-        IEnumerable<ISimplifier> Simplifiers
+        readonly IList<ISimplifier> mSimplifiersInCorrectOrder = new List<ISimplifier>
         {
-            get
-            {
-                yield return new DirectCalculationSimplifier();
-                yield return new ParenthesesSimplifier();
-                yield return new AdditionAndSubtractionMover();
-                yield return new VariableCalculator();
-            }
-        }
+            new DirectCalculationSimplifier(),
+            new ParenthesesSimplifier(),
+            new AdditionAndSubtractionMover(),
+            new VariableCalculator()
+        };
         public IExpression Simplify(IExpression input)
         {
             var equalityChecker = new ExpressionEqualityChecker();
 
             bool hasChanged;
-            var lastStep = ExpressionCloner.Clone(input);
+            var copyOfInput = ExpressionCloner.Clone(input);
             do
             {
-                var transformed = Simplifiers.Aggregate(lastStep, (current, simplifier) => simplifier.Simplify(current));
+                var transformed = mSimplifiersInCorrectOrder.Aggregate(copyOfInput, (current, simplifier) => simplifier.Simplify(current));
 
-                hasChanged = !equalityChecker.IsEqual(lastStep, transformed);
-                if (hasChanged) { lastStep = transformed; }
+                hasChanged = !equalityChecker.IsEqual(copyOfInput, transformed);
+                if (hasChanged) { copyOfInput = transformed; }
             }
             while (hasChanged);
-            return lastStep;
+            return copyOfInput;
         }
         static string UseFormattingExpressionVisitor(IExpression expression)
             => new FormattingExpressionVisitor().Format(expression);
