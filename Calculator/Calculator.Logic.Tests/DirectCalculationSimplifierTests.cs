@@ -14,8 +14,8 @@ namespace Calculator.Logic.Tests
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var underTest = new DirectCalculationSimplifier(inputTree);
-            var simplified = underTest.Simplify();
+            var underTest = new DirectCalculationSimplifier();
+            var simplified = underTest.Simplify(inputTree);
             var asString = new FormattingExpressionVisitor().Format(simplified);
             asString.Should().Be(expected);
         }
@@ -72,8 +72,8 @@ namespace Calculator.Logic.Tests
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
-            var underTest = new DirectCalculationSimplifier(input);
-            underTest.Simplify();
+            var underTest = new DirectCalculationSimplifier();
+            underTest.Simplify(input);
             ((Addition) input).Left.Should().BeOfType<Addition>();
         }
     }

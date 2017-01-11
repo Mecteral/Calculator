@@ -20,7 +20,7 @@ namespace Calculator.Logic.Tests
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
             var mover = new AdditionAndSubtractionMover();
-            var underTest = mover.Move(inputTree);
+            var underTest = mover.Simplify(inputTree);
             var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }

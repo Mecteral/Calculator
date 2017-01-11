@@ -8,7 +8,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic
 {
-    public class AdditionAndSubtractionMover : IExpressionVisitor
+    public class AdditionAndSubtractionMover : IExpressionVisitor, ISimplifier
     {
         static IExpression sMovedExpression;
         bool mIsRight;
@@ -21,14 +21,6 @@ namespace Calculator.Logic
             expression.Accept(mover);
         }
 
-        public IExpression Move(IExpression expression)
-        {
-            mWasChanged = false;
-            sMovedExpression = ExpressionCloner.Clone(expression);
-            MoveAdditionsOrSubtractions(sMovedExpression);
-            return sMovedExpression;
-        }
-
         void CheckIfMoveIsAvailable(IArithmeticOperation operation)
         {
             if (operation.Right is Constant && (operation.Left is Addition || operation.Left is Subtraction))
@@ -39,7 +31,7 @@ namespace Calculator.Logic
 
         IArithmeticOperation FindMoveableExpression(IArithmeticOperation operation)
         {
-            while (true && !mWasChanged)
+            while (!mWasChanged)
             {
                 var current = operation;
                 if (operation.Right is Multiplication && operation.Left is Constant)
@@ -232,6 +224,14 @@ namespace Calculator.Logic
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
+        }
+
+        public IExpression Simplify(IExpression input)
+        {
+            mWasChanged = false;
+            sMovedExpression = ExpressionCloner.Clone(input);
+            MoveAdditionsOrSubtractions(sMovedExpression);
+            return sMovedExpression;
         }
     }
 }

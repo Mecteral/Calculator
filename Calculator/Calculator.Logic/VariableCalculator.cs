@@ -3,7 +3,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic
 {
-    public class VariableCalculator : IExpressionVisitor
+    public class VariableCalculator : IExpressionVisitor, ISimplifier
     {
         static IExpression sCalculatedExpression;
         string mCurrentVariable;
@@ -423,6 +423,14 @@ namespace Calculator.Logic
                 break;
             }
             return null;
+        }
+
+        public IExpression Simplify(IExpression input)
+        {
+            mWasChanged = false;
+            sCalculatedExpression = ExpressionCloner.Clone(input);
+            CalculateVariables(sCalculatedExpression);
+            return sCalculatedExpression;
         }
     }
 }

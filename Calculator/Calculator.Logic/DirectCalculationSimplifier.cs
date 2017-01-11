@@ -6,13 +6,9 @@ namespace Calculator.Logic
     /// <summary>
     /// This Class calculates all possible calculations without variables
     /// </summary>
-    public class DirectCalculationSimplifier : IExpressionVisitor
+    public class DirectCalculationSimplifier : IExpressionVisitor, ISimplifier
     {
         IExpression mExpression;
-        public DirectCalculationSimplifier(IExpression expression)
-        {
-            mExpression = ExpressionCloner.Clone(expression);
-        }
         public void Visit(Subtraction subtraction)
         {
             CalculateResultIfPossible(subtraction);
@@ -35,15 +31,10 @@ namespace Calculator.Logic
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
-        public IExpression Simplify()
+        public IExpression Calculate()
         {
             mExpression.Accept(this);
             return mExpression;
-        }
-        public static IExpression Simplify(IExpression input)
-        {
-            var simplifier = new DirectCalculationSimplifier(input);
-            return simplifier.Simplify();
         }
         static bool IsCalculateable(IArithmeticOperation operation)
             => operation.Left is Constant && operation.Right is Constant;
@@ -86,6 +77,13 @@ namespace Calculator.Logic
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
+        }
+
+        public IExpression Simplify(IExpression input)
+        {
+            mExpression = ExpressionCloner.Clone(input);
+            Calculate();
+            return mExpression;
         }
     }
 }

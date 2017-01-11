@@ -9,14 +9,9 @@ namespace Calculator.Logic
     /// <summary>
     /// Removes all unnecessary Parentheses
     /// </summary>
-    public class ParenthesesSimplifier : IExpressionVisitor
+    public class ParenthesesSimplifier : IExpressionVisitor, ISimplifier
     {
-        readonly IExpression mExpression;
-
-        public ParenthesesSimplifier(IExpression expression)
-        {
-            mExpression = ExpressionCloner.Clone(expression);
-        }
+        IExpression mExpression;
 
         public void Visit(Subtraction subtraction)
         {
@@ -56,16 +51,17 @@ namespace Calculator.Logic
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
 
-        public IExpression Simplify()
+        public IExpression RemoveParentheses()
         {
             mExpression.Accept(this);
             return mExpression;
         }
 
-        public static IExpression Simplify(IExpression input)
+        public IExpression Simplify(IExpression input)
         {
-            var simplifier = new ParenthesesSimplifier(input);
-            return simplifier.Simplify();
+            mExpression = ExpressionCloner.Clone(input);
+            RemoveParentheses();
+            return mExpression;
         }
         static void HandleParenthesis(
             IArithmeticOperation operation,

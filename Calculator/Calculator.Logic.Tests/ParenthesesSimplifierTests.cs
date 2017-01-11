@@ -18,10 +18,10 @@ namespace Calculator.Logic.Tests
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var directCalculator = new DirectCalculationSimplifier(inputTree);
-            var directSimplified = directCalculator.Simplify();
-            var underTest = new ParenthesesSimplifier(directSimplified);
-            var simplified = underTest.Simplify();
+            var directCalculator = new DirectCalculationSimplifier();
+            var directSimplified = directCalculator.Simplify(inputTree);
+            var underTest = new ParenthesesSimplifier();
+            var simplified = underTest.Simplify(directSimplified);
             var asString = new FormattingExpressionVisitor().Format(simplified);
             asString.Should().Be(expected);
         }
