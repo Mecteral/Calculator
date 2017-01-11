@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Calculator.Logic.Model;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -18,19 +17,21 @@ namespace Calculator.Logic
         {
             var equalityChecker = new ExpressionEqualityChecker();
 
+            var result = input;
             bool hasChanged;
-            var copyOfInput = ExpressionCloner.Clone(input);
             do
             {
-                var transformed = mSimplifiersInCorrectOrder.Aggregate(copyOfInput, (current, simplifier) => simplifier.Simplify(current));
+                var transformed = ApplyAllSimplifications(result);
 
-                hasChanged = !equalityChecker.IsEqual(copyOfInput, transformed);
-                if (hasChanged) { copyOfInput = transformed; }
+                hasChanged = !equalityChecker.IsEqual(result, transformed);
+                if (hasChanged) { result = transformed; }
             }
             while (hasChanged);
-            return copyOfInput;
+            return result;
         }
-        static string UseFormattingExpressionVisitor(IExpression expression)
-            => new FormattingExpressionVisitor().Format(expression);
+        IExpression ApplyAllSimplifications(IExpression result)
+        {
+            return mSimplifiersInCorrectOrder.Aggregate(result, (current, simplifier) => simplifier.Simplify(current));
+        }
     }
 }
