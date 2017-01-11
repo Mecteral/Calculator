@@ -8,13 +8,6 @@ namespace Calculator.Logic
     {
         readonly Dictionary<Type, Dictionary<Type, Action<object, object>>> mHandlers =
             new Dictionary<Type, Dictionary<Type, Action<object, object>>>();
-        readonly IExpression mLeft;
-        readonly IExpression mRight;
-        public Dispatcher(IExpression left, IExpression right)
-        {
-            mLeft = left;
-            mRight = right;
-        }
         public Action<IExpression, IExpression> FallbackHandler { get; set; }
         public LeftContinuation<TLeft> OnLeft<TLeft>()
         {
@@ -24,24 +17,24 @@ namespace Calculator.Logic
         {
             AddHandler(typeof(TLeft), typeof(TRight), ToUntypedAction(handler));
         }
-        public void Dispatch()
+        public void Dispatch(IExpression left, IExpression right)
         {
-            var leftType = mLeft.GetType();
-            var rightType = mRight.GetType();
-            if (!mHandlers.ContainsKey(leftType)) InvokeFallbackHandler();
+            var leftType = left.GetType();
+            var rightType = right.GetType();
+            if (!mHandlers.ContainsKey(leftType)) InvokeFallbackHandler(left, right);
             else
             {
                 var leftHandlers = mHandlers[leftType];
-                if (!leftHandlers.ContainsKey(rightType)) InvokeFallbackHandler();
-                else leftHandlers[rightType](mLeft, mRight);
+                if (!leftHandlers.ContainsKey(rightType)) InvokeFallbackHandler(left, right);
+                else leftHandlers[rightType](left, right);
             }
         }
-        void InvokeFallbackHandler()
+        void InvokeFallbackHandler(IExpression left, IExpression right)
         {
             if (null == FallbackHandler)
                 throw new InvalidOperationException(
                     $"You must either take care to define handlers for all permutations that might come in; or define '{nameof(FallbackHandler)}'.");
-            FallbackHandler(mLeft, mRight);
+            FallbackHandler(left, right);
         }
         void AddHandler(Type leftType, Type rightType, Action<object, object> action)
         {
