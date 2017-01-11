@@ -35,5 +35,20 @@ namespace Calculator.Logic.Tests
 
             wasRightComboPicked.Should().BeTrue();
         }
+        [Test]
+        public void Usage_With_Unified_On()
+        {
+            IExpression left = new Addition();
+            IExpression right = new Constant();
+            var dispatcher = new Dispatcher(left, right) { FallbackHandler = (l, r) => Assert.Fail() };
+
+            dispatcher.On<Constant, Variable>((c, v) => { Assert.Fail(); });
+            var wasRightComboPicked = false;
+            dispatcher.On<Addition, Constant>((a, m) => { wasRightComboPicked = true; });
+
+            dispatcher.Dispatch();
+
+            wasRightComboPicked.Should().BeTrue();
+        }
     }
 }

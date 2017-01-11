@@ -20,6 +20,10 @@ namespace Calculator.Logic
         {
             return new LeftContinuation<TLeft>(this);
         }
+        public void On<TLeft, TRight>(Action<TLeft, TRight> handler)
+        {
+            AddHandler(typeof(TLeft), typeof(TRight), ToUntypedAction(handler));
+        }
         public void Dispatch()
         {
             var leftType = mLeft.GetType();
@@ -58,10 +62,13 @@ namespace Calculator.Logic
             {
                 mDispatcher = dispatcher;
             }
-            public void Do(Action<TLeft, TRight> action)
+            public void Do(Action<TLeft, TRight> handler)
             {
-                mDispatcher.AddHandler(typeof(TLeft), typeof(TRight), (l, r) => action((TLeft)l, (TRight)r));
+                mDispatcher.AddHandler(typeof(TLeft), typeof(TRight), ToUntypedAction(handler));
             }
         }
+
+        static Action<object, object> ToUntypedAction<TLeft, TRight>(Action<TLeft, TRight> action)
+            => (l, r) => action((TLeft) l, (TRight) r);
     }
 }
