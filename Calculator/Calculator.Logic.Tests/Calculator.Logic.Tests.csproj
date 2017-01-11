@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="DirectCalculationSimplifierTests.cs" />
+    <Compile Include="DoubleDispatchTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />

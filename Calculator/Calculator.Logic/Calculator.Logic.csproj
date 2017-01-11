@@ -52,6 +52,7 @@
     <Compile Include="AdditionAndSubtractionMover.cs" />
     <Compile Include="AdditionSubtractionDispatcher.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
+    <Compile Include="Dispatcher.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="ISimplifier.cs" />
