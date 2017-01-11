@@ -27,7 +27,7 @@ namespace CalculatorConsoleApplication
         static IExpression UseSimplifier(ITokenizer token) => new Simplifier().Simplify(CreateInMemoryModel(token));
         static string GetUserInput() => Console.ReadLine();
         static bool IsSimplificationNecessary(ITokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
-        static double UseEvaluationExpressionVisitor(ITokenizer token)
+        static decimal UseEvaluationExpressionVisitor(ITokenizer token)
             => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
         static string UseFormattingExpressionVisitor(IExpression expression)
             => new FormattingExpressionVisitor().Format(expression);

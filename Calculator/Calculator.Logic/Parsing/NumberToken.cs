@@ -10,9 +10,9 @@ namespace Calculator.Logic.Parsing
         public NumberToken(string asText)
         {
             asText = asText.Replace(',', '.');
-            Value = double.Parse(asText, NumberStyles.Any, CultureInfo.InvariantCulture);
+            Value = decimal.Parse(asText, NumberStyles.Any, CultureInfo.InvariantCulture);
         }
-        public double Value { get; }
+        public decimal Value { get; }
         public void Accept(ITokenVisitor visitor)
         {
             visitor.Visit(this);

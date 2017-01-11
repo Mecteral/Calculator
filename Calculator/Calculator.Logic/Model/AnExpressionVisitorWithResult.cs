@@ -53,7 +53,7 @@ namespace Calculator.Logic.Model
         protected abstract TResult UseMultiplication(TResult left, TResult right);
         protected abstract TResult UseAddition(TResult left, TResult right);
         protected abstract TResult UseDivision(TResult left, TResult right);
-        protected abstract TResult UseConstant(double value);
+        protected abstract TResult UseConstant(decimal value);
         protected abstract TResult UseVariable(string variable);
     }
 }

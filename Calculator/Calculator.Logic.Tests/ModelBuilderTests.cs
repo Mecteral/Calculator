@@ -128,7 +128,7 @@ namespace Calculator.Logic.Tests
         {
             //3.131
             var constantNumber = TestExpecting<Constant>(Number(3.131));
-            constantNumber.Value.Should().Be(3.131);
+            constantNumber.Value.Should().Be(3.131M);
         }
         [Test]
         public void Variable_Minus_Number_Builds_Subtraction()

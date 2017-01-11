@@ -8,7 +8,7 @@ namespace Calculator.Logic.Tests.Model
     [TestFixture]
     public class EvaluatingExpressionVisitorTests
     {
-        static void Check(IExpression input, double expected)
+        static void Check(IExpression input, decimal expected)
         {
             EvaluatingExpressionVisitor.Evaluate(input).Should().Be(expected);
         }
@@ -20,12 +20,12 @@ namespace Calculator.Logic.Tests.Model
         [Test]
         public void Evaluate_Constant()
         {
-            Check(TestExpressions.Pi, 3.141);
+            Check(TestExpressions.Pi, 3.141M);
         }
         [Test]
         public void Evaluate_Division()
         {
-            Check(TestExpressions.Divide3By4, 0.75);
+            Check(TestExpressions.Divide3By4, 0.75M);
         }
         [Test]
         public void Evaluate_Multiplication()
@@ -45,7 +45,7 @@ namespace Calculator.Logic.Tests.Model
         [Test]
         public void Nested_Case()
         {
-            Check(TestExpressions.Nested, -0.25);
+            Check(TestExpressions.Nested, -0.25M);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Calculator.Logic.Tests.Model
     {
         public static Addition Add3To4
             => new Addition {Left = new Constant {Value = 3}, Right = new Constant {Value = 4}};
-        public static Constant Pi => new Constant {Value = 3.141};
+        public static Constant Pi => new Constant {Value = 3.141M};
         public static Division Divide3By4
             => new Division {Left = new Constant {Value = 3}, Right = new Constant {Value = 4}};
         public static Multiplication Multiply3Times4

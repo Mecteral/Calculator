@@ -25,7 +25,7 @@ namespace Calculator.Logic.Model
         {
             return new Division {Left = left, Right = right};
         }
-        protected override IExpression UseConstant(double value)
+        protected override IExpression UseConstant(decimal value)
         {
             return new Constant {Value = value};
         }
