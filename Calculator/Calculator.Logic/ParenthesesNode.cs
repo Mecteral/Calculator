@@ -7,8 +7,8 @@ namespace Calculator.Logic
     {
         public readonly ParenthesedExpression ParenthesedExpression = new ParenthesedExpression();
         public IList<ParenthesesNode> Children { get; } = new List<ParenthesesNode>();
-        public IList<IExpression> Expressions { get; set; } = new List<IExpression>();
-        public ParenthesesNode Parent { get; set; }
+        public IList<IExpression> Expressions { get; } = new List<IExpression>();
+        public ParenthesesNode Parent { get; private set; }
         public bool HasChild { get; private set; }
         public void AddChild(ParenthesesNode child)
         {

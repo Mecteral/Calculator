@@ -51,9 +51,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void BoundAdditionIsBiggerThanBoundMultiplication()
         {
-            var underTest = new List<string>();
-            underTest.Add("3+2+1+0");
-            underTest.Add("3*2+1");
+            var underTest = new List<string> {"3+2+1+0", "3*2+1"};
             CheckEnumerable(CreateIExpressionEnumerableFromStrings(underTest), 1);
         }
         [Test]
@@ -79,9 +77,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void SimpleAdditionIsSmallerThanBoundAddition()
         {
-            var underTest = new List<string>();
-            underTest.Add("3+2");
-            underTest.Add("3+2+1");
+            var underTest = new List<string> {"3+2", "3+2+1"};
             CheckEnumerable(CreateIExpressionEnumerableFromStrings(underTest), 0);
         }
     }

@@ -34,11 +34,6 @@ namespace Calculator.Logic
         public IExpression Simplify(IExpression input)
         {
             mExpression = ExpressionCloner.Clone(input);
-            Calculate();
-            return mExpression;
-        }
-        public IExpression Calculate()
-        {
             mExpression.Accept(this);
             return mExpression;
         }

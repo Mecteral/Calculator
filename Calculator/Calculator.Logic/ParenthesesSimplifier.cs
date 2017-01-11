@@ -30,14 +30,15 @@ namespace Calculator.Logic
         }
         public void Visit(ParenthesedExpression parenthesed)
         {
-            if (parenthesed.Wrapped is IArithmeticOperation) RemoveParenthesesIfPossible((IArithmeticOperation) parenthesed.Wrapped);
+            var wrapped = parenthesed.Wrapped as IArithmeticOperation;
+            if (wrapped != null) RemoveParenthesesIfPossible(wrapped);
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
         public IExpression Simplify(IExpression input)
         {
             mExpression = ExpressionCloner.Clone(input);
-            RemoveParentheses();
+            mExpression.Accept(this);
             return mExpression;
         }
         void RemoveParenthesesIfPossible(IArithmeticOperation operation)
@@ -47,11 +48,6 @@ namespace Calculator.Logic
                 HandleParenthesis(operation, o => o.Left);
             }
             else if (operation.Right is ParenthesedExpression) { HandleParenthesis(operation, o => o.Right); }
-        }
-        public IExpression RemoveParentheses()
-        {
-            mExpression.Accept(this);
-            return mExpression;
         }
         static void HandleParenthesis(
             IArithmeticOperation operation,

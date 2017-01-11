@@ -9,7 +9,7 @@
         {
             Variable += asText;
         }
-        public string Variable { get; private set; }
+        public string Variable { get; }
         public void Accept(ITokenVisitor visitor)
         {
             visitor.Visit(this);
