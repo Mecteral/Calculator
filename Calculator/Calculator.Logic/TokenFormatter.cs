@@ -2,6 +2,7 @@
 using System.Globalization;
 using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.Parsing.ConversionTokenizer;
 
 namespace Calculator.Logic
 {
@@ -41,6 +42,17 @@ namespace Calculator.Logic
         {
             mResult += variableToken.Variable;
         }
+
+        public void Visit(MetricToken metricToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(ImperialToken imperialToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public string Format(IEnumerable<IToken> tokens)
         {
             foreach (var token in tokens) token.Accept(this);
