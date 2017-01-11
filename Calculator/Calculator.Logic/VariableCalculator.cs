@@ -116,7 +116,10 @@ namespace Calculator.Logic
         {
             HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l - r);
         }
-        void ModifyOperation(IArithmeticOperation operation, IArithmeticOperation chainedOperation, Action<IArithmeticOperation, IArithmeticOperation> handler)
+        void ModifyAddition(
+            IArithmeticOperation operation,
+            IArithmeticOperation chainedOperation,
+            Action<IArithmeticOperation, IArithmeticOperation> handler)
         {
             if (mIsRight)
             {
@@ -126,46 +129,46 @@ namespace Calculator.Logic
             else
             {
                 chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Right);
-                handler(operation, (IArithmeticOperation)chainedOperation.Left);
+                handler(operation, (IArithmeticOperation) chainedOperation.Left);
+            }
+        }
+        void ModifySubtraction(
+            IArithmeticOperation operation,
+            IArithmeticOperation chainedOperation,
+            Action<IArithmeticOperation, IArithmeticOperation> handler)
+        {
+            ModifySubtraction(operation, chainedOperation, handler, handler);
+        }
+        void ModifySubtraction(
+            IArithmeticOperation operation,
+            IArithmeticOperation chainedOperation,
+            Action<IArithmeticOperation, IArithmeticOperation> righthandler,
+            Action<IArithmeticOperation, IArithmeticOperation> leftHandler)
+        {
+            if (mIsRight)
+            {
+                righthandler(operation, (IArithmeticOperation) chainedOperation.Right);
+                chainedOperation.Right = new Constant {Value = 0};
+            }
+            else
+            {
+                leftHandler(operation, (IArithmeticOperation) chainedOperation.Left);
+                chainedOperation.Left = new Constant {Value = 0};
             }
         }
         void MakeMove(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
         {
             if (chainedOperation == null) return;
-            if (operation is Addition && chainedOperation is Addition)
+
+            new AdditionSubtractionDispatcher(operation, chainedOperation)
             {
-                ModifyOperation(operation, chainedOperation, HandleAdditionOfVariables);
-            }
-            else if (operation is Subtraction && chainedOperation is Addition)
-            {
-                ModifyOperation(operation, chainedOperation, HanldeSubtractionToAddition);
-            }
-            else if (operation is Addition && chainedOperation is Subtraction)
-            {
-                if (mIsRight)
-                {
-                    HandleSubtractionToAddition(operation, (IArithmeticOperation) chainedOperation.Right);
-                    chainedOperation.Right = new Constant {Value = 0};
-                }
-                else
-                {
-                    HandleAdditionOfVariables(operation, (IArithmeticOperation) chainedOperation.Left);
-                    chainedOperation.Left = new Constant {Value = 0};
-                }
-            }
-            else if (operation is Subtraction && chainedOperation is Subtraction)
-            {
-                if (mIsRight)
-                {
-                    HandleSubtractionToSubtraction(operation, (IArithmeticOperation) chainedOperation.Right);
-                    chainedOperation.Right = new Constant {Value = 0};
-                }
-                else
-                {
-                    HandleSubtractionToSubtraction(operation, (IArithmeticOperation) chainedOperation.Left);
-                    chainedOperation.Left = new Constant {Value = 0};
-                }
-            }
+                ForAddAdd = (op, chained) => ModifyAddition(op, chained, HandleAdditionOfVariables),
+                ForSubAdd = (op, chained) => ModifyAddition(op, chained, HanldeSubtractionToAddition),
+                ForSubSub = (op, chained) => ModifySubtraction(op, chained, HandleSubtractionToSubtraction),
+                ForAddSub =
+                    (op, chained) =>
+                        ModifySubtraction(op, chained, HandleSubtractionToAddition, HandleAdditionOfVariables)
+            }.Execute();
         }
         void HandleReplacement(IExpression operation, IExpression replacement)
         {

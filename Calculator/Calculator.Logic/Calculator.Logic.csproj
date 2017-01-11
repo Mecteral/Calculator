@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMover.cs" />
+    <Compile Include="AdditionSubtractionDispatcher.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
