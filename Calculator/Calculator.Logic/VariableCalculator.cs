@@ -116,36 +116,31 @@ namespace Calculator.Logic
         {
             HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l - r);
         }
+        void ModifyOperation(IArithmeticOperation operation, IArithmeticOperation chainedOperation, Action<IArithmeticOperation, IArithmeticOperation> handler)
+        {
+            if (mIsRight)
+            {
+                chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Left);
+                handler(operation, (IArithmeticOperation) chainedOperation.Right);
+            }
+            else
+            {
+                chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Right);
+                handler(operation, (IArithmeticOperation)chainedOperation.Left);
+            }
+        }
         void MakeMove(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
         {
             if (chainedOperation == null) return;
             if (operation is Addition && chainedOperation is Addition)
             {
-                if (mIsRight)
-                {
-                    chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Left);
-                    HandleAdditionOfVariables(operation, (IArithmeticOperation) chainedOperation.Right);
-                }
-                else
-                {
-                    chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Right);
-                    HandleAdditionOfVariables(operation, (IArithmeticOperation) chainedOperation.Left);
-                }
+                ModifyOperation(operation, chainedOperation, HandleAdditionOfVariables);
             }
-            if (operation is Subtraction && chainedOperation is Addition)
+            else if (operation is Subtraction && chainedOperation is Addition)
             {
-                if (mIsRight)
-                {
-                    chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Left);
-                    HanldeSubtractionToAddition(operation, (IArithmeticOperation) chainedOperation.Right);
-                }
-                else
-                {
-                    chainedOperation.Parent.ReplaceChild(chainedOperation, chainedOperation.Right);
-                    HanldeSubtractionToAddition(operation, (IArithmeticOperation) chainedOperation.Left);
-                }
+                ModifyOperation(operation, chainedOperation, HanldeSubtractionToAddition);
             }
-            if (operation is Addition && chainedOperation is Subtraction)
+            else if (operation is Addition && chainedOperation is Subtraction)
             {
                 if (mIsRight)
                 {
@@ -158,7 +153,7 @@ namespace Calculator.Logic
                     chainedOperation.Left = new Constant {Value = 0};
                 }
             }
-            if (operation is Subtraction && chainedOperation is Subtraction)
+            else if (operation is Subtraction && chainedOperation is Subtraction)
             {
                 if (mIsRight)
                 {
