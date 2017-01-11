@@ -6,7 +6,7 @@ namespace Calculator.Logic
 {
     public class VariableCalculator : IExpressionVisitor, ISimplifier
     {
-        static IExpression sCalculatedExpression;
+        IExpression mCalculatedExpression;
         string mCurrentVariable;
         bool mIsRight;
         bool mWasChanged;
@@ -37,14 +37,9 @@ namespace Calculator.Logic
         public IExpression Simplify(IExpression input)
         {
             mWasChanged = false;
-            sCalculatedExpression = ExpressionCloner.Clone(input);
-            CalculateVariables(sCalculatedExpression);
-            return sCalculatedExpression;
-        }
-        static void CalculateVariables(IExpression expression)
-        {
-            var calculator = new VariableCalculator();
-            expression.Accept(calculator);
+            mCalculatedExpression = ExpressionCloner.Clone(input);
+            mCalculatedExpression.Accept(this);
+            return mCalculatedExpression;
         }
         void VisitOperands(IArithmeticOperation operation)
         {
@@ -107,7 +102,7 @@ namespace Calculator.Logic
                     }
                     else
                     {
-                        sCalculatedExpression = replacement;
+                        mCalculatedExpression = replacement;
                         mWasChanged = true;
                     }
                 }
@@ -177,12 +172,12 @@ namespace Calculator.Logic
                 }
             }
         }
-        static void HandleReplacement(IExpression operation, IExpression replacement)
+        void HandleReplacement(IExpression operation, IExpression replacement)
         {
             if (operation.HasParent) {
                 operation.Parent.ReplaceChild(operation, replacement);
             }
-            else sCalculatedExpression = replacement;
+            else mCalculatedExpression = replacement;
         }
         void HandleSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
@@ -236,7 +231,7 @@ namespace Calculator.Logic
             HandleReplacement(operation, replacement);
             if (!operation.HasParent && !mIsRight)
             {
-                sCalculatedExpression = new Addition
+                mCalculatedExpression = new Addition
                 {
                     Left = operation.Left,
                     Right =
