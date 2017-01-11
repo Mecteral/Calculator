@@ -15,7 +15,7 @@ namespace Calculator.Logic.Tests
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
             var calculator = new VariableCalculator();
-            var underTest = calculator.Calculate(inputTree);
+            var underTest = calculator.Simplify(inputTree);
             var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }

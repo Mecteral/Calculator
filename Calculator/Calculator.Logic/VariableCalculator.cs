@@ -1,4 +1,5 @@
-﻿using Calculator.Logic.Model;
+﻿using System;
+using Calculator.Logic.Model;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -45,13 +46,6 @@ namespace Calculator.Logic
             var calculator = new VariableCalculator();
             expression.Accept(calculator);
         }
-        public IExpression Calculate(IExpression expression)
-        {
-            mWasChanged = false;
-            sCalculatedExpression = ExpressionCloner.Clone(expression);
-            CalculateVariables(sCalculatedExpression);
-            return sCalculatedExpression;
-        }
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
@@ -86,9 +80,16 @@ namespace Calculator.Logic
         /// <param name="operation"></param>
         void HandleDoubleMultiplicationInAddition(IArithmeticOperation operation)
         {
+            HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l + r);
+        }
+        void HandleDoubleMultiplicationInAdditiveOperation(
+            IArithmeticOperation operation,
+            Func<decimal, decimal, decimal> calculateLeftConstant)
+        {
             var operationLeft = (IArithmeticOperation) operation.Left;
             var operationRight = (IArithmeticOperation) operation.Right;
-            if (operationLeft.Right is Variable && operationRight.Right is Variable)
+            if (operationLeft.Right is Variable && operationRight.Right is Variable && operationLeft.Left is Constant &&
+                operationRight.Left is Constant)
             {
                 var variableOne = (Variable) operationLeft.Right;
                 var variableTwo = (Variable) operationRight.Right;
@@ -98,11 +99,10 @@ namespace Calculator.Logic
                     var constantTwo = (Constant) operationRight.Left;
                     var replacement = new Multiplication
                     {
-                        Left = new Constant {Value = constantOne.Value + constantTwo.Value},
+                        Left = new Constant {Value = calculateLeftConstant(constantOne.Value, constantTwo.Value)},
                         Right = variableOne
                     };
-                    if (operation.HasParent)
-                    {
+                    if (operation.HasParent) {
                         operation.Parent.ReplaceChild(operation, replacement);
                     }
                     else
@@ -119,33 +119,7 @@ namespace Calculator.Logic
         /// <param name="operation"></param>
         void HandleDoubleMultiplicationInSubtraction(IArithmeticOperation operation)
         {
-            var operationLeft = (IArithmeticOperation) operation.Left;
-            var operationRight = (IArithmeticOperation) operation.Right;
-            if (operationLeft.Right is Variable && operationRight.Right is Variable && operationLeft.Left is Constant &&
-                operationRight.Left is Constant)
-            {
-                var variableOne = (Variable) operationLeft.Right;
-                var variableTwo = (Variable) operationRight.Right;
-                if (variableOne.Variables == variableTwo.Variables)
-                {
-                    var constantOne = (Constant) operationLeft.Left;
-                    var constantTwo = (Constant) operationRight.Left;
-                    var replacement = new Multiplication
-                    {
-                        Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                        Right = variableOne
-                    };
-                    if (operation.HasParent)
-                    {
-                        operation.Parent.ReplaceChild(operation, replacement);
-                    }
-                    else
-                    {
-                        sCalculatedExpression = replacement;
-                        mWasChanged = true;
-                    }
-                }
-            }
+            HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l - r);
         }
         void MakeMove(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
         {
@@ -203,12 +177,10 @@ namespace Calculator.Logic
                 }
             }
         }
-        void HandleReplacement(IArithmeticOperation operation, IArithmeticOperation replacement)
+        static void HandleReplacement(IExpression operation, IExpression replacement)
         {
-            if (operation.HasParent)
-            {
-                if (operation.Parent is ParenthesedExpression) operation.Parent.ReplaceChild(operation, replacement);
-                else operation.Parent.ReplaceChild(operation, replacement);
+            if (operation.HasParent) {
+                operation.Parent.ReplaceChild(operation, replacement);
             }
             else sCalculatedExpression = replacement;
         }
