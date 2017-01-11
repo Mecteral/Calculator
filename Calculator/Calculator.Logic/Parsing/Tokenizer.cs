@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,16 +22,17 @@ namespace Calculator.Logic.Parsing
         }
         IEnumerable<IToken> FillTokens()
         {
-            foreach (var c in mInput)
+            for (var i = 0; i < mInput.Length; i++)
             {
-                if (c == '+' || c == '-' || c == '*' || c == '/') AddOperatorToken(c);
-                else if (c == '(' || c == ')') AddParenthesisToken(c);
-                else if (char.IsLetter(c)) AddVariableToken(c);
-                else if (char.IsNumber(c) || c == '.' || c == ',')
+                var c = mInput[i];
+                if (char.IsNumber(c) || c == '.' || c == ',' || (mInput.Length >= i + 1 && c == 'E' && char.IsNumber(mInput[i + 1])) || (mInput.Length >= i + 2 && c == 'E' && mInput[i + 1] == '-' && char.IsNumber(mInput[i + 2])) || (i-1 > 0 && c == '-' && mInput[i - 1] == 'E'))
                 {
                     mWasNumber = true;
                     mNumber += c;
                 }
+                else if (c == '+' || c == '-' || c == '*' || c == '/') AddOperatorToken(c);
+                else if (c == '(' || c == ')') AddParenthesisToken(c);
+                else if (char.IsLetter(c)) AddVariableToken(c);
             }
             if (mNumber != null) mTempTokens.Add(new NumberToken(mNumber));
             return mTempTokens;
