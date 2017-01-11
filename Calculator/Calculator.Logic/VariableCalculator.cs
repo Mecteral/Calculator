@@ -271,11 +271,6 @@ namespace Calculator.Logic
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
             var constantOne = (Constant) multiplicationOfOperation.Left;
             var constantTwo = (Constant) multiplication.Left;
-            var parenthesed = new Multiplication
-            {
-                Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                Right = new Variable {Variables = mCurrentVariable}
-            };
             var replacement = new Addition
             {
                 Left = operation.Left,
@@ -293,11 +288,6 @@ namespace Calculator.Logic
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
             var constantOne = (Constant) multiplication.Left;
             var constantTwo = (Constant) multiplicationOfOperation.Left;
-            var parenthesed = new Multiplication
-            {
-                Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                Right = new Variable {Variables = mCurrentVariable}
-            };
             var replacement = new Addition
             {
                 Left = operation.Left,
@@ -324,11 +314,6 @@ namespace Calculator.Logic
                         Left = new Constant {Value = constantOne.Value + constantTwo.Value},
                         Right = new Variable {Variables = mCurrentVariable}
                     }
-            };
-            var parenthesed = new Multiplication
-            {
-                Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                Right = new Variable {Variables = mCurrentVariable}
             };
             HandleReplacement(operation, replacement);
             if (!operation.HasParent && !mIsRight)
@@ -359,11 +344,6 @@ namespace Calculator.Logic
                         Left = new Constant {Value = constantOne.Value - constantTwo.Value},
                         Right = new Variable {Variables = mCurrentVariable}
                     }
-            };
-            var parenthesed = new Multiplication
-            {
-                Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                Right = new Variable {Variables = mCurrentVariable}
             };
             HandleReplacement(operation, replacement);
         }

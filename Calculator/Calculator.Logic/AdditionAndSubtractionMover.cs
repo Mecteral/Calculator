@@ -175,7 +175,7 @@ namespace Calculator.Logic
                         Left = operation.Left,
                         Right = new Subtraction {Left = chainedOperation.Right, Right = operation.Right}
                     };
-                    CheckForParent(operation, chainedOperation, replacement);
+                    CheckForParent(operation, replacement);
                     mWasChanged = true;
                 }
                 else
@@ -186,15 +186,12 @@ namespace Calculator.Logic
                         Left = operation.Left,
                         Right = new Subtraction {Left = chainedOperation.Left, Right = operation.Right}
                     };
-                    CheckForParent(operation, chainedOperation, replacement);
+                    CheckForParent(operation, replacement);
                     mWasChanged = true;
                 }
             }
         }
-        static void CheckForParent(
-            IArithmeticOperation operation,
-            IArithmeticOperation chainedOperation,
-            Addition replacement)
+        static void CheckForParent(IArithmeticOperation operation, Addition replacement)
         {
             if (!operation.HasParent) sMovedExpression = replacement;
             else

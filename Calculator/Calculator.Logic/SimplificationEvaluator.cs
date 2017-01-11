@@ -44,8 +44,9 @@ namespace Calculator.Logic
         public IExpression FindSmallesExpressionInEnumerable(IEnumerable<IExpression> expressions)
         {
             if (expressions == null) throw new InvalidExpressionException();
-            var result = expressions.First();
-            foreach (var expression in expressions)
+            var frozen = expressions as IExpression[] ?? expressions.ToArray();
+            var result = frozen.First();
+            foreach (var expression in frozen)
             {
                 var currentExpression = expression;
                 if (CountExpression(expression) < CountExpression(result)) { result = currentExpression; }
