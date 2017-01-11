@@ -33,8 +33,9 @@ namespace Calculator.Logic.Tests
         static void CheckEnumerable(IEnumerable<IExpression> input, int expectedPosition)
         {
             var underTest = new SimplificationEvaluator();
-            var expected = input.ElementAt(expectedPosition);
-            underTest.FindSmallesExpressionInEnumerable(input).Should().Be(expected);
+            var frozen = input as IExpression[] ?? input.ToArray();
+            var expected = frozen.ElementAt(expectedPosition);
+            underTest.FindSmallesExpressionInEnumerable(frozen).Should().Be(expected);
         }
 
         static IEnumerable<IToken> Tokenize(string input)

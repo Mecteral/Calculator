@@ -108,14 +108,14 @@ namespace Calculator.Logic
             }
         }
 
-        void HandleOperations<U, V>(IList<IExpression> expressions) where U : IArithmeticOperation
-            where V : IArithmeticOperation
+        void HandleOperations<TFirstAlternative, TSecondAlternative>(IList<IExpression> expressions) where TFirstAlternative : IArithmeticOperation
+            where TSecondAlternative : IArithmeticOperation
         {
             var i = 0;
             while (i < expressions.Count)
             {
-                if (expressions[i] is U) HandleOperation<U>(expressions, i);
-                else if (expressions[i] is V) HandleOperation<V>(expressions, i);
+                if (expressions[i] is TFirstAlternative) HandleOperation<TFirstAlternative>(expressions, i);
+                else if (expressions[i] is TSecondAlternative) HandleOperation<TSecondAlternative>(expressions, i);
                 else ++i;
             }
         }

@@ -10,7 +10,7 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var token = GetStringAndCreateTokens();
             if (IsSimplificationNecessary(token)) Console.WriteLine(UseFormattingExpressionVisitor(UseSimplifier(token)));

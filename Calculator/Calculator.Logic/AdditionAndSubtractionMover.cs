@@ -165,10 +165,10 @@ namespace Calculator.Logic
                 sMovedExpression = replacement;
             else
             {
-                HandleParent(operation, chainedOperation, replacement);
+                HandleParent(operation, replacement);
             }
         }
-        static void HandleParent(IArithmeticOperation operation, IArithmeticOperation chainedOperation, Addition replacement)
+        static void HandleParent(IArithmeticOperation operation, IExpression replacement)
         {
             if (operation.Parent is IArithmeticOperation)
             {

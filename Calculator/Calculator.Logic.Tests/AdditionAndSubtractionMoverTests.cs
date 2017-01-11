@@ -24,16 +24,6 @@ namespace Calculator.Logic.Tests
             var asString = new FormattingExpressionVisitor().Format(underTest);
             asString.Should().Be(expected);
         }
-
-        static void CheckWithFullSimplification(string input, string expected)
-        {
-            var tokens = Tokenize(input);
-            var inputTree = CreateInMemoryModel(tokens);
-            var simplifier = new Simplifier();
-            var underTest = simplifier.Simplify(inputTree);
-            var asString  = new FormattingExpressionVisitor().Format(underTest);
-            asString.Should().Be(expected);
-        }
         static IEnumerable<IToken> Tokenize(string input)
         {
             var tokenizer = new Tokenizer();
