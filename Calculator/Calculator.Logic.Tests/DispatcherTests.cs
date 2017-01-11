@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests
 {
     [TestFixture]
-    public class DoubleDispatchTests
+    public class DispatcherTests
     {
         [Test]
         public void If_No_Fitting_Handler_Defined_Calls_FallbackHandler()
