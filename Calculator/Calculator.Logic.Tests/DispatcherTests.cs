@@ -40,12 +40,12 @@ namespace Calculator.Logic.Tests
         {
             IExpression left = new Addition();
             IExpression right = new Constant();
-            var dispatcher = new Dispatcher(left, right) { FallbackHandler = (l, r) => Assert.Fail() };
-
-            dispatcher.On<Constant, Variable>((c, v) => { Assert.Fail(); });
             var wasRightComboPicked = false;
-            dispatcher.On<Addition, Constant>((a, m) => { wasRightComboPicked = true; });
 
+
+            var dispatcher = new Dispatcher(left, right);
+            dispatcher.On<Constant, Variable>((c, v) => { Assert.Fail(); });
+            dispatcher.On<Addition, Constant>((a, m) => { wasRightComboPicked = true; });
             dispatcher.Dispatch();
 
             wasRightComboPicked.Should().BeTrue();

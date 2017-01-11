@@ -28,13 +28,20 @@ namespace Calculator.Logic
         {
             var leftType = mLeft.GetType();
             var rightType = mRight.GetType();
-            if (!mHandlers.ContainsKey(leftType)) FallbackHandler(mLeft, mRight);
+            if (!mHandlers.ContainsKey(leftType)) InvokeFallbackHandler();
             else
             {
                 var leftHandlers = mHandlers[leftType];
-                if (!leftHandlers.ContainsKey(rightType)) FallbackHandler(mLeft, mRight);
+                if (!leftHandlers.ContainsKey(rightType)) InvokeFallbackHandler();
                 else leftHandlers[rightType](mLeft, mRight);
             }
+        }
+        void InvokeFallbackHandler()
+        {
+            if (null == FallbackHandler)
+                throw new InvalidOperationException(
+                    $"You must either take care to define handlers for all permutations that might come in; or define '{nameof(FallbackHandler)}'.");
+            FallbackHandler(mLeft, mRight);
         }
         void AddHandler(Type leftType, Type rightType, Action<object, object> action)
         {
@@ -42,6 +49,9 @@ namespace Calculator.Logic
             var leftHandlers = mHandlers[leftType];
             leftHandlers[rightType] = action;
         }
+        static Action<object, object> ToUntypedAction<TLeft, TRight>(Action<TLeft, TRight> action)
+            => (l, r) => action((TLeft) l, (TRight) r);
+
         public class LeftContinuation<TLeft>
         {
             readonly Dispatcher mDispatcher;
@@ -67,8 +77,5 @@ namespace Calculator.Logic
                 mDispatcher.AddHandler(typeof(TLeft), typeof(TRight), ToUntypedAction(handler));
             }
         }
-
-        static Action<object, object> ToUntypedAction<TLeft, TRight>(Action<TLeft, TRight> action)
-            => (l, r) => action((TLeft) l, (TRight) r);
     }
 }
