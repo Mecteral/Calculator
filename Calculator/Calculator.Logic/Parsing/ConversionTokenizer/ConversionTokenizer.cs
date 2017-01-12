@@ -41,10 +41,10 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
 
         void AddToken(string input)
         {
-            if (input.Contains("ft") || input.Contains("in") || input.Contains("yd") || input.Contains("mI") || input.Contains("th") || input.Contains("ch") || input.Contains("fur") || input.Contains("lea") || input.Contains("ftm"))
-                mTempTokens.Add(new ImperialLengthToken(input));
-            else if (input.Contains("sft")||input.Contains("perch") || input.Contains("rood") || input.Contains("acre"))
+            if (input.Contains("sft") || input.Contains("perch") || input.Contains("rood") || input.Contains("acre"))
                 mTempTokens.Add(new ImperialAreaToken(input));
+            else if (input.Contains("ft") || input.Contains("in") || input.Contains("yd") || input.Contains("mI") || input.Contains("th") || input.Contains("ch") || input.Contains("fur") || input.Contains("lea") || input.Contains("ftm"))
+                mTempTokens.Add(new ImperialLengthToken(input));
             else if (input.Contains("floz") || input.Contains("gi") || input.Contains("pt") || input.Contains("qt") || input.Contains("gal"))
                 mTempTokens.Add(new ImperialVolumeToken(input));
             else if (input.Contains("gr") || input.Contains("dr") || input.Contains("oz") || input.Contains("lb") || input.Contains("st") || input.Contains("cwt") || input.Contains("it"))

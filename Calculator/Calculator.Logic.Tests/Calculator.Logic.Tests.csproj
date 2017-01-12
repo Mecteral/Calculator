@@ -70,6 +70,7 @@
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
+    <Compile Include="Model\ConversionModel\ConversionModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />
     <Compile Include="Model\ExpressionClonerTests.cs" />
     <Compile Include="Model\ExpressionExtensionsTests.cs" />

@@ -69,6 +69,14 @@
     <Compile Include="Model\ConversionModel\IArithmeticConversionOperation.cs" />
     <Compile Include="Model\ConversionModel\IConversionExpression.cs" />
     <Compile Include="Model\ConversionModel\IConversionExpressionVisitor.cs" />
+    <Compile Include="Model\ConversionModel\ImperialAreaExpression.cs" />
+    <Compile Include="Model\ConversionModel\ImperialLengthExpression.cs" />
+    <Compile Include="Model\ConversionModel\ImperialMassExpression.cs" />
+    <Compile Include="Model\ConversionModel\ImperialVolumeExpression.cs" />
+    <Compile Include="Model\ConversionModel\MetricAreaExpression.cs" />
+    <Compile Include="Model\ConversionModel\MetricLengthExpression.cs" />
+    <Compile Include="Model\ConversionModel\MetricMassExpression.cs" />
+    <Compile Include="Model\ConversionModel\MetricVolumeExpression.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\ExpressionExtensions.cs" />
