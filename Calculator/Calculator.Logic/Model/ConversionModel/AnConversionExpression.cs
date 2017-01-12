@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Logic.Model.ConversionModel
 {
-    abstract class AnConversionExpression : IConversionExpression
+    public abstract class AnConversionExpression : IConversionExpression
     {
         public IConversionExpression Parent { get; protected internal set; }
         public bool HasParent => null != Parent;
