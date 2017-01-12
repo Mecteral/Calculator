@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using Calculator.Logic.Model.ConversionModel;
 
 namespace Calculator.Logic
@@ -95,28 +96,26 @@ namespace Calculator.Logic
             }
         }
 
-        static decimal CalculateValueForSpecificOperationType(IArithmeticConversionOperation operation, decimal lhs, decimal rhs)
+        static decimal CalculateValueForSpecificOperationType(IArithmeticConversionOperation operation, decimal lhs,
+            decimal rhs)
         {
             if (operation is ConversionAddition)
             {
                 return lhs + rhs;
             }
-            else if (operation is ConversionSubtraction)
+            if (operation is ConversionSubtraction)
             {
                 return lhs - rhs;
             }
-            else if (operation is ConversionMultiplication)
+            if (operation is ConversionMultiplication)
             {
                 return lhs*rhs;
             }
-            else if (operation is ConversionDivision)
+            if (operation is ConversionDivision)
             {
                 return lhs/rhs;
             }
-            else
-            {
-                throw new InvalidExpressionException();
-            }
+            throw new InvalidExpressionException();
         }
 
         void CalculateIfNoConversionIsNeeded(IArithmeticConversionOperation operation)
@@ -127,59 +126,84 @@ namespace Calculator.Logic
             {
                 if (lhs is MetricVolumeExpression)
                 {
-                    var templhs = (MetricVolumeExpression)lhs;
-                    var temprhs = (MetricVolumeExpression)rhs;
-                    mReplacement = new MetricVolumeExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (MetricVolumeExpression) lhs;
+                    var temprhs = (MetricVolumeExpression) rhs;
+                    mReplacement = new MetricVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricAreaExpression)
                 {
-                    var templhs = (MetricAreaExpression)lhs;
-                    var temprhs = (MetricAreaExpression)rhs;
-                    mReplacement = new MetricAreaExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (MetricAreaExpression) lhs;
+                    var temprhs = (MetricAreaExpression) rhs;
+                    mReplacement = new MetricAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricLengthExpression)
                 {
-                    var templhs = (MetricLengthExpression)lhs;
-                    var temprhs = (MetricLengthExpression)rhs;
-                    mReplacement = new MetricLengthExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (MetricLengthExpression) lhs;
+                    var temprhs = (MetricLengthExpression) rhs;
+                    mReplacement = new MetricLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricMassExpression)
                 {
-                    var templhs = (MetricMassExpression)lhs;
-                    var temprhs = (MetricMassExpression)rhs;
-                    mReplacement = new MetricMassExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (MetricMassExpression) lhs;
+                    var temprhs = (MetricMassExpression) rhs;
+                    mReplacement = new MetricMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else
             {
                 if (lhs is ImperialVolumeExpression)
                 {
-                    var templhs = (ImperialVolumeExpression)lhs;
-                    var temprhs = (ImperialVolumeExpression)rhs;
-                    mReplacement = new ImperialVolumeExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialVolumeExpression) lhs;
+                    var temprhs = (ImperialVolumeExpression) rhs;
+                    mReplacement = new ImperialVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialAreaExpression)
                 {
-                    var templhs = (ImperialAreaExpression)lhs;
-                    var temprhs = (ImperialAreaExpression)rhs;
-                    mReplacement = new ImperialAreaExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialAreaExpression) lhs;
+                    var temprhs = (ImperialAreaExpression) rhs;
+                    mReplacement = new ImperialAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialLengthExpression)
                 {
-                    var templhs = (ImperialLengthExpression)lhs;
-                    var temprhs = (ImperialLengthExpression)rhs;
-                    mReplacement = new ImperialLengthExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialLengthExpression) lhs;
+                    var temprhs = (ImperialLengthExpression) rhs;
+                    mReplacement = new ImperialLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialMassExpression)
                 {
-                    var templhs = (ImperialMassExpression)lhs;
-                    var temprhs = (ImperialMassExpression)rhs;
-                    mReplacement = new ImperialMassExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialMassExpression) lhs;
+                    var temprhs = (ImperialMassExpression) rhs;
+                    mReplacement = new ImperialMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
         }
 
-        void CreateReplacementIfBothSidesOfTheOperationNeedToBeConvertedForImperial(IArithmeticConversionOperation operation)
+        void CreateReplacementIfBothSidesOfTheOperationNeedToBeConvertedForImperial(
+            IArithmeticConversionOperation operation)
         {
             var lhs = operation.Left;
             var rhs = operation.Right;
@@ -187,31 +211,45 @@ namespace Calculator.Logic
             {
                 if (lhs is MetricVolumeExpression)
                 {
-                    var templhs = (ImperialVolumeExpression)ConvertSingleExpression(lhs);
-                    var temprhs = (ImperialVolumeExpression)ConvertSingleExpression(rhs);
-                    mReplacement = new ImperialVolumeExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialVolumeExpression) ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialVolumeExpression) ConvertSingleExpression(rhs);
+                    mReplacement = new ImperialVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricAreaExpression)
                 {
-                    var templhs = (ImperialAreaExpression)ConvertSingleExpression(lhs);
-                    var temprhs = (ImperialAreaExpression)ConvertSingleExpression(rhs);
-                    mReplacement = new ImperialAreaExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialAreaExpression) ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialAreaExpression) ConvertSingleExpression(rhs);
+                    mReplacement = new ImperialAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricLengthExpression)
                 {
-                    var templhs = (ImperialLengthExpression)ConvertSingleExpression(lhs);
-                    var temprhs = (ImperialLengthExpression)ConvertSingleExpression(rhs);
-                    mReplacement = new ImperialLengthExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialLengthExpression) ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialLengthExpression) ConvertSingleExpression(rhs);
+                    mReplacement = new ImperialLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is MetricMassExpression)
                 {
-                    var templhs = (ImperialMassExpression)ConvertSingleExpression(lhs);
-                    var temprhs = (ImperialMassExpression)ConvertSingleExpression(rhs);
-                    mReplacement = new ImperialMassExpression { Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    var templhs = (ImperialMassExpression) ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialMassExpression) ConvertSingleExpression(rhs);
+                    mReplacement = new ImperialMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
         }
-        void CreateReplacementIfBothSidesOfTheOperationNeedToBeConvertedForMetric(IArithmeticConversionOperation operation)
+
+        void CreateReplacementIfBothSidesOfTheOperationNeedToBeConvertedForMetric(
+            IArithmeticConversionOperation operation)
         {
             var lhs = operation.Left;
             var rhs = operation.Right;
@@ -221,25 +259,37 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricVolumeExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricVolumeExpression) ConvertSingleExpression(lhs);
-                    mReplacement = new MetricVolumeExpression {Value = CalculateValueForSpecificOperationType(operation,templhs.Value,temprhs.Value)};
+                    mReplacement = new MetricVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialLengthExpression)
                 {
                     var templhs = (MetricLengthExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricLengthExpression) ConvertSingleExpression(lhs);
-                    mReplacement = new MetricLengthExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    mReplacement = new MetricLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialAreaExpression)
                 {
                     var templhs = (MetricAreaExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricAreaExpression) ConvertSingleExpression(lhs);
-                    mReplacement = new MetricAreaExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value) };
+                    mReplacement = new MetricAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else if (lhs is ImperialMassExpression)
                 {
                     var templhs = (MetricMassExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricMassExpression) ConvertSingleExpression(lhs);
-                    mReplacement = new MetricMassExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
         }
@@ -260,13 +310,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricVolumeExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricVolumeExpression) lhs;
-                    mReplacement = new MetricVolumeExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialVolumeExpression) ConvertSingleExpression(lhs);
                     var temprhs = (ImperialVolumeExpression) rhs;
-                    mReplacement = new ImperialVolumeExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is MetricAreaExpression && rhs is ImperialAreaExpression)
@@ -275,13 +331,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricAreaExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricAreaExpression) lhs;
-                    mReplacement = new MetricAreaExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialAreaExpression) ConvertSingleExpression(lhs);
                     var temprhs = (ImperialAreaExpression) rhs;
-                    mReplacement = new ImperialAreaExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is MetricLengthExpression && rhs is ImperialLengthExpression)
@@ -290,13 +352,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricLengthExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricLengthExpression) lhs;
-                    mReplacement = new MetricLengthExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialLengthExpression) ConvertSingleExpression(lhs);
                     var temprhs = (ImperialLengthExpression) rhs;
-                    mReplacement = new ImperialLengthExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is MetricMassExpression && rhs is ImperialMassExpression)
@@ -305,13 +373,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricMassExpression) ConvertSingleExpression(rhs);
                     var temprhs = (MetricMassExpression) lhs;
-                    mReplacement = new MetricMassExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialMassExpression) ConvertSingleExpression(lhs);
                     var temprhs = (ImperialMassExpression) rhs;
-                    mReplacement = new ImperialMassExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is ImperialVolumeExpression && rhs is MetricVolumeExpression)
@@ -320,13 +394,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricVolumeExpression) ConvertSingleExpression(lhs);
                     var temprhs = (MetricVolumeExpression) rhs;
-                    mReplacement = new MetricVolumeExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialVolumeExpression) ConvertSingleExpression(rhs);
                     var temprhs = (ImperialVolumeExpression) lhs;
-                    mReplacement = new ImperialVolumeExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialVolumeExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is ImperialAreaExpression && rhs is MetricAreaExpression)
@@ -335,13 +415,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricAreaExpression) ConvertSingleExpression(lhs);
                     var temprhs = (MetricAreaExpression) rhs;
-                    mReplacement = new MetricAreaExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialAreaExpression) ConvertSingleExpression(rhs);
                     var temprhs = (ImperialAreaExpression) lhs;
-                    mReplacement = new ImperialAreaExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialAreaExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is ImperialLengthExpression && rhs is MetricLengthExpression)
@@ -350,13 +436,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricLengthExpression) ConvertSingleExpression(lhs);
                     var temprhs = (MetricLengthExpression) rhs;
-                    mReplacement = new MetricLengthExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialLengthExpression) ConvertSingleExpression(rhs);
                     var temprhs = (ImperialLengthExpression) lhs;
-                    mReplacement = new ImperialLengthExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialLengthExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else if (lhs is ImperialMassExpression && rhs is MetricMassExpression)
@@ -365,13 +457,19 @@ namespace Calculator.Logic
                 {
                     var templhs = (MetricMassExpression) ConvertSingleExpression(lhs);
                     var temprhs = (MetricMassExpression) rhs;
-                    mReplacement = new MetricMassExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new MetricMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
                 else
                 {
                     var templhs = (ImperialMassExpression) ConvertSingleExpression(rhs);
                     var temprhs = (ImperialMassExpression) lhs;
-                    mReplacement = new ImperialMassExpression {Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)};
+                    mReplacement = new ImperialMassExpression
+                    {
+                        Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
+                    };
                 }
             }
             else

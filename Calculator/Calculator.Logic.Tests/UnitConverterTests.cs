@@ -230,8 +230,46 @@ namespace Calculator.Logic.Tests
         [Test]
         public void WithoutConversionMultiplicationMetric()
         {
+            var result = Convert("13g*13g", true);
+            result.Should().BeOfType<MetricMassExpression>().Which.Value.Should().Be(169);
+        }
+        [Test]
+        public void WithoutConversionDivisionMetric()
+        {
+            var result = Convert("169l/13l", true);
+            result.Should().BeOfType<MetricVolumeExpression>().Which.Value.Should().Be(13);
+        }
+        [Test]
+        public void WithoutConversionMetricArea()
+        {
+            var result = Convert("13qm*13qm", true);
+            result.Should().BeOfType<MetricAreaExpression>().Which.Value.Should().Be(169);
+        }
+        [Test]
+        public void WithoutConversionMetricLength()
+        {
             var result = Convert("13m*13m", true);
             result.Should().BeOfType<MetricLengthExpression>().Which.Value.Should().Be(169);
         }
+        [Test]
+        public void WithoutConversionImperialArea()
+        {
+            var result = Convert("13sft*13sft", false);
+            result.Should().BeOfType<ImperialAreaExpression>().Which.Value.Should().Be(169);
+        }
+        [Test]
+        public void WithoutConversionImperialVolume()
+        {
+            var result = Convert("13floz*13floz", false);
+            result.Should().BeOfType<ImperialVolumeExpression>().Which.Value.Should().Be(169);
+        }
+        [Test]
+        public void WithoutConversionImperialMass()
+        {
+            var result = Convert("13lb*13lb", false);
+            result.Should().BeOfType<ImperialMassExpression>().Which.Value.Should().Be(169);
+        }
+
+
     }
 }
