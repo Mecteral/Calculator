@@ -41,7 +41,7 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         [Test]
         public void MeterStaysMeter()
         {
-            CheckWithNumber("1000m", 0, 1000);
+            CheckWithNumber("1000m20cm", 0, 1000.20M);
         }
 
         [Test]
