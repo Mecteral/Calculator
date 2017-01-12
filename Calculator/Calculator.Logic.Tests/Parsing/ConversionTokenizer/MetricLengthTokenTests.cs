@@ -12,14 +12,14 @@ using FluentAssertions;
 namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
 {
     [TestFixture]
-    public class MetricTokenTests
+    public class MetricLengthTokenTests
     {
         static void CheckWithNumber(string input, int position, decimal expected)
         {
             var converter = new Logic.Parsing.ConversionTokenizer.ConversionTokenizer();
             converter.Tokenize(input);
             var underTest = converter.Tokens;
-            var result = (MetricToken)underTest.ElementAt(position);
+            var result = (MetricLengthToken)underTest.ElementAt(position);
             result.Value.Should().Be(expected);
         }
         [Test]
@@ -48,11 +48,11 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         public void MetricUnitsWithAddition()
         {
             var converter = new Logic.Parsing.ConversionTokenizer.ConversionTokenizer();
-            converter.Tokenize("10m+20km");
+            converter.Tokenize("10m+20.3km");
             var underTest = converter.Tokens;
-            underTest.ElementAt(0).Should().BeOfType<MetricToken>().Which.Value.Should().Be(10);
-            underTest.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Add);
-            underTest.ElementAt(2).Should().BeOfType<MetricToken>().Which.Value.Should().Be(20000);
+            underTest.ElementAt(0).Should().BeOfType<MetricLengthToken>().Which.Value.Should().Be(10);
+            underTest.ElementAt(1).Should().BeOfType<ConversionOperatorToken>().Which.Operator.Should().Be(Operator.Add);
+            underTest.ElementAt(2).Should().BeOfType<MetricLengthToken>().Which.Value.Should().Be(20300);
         }
     }
 }

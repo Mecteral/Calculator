@@ -1,17 +1,15 @@
-﻿using System;
 using System.Globalization;
-using Calculator.Logic.Parsing.CalculationTokenizer;
 
 namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
-    public class MetricToken : IToken
+    public abstract class AConversionTokens
     {
         public decimal Value { get; private set; } = 0;
         string mUnit;
         decimal mNumber;
         string mNumberAsText;
 
-        public MetricToken(string asText)
+        protected AConversionTokens(string asText)
         {
             asText = asText.Replace(',', '.');
 
@@ -47,16 +45,15 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                 mNumberAsText = null;
             }
         }
-
         void ConvertToMetersAndAddToValue()
         {
             switch (mUnit)
             {
                 case "mm":
-                    Value += mNumber*(decimal) 0.001;
+                    Value += mNumber * (decimal)0.001;
                     break;
                 case "cm":
-                    Value += mNumber * (decimal) 0.01;
+                    Value += mNumber * (decimal)0.01;
                     break;
                 case "m":
                     Value += mNumber;
@@ -64,14 +61,21 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                 case "km":
                     Value += mNumber * 1000;
                     break;
+                case "in":
+                    Value += mNumber / 12;
+                    break;
+                case "ft":
+                    Value += mNumber;
+                    break;
+                case "yd":
+                    Value += mNumber * 3;
+                    break;
+                case "mI":
+                    Value += mNumber * 5280;
+                    break;
             }
             mUnit = null;
             mNumber = 0;
-        }
-
-        public void Accept(ITokenVisitor visitor)
-        {
-            visitor.Visit(this);
         }
     }
 }

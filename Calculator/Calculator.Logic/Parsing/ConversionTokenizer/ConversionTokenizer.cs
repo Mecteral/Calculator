@@ -7,9 +7,9 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
     public class ConversionTokenizer
     {
-        readonly List<IToken> mTempTokens = new List<IToken>();
+        readonly List<IConversionToken> mTempTokens = new List<IConversionToken>();
         string mInput;
-        public IEnumerable<IToken> Tokens { get; private set; }
+        public IEnumerable<IConversionToken> Tokens { get; private set; }
 
         public void Tokenize(string input)
         {
@@ -18,7 +18,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
             Tokens = FillTokens();
         }
 
-        IEnumerable<IToken> FillTokens()
+        IEnumerable<IConversionToken> FillTokens()
         {
             string number = null;
             foreach (var c in mInput)
@@ -42,16 +42,16 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         void AddToken(string input)
         {
             if (input.Contains("ft") || input.Contains("in") || input.Contains("yd") || input.Contains("mI"))
-                mTempTokens.Add(new ImperialToken(input));
+                mTempTokens.Add(new ImperialLengthToken(input));
             else if (input.Contains("mm") || input.Contains("cm") || input.Contains("m") || input.Contains("km") || input.Contains("ha"))
-                mTempTokens.Add(new MetricToken(input));
+                mTempTokens.Add(new MetricLengthToken(input));
             else
                 throw new InvalidExpressionException("The input didnt define which system it used.");
         }
 
         void AddArithmeticToken(char input)
         {
-            mTempTokens.Add(new OperatorToken(input));
+            mTempTokens.Add(new ConversionOperatorToken(input));
         }
         static string RemoveWhitespaceAndEqualSign(string input)
         {

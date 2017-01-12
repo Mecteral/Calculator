@@ -77,7 +77,8 @@
     <Compile Include="Model\TestExpressions.cs" />
     <Compile Include="ParenthesesSimplifierTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\TokenizerTests.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricTokenTests.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\ImperialLengthTokenTests.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\MetricLengthTokenTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplificationEvaluatorTests.cs" />
     <Compile Include="SimplifierTests.cs" />

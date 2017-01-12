@@ -11,7 +11,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         void Visit(NumberToken numberToken);
         void Visit(ParenthesesToken parenthesesToken);
         void Visit(VariableToken variableToken);
-        void Visit(MetricToken metricToken);
-        void Visit(ImperialToken imperialToken);
+
     }
 }
