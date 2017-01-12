@@ -80,6 +80,10 @@ namespace Calculator.Logic
             {
                 CreateReplacement(operation);
             }
+            else
+            {
+                CreateReplacementIfBothSidesOfTheOperationNeedToBeConverted(operation);
+            }
             if (operation.HasParent)
                 {
                     operation.Parent.ReplaceChild(operation, mReplacement);
@@ -88,6 +92,70 @@ namespace Calculator.Logic
                 {
                     mResult = mReplacement;
                 }
+        }
+
+        void CreateReplacementIfBothSidesOfTheOperationNeedToBeConverted(IArithmeticConversionOperation operation)
+        {
+            var lhs = operation.Left;
+            var rhs = operation.Right;
+            if (mToMetric)
+            {
+                if (lhs is ImperialVolumeExpression)
+                {
+                    var templhs = (MetricVolumeExpression)ConvertSingleExpression(rhs);
+                    var temprhs = (MetricVolumeExpression)ConvertSingleExpression(lhs);
+                    mReplacement = new MetricVolumeExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is ImperialLengthExpression)
+                {
+                    var templhs = (MetricLengthExpression)ConvertSingleExpression(rhs);
+                    var temprhs = (MetricLengthExpression)ConvertSingleExpression(lhs);
+                    mReplacement = new MetricLengthExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is ImperialAreaExpression)
+                {
+                    var templhs = (MetricAreaExpression)ConvertSingleExpression(rhs);
+                    var temprhs = (MetricAreaExpression)ConvertSingleExpression(lhs);
+                    mReplacement = new MetricAreaExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is ImperialMassExpression)
+                {
+                    var templhs = (MetricMassExpression)ConvertSingleExpression(rhs);
+                    var temprhs = (MetricMassExpression)ConvertSingleExpression(lhs);
+                    mReplacement = new MetricMassExpression { Value = templhs.Value + temprhs.Value };
+                }
+            }
+            else if (!mToMetric)
+            {
+                if (lhs is MetricVolumeExpression)
+                {
+                    var templhs = (ImperialVolumeExpression)ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialVolumeExpression)rhs;
+                    mReplacement = new ImperialVolumeExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is MetricAreaExpression)
+                {
+                    var templhs = (ImperialAreaExpression)ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialAreaExpression)rhs;
+                    mReplacement = new ImperialAreaExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is MetricLengthExpression)
+                {
+                    var templhs = (MetricLengthExpression)ConvertSingleExpression(lhs);
+                    var temprhs = (MetricLengthExpression)rhs;
+                    mReplacement = new MetricLengthExpression { Value = templhs.Value + temprhs.Value };
+                }
+                else if (lhs is MetricMassExpression)
+                {
+                    var templhs = (ImperialMassExpression)ConvertSingleExpression(lhs);
+                    var temprhs = (ImperialMassExpression)rhs;
+                    mReplacement = new ImperialMassExpression { Value = templhs.Value + temprhs.Value };
+                }
+            }
+            else
+            {
+                throw  new InvalidExpressionException();
+            }
         }
 
         void VisitOperands(IArithmeticConversionOperation operation)

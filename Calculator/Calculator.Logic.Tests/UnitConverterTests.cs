@@ -30,5 +30,12 @@ namespace Calculator.Logic.Tests
             var result = new MetricLengthExpression {Value = (decimal) 26.4008 }; 
             Check("21ft+20m", true, result);
         }
+
+        [Test]
+        public void DoubleFootCalculation()
+        {
+            var result = new MetricLengthExpression { Value = (decimal)12.4968 };
+            Check("21ft+20ft", true, result);
+        }
     }
 }
