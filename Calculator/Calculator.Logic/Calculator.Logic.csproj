@@ -54,12 +54,14 @@
     <Compile Include="DirectCalculationSimplifier.cs" />
     <Compile Include="Dispatcher.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
+    <Compile Include="IConverters.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
     <Compile Include="Model\ConversionModel\AnArithmeticConversionOperation.cs" />
     <Compile Include="Model\ConversionModel\AnConversionExpression.cs" />
+    <Compile Include="Model\ConversionModel\AnConversionExpressionWithValue.cs" />
     <Compile Include="Model\ConversionModel\ConversionAddition.cs" />
     <Compile Include="Model\ConversionModel\ConversionDivision.cs" />
     <Compile Include="Model\ConversionModel\ConversionModelBuilder.cs" />
@@ -95,7 +97,7 @@
     <Compile Include="Parsing\CalculationTokenizer\ITokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\ITokenVisitor.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ImperialMassToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ImperialToMetricConverter.cs" />
+    <Compile Include="ImperialToMetricConverter.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ImperialVolumeToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricAreaToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricLengthToken.cs" />
@@ -106,13 +108,14 @@
     <Compile Include="Parsing\CalculationTokenizer\Tokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\VariableToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricMassToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricToImperialConverter.cs" />
+    <Compile Include="MetricToImperialConverter.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricVolumeToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SimplificationEvaluator.cs" />
     <Compile Include="Simplifier.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="StringSimplifier.cs" />
+    <Compile Include="UnitConverter.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="VariableCalculator.cs" />
   </ItemGroup>

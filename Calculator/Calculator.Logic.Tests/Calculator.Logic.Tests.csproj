@@ -85,6 +85,7 @@
     <Compile Include="SimplifierTests.cs" />
     <Compile Include="StringSimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
+    <Compile Include="UnitConverterTests.cs" />
     <Compile Include="VariableCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
