@@ -61,7 +61,6 @@
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
     <Compile Include="Model\ConversionModel\AnArithmeticConversionOperation.cs" />
     <Compile Include="Model\ConversionModel\AnConversionExpression.cs" />
-    <Compile Include="Model\ConversionModel\AnConversionExpressionWithValue.cs" />
     <Compile Include="Model\ConversionModel\ConversionAddition.cs" />
     <Compile Include="Model\ConversionModel\ConversionDivision.cs" />
     <Compile Include="Model\ConversionModel\ConversionModelBuilder.cs" />

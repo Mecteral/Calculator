@@ -69,6 +69,8 @@
     <Compile Include="DirectCalculationSimplifierTests.cs" />
     <Compile Include="DispatcherTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
+    <Compile Include="ImperialToMetricConverterTests.cs" />
+    <Compile Include="MetricToImperialConverterTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\ConversionModel\ConversionModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />

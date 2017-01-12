@@ -49,14 +49,14 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                 mTempTokens.Add(new ImperialVolumeToken(input));
             else if (input.Contains("gr") || input.Contains("dr") || input.Contains("oz") || input.Contains("lb") || input.Contains("st") || input.Contains("cwt") || input.Contains("it"))
                 mTempTokens.Add(new ImperialMassToken(input));
-            else if (input.Contains("mm") || input.Contains("cm") || input.Contains("m") || input.Contains("km"))
-                mTempTokens.Add(new MetricLengthToken(input));
             else if(input.Contains("ml") || input.Contains("cl") || input.Contains("l") || input.Contains("hl"))
                 mTempTokens.Add(new MetricVolumeToken(input));
             else if (input.Contains("mg")  || input.Contains("g") || input.Contains("kg") || input.Contains("t"))
                 mTempTokens.Add(new MetricMassToken(input));
             else if (input.Contains("qmm") || input.Contains("qcm") || input.Contains("qm") || input.Contains("qkm") || input.Contains("ha"))
                 mTempTokens.Add(new MetricAreaToken(input));
+            else if (input.Contains("mm") || input.Contains("cm") || input.Contains("m") || input.Contains("km"))
+                mTempTokens.Add(new MetricLengthToken(input));
             else
                 throw new InvalidExpressionException("The input didnt define which system it used.");
         }

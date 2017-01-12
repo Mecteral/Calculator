@@ -15,7 +15,7 @@ namespace Calculator.Logic
             else if (expression is ImperialAreaExpression)
             {
                 var tempExpression = (ImperialAreaExpression)expression;
-                return new MetricAreaExpression { Value = tempExpression.Value * (decimal) 25.29285264 };
+                return new MetricAreaExpression { Value = tempExpression.Value * (decimal) 0.0929 };
             }
             else if (expression is ImperialMassExpression)
             {
