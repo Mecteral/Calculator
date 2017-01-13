@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using System.Globalization;
 
 namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
     public abstract class AConversionTokens
     {
+        
         public decimal Value { get; private set; } = 0;
         string mUnit;
         decimal mNumber;
@@ -47,6 +49,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         }
         void ConvertToMetersAndAddToValue()
         {
+
             switch (mUnit)
             {
                 case "mm":
@@ -83,7 +86,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                     Value += mNumber * 1000;
                     break;
                 case "t":
-                    Value += mNumber * 1000000;
+                    Value += mNumber * (decimal)1.0E6;
                     break;
                 case "qmm":
                     Value += mNumber * (decimal)1.0E-6;
@@ -95,7 +98,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                     Value += mNumber;
                     break;
                 case "qkm":
-                    Value += mNumber * 1000000;
+                    Value += mNumber * (decimal)1.0E6;
                     break;
                 case "ha":
                     Value += mNumber * 10000;
@@ -180,5 +183,97 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
             mUnit = null;
             mNumber = 0;
         }
+    }
+
+    public class UnitAbbreviations
+
+    {
+        //Metric Length
+        public const string Millimeters = "mm";
+        public const string Centimeters = "cm";
+        public const string Meters = "m";
+        public const string Kilometers = "km";
+        public const string Milligram = "mg";
+        public const string Gram = "g";
+        public const string Kilogram = "kg";
+        public const string Ton = "t";
+        public const string Milliliters = "ml";
+        public const string Centiliters = "cl";
+        public const string Liters = "l";
+        public const string Hectoliters = "hl";
+        public const string Squaremillimeters = "qmm";
+        public const string Squarecentimeters = "qcm";
+        public const string Sqauremeters = "qm";
+        public const string Squarekilometers = "qkm";
+        public const string Hectas = "ha";
+        //Imperial Length
+        public const string Though = "th";
+        public const string Inch = "in";
+        public const string Foot = "ft";
+        public const string Yard = "yd";
+        public const string Chain = "ch";
+        public const string Furlong = "fur";
+        public const string Mile = "mI";
+        public const string League = "lea";
+        public const string Fathom = "ftm";
+        //Imperial Area
+        public const string Squarefoot = "sft";
+        public const string Perch = "perch";
+        public const string Rood = "rood";
+        public const string Acre= "acre";
+        //Imperial Volume
+        public const string FluidOunce = "floz";
+        public const string Gill = "gi";
+        public const string Pint = "pt";
+        public const string Quart = "qt";
+        public const string Gallon = "gal";
+        //Imperial Mass
+        public const string Grain = "gr";
+        public const string Drachm = "dr";
+        public const string Ounce = "oz";
+        public const string Pound = "lb";
+        public const string Stone = "st";
+        public const string HundredWeight = "cwt";
+        public const string ImperialTon = "it";
+    }
+
+    public class ConversionFactors
+
+    {
+        //Metric
+        public const decimal MetricDivisionOneThousand = (decimal)1.0E-3;
+        public const decimal MetricDivisionOneHundred = (decimal)1.0E-2;
+        public const decimal MetricMultiplicationOneThousand = (decimal)1.0E3;
+        public const decimal MetricMultiplicationOneMillion = (decimal)1.0E6;
+        public const decimal MetricMultiplicationMeterToha = (decimal)1.0E5;
+        //Imperial Length
+        public const decimal ThouToFeet = (decimal)1/12000;
+        public const decimal InchToFeet = (decimal)1/12;
+        public const decimal FeetToFeet = 1;
+        public const decimal YardToFeet = 3;
+        public const decimal ChainToFeet = 66;
+        public const decimal FurlongToFeet = 660;
+        public const decimal MileToFeet = 5280;
+        public const decimal LeagueToFeet = 15840;
+        public const decimal FathomToFeet = 608001;
+        //Imperial Area
+        public const decimal SquareFoot = 1;
+        public const decimal PerchToSquareFoot = (decimal) 272.25;
+        public const decimal RoodToSquareFoot = 10890;
+        public const decimal AcreToSquareFoot = 43560;
+        //Imperial Volume
+        public const decimal FluidOunce = 1;
+        public const decimal GillToFluidOunce = 5;
+        public const decimal PintToFluidOunce = 20;
+        public const decimal QuartToFluidOunce = 40;
+        public const decimal GallonToFluidOunce = 160;
+        //Imperial Mass
+        public const decimal GrainToPound = (decimal)1/7000;
+        public const decimal DrachimToPound = (decimal)1/256;
+        public const decimal OunceToPound = (decimal)1/16;
+        public const decimal Pound = 1;
+        public const decimal StoneToPound = 14;
+        public const decimal HundredWeightToPound = 112;
+        public const decimal ImperialTonToPound = 2240; 
     }
 }
