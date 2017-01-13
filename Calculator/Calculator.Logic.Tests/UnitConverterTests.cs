@@ -320,6 +320,24 @@ namespace Calculator.Logic.Tests
             result.Should().BeOfType<ImperialMassExpression>().Which.Value.Should().Be(169);
         }
 
+        [Test]
+        public void MetricToImperialMass()
+        {
+            var result = Convert("13kg+16oz", false);
+            result.Should().BeOfType<ImperialMassExpression>().Which.Value.Should().Be((decimal)29.66009408405);
+        }
+        [Test]
+        public void MetricToImperialArea()
+        {
+            var result = Convert("13qm-13sft", false);
+            result.Should().BeOfType<ImperialAreaExpression>().Which.Value.Should().Be((decimal)126.93083541723);
+        }
+        [Test]
+        public void MetricToImperialLength()
+        {
+            var result = Convert("13m+13ft", false);
+            result.Should().BeOfType<ImperialLengthExpression>().Which.Value.Should().Be((decimal)55.650918635);
+        }
 
     }
 }
