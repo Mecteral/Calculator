@@ -1,25 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
-using Calculator.Model;
 
 namespace Calculator.Logic.Model.ConversionModel
 {
-    public class ConversionModelBuilder :IConversionTokenVisitor
+    public class ConversionModelBuilder : IConversionTokenVisitor
     {
-        IConversionExpression mResult;
         IConversionExpression mCurrent;
         IArithmeticConversionOperation mCurrentOperation;
-        public IConversionExpression BuildFrom(IEnumerable<IConversionToken> tokens)
-        {
-            foreach (var conversionToken in tokens){ conversionToken.Accept(this); }
-            mResult = mCurrent;
-            return mResult;
-        }
+        IConversionExpression mResult;
+
         public void Visit(ImperialLengthToken imperialLengthToken)
         {
             mCurrent = new ImperialLengthExpression {Value = imperialLengthToken.Value};
@@ -82,6 +72,16 @@ namespace Calculator.Logic.Model.ConversionModel
                 FillOperation();
         }
 
+        public IConversionExpression BuildFrom(IEnumerable<IConversionToken> tokens)
+        {
+            foreach (var conversionToken in tokens)
+            {
+                conversionToken.Accept(this);
+            }
+            mResult = mCurrent;
+            return mResult;
+        }
+
         void CreateOperatorExpression(ConversionOperatorToken operatorToken)
         {
             switch (operatorToken.Operator)
@@ -91,7 +91,8 @@ namespace Calculator.Logic.Model.ConversionModel
                     break;
                 case Operator.Subtract:
                     mCurrentOperation = new ConversionSubtraction();
-                    break;;
+                    break;
+                    ;
                 case Operator.Multiply:
                     mCurrentOperation = new ConversionMultiplication();
                     break;
@@ -100,6 +101,7 @@ namespace Calculator.Logic.Model.ConversionModel
                     break;
             }
         }
+
         void FillOperation()
         {
             if (mCurrentOperation.Left == null)

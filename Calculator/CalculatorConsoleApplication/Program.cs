@@ -2,8 +2,10 @@
 using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.Model;
+using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
 
 namespace CalculatorConsoleApplication
@@ -13,17 +15,44 @@ namespace CalculatorConsoleApplication
     {
         static void Main()
         {
-            var token = GetStringAndCreateTokens();
-            if (IsSimplificationNecessary(token)) Console.WriteLine(UseFormattingExpressionVisitor(UseSimplifier(token)));
-            else Console.WriteLine(UseEvaluationExpressionVisitor(token));
+            var input = GetUserInput();
+            if (input.Contains("=?"))
+            {
+                ConvertUnits(input);
+            }
+            else
+            {
+                var token = CreateTokens(input);
+                if (IsSimplificationNecessary(token)) Console.WriteLine(UseFormattingExpressionVisitor(UseSimplifier(token)));
+                else Console.WriteLine(UseEvaluationExpressionVisitor(token));
+            }
             Console.ReadKey();
         }
-        static Tokenizer GetStringAndCreateTokens()
+        static Tokenizer CreateTokens(string input)
         {
             var token = new Tokenizer();
-            token.Tokenize(GetUserInput());
+            token.Tokenize(input);
             return token;
         }
+
+        static ConversionTokenizer CreateConversionTokens(string input)
+        {
+            var token = new ConversionTokenizer();
+            token.Tokenize(input);
+            return token;
+        }
+
+        static void ConvertUnits(string input)
+        {
+            Console.WriteLine("Do you want to convert to the metric system?");
+            var userInput = Console.ReadLine();
+            var toMetric = userInput == "y";
+            var token = CreateConversionTokens(input);
+            var converted = UseUnitConverter(CreateConversionInMemoryModel(token), toMetric);
+            Console.WriteLine(converted);
+        }
+        static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token) => new ConversionModelBuilder().BuildFrom(token.Tokens);
+        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter().Convert(expression, toMetric);
         static IExpression CreateInMemoryModel(ITokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
         static IExpression UseSimplifier(ITokenizer token) => new Simplifier().Simplify(CreateInMemoryModel(token));
         static string GetUserInput() => Console.ReadLine();
