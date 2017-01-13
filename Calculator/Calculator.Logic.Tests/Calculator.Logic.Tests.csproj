@@ -47,6 +47,10 @@
       <HintPath>..\packages\morelinq.2.0.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="November.MultiDispatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\November.MultiDispatch.1.0.0\lib\November.MultiDispatch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NSubstitute, Version=1.10.0.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <HintPath>..\packages\NSubstitute.1.10.0.0\lib\net45\NSubstitute.dll</HintPath>
       <Private>True</Private>
@@ -67,7 +71,7 @@
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="DirectCalculationSimplifierTests.cs" />
-    <Compile Include="DispatcherTests.cs" />
+    <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ImperialToMetricConverterTests.cs" />
     <Compile Include="MetricToImperialConverterTests.cs" />
@@ -102,6 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="November.MultiDispatch.deps.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

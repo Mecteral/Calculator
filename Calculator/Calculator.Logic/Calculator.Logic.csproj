@@ -39,6 +39,10 @@
       <HintPath>..\packages\morelinq.2.0.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="November.MultiDispatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\November.MultiDispatch.1.0.0\lib\November.MultiDispatch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,7 +56,6 @@
     <Compile Include="AdditionAndSubtractionMover.cs" />
     <Compile Include="AdditionSubtractionDispatcher.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
-    <Compile Include="Dispatcher.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IConverters.cs" />
     <Compile Include="IModelBuilder.cs" />
@@ -120,6 +123,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="November.MultiDispatch.deps.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
