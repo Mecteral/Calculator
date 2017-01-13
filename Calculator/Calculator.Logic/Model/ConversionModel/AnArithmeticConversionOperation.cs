@@ -48,5 +48,7 @@ namespace Calculator.Logic.Model.ConversionModel
             }
             else throw new ArgumentException();
         }
+
+        public override decimal Value { get; set; }
     }
 }

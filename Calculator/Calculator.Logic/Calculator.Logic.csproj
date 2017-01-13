@@ -73,6 +73,7 @@
     <Compile Include="Model\ConversionModel\IArithmeticConversionOperation.cs" />
     <Compile Include="Model\ConversionModel\IConversionExpression.cs" />
     <Compile Include="Model\ConversionModel\IConversionExpressionVisitor.cs" />
+    <Compile Include="Model\ConversionModel\IConversionExpressionWithValue.cs" />
     <Compile Include="Model\ConversionModel\ImperialAreaExpression.cs" />
     <Compile Include="Model\ConversionModel\ImperialLengthExpression.cs" />
     <Compile Include="Model\ConversionModel\ImperialMassExpression.cs" />

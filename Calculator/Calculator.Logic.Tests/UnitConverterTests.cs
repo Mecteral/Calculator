@@ -24,22 +24,6 @@ namespace Calculator.Logic.Tests
             var converter = new UnitConverter();
             return converter.Convert(model.BuildFrom(tokens.Tokens), toMetric);
         }
-        static TestDelegate ConvertWithException()
-        {
-            var tokens = new ConversionTokenizer();
-            tokens.Tokenize("10sft+10ft");
-            var model = new ConversionModelBuilder();
-            var converter = new UnitConverter();
-            try
-            {
-                converter.Convert(model.BuildFrom(tokens.Tokens), false);
-            }
-            catch (Exception)
-            {
-                throw new InvalidExpressionException();
-            }
-            return null;
-        }
 
         [Test]
         public void SimpleAdditionGetsCalculatedCorrectly()
@@ -82,6 +66,12 @@ namespace Calculator.Logic.Tests
         }
 
         [Test]
+        public void ConvertSingleExpression()
+        {
+            var result = Convert("1ml", false);
+            result.Should().BeOfType<ImperialVolumeExpression>().Which.Value.Should().Be((decimal) 0.0338140226);
+        }
+        [Test]
         public void ImperialAreaToMetricArea()
         {
             var result = Convert("13sft+1qmm",true);
@@ -111,6 +101,60 @@ namespace Calculator.Logic.Tests
         {
             var result = Convert("13floz+1ml", true);
             result.Should().BeOfType<MetricVolumeExpression>().Which.Value.Should().Be((decimal)0.3703698125);
+        }
+        [Test]
+        public void DoubleImperialMetricVolume()
+        {
+            var result = Convert("13floz+13floz", true);
+            result.Should().BeOfType<MetricVolumeExpression>().Which.Value.Should().Be((decimal)0.738739625);
+        }
+        [Test]
+        public void DoubleImperialMetricMass()
+        {
+            var result = Convert("13oz+13oz", true);
+            result.Should().BeOfType<MetricMassExpression>().Which.Value.Should().Be((decimal)737.08760125);
+        }
+        [Test]
+        public void DoubleMetricToImperialMass()
+        {
+            var result = Convert("13g+13g", false);
+            result.Should().BeOfType<ImperialMassExpression>().Which.Value.Should().Be((decimal)0.05732018816810);
+        }
+        [Test]
+        public void DoubleMetricToImperialArea()
+        {
+            var result = Convert("13qm+13qm", false);
+            result.Should().BeOfType<ImperialAreaExpression>().Which.Value.Should().Be((decimal)279.86167083446);
+        }
+        [Test]
+        public void DoubleMetricToImperialLength()
+        {
+            var result = Convert("13m+13m", false);
+            result.Should().BeOfType<ImperialLengthExpression>().Which.Value.Should().Be((decimal)85.301837270);
+        }
+        [Test]
+        public void DoubleImperialMetricArea()
+        {
+            var result = Convert("13sft+13sft", true);
+            result.Should().BeOfType<MetricAreaExpression>().Which.Value.Should().Be((decimal)2.4154);
+        }
+        [Test]
+        public void DoubleMetricToImperialVolume()
+        {
+            var result = Convert("13l+13l", false);
+            result.Should().BeOfType<ImperialVolumeExpression>().Which.Value.Should().Be((decimal)879.1645876);
+        }
+        [Test]
+        public void MetricToimperialVolume()
+        {
+            var result = Convert("13floz+1ml", false);
+            result.Should().BeOfType<ImperialVolumeExpression>().Which.Value.Should().Be((decimal)13.0338140226);
+        }
+        [Test]
+        public void MetricToimperialVolume2()
+        {
+            var result = Convert("13l+1floz", true);
+            result.Should().BeOfType<MetricVolumeExpression>().Which.Value.Should().Be((decimal)13.0284130625);
         }
         [Test]
         public void ImperialVolumeToMetricVolume2()
