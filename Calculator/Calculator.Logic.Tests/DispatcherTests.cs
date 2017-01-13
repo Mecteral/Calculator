@@ -13,10 +13,10 @@ namespace Calculator.Logic.Tests
             IExpression left = new Constant();
             IExpression right = new Constant();
             var wasFallbackCalled = false;
-            var dispatcher = new Dispatcher(left, right) {FallbackHandler = (l, r) => wasFallbackCalled = true};
+            var dispatcher = new Dispatcher() {FallbackHandler = (l, r) => wasFallbackCalled = true};
             dispatcher.OnLeft<Constant>().OnRight<Variable>().Do((c, v) => { Assert.Fail(); });
             dispatcher.OnLeft<Addition>().OnRight<Constant>().Do((a, m) => { Assert.Fail(); });
-            dispatcher.Dispatch();
+            dispatcher.Dispatch(left, right);
 
             wasFallbackCalled.Should().BeTrue();
         }
@@ -25,13 +25,13 @@ namespace Calculator.Logic.Tests
         {
             IExpression left = new Addition();
             IExpression right = new Constant();
-            var dispatcher = new Dispatcher(left, right) {FallbackHandler = (l, r) => Assert.Fail()};
+            var dispatcher = new Dispatcher() {FallbackHandler = (l, r) => Assert.Fail()};
 
             dispatcher.OnLeft<Constant>().OnRight<Variable>().Do((c, v) => { Assert.Fail(); });
             var wasRightComboPicked = false;
             dispatcher.OnLeft<Addition>().OnRight<Constant>().Do((a, m) => { wasRightComboPicked = true; });
 
-            dispatcher.Dispatch();
+            dispatcher.Dispatch(left, right);
 
             wasRightComboPicked.Should().BeTrue();
         }
@@ -43,10 +43,10 @@ namespace Calculator.Logic.Tests
             var wasRightComboPicked = false;
 
 
-            var dispatcher = new Dispatcher(left, right);
+            var dispatcher = new Dispatcher();
             dispatcher.On<Constant, Variable>((c, v) => { Assert.Fail(); });
             dispatcher.On<Addition, Constant>((a, m) => { wasRightComboPicked = true; });
-            dispatcher.Dispatch();
+            dispatcher.Dispatch(left, right);
 
             wasRightComboPicked.Should().BeTrue();
         }
