@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace Calculator.Logic.Parsing
+namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Takes in a Number and creates a Token, changes commas to dots

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.Parsing.ConversionTokenizer;
 
 namespace Calculator.Logic
 {
@@ -40,6 +42,7 @@ namespace Calculator.Logic
         {
             mResult += variableToken.Variable;
         }
+
         public string Format(IEnumerable<IToken> tokens)
         {
             foreach (var token in tokens) token.Accept(this);

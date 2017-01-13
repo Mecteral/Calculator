@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Calculator.Logic.Parsing
+namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public interface ITokenizer
     {

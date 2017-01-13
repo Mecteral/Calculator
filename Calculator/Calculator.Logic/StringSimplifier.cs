@@ -1,5 +1,6 @@
 ﻿using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 
 namespace Calculator.Logic
 {

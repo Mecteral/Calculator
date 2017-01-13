@@ -17,7 +17,7 @@ namespace Calculator.Model.Tests
         [Test]
         public void ToString_Is_Human_Readable()
         {
-            new Constant {Value = 3.141M}.ToString().Should().Be("3.141");
+            new Constant {Value = 3.141M}.ToString().Should().Be("3,141");
         }
     }
 }

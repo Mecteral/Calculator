@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;

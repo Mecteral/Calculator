@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic.Parsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -39,6 +41,7 @@ namespace Calculator.Logic
             }
         }
         public void Visit(VariableToken variableToken) => Add(new Variable {Variables = variableToken.Variable});
+
         void IterateChildren(ParenthesesNode root)
         {
             var index = 0;

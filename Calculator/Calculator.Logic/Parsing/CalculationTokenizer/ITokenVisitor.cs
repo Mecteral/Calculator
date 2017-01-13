@@ -1,4 +1,6 @@
-﻿namespace Calculator.Logic.Parsing
+﻿using Calculator.Logic.Parsing.ConversionTokenizer;
+
+namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     /// <summary>
     /// Visitor for all Tokens ( OperatorToken, NumberToken, ParenthesesToken )
@@ -9,5 +11,6 @@
         void Visit(NumberToken numberToken);
         void Visit(ParenthesesToken parenthesesToken);
         void Visit(VariableToken variableToken);
+
     }
 }
