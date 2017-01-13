@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data;
+﻿using System.Data;
 using Calculator.Logic.Model.ConversionModel;
 
 namespace Calculator.Logic
@@ -119,15 +118,17 @@ namespace Calculator.Logic
         }
 
         void MakeReplacementWithoutConversion<TSelf>(IArithmeticConversionOperation operation,
-            IConversionExpressionWithValue lhs, IConversionExpressionWithValue rhs) where TSelf : IConversionExpressionWithValue, new()
+            IConversionExpression lhs, IConversionExpression rhs)
+            where TSelf : IConversionExpressionWithValue, new()
         {
-            var templhs = (TSelf)lhs;
-            var temprhs = (TSelf)rhs;
+            var templhs = (TSelf) lhs;
+            var temprhs = (TSelf) rhs;
             mReplacement = new TSelf
             {
                 Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
             };
         }
+
         void CalculateIfNoConversionIsNeeded(IArithmeticConversionOperation operation)
         {
             var lhs = operation.Left;
@@ -136,38 +137,46 @@ namespace Calculator.Logic
             {
                 if (lhs is MetricVolumeExpression)
                 {
-                    MakeReplacementWithoutConversion<MetricVolumeExpression>(operation,lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<MetricVolumeExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is MetricAreaExpression)
                 {
-                    MakeReplacementWithoutConversion<MetricAreaExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<MetricAreaExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is MetricLengthExpression)
                 {
-                    MakeReplacementWithoutConversion<MetricLengthExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<MetricLengthExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is MetricMassExpression)
                 {
-                    MakeReplacementWithoutConversion<MetricMassExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<MetricMassExpression>(operation,
+                        lhs, rhs);
                 }
             }
             else
             {
                 if (lhs is ImperialVolumeExpression)
                 {
-                    MakeReplacementWithoutConversion<ImperialVolumeExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<ImperialVolumeExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is ImperialAreaExpression)
                 {
-                    MakeReplacementWithoutConversion<ImperialAreaExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<ImperialAreaExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is ImperialLengthExpression)
                 {
-                    MakeReplacementWithoutConversion<ImperialLengthExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<ImperialLengthExpression>(operation,
+                        lhs, rhs);
                 }
                 else if (lhs is ImperialMassExpression)
                 {
-                    MakeReplacementWithoutConversion<ImperialMassExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                    MakeReplacementWithoutConversion<ImperialMassExpression>(operation,
+                        lhs, rhs);
                 }
             }
         }
@@ -201,13 +210,14 @@ namespace Calculator.Logic
         void MakeReplacementWithDoubleConversion<TSelf>(IArithmeticConversionOperation operation,
             IConversionExpression lhs, IConversionExpression rhs) where TSelf : IConversionExpressionWithValue, new()
         {
-            var templhs = (TSelf)ConvertSingleExpression(rhs);
-            var temprhs = (TSelf)ConvertSingleExpression(lhs);
+            var templhs = (TSelf) ConvertSingleExpression(rhs);
+            var temprhs = (TSelf) ConvertSingleExpression(lhs);
             mReplacement = new TSelf
             {
                 Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
             };
         }
+
         void CreateReplacementIfBothSidesOfTheOperationNeedToBeConvertedForMetric(
             IArithmeticConversionOperation operation)
         {
@@ -221,7 +231,7 @@ namespace Calculator.Logic
                 }
                 else if (lhs is ImperialLengthExpression)
                 {
-                    MakeReplacementWithDoubleConversion<MetricLengthExpression>(operation,lhs, rhs);
+                    MakeReplacementWithDoubleConversion<MetricLengthExpression>(operation, lhs, rhs);
                 }
                 else if (lhs is ImperialAreaExpression)
                 {
@@ -234,13 +244,14 @@ namespace Calculator.Logic
             }
         }
 
-        void MakeReplacement<TLeft, TRight>(IArithmeticConversionOperation operation, IConversionExpressionWithValue lhs,
-            IConversionExpressionWithValue rhs) where TLeft : IConversionExpressionWithValue, new() where TRight : IConversionExpressionWithValue, new()
+        void MakeReplacement<TLeft, TRight>(IArithmeticConversionOperation operation, IConversionExpression lhs,
+            IConversionExpression rhs) where TLeft : IConversionExpressionWithValue, new()
+            where TRight : IConversionExpressionWithValue, new()
         {
             if (!mToMetric)
             {
-                var templhs = (TLeft)ConvertSingleExpression(rhs);
-                var temprhs = (TLeft)lhs;
+                var templhs = (TLeft) ConvertSingleExpression(rhs);
+                var temprhs = (TLeft) lhs;
                 mReplacement = new TLeft
                 {
                     Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
@@ -248,8 +259,8 @@ namespace Calculator.Logic
             }
             else
             {
-                var templhs = (TRight)ConvertSingleExpression(lhs);
-                var temprhs = (TRight)rhs;
+                var templhs = (TRight) ConvertSingleExpression(lhs);
+                var temprhs = (TRight) rhs;
                 mReplacement = new TRight
                 {
                     Value = CalculateValueForSpecificOperationType(operation, templhs.Value, temprhs.Value)
@@ -269,35 +280,43 @@ namespace Calculator.Logic
             var rhs = operation.Right;
             if (lhs is MetricVolumeExpression && rhs is ImperialVolumeExpression)
             {
-                MakeReplacement<ImperialVolumeExpression, MetricVolumeExpression>(operation,rhs as IConversionExpressionWithValue, lhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialVolumeExpression, MetricVolumeExpression>(operation,
+                    rhs, lhs);
             }
             else if (lhs is MetricAreaExpression && rhs is ImperialAreaExpression)
             {
-                MakeReplacement<ImperialAreaExpression, MetricAreaExpression>(operation, rhs as IConversionExpressionWithValue, lhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialAreaExpression, MetricAreaExpression>(operation,
+                    rhs, lhs);
             }
             else if (lhs is MetricLengthExpression && rhs is ImperialLengthExpression)
             {
-                MakeReplacement<ImperialLengthExpression, MetricLengthExpression>(operation, rhs as IConversionExpressionWithValue, lhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialLengthExpression, MetricLengthExpression>(operation,
+                    rhs, lhs);
             }
             else if (lhs is MetricMassExpression && rhs is ImperialMassExpression)
             {
-                MakeReplacement<ImperialMassExpression, MetricMassExpression>(operation, rhs as IConversionExpressionWithValue, lhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialMassExpression, MetricMassExpression>(operation,
+                    rhs, lhs);
             }
             else if (lhs is ImperialVolumeExpression && rhs is MetricVolumeExpression)
             {
-                MakeReplacement<ImperialVolumeExpression,MetricVolumeExpression>(operation,lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialVolumeExpression, MetricVolumeExpression>(operation,
+                    lhs, rhs);
             }
             else if (lhs is ImperialAreaExpression && rhs is MetricAreaExpression)
             {
-                MakeReplacement<ImperialAreaExpression, MetricAreaExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialAreaExpression, MetricAreaExpression>(operation,
+                    lhs, rhs);
             }
             else if (lhs is ImperialLengthExpression && rhs is MetricLengthExpression)
             {
-                MakeReplacement<ImperialLengthExpression, MetricLengthExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialLengthExpression, MetricLengthExpression>(operation,
+                    lhs, rhs);
             }
             else if (lhs is ImperialMassExpression && rhs is MetricMassExpression)
             {
-                MakeReplacement<ImperialMassExpression, MetricMassExpression>(operation, lhs as IConversionExpressionWithValue, rhs as IConversionExpressionWithValue);
+                MakeReplacement<ImperialMassExpression, MetricMassExpression>(operation,
+                    lhs, rhs);
             }
             else
             {
