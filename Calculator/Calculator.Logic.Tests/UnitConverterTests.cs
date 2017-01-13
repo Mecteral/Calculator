@@ -72,7 +72,13 @@ namespace Calculator.Logic.Tests
         [Test]
         public void DifferentSystemsThrowException()
         {
-            //Assert.Throws<InvalidExpressionException>(ConvertWithException());
+            var tokens = new ConversionTokenizer();
+            tokens.Tokenize("10sft+10ft");
+            var model = new ConversionModelBuilder();
+            var converter = new UnitConverter();
+            Action a= () => converter.Convert(model.BuildFrom(tokens.Tokens), false);
+
+            a.ShouldThrow<InvalidExpressionException>();
         }
 
         [Test]
