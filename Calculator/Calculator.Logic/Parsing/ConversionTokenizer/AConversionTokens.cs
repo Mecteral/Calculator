@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -49,158 +50,83 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         }
         void ConvertToMetersAndAddToValue()
         {
-
-            switch (mUnit)
-            {
-                case "mm":
-                    Value += mNumber * (decimal)1.0E-3;
-                    break;
-                case "cm":
-                    Value += mNumber * (decimal)1.0E-2;
-                    break;
-                case "m":
-                    Value += mNumber;
-                    break;
-                case "km":
-                    Value += mNumber * 1000;
-                    break;
-                case "ml":
-                    Value += mNumber * (decimal)1.0E-3;
-                    break;
-                case "cl":
-                    Value += mNumber * (decimal)1.0E-2;
-                    break;
-                case "l":
-                    Value += mNumber;
-                    break;
-                case "hl":
-                    Value += mNumber * 100;
-                    break;
-                case "mg":
-                    Value += mNumber*(decimal) 1.0E-2;
-                    break;
-                case "g":
-                    Value += mNumber;
-                    break;
-                case "kg":
-                    Value += mNumber * 1000;
-                    break;
-                case "t":
-                    Value += mNumber * (decimal)1.0E6;
-                    break;
-                case "qmm":
-                    Value += mNumber * (decimal)1.0E-6;
-                    break;
-                case "qcm":
-                    Value += mNumber * (decimal)1.0E-3;
-                    break;
-                case "qm":
-                    Value += mNumber;
-                    break;
-                case "qkm":
-                    Value += mNumber * (decimal)1.0E6;
-                    break;
-                case "ha":
-                    Value += mNumber * 10000;
-                    break;
-                case "th":
-                    Value += mNumber / 12000;
-                    break;
-                case "in":
-                    Value += mNumber / 12;
-                    break;
-                case "ft":
-                    Value += mNumber;
-                    break;
-                case "yd":
-                    Value += mNumber * 3;
-                    break;
-                case "ch":
-                    Value += mNumber *66;
-                    break;
-                case "fur":
-                    Value += mNumber *660;
-                    break;
-                case "mI":
-                    Value += mNumber * 5280;
-                    break;
-                case "lea":
-                    Value += mNumber * 15840;
-                    break;
-                case "ftm":
-                    Value += mNumber * 608001;
-                    break;
-                case "sft":
-                    Value += mNumber;
-                    break;
-                case "perch":
-                    Value += mNumber * (decimal) 272.25;
-                    break;
-                case "rood":
-                    Value += mNumber * 10890;
-                    break;
-                case "acre":
-                    Value += mNumber * 43560;
-                    break;
-                case "floz":
-                    Value += mNumber;
-                    break;
-                case "gi":
-                    Value += mNumber * 5;
-                    break;
-                case "pt":
-                    Value += mNumber * 20;
-                    break;
-                case "qt":
-                    Value += mNumber * 40;
-                    break;
-                case "gal":
-                    Value += mNumber * 160;
-                    break;
-                case "gr":
-                    Value += mNumber * 1/7000;
-                    break;
-                case "dr":
-                    Value += mNumber * 1/256;
-                    break;
-                case "oz":
-                    Value += mNumber * 1/16;
-                    break;
-                case "lb":
-                    Value += mNumber;
-                    break;
-                case "st":
-                    Value += mNumber * 14;
-                    break;
-                case "cwt":
-                    Value += mNumber * 112;
-                    break;
-                case "it":
-                    Value += mNumber * 2240;
-                    break;
-
-            }
+            Value += mNumber * mMap[mUnit];
             mUnit = null;
             mNumber = 0;
         }
+        readonly Dictionary<string, decimal> mMap = new Dictionary<string, decimal>
+        {
+            //Metric Length
+            {UnitAbbreviations.Millimeters, ConversionFactors.MetricDivisionOneThousand},
+            {UnitAbbreviations.Centimeters, ConversionFactors.MetricDivisionOneHundred},
+            {UnitAbbreviations.Meters, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Kilometers, ConversionFactors.MetricMultiplicationOneThousand},
+            //Metric Mass
+            {UnitAbbreviations.Milligram, ConversionFactors.MetricDivisionOneThousand},
+            {UnitAbbreviations.Gram, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Kilogram, ConversionFactors.MetricMultiplicationOneThousand},
+            {UnitAbbreviations.Ton, ConversionFactors.MetricMultiplicationOneMillion},
+            //Metric Volume
+            {UnitAbbreviations.Milliliters, ConversionFactors.MetricDivisionOneThousand},
+            {UnitAbbreviations.Centiliters, ConversionFactors.MetricDivisionOneHundred},
+            {UnitAbbreviations.Liters, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Hectoliters, ConversionFactors.MetricMultiplicationOneHundred},
+            //Metric Area
+            {UnitAbbreviations.Squaremillimeters, ConversionFactors.MetricDivisionOneMillion},
+            {UnitAbbreviations.Squarecentimeters, ConversionFactors.MetricDivisionOneThousand},
+            {UnitAbbreviations.Sqauremeters, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Squarekilometers, ConversionFactors.MetricMultiplicationOneMillion},
+            {UnitAbbreviations.Hectas, ConversionFactors.MetricMultiplicationMeterToha},
+            //Imperial Length
+            {UnitAbbreviations.Though, ConversionFactors.ThouToFeet},
+            {UnitAbbreviations.Inch, ConversionFactors.InchToFeet},
+            {UnitAbbreviations.Foot, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Yard, ConversionFactors.YardToFeet},
+            {UnitAbbreviations.Chain, ConversionFactors.ChainToFeet},
+            {UnitAbbreviations.Furlong, ConversionFactors.FurlongToFeet},
+            {UnitAbbreviations.Mile, ConversionFactors.MileToFeet},
+            {UnitAbbreviations.League, ConversionFactors.LeagueToFeet},
+            {UnitAbbreviations.Fathom, ConversionFactors.FathomToFeet},
+            //Imperial Area
+            {UnitAbbreviations.Squarefoot, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Perch, ConversionFactors.PerchToSquareFoot},
+            {UnitAbbreviations.Rood, ConversionFactors.RoodToSquareFoot},
+            {UnitAbbreviations.Acre, ConversionFactors.AcreToSquareFoot},
+            //Imperial Volume
+            {UnitAbbreviations.FluidOunce, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Gill, ConversionFactors.GillToFluidOunce},
+            {UnitAbbreviations.Pint, ConversionFactors.PintToFluidOunce},
+            {UnitAbbreviations.Quart, ConversionFactors.QuartToFluidOunce},
+            {UnitAbbreviations.Gallon, ConversionFactors.GallonToFluidOunce},
+            //Imperial Mass
+            {UnitAbbreviations.Grain, ConversionFactors.GrainToPound},
+            {UnitAbbreviations.Drachim, ConversionFactors.DrachimToPound},
+            {UnitAbbreviations.Ounce, ConversionFactors.OunceToPound},
+            {UnitAbbreviations.Pound, ConversionFactors.MultiplicationByOne},
+            {UnitAbbreviations.Stone, ConversionFactors.StoneToPound},
+            {UnitAbbreviations.HundredWeight, ConversionFactors.HundredWeightToPound},
+            {UnitAbbreviations.ImperialTon, ConversionFactors.ImperialTonToPound}
+        };
     }
 
     public class UnitAbbreviations
-
     {
         //Metric Length
         public const string Millimeters = "mm";
         public const string Centimeters = "cm";
         public const string Meters = "m";
         public const string Kilometers = "km";
+        //Metric Mass
         public const string Milligram = "mg";
         public const string Gram = "g";
         public const string Kilogram = "kg";
         public const string Ton = "t";
+        //Metric Volume
         public const string Milliliters = "ml";
         public const string Centiliters = "cl";
         public const string Liters = "l";
         public const string Hectoliters = "hl";
+        //Metric Area
         public const string Squaremillimeters = "qmm";
         public const string Squarecentimeters = "qcm";
         public const string Sqauremeters = "qm";
@@ -229,7 +155,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         public const string Gallon = "gal";
         //Imperial Mass
         public const string Grain = "gr";
-        public const string Drachm = "dr";
+        public const string Drachim = "dr";
         public const string Ounce = "oz";
         public const string Pound = "lb";
         public const string Stone = "st";
@@ -238,18 +164,19 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
     }
 
     public class ConversionFactors
-
     {
         //Metric
+        public const decimal MetricDivisionOneMillion = (decimal)1.0E-6;
         public const decimal MetricDivisionOneThousand = (decimal)1.0E-3;
         public const decimal MetricDivisionOneHundred = (decimal)1.0E-2;
+        public const decimal MultiplicationByOne = 1;
+        public const decimal MetricMultiplicationOneHundred = (decimal)1.0E2;
         public const decimal MetricMultiplicationOneThousand = (decimal)1.0E3;
         public const decimal MetricMultiplicationOneMillion = (decimal)1.0E6;
-        public const decimal MetricMultiplicationMeterToha = (decimal)1.0E5;
+        public const decimal MetricMultiplicationMeterToha = (decimal)1.0E4;
         //Imperial Length
         public const decimal ThouToFeet = (decimal)1/12000;
         public const decimal InchToFeet = (decimal)1/12;
-        public const decimal FeetToFeet = 1;
         public const decimal YardToFeet = 3;
         public const decimal ChainToFeet = 66;
         public const decimal FurlongToFeet = 660;
@@ -257,12 +184,10 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         public const decimal LeagueToFeet = 15840;
         public const decimal FathomToFeet = 608001;
         //Imperial Area
-        public const decimal SquareFoot = 1;
         public const decimal PerchToSquareFoot = (decimal) 272.25;
         public const decimal RoodToSquareFoot = 10890;
         public const decimal AcreToSquareFoot = 43560;
         //Imperial Volume
-        public const decimal FluidOunce = 1;
         public const decimal GillToFluidOunce = 5;
         public const decimal PintToFluidOunce = 20;
         public const decimal QuartToFluidOunce = 40;
@@ -271,7 +196,6 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         public const decimal GrainToPound = (decimal)1/7000;
         public const decimal DrachimToPound = (decimal)1/256;
         public const decimal OunceToPound = (decimal)1/16;
-        public const decimal Pound = 1;
         public const decimal StoneToPound = 14;
         public const decimal HundredWeightToPound = 112;
         public const decimal ImperialTonToPound = 2240; 

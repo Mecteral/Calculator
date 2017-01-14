@@ -29,12 +29,6 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         }
 
         [Test]
-        public void FeetToInch()
-        {
-            CheckWithNumber("144in",0,12);
-        }
-
-        [Test]
         public void MileToFeet()
         {
             CheckWithNumber("12mI",0,63360);

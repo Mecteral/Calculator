@@ -183,8 +183,8 @@ namespace Calculator.Logic.Tests
         [Test]
         public void ImperialMassToMetricMass()
         {
-            var result = Convert("14gr+1mg", true);
-            result.Should().BeOfType<MetricMassExpression>().Which.Value.Should().Be((decimal)0.91718474);
+            var result = Convert("0gr+13g", true);
+            result.Should().BeOfType<MetricMassExpression>().Which.Value.Should().Be((decimal)13);
         }
         [Test]
         public void ImperialMassToMetricMass2()
@@ -231,8 +231,8 @@ namespace Calculator.Logic.Tests
         [Test]
         public void ImperialLengthToMetricLength2()
         {
-            var result = Convert("13in+1cm", true);
-            result.Should().BeOfType<MetricLengthExpression>().Which.Value.Should().Be((decimal)0.3402);
+            var result = Convert("0in+1cm", true);
+            result.Should().BeOfType<MetricLengthExpression>().Which.Value.Should().Be((decimal)0.01);
         }
         [Test]
         public void ImperialLengthToMetricLength3()
@@ -249,8 +249,8 @@ namespace Calculator.Logic.Tests
         [Test]
         public void ImperialLengthToMetricLength5()
         {
-            var result = Convert("13th+1m", true);
-            result.Should().BeOfType<MetricLengthExpression>().Which.Value.Should().Be((decimal)1.0003302);
+            var result = Convert("0th+1m", true);
+            result.Should().BeOfType<MetricLengthExpression>().Which.Value.Should().Be((decimal)1);
         }
         [Test]
         public void ImperialLengthToMetricLength6()
