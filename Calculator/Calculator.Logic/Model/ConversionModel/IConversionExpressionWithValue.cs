@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Logic.Model.ConversionModel
 {
-    interface IConversionExpressionWithValue : IConversionExpression
+    public interface IConversionExpressionWithValue : IConversionExpression
     {
         decimal Value { get; set; }
     }

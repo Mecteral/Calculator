@@ -49,7 +49,8 @@ namespace CalculatorConsoleApplication
             var toMetric = userInput == "y";
             var token = CreateConversionTokens(input);
             var converted = UseUnitConverter(CreateConversionInMemoryModel(token), toMetric);
-            Console.WriteLine(converted);
+            var output = new ReadableOutputCreator();
+            Console.WriteLine(output.MakeReadable((IConversionExpressionWithValue)converted));
         }
         static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token) => new ConversionModelBuilder().BuildFrom(token.Tokens);
         static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter().Convert(expression, toMetric);

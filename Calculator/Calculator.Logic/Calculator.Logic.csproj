@@ -90,6 +90,7 @@
     <Compile Include="ParenthesesNode.cs" />
     <Compile Include="ParenthesesSimplifier.cs" />
     <Compile Include="Parsing\ConversionTokenizer\AConversionTokens.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\ConversionFactors.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionOperatorToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionTokenizer.cs" />
     <Compile Include="Parsing\ConversionTokenizer\IConversionToken.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Parsing\ConversionTokenizer\MetricMassToken.cs" />
     <Compile Include="MetricToImperialConverter.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricVolumeToken.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\UnitAbbreviations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadableOutputCreator.cs" />
     <Compile Include="SimplificationEvaluator.cs" />
