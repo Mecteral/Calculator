@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing.ConversionTokenizer;
 
@@ -15,23 +11,47 @@ namespace Calculator.Logic
         public string MakeReadable(IConversionExpressionWithValue expression)
         {
             var result = CreateUnitIfMetric(expression);
-            if (result==null)
-            {
-                var readabilityCreator = new ImperialMassReadabilityCreator();
-                result = readabilityCreator.MakeReadable(expression);
-            }
+            if (result != null) return result;
+            result = CreateUnitIfImperial(expression);
             return result;
         }
+
+        static string CreateUnitIfImperial(IConversionExpressionWithValue expression)
+        {
+            if (expression is ImperialLengthExpression)
+            {
+                var readabilityCreator = new ImperialLengthReadabilityCreator();
+                return readabilityCreator.MakeReadable(expression);
+            }
+            if (expression is ImperialAreaExpression)
+            {
+                var readabilityCreator =
+                    new ImperialAreaReadabilityCreator();
+                return readabilityCreator.MakeReadable(expression);
+            }
+            if (expression is ImperialVolumeExpression)
+            {
+                var readabilityCreator = new ImperialVolumeReadabilityCreator();
+                return readabilityCreator.MakeReadable(expression);
+            }
+            if (expression is ImperialMassExpression)
+            {
+                var readabilityCreator = new ImperialMassReadabilityCreator();
+                return readabilityCreator.MakeReadable(expression);
+            }
+            throw new InvalidExpressionException();
+        }
+
         string CreateUnitIfMetric(IConversionExpressionWithValue expression)
         {
             if (expression is MetricLengthExpression)
             {
-                if (expression.Value <= (decimal)0.01)
+                if (expression.Value <= (decimal) 0.01)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneThousand;
                     Unit = UnitAbbreviations.Millimeters;
                 }
-                else if (expression.Value <= (decimal)0.1)
+                else if (expression.Value <= (decimal) 0.1)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneHundred;
                     Unit = UnitAbbreviations.Centimeters;
@@ -48,22 +68,22 @@ namespace Calculator.Logic
             }
             else if (expression is MetricAreaExpression)
             {
-                if (expression.Value <= (decimal)1E-5)
+                if (expression.Value <= (decimal) 1E-5)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneMillion;
                     Unit = UnitAbbreviations.Squaremillimeters;
                 }
-                else if (expression.Value <= (decimal)1E-3)
+                else if (expression.Value <= (decimal) 1E-3)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionTenThousand;
                     Unit = UnitAbbreviations.Squarecentimeters;
                 }
-                else if (expression.Value >= (decimal)1E5)
+                else if (expression.Value >= (decimal) 1E5)
                 {
                     expression.Value /= ConversionFactors.MetricMultiplicationOneMillion;
                     Unit = UnitAbbreviations.Squarekilometers;
                 }
-                else if (expression.Value >= (decimal)1E3)
+                else if (expression.Value >= (decimal) 1E3)
                 {
                     expression.Value /= ConversionFactors.MetricMultiplicationMeterToha;
                     Unit = UnitAbbreviations.Hectas;
@@ -75,19 +95,19 @@ namespace Calculator.Logic
             }
             else if (expression is MetricVolumeExpression)
             {
-                if (expression.Value <= (decimal)0.01)
+                if (expression.Value <= (decimal) 0.01)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneThousand;
                     Unit = UnitAbbreviations.Milliliters;
                 }
-                else if (expression.Value <= (decimal)0.1)
+                else if (expression.Value <= (decimal) 0.1)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneHundred;
                     Unit = UnitAbbreviations.Centiliters;
                 }
-                else if (expression.Value >= 10)
+                else if (expression.Value >= 100)
                 {
-                    expression.Value /= ConversionFactors.MetricDivisionOneHundred;
+                    expression.Value /= ConversionFactors.MetricMultiplicationOneHundred;
                     Unit = UnitAbbreviations.Hectoliters;
                 }
                 else
@@ -97,7 +117,7 @@ namespace Calculator.Logic
             }
             else if (expression is MetricMassExpression)
             {
-                if (expression.Value <= (decimal)0.01)
+                if (expression.Value <= (decimal) 0.01)
                 {
                     expression.Value /= ConversionFactors.MetricDivisionOneThousand;
                     Unit = UnitAbbreviations.Milligram;
@@ -122,87 +142,6 @@ namespace Calculator.Logic
                 return $"{expression.Value} {Unit}";
             }
             return null;
-        }
-    }
-    
-
-    public class ImperialMassReadabilityCreator
-    {
-        string mResult;
-        decimal mValue;
-        int mGrainCount;
-        int mDrachmCount;
-        int mOunzeCount;
-        int mStoneCount;
-        int mHundredWeightCount;
-        int mTonCount;
-        void CreateCountsFromValue(IConversionExpressionWithValue expression)
-        {
-            while (mValue > ConversionFactors.ImperialTonToPound)
-            {
-                mValue -= ConversionFactors.ImperialTonToPound;
-                mTonCount += 1;
-            }
-            while (mValue > ConversionFactors.ImperialTonToPound)
-            {
-                mValue -= ConversionFactors.HundredWeightToPound;
-                mHundredWeightCount += 1;
-            }
-            while (mValue > ConversionFactors.StoneToPound)
-            {
-                mValue -= ConversionFactors.StoneToPound;
-                mStoneCount += 1;
-            }
-            while (mValue < ConversionFactors.GrainToPound)
-            {
-                mValue += ConversionFactors.GrainToPound;
-                mGrainCount += 1;
-            }
-            while (mValue < ConversionFactors.DrachmToPound)
-            {
-                mValue += ConversionFactors.DrachmToPound;
-                mDrachmCount += 1;
-            }
-            while (mValue < ConversionFactors.OunceToPound)
-            {
-                mValue += ConversionFactors.OunceToPound;
-                mOunzeCount += 1;
-            }
-        }
-
-        public string MakeReadable(IConversionExpressionWithValue expression)
-        {
-            mValue = expression.Value;
-            CreateCountsFromValue(expression);
-            if (mTonCount != 0)
-            {
-                mResult += $"{mTonCount}{UnitAbbreviations.ImperialTon}";
-            }
-            if (mHundredWeightCount != 0)
-            {
-                mResult += $" {mHundredWeightCount}{UnitAbbreviations.HundredWeight}";
-            }
-            if (mStoneCount != 0)
-            {
-                mResult += $" {mStoneCount}{UnitAbbreviations.Stone}";
-            }
-            if (mValue != 0)
-            {
-                mResult += $" {mValue}{UnitAbbreviations.Pound}";
-            }
-            if (mOunzeCount != 0)
-            {
-                mResult += $" {mOunzeCount}{UnitAbbreviations.Ounce}";
-            }
-            if (mDrachmCount != 0)
-            {
-                mResult += $" {mDrachmCount}{UnitAbbreviations.Drachm}";
-            }
-            if (mGrainCount!=0)
-            {
-                mResult += $" {mGrainCount}{UnitAbbreviations.Grain}";
-            }
-            return mResult;
         }
     }
 }

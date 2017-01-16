@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="DirectCalculationSimplifierTests.cs" />
+    <Compile Include="ReadableOutputCreatorTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ImperialToMetricConverterTests.cs" />

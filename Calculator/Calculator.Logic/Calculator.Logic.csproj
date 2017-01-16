@@ -55,10 +55,15 @@
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMover.cs" />
     <Compile Include="AdditionSubtractionDispatcher.cs" />
+    <Compile Include="AnImperialReadabilityCreator.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IConverters.cs" />
     <Compile Include="IModelBuilder.cs" />
+    <Compile Include="ImperialAreaReadabilityCreator.cs" />
+    <Compile Include="ImperialLengthReadabilityCreator.cs" />
+    <Compile Include="ImperialMassReadabilityCreator.cs" />
+    <Compile Include="ImperialVolumeReadabilityCreator.cs" />
     <Compile Include="ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
