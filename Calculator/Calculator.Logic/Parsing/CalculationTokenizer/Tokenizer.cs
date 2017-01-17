@@ -11,6 +11,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         readonly List<IToken> mTempTokens = new List<IToken>();
         string mInput;
         string mNumber;
+        string mTrigonometricString;
         bool mWasNumber;
         public IEnumerable<IToken> Tokens { get; private set; }
         public void Tokenize(string input)
@@ -31,10 +32,42 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                 }
                 else if (c == '+' || c == '-' || c == '*' || c == '/') AddOperatorToken(c);
                 else if (c == '(' || c == ')') AddParenthesisToken(c);
+                else if (i+3 < mInput.Length && (c == 'c' && mInput[i+1] == 'o' && mInput[i + 2] == 's' && mInput[i+3] == '(') || (c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') || (c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '('))
+                {
+                    i = CreateTokenStringForTrigonometricTokensAndSetCounterAnew(i);
+                    AddTrigonometricTokens();
+                }
                 else if (char.IsLetter(c)) AddVariableToken(c);
             }
             if (mNumber != null) mTempTokens.Add(new NumberToken(mNumber));
             return mTempTokens;
+        }
+
+        int CreateTokenStringForTrigonometricTokensAndSetCounterAnew(int i)
+        {
+            do
+            {
+                mTrigonometricString += mInput[i];
+                i++;
+            } while (mInput[i] != ')');
+            return i;
+        }
+
+        void AddTrigonometricTokens()
+        {
+            if (mTrigonometricString.Contains("cos"))
+            {
+                mTempTokens.Add(new CosineToken(mTrigonometricString));
+            }
+            else if (mTrigonometricString.Contains("sin"))
+            {
+                mTempTokens.Add(new SinusToken(mTrigonometricString));
+            }
+            else if (mTrigonometricString.Contains("tan"))
+            {
+                mTempTokens.Add(new TangentToken(mTrigonometricString));
+            }
+            mTrigonometricString = null;
         }
         void AddNumberTokenIfNecessary()
         {

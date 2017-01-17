@@ -43,6 +43,21 @@ namespace Calculator.Logic
             mResult += variableToken.Variable;
         }
 
+        public void Visit(CosineToken cosineToken)
+        {
+            mResult += cosineToken.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public void Visit(TangentToken tangentToken)
+        {
+            mResult += tangentToken.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
+        public void Visit(SinusToken sinusToken)
+        {
+            mResult += sinusToken.Value.ToString(CultureInfo.InvariantCulture);
+        }
+
         public string Format(IEnumerable<IToken> tokens)
         {
             foreach (var token in tokens) token.Accept(this);

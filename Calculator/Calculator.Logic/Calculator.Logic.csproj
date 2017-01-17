@@ -94,6 +94,10 @@
     <Compile Include="Model\IExpressionFormatter.cs" />
     <Compile Include="ParenthesesNode.cs" />
     <Compile Include="ParenthesesSimplifier.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\TangentToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\AConversionTokens.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionFactors.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionOperatorToken.cs" />

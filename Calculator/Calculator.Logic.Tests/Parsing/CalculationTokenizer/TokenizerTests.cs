@@ -144,5 +144,51 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
             result.Tokenize(underTest);
             result.Tokens.Count().Should().Be(3);
         }
+
+        [Test]
+        public void CosineTokenGetsCreated()
+        {
+            var underTest = " cos(90)";
+            var result = new Tokenizer();
+            result.Tokenize(underTest);
+            result.Tokens.ElementAt(0).Should().BeOfType<CosineToken>();
+        }
+        [Test]
+        public void TangentTokenGetsCreated()
+        {
+            var underTest = " tan(90rad)";
+            var result = new Tokenizer();
+            result.Tokenize(underTest);
+            result.Tokens.ElementAt(0).Should().BeOfType<TangentToken>();
+        }
+        [Test]
+        public void SinusTokenGetsCreated()
+        {
+            var underTest = " sin(90)";
+            var result = new Tokenizer();
+            result.Tokenize(underTest);
+            result.Tokens.ElementAt(0).Should().BeOfType<SinusToken>();
+        }
+
+        [Test]
+        public void AdditionWithTrigonometricToken()
+        {
+            var underTest = " sin(67)+20";
+            var result = new Tokenizer();
+            result.Tokenize(underTest);
+            result.Tokens.ElementAt(0).Should().BeOfType<SinusToken>().Which.Value.Should().Be(-0.855519978975322M);
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>();
+            result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(20);
+        }
+        [Test]
+        public void AdditionWithTrigonometricTokenInDegree()
+        {
+            var underTest = " cos(60deg)+20";
+            var result = new Tokenizer();
+            result.Tokenize(underTest);
+            result.Tokens.ElementAt(0).Should().BeOfType<CosineToken>().Which.Value.Should().Be(0.5M);
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>();
+            result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(20);
+        }
     }
 }

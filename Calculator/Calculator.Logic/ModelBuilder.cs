@@ -65,6 +65,21 @@ namespace Calculator.Logic
             HandleNonParenthesesAndOperation();
         }
 
+        public void Visit(CosineToken cosineToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(TangentToken tangentToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(SinusToken sinusToken)
+        {
+            throw new System.NotImplementedException();
+        }
+
         void HandleNonParenthesesAndOperation()
         {
             if (!mWasOpening)

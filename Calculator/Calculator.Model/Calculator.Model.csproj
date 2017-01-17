@@ -44,6 +44,7 @@
     <Compile Include="AnArithmeticOperation.cs" />
     <Compile Include="AnExpression.cs" />
     <Compile Include="AnExpressionWithValue.cs" />
+    <Compile Include="ATrignometricFunction.cs" />
     <Compile Include="Constant.cs" />
     <Compile Include="Division.cs" />
     <Compile Include="ExpressionExtension.cs" />
