@@ -20,16 +20,18 @@ namespace Calculator.Logic
         IExpression mResult;
         bool mIsNegated;
         bool mWasOpening;
+        bool mWasMultiplication;
 
         public void Visit(OperatorToken operatorToken)
         {
             CreateOperatorExpression(operatorToken);
-            if (!mIsNegated)
+            if (!mIsNegated && !mWasMultiplication)
             {
                 FillOperation();
             }
             else
             {
+                mWasMultiplication = false;
                 mIsNegated = false;
             }
 
@@ -70,6 +72,11 @@ namespace Calculator.Logic
             }
             else
             {
+                mWasOpening = false;
+                if (mCurrent is Constant)
+                {
+                    mParenthesed.Wrapped = mCurrent;
+                }
                 mCurrent = mParenthesed;
                 mParenthesed = null;
                 if (mCurrent.HasParent)
@@ -155,6 +162,7 @@ namespace Calculator.Logic
                 var multiplicationOrDivision = new TSelf { Left = temp };
                 mCurrentOperation.Right = multiplicationOrDivision;
                 mCurrentOperation = multiplicationOrDivision;
+                mWasMultiplication = true;
             }
             else
                 mCurrentOperation = new TSelf();
