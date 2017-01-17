@@ -10,30 +10,38 @@ namespace Calculator.Logic
         string mCurrentVariable;
         bool mIsRight;
         bool mWasChanged;
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
         }
+
         public void Visit(Subtraction subtraction)
         {
             CheckOperation(subtraction);
             VisitOperands(subtraction);
         }
+
         public void Visit(Multiplication multiplication)
         {
             VisitOperands(multiplication);
         }
+
         public void Visit(Addition addition)
         {
             CheckOperation(addition);
             VisitOperands(addition);
         }
+
         public void Visit(Constant constant) {}
+
         public void Visit(Division division)
         {
             VisitOperands(division);
         }
+
         public void Visit(Variable variable) {}
+
         public IExpression Simplify(IExpression input)
         {
             mWasChanged = false;
@@ -41,11 +49,13 @@ namespace Calculator.Logic
             mCalculatedExpression.Accept(this);
             return mCalculatedExpression;
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
         }
+
         void CheckOperation(IArithmeticOperation operation)
         {
             if (operation.Right is Multiplication && (operation.Left is Addition || operation.Left is Subtraction))
@@ -60,7 +70,8 @@ namespace Calculator.Logic
             }
             else if (operation.Right is Multiplication && operation.Left is Multiplication)
             {
-                if (operation is Addition) {
+                if (operation is Addition)
+                {
                     HandleDoubleMultiplicationInAddition(operation);
                 }
                 else
@@ -77,6 +88,7 @@ namespace Calculator.Logic
         {
             HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l + r);
         }
+
         void HandleDoubleMultiplicationInAdditiveOperation(
             IArithmeticOperation operation,
             Func<decimal, decimal, decimal> calculateLeftConstant)
@@ -97,7 +109,8 @@ namespace Calculator.Logic
                         Left = new Constant {Value = calculateLeftConstant(constantOne.Value, constantTwo.Value)},
                         Right = variableOne
                     };
-                    if (operation.HasParent) {
+                    if (operation.HasParent)
+                    {
                         operation.Parent.ReplaceChild(operation, replacement);
                     }
                     else
@@ -108,6 +121,7 @@ namespace Calculator.Logic
                 }
             }
         }
+
         /// <summary>
         /// Handles subtraction of Variables next to each other
         /// </summary>
@@ -116,6 +130,7 @@ namespace Calculator.Logic
         {
             HandleDoubleMultiplicationInAdditiveOperation(operation, (l, r) => l - r);
         }
+
         void ModifyAddition(
             IArithmeticOperation operation,
             IArithmeticOperation chainedOperation,
@@ -132,6 +147,7 @@ namespace Calculator.Logic
                 handler(operation, (IArithmeticOperation) chainedOperation.Left);
             }
         }
+
         void ModifySubtraction(
             IArithmeticOperation operation,
             IArithmeticOperation chainedOperation,
@@ -139,6 +155,7 @@ namespace Calculator.Logic
         {
             ModifySubtraction(operation, chainedOperation, handler, handler);
         }
+
         void ModifySubtraction(
             IArithmeticOperation operation,
             IArithmeticOperation chainedOperation,
@@ -156,6 +173,7 @@ namespace Calculator.Logic
                 chainedOperation.Left = new Constant {Value = 0};
             }
         }
+
         void MakeMove(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
         {
             if (chainedOperation == null) return;
@@ -167,16 +185,19 @@ namespace Calculator.Logic
                 ForSubSub = (op, chained) => ModifySubtraction(op, chained, HandleSubtractionToSubtraction),
                 ForAddSub =
                     (op, chained) =>
-                        ModifySubtraction(op, chained, HandleSubtractionToAddition, HandleAdditionOfVariables)
+                            ModifySubtraction(op, chained, HandleSubtractionToAddition, HandleAdditionOfVariables)
             }.Execute();
         }
+
         void HandleReplacement(IExpression operation, IExpression replacement)
         {
-            if (operation.HasParent) {
+            if (operation.HasParent)
+            {
                 operation.Parent.ReplaceChild(operation, replacement);
             }
             else mCalculatedExpression = replacement;
         }
+
         void HandleSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
@@ -194,6 +215,7 @@ namespace Calculator.Logic
             };
             HandleReplacement(operation, replacement);
         }
+
         void HandleAdditionOfVariables(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
@@ -211,6 +233,7 @@ namespace Calculator.Logic
             };
             HandleReplacement(operation, replacement);
         }
+
         void HandleSubtractionToSubtraction(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
@@ -241,6 +264,7 @@ namespace Calculator.Logic
                 };
             }
         }
+
         void HanldeSubtractionToAddition(IArithmeticOperation operation, IArithmeticOperation multiplication)
         {
             var multiplicationOfOperation = (IArithmeticOperation) operation.Right;
@@ -258,6 +282,7 @@ namespace Calculator.Logic
             };
             HandleReplacement(operation, replacement);
         }
+
         IArithmeticOperation FindSuitableAdditionOrSubtraction(IArithmeticOperation operation)
         {
             while (!mWasChanged)
@@ -266,8 +291,14 @@ namespace Calculator.Logic
                 var multiplicationRight = operation.Right as Multiplication;
                 var variableRight = (Variable) null;
                 var variableLeft = (Variable) null;
-                if (multiplicationLeft != null) { variableLeft = multiplicationLeft.Right as Variable; }
-                if (multiplicationRight != null) { variableRight = multiplicationRight.Right as Variable; }
+                if (multiplicationLeft != null)
+                {
+                    variableLeft = multiplicationLeft.Right as Variable;
+                }
+                if (multiplicationRight != null)
+                {
+                    variableRight = multiplicationRight.Right as Variable;
+                }
                 if (multiplicationRight != null && variableRight != null && variableRight.Variables == mCurrentVariable)
                 {
                     mIsRight = true;
