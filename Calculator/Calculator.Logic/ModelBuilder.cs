@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Calculator.Logic.Model;
 using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
@@ -13,154 +14,169 @@ namespace Calculator.Logic
     /// </summary>
     public class ModelBuilder : ITokenVisitor, IModelBuilder
     {
-        readonly IList<IExpression> mExpressions = new List<IExpression>();
-        readonly IList<ParenthesesNode> mRootNodes = new List<ParenthesesNode>();
+        IExpression mCurrent;
+        ParenthesedExpression mParenthesed;
         IArithmeticOperation mCurrentOperation;
-        ParenthesesNode mNode;
-        bool IsWrapped => null != mNode;
-        public IExpression BuildFrom(IEnumerable<IToken> tokens)
+        IExpression mResult;
+        bool mIsNegated;
+        bool mWasOpening;
+
+        public void Visit(OperatorToken operatorToken)
         {
-            foreach (var token in tokens) { token.Accept(this); }
-            HandleParenthesesExpressions();
-            PointBeforeAdditionOrSubtraction(mExpressions);
-            return mExpressions[0];
-        }
-        public void Visit(OperatorToken operatorToken) => Add(CreateOperatorExpression(operatorToken));
-        public void Visit(NumberToken numberToken) => Add(new Constant {Value = numberToken.Value});
-        public void Visit(ParenthesesToken parenthesisToken)
-        {
-            if (parenthesisToken.IsOpening && mNode == null) {
-                HandleTopLevelOpeningParenthesis();
-            }
-            else if (parenthesisToken.IsOpening) {
-                HandleChildOpeningParenthesis();
+            CreateOperatorExpression(operatorToken);
+            if (!mIsNegated)
+            {
+                FillOperation();
             }
             else
             {
-                HandleClosingParenthesis();
+                mIsNegated = false;
             }
-        }
-        public void Visit(VariableToken variableToken) => Add(new Variable {Variables = variableToken.Variable});
 
-        void IterateChildren(ParenthesesNode root)
+        }
+
+        public void Visit(NumberToken numberToken)
         {
-            var index = 0;
-            foreach (var child in root.Children)
+            mCurrent = new Constant { Value = numberToken.Value };
+            if (!mWasOpening)
             {
-                index++;
-                if (child.HasChild) { IterateChildren(child); }
-                child.ParenthesedExpression.Wrapped = PointBeforeAdditionOrSubtraction(child.Expressions);
-                ChangeParenthesesExpressionOfParent(index, child);
+                FillOperation();
             }
-        }
-        static void ChangeParenthesesExpressionOfParent(int index, ParenthesesNode child)
-        {
-            child.Parent.Expressions[FindExpressionIndexForParenthesesIndex(index, child)] = child.ParenthesedExpression;
-        }
-        static int FindExpressionIndexForParenthesesIndex(int parenthesisIndex, ParenthesesNode child)
-        {
-            var parenthesisCount = 0;
-            //Cant use foreach as expressionIndex is returned
-            for (var expressionIndex = 0; expressionIndex < child.Parent.Expressions.Count; expressionIndex++)
+            else
             {
-                if (child.Parent.Expressions[expressionIndex] is ParenthesedExpression) parenthesisCount++;
-                if (parenthesisCount == parenthesisIndex) return expressionIndex;
+                mWasOpening = false;
             }
-            throw new InvalidOperationException();
+
         }
-        IExpression PointBeforeAdditionOrSubtraction(IList<IExpression> expressions)
+
+        public void Visit(ParenthesesToken parenthesesToken)
         {
-            HandleOperations<Multiplication, Division>(expressions);
-            HandleOperations<Addition, Subtraction>(expressions);
-            return expressions.First();
-        }
-        void HandleParenthesesExpressions()
-        {
-            //Cant use foreach because changing mExpressions
-            for (var i = 0; i < mExpressions.Count; i++)
+            if (parenthesesToken.IsOpening)
             {
-                var expression = mExpressions[i];
-                if (expression is ParenthesedExpression)
+                var parenthesedExpression = new ParenthesedExpression();
+                if (mCurrent is ParenthesedExpression)
                 {
-                    mNode = mRootNodes[0];
-                    if (mNode.HasChild) { IterateChildren(mNode); }
-                    mNode.ParenthesedExpression.Wrapped = PointBeforeAdditionOrSubtraction(mNode.Expressions);
-                    mRootNodes.RemoveAt(0);
-                    mExpressions[i] = mNode.ParenthesedExpression;
+                    var parent = (ParenthesedExpression)mCurrent;
+                    parent.Wrapped = parenthesedExpression;
+                }
+                mCurrent = parenthesedExpression;
+                mParenthesed = (ParenthesedExpression) mCurrent;
+                if (mCurrentOperation != null)
+                {
+                    mCurrentOperation.Right = mCurrent;
+                    mWasOpening = true;
+                    mCurrentOperation = null;
+                }
+            }
+            else
+            {
+                mCurrent = mParenthesed;
+                mParenthesed = null;
+                if (mCurrent.HasParent)
+                {
+                    var temp = mCurrent;
+                    while (temp.HasParent)
+                    {
+                        temp = temp.Parent;
+                        if (temp is ParenthesedExpression)
+                        {
+                            mParenthesed = (ParenthesedExpression) temp;
+                            break;
+                        }
+                        mCurrent = temp;
+                    }
                 }
             }
         }
-        void HandleOperations<TFirstAlternative, TSecondAlternative>(IList<IExpression> expressions)
-            where TFirstAlternative : IArithmeticOperation where TSecondAlternative : IArithmeticOperation
+
+        public void Visit(VariableToken variableToken)
         {
-            var i = 0;
-            while (i < expressions.Count)
+            mCurrent = new Variable { Variables= variableToken.Variable};
+            if (!mWasOpening)
             {
-                if (expressions[i] is TFirstAlternative) HandleOperation<TFirstAlternative>(expressions, i);
-                else if (expressions[i] is TSecondAlternative) HandleOperation<TSecondAlternative>(expressions, i);
-                else ++i;
+                FillOperation();
+            }
+            else
+            {
+                mWasOpening = false;
             }
         }
-        void HandleOperation<T>(IList<IExpression> expressions, int index) where T : IArithmeticOperation
+
+        public IExpression BuildFrom(IEnumerable<IToken> tokens)
         {
-            mCurrentOperation = (T) expressions[index];
-            FillOperators(index, expressions);
+            foreach (var token in tokens)
+            {
+                token.Accept(this);
+            }
+            mResult = mCurrent;
+            return mResult;
         }
-        void FillOperators(int i, IList<IExpression> expressions)
-        {
-            mCurrentOperation.Left = expressions[i - 1];
-            mCurrentOperation.Right = expressions[i + 1];
-            expressions.RemoveAt(i + 1);
-            expressions.RemoveAt(i - 1);
-        }
-        static IArithmeticOperation CreateOperatorExpression(OperatorToken operatorToken)
+        void CreateOperatorExpression(OperatorToken operatorToken)
         {
             switch (operatorToken.Operator)
             {
                 case Operator.Add:
-                    return new Addition();
+                    mCurrentOperation = new Addition();
+                    break;
                 case Operator.Subtract:
-                    return new Subtraction();
+                    HandleNegation();
+                    break;
                 case Operator.Multiply:
-                    return new Multiplication();
+                    HandleMultiplicationBeforeAdditiveOperation<Multiplication>();
+                    break;
                 case Operator.Divide:
-                    return new Division();
+                    
+                    HandleMultiplicationBeforeAdditiveOperation<Division>();
+                    break;
             }
-            throw new ArgumentOutOfRangeException();
         }
-        void Add(IExpression expression)
+
+        void HandleNegation()
         {
-            Negate(expression);
-            if (IsWrapped) mNode.Expressions.Add(expression);
-            else mExpressions.Add(expression);
+            var parentheses = mCurrent as ParenthesedExpression;
+            if (mCurrent != null && !(mCurrent is ParenthesedExpression))
+                mCurrentOperation = new Subtraction();
+            else if (parentheses?.Wrapped != null)
+            {
+                    mCurrentOperation = new Subtraction();
+            }
+            else
+            {
+                var constant = new Constant { Value = 0 };
+                mCurrentOperation = new Subtraction { Left = constant };
+                mIsNegated = true;
+            }
         }
-        void HandleClosingParenthesis()
+        void HandleMultiplicationBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
         {
-            mNode = mNode.Parent;
+            if (mCurrentOperation is Subtraction || mCurrentOperation is Addition && !(mCurrent is ParenthesedExpression))
+            {
+                var temp = mCurrentOperation.Right;
+                var multiplicationOrDivision = new TSelf { Left = temp };
+                mCurrentOperation.Right = multiplicationOrDivision;
+                mCurrentOperation = multiplicationOrDivision;
+            }
+            else
+                mCurrentOperation = new TSelf();
         }
-        void HandleChildOpeningParenthesis()
+        void FillOperation()
         {
-            mNode.Expressions.Add(new ParenthesedExpression());
-            var childNode = new ParenthesesNode();
-            mNode.AddChild(childNode);
-            mNode = childNode;
-        }
-        void HandleTopLevelOpeningParenthesis()
-        {
-            mNode = new ParenthesesNode();
-            mExpressions.Add(new ParenthesedExpression());
-            mRootNodes.Add(mNode);
-        }
-        void Negate(IExpression subtraction)
-        {
-            if (subtraction is Subtraction &&
-                (mExpressions.Count == 0 ||
-                 !(mExpressions.Last() is Constant) && !(mExpressions.Last() is Variable) &&
-                 !(mExpressions.Last() is ParenthesedExpression))) mExpressions.Add(new Constant {Value = 0});
-            else if (subtraction is Subtraction && IsWrapped &&
-                     (mNode.Expressions.Count == 0 ||
-                      !(mNode.Expressions.Last() is Constant) && !(mNode.Expressions.Last() is Variable) &&
-                      !(mNode.Expressions.Last() is ParenthesedExpression))) mNode.Expressions.Add(new Constant {Value = 0});
+            if (mCurrentOperation != null)
+            {
+                if (mCurrentOperation.Left == null)
+                    mCurrentOperation.Left = mCurrent;
+                else
+                    mCurrentOperation.Right = mCurrent;
+                mCurrent = mCurrentOperation;
+            }
+            if (mCurrentOperation != null && !(mCurrentOperation.Parent is ParenthesedExpression))
+            {
+                mCurrent = mCurrentOperation.HasParent ? mCurrentOperation.Parent : mCurrentOperation;
+            }
+            if (mParenthesed != null)
+            {
+                mParenthesed.Wrapped = mCurrent;
+            }
         }
     }
 }

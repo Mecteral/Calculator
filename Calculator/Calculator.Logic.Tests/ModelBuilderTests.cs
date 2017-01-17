@@ -36,16 +36,39 @@ namespace Calculator.Logic.Tests
             new FormattingExpressionVisitor().Format(exp).Should().Be("(1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))");
         }
         [Test]
-        public void Complex_Case_With_Two_Parentheses_In_Parentheses()
+        public void Complex_Case2()
         {
-            // ((1*2)/(3-4))
+            // (1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))
             var input = new IToken[]
             {
-                Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close,
+                Number(2),Plus, Open, Number(1), Times, Open, Number(2), Plus, Number(3), DividedBy, Open, Number(4), Minus, Number(5),
+                Close, Close, Close
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("2 + (1*(2 + 3/(4 - 5)))");
+        }
+        [Test]
+        public void Complex_Case_With_Two_Parentheses_In_Parentheses()
+        {
+            // 2+((1*2)/(3-4))
+            var input = new IToken[]
+            {
+                Number(2),Plus,Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close,
                 Close
             };
             var exp = Test(input);
-            new FormattingExpressionVisitor().Format(exp).Should().Be("((1*2)/(3 - 4))");
+            new FormattingExpressionVisitor().Format(exp).Should().Be("2 + ((1*2)/(3 - 4))");
+        }
+
+        [Test]
+        public void MultiplicationAfterParentheses()
+        {
+            var input = new IToken[]
+            {
+                Open,Number(1),Plus,Number(2),Close,Times,Number(3)
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2)*3");
         }
         [Test]
         public void Negation_Of_Numbers_Builds_Zero_Minus_Number()
@@ -73,6 +96,14 @@ namespace Calculator.Logic.Tests
                 .BeOfType<Constant>()
                 .Subject.Value.Should()
                 .Be(22);
+        }
+        //(1+2)+(3+4)
+        [Test]
+        public void AdditionWithDoubleParenthesed()
+        {
+            var input = new IToken[] { Open, Number(1), Plus, Number(2), Close, Plus, Open, Number(3), Plus, Number(4), Close };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2) + (3 + 4)");
         }
         [Test]
         public void Number_DividedBy_Number_Builds_Division()
