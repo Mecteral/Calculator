@@ -43,17 +43,17 @@ namespace Calculator.Logic
 
         public void Visit(CosineExpression cosineExpression)
         {
-            throw new System.NotImplementedException();
+            mSecondExpressions.Add(cosineExpression);
         }
 
         public void Visit(TangentExpression tangentExpression)
         {
-            throw new System.NotImplementedException();
+            mSecondExpressions.Add(tangentExpression);
         }
 
         public void Visit(SinusExpression sinusExpression)
         {
-            throw new System.NotImplementedException();
+            mSecondExpressions.Add(sinusExpression);
         }
 
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)

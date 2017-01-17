@@ -1,8 +1,6 @@
 ﻿using System.Globalization;
 using Calculator.Logic.Model;
-using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
@@ -13,7 +11,8 @@ namespace Calculator.Logic.Tests
     public class ModelBuilderTests
     {
         static T TestExpecting<T>(params IToken[] input) where T : IExpression
-            => Test(input).Should().BeOfType<T>().Subject;
+        => Test(input).Should().BeOfType<T>().Subject;
+
         static IExpression Test(params IToken[] input) => new ModelBuilder().BuildFrom(input);
         static ParenthesesToken Close => new ParenthesesToken(')');
         static ParenthesesToken Open => new ParenthesesToken('(');
@@ -26,6 +25,16 @@ namespace Calculator.Logic.Tests
         static TangentToken Tangent(string input) => new TangentToken($"tan({input})");
         static SinusToken Sinus(string input) => new SinusToken($"sin({input})");
         static CosineToken Cosine(string input) => new CosineToken($"cos({input})");
+        //(1+2)+(3+4)
+        [Test]
+        public void AdditionWithDoubleParenthesed()
+        {
+            var input = new IToken[]
+                {Open, Number(1), Plus, Number(2), Close, Plus, Open, Number(3), Plus, Number(4), Close};
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2) + (3 + 4)");
+        }
+
         [Test]
         public void Complex_Case()
         {
@@ -39,58 +48,135 @@ namespace Calculator.Logic.Tests
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("(1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))");
         }
-        [Test]
-        public void Complex_Case2()
-        {
-            // (1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))
-            var input = new IToken[]
-            {
-                Number(2),Plus, Open, Number(1), Times, Open, Number(2), Plus, Number(3), DividedBy, Open, Number(4), Minus, Number(5),
-                Close, Close, Close
-            };
-            var exp = Test(input);
-            new FormattingExpressionVisitor().Format(exp).Should().Be("2 + (1*(2 + 3/(4 - 5)))");
-            exp.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
-            exp.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Multiplication>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
-            exp.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
-            exp.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Division>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
-            exp.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Division>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Subtraction>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-            exp.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Division>().Which.Right.Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Subtraction>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(5);
 
-        }
         [Test]
         public void Complex_Case_With_Two_Parentheses_In_Parentheses()
         {
             // 2+((1*2)/(3-4))
             var input = new IToken[]
             {
-                Number(2),Plus,Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus, Number(4), Close,
+                Number(2), Plus, Open, Open, Number(1), Times, Number(2), Close, DividedBy, Open, Number(3), Minus,
+                Number(4), Close,
                 Close
             };
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("2 + ((1*2)/(3 - 4))");
         }
-        //(1+2)*3+4a+5*(6+7)
+
         [Test]
-        public void TestWithTwoParentheses()
+        public void Complex_Case2()
         {
+            // (1*(2 + 3/(4 - 5))) - (6*(7 + (8 - 9)))
             var input = new IToken[]
             {
-                Open,Number(1),Plus,Number(2),Close,Times,Number(3),Plus,Number(4),Times,Variable('a'),Plus,Number(5),Times,Open,Number(6),Plus,Number(7),Close
+                Number(2), Plus, Open, Number(1), Times, Open, Number(2), Plus, Number(3), DividedBy, Open, Number(4),
+                Minus, Number(5),
+                Close, Close, Close
             };
             var exp = Test(input);
-            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2)*3 + 4*a + 5*(6 + 7)");
+            new FormattingExpressionVisitor().Format(exp).Should().Be("2 + (1*(2 + 3/(4 - 5)))");
+            exp.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+            exp.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(1);
+            exp.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Addition>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(2);
+            exp.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<Division>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(3);
+            exp.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<Division>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Subtraction>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(4);
+            exp.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<Division>()
+                .Which.Right.Should()
+                .BeOfType<ParenthesedExpression>()
+                .Which.Wrapped.Should()
+                .BeOfType<Subtraction>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(5);
         }
+
+        [Test]
+        public void CosineMinusConstant()
+        {
+            var subtraction = TestExpecting<Subtraction>(Cosine("60deg"), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<CosineExpression>().Which.Value.Should().Be(0.5M);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+
         [Test]
         public void MultiplicationAfterParentheses()
         {
             var input = new IToken[]
             {
-                Open,Number(1),Plus,Number(2),Close,Times,Number(3)
+                Open, Number(1), Plus, Number(2), Close, Times, Number(3)
             };
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2)*3");
         }
+
         [Test]
         public void Negation_Of_Numbers_Builds_Zero_Minus_Number()
         {
@@ -99,6 +185,7 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
         }
+
         [Test]
         public void Negation_Of_Numbers_In_Parentheses_Builds_Zero_Minus_Number()
         {
@@ -106,6 +193,7 @@ namespace Calculator.Logic.Tests
             var exp = Test(input);
             new FormattingExpressionVisitor().Format(exp).Should().Be("(0 - 1)");
         }
+
         [Test]
         public void Nested_Parentheses_Build_Correctly()
         {
@@ -118,14 +206,7 @@ namespace Calculator.Logic.Tests
                 .Subject.Value.Should()
                 .Be(22);
         }
-        //(1+2)+(3+4)
-        [Test]
-        public void AdditionWithDoubleParenthesed()
-        {
-            var input = new IToken[] { Open, Number(1), Plus, Number(2), Close, Plus, Open, Number(3), Plus, Number(4), Close };
-            var exp = Test(input);
-            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2) + (3 + 4)");
-        }
+
         [Test]
         public void Number_DividedBy_Number_Builds_Division()
         {
@@ -134,6 +215,7 @@ namespace Calculator.Logic.Tests
             division.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
             division.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
         [Test]
         public void Number_Minus_Number_Builds_Subtraction()
         {
@@ -142,6 +224,7 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
         [Test]
         public void Number_Plus_Number_Builds_Addition()
         {
@@ -150,6 +233,7 @@ namespace Calculator.Logic.Tests
             addition.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
             addition.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
         [Test]
         public void Parenthese_Number_Parenthese_Builds_ParenthesedExpression()
         {
@@ -157,6 +241,7 @@ namespace Calculator.Logic.Tests
             var parenthesed = TestExpecting<ParenthesedExpression>(Open, Number(22), Close);
             parenthesed.Wrapped.Should().BeOfType<Constant>().Subject.Value.Should().Be(22);
         }
+
         [Test]
         public void PointBeforeAdditionOrSubtraction()
         {
@@ -176,11 +261,13 @@ namespace Calculator.Logic.Tests
                 .Which.Value.Should()
                 .Be(5);
         }
+
         [Test]
         public void PointBeforeAdditionOrSubtractionInParentheses()
         {
             //3+4*5
-            var parentheses = TestExpecting<ParenthesedExpression>(Open,Number(3), Plus, Number(4), Times, Number(5),Close);
+            var parentheses = TestExpecting<ParenthesedExpression>(Open, Number(3), Plus, Number(4), Times, Number(5),
+                Close);
             parentheses.Wrapped.Should()
                 .BeOfType<Addition>()
                 .Subject.Left.Should()
@@ -198,6 +285,7 @@ namespace Calculator.Logic.Tests
                 .BeOfType<Multiplication>()
                 .Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(5);
         }
+
         [Test]
         public void Single_Number_Token_Builds_ConstantNumber()
         {
@@ -205,22 +293,15 @@ namespace Calculator.Logic.Tests
             var constantNumber = TestExpecting<Constant>(Number(3.131));
             constantNumber.Value.Should().Be(3.131M);
         }
+
         [Test]
-        public void Variable_Minus_Number_Builds_Subtraction()
+        public void SinusMinusConstant()
         {
-            //a-4
-            var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
+            var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<SinusExpression>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
-        [Test]
-        public void CosineMinusConstant()
-        {
-            var subtraction = TestExpecting<Subtraction>(Cosine("60deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<CosineExpression>().Which.Value.Should().Be(0.5M);
-            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
         [Test]
         public void TangentMinusConstant()
         {
@@ -228,11 +309,26 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<TangentExpression>().Which.Value.Should().Be(1.0M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
+        //(1+2)*3+4a+5*(6+7)
         [Test]
-        public void SinusMinusConstant()
+        public void TestWithTwoParentheses()
         {
-            var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<SinusExpression>().Which.Value.Should().Be(0.5M);
+            var input = new IToken[]
+            {
+                Open, Number(1), Plus, Number(2), Close, Times, Number(3), Plus, Number(4), Times, Variable('a'), Plus,
+                Number(5), Times, Open, Number(6), Plus, Number(7), Close
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("(1 + 2)*3 + 4*a + 5*(6 + 7)");
+        }
+
+        [Test]
+        public void Variable_Minus_Number_Builds_Subtraction()
+        {
+            //a-4
+            var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
     }

@@ -6,6 +6,8 @@ namespace Calculator.Logic.Model
     public class EvaluatingExpressionVisitor : AnExpressionVisitorWithResult<EvaluatingExpressionVisitor, decimal>
     {
         public static decimal Evaluate(IExpression expression) => GetResultFor(expression);
+        protected override decimal UseSinus(decimal value) => value;
+
         protected override decimal UseVariable(string variable)
         {
             throw new InvalidOperationException();
@@ -16,5 +18,8 @@ namespace Calculator.Logic.Model
         protected override decimal UseAddition(decimal left, decimal right) => left + right;
         protected override decimal UseDivision(decimal left, decimal right) => left / right;
         protected override decimal UseConstant(decimal value) => value;
+        protected override decimal UseCosine(decimal value) => value;
+
+        protected override decimal UseTangent(decimal value) => value;
     }
 }

@@ -41,20 +41,12 @@ namespace Calculator.Logic
         }
 
         public void Visit(Variable variable) {}
-        public void Visit(CosineExpression cosineExpression)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Visit(TangentExpression tangentExpression)
-        {
-            throw new NotImplementedException();
-        }
+        public void Visit(CosineExpression cosineExpression) {}
 
-        public void Visit(SinusExpression sinusExpression)
-        {
-            throw new NotImplementedException();
-        }
+        public void Visit(TangentExpression tangentExpression) {}
+
+        public void Visit(SinusExpression sinusExpression) {}
 
         public IExpression Simplify(IExpression input)
         {
@@ -94,6 +86,7 @@ namespace Calculator.Logic
                 }
             }
         }
+
         /// <summary>
         /// Handles addition of Variables next to each other
         /// </summary>

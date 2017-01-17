@@ -9,42 +9,40 @@ namespace Calculator.Logic
     public class DirectCalculationSimplifier : IExpressionVisitor, ISimplifier
     {
         IExpression mExpression;
+
         public void Visit(Subtraction subtraction)
         {
             CalculateResultIfPossible(subtraction);
         }
+
         public void Visit(Multiplication multiplication)
         {
             CalculateResultIfPossible(multiplication);
         }
+
         public void Visit(Addition addition)
         {
             CalculateResultIfPossible(addition);
         }
+
         public void Visit(Division division)
         {
             CalculateResultIfPossible(division);
         }
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
         }
+
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
-        public void Visit(CosineExpression cosineExpression)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void Visit(TangentExpression tangentExpression)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Visit(CosineExpression cosineExpression) {}
 
-        public void Visit(SinusExpression sinusExpression)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Visit(TangentExpression tangentExpression) {}
+
+        public void Visit(SinusExpression sinusExpression) {}
 
         public IExpression Simplify(IExpression input)
         {
@@ -52,13 +50,16 @@ namespace Calculator.Logic
             mExpression.Accept(this);
             return mExpression;
         }
+
         static bool IsCalculateable(IArithmeticOperation operation)
             => operation.Left is Constant && operation.Right is Constant;
+
         void CalculateResultIfPossible(IArithmeticOperation operation)
         {
             if (IsCalculateable(operation))
             {
-                if (operation is Subtraction && operation.Left is Constant && operation.Right is Constant) {
+                if (operation is Subtraction && operation.Left is Constant && operation.Right is Constant)
+                {
                     operation = ChangeSubtractionIfRighthandsideIsNegative(operation);
                 }
                 var replacement = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
@@ -67,6 +68,7 @@ namespace Calculator.Logic
             }
             else VisitOperands(operation);
         }
+
         IArithmeticOperation ChangeSubtractionIfRighthandsideIsNegative(IArithmeticOperation operation)
         {
             var constant = (Constant) operation.Right;
@@ -82,6 +84,7 @@ namespace Calculator.Logic
             }
             return operation;
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);

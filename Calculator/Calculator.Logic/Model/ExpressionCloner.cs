@@ -29,6 +29,22 @@ namespace Calculator.Logic.Model
         {
             return new Constant {Value = value};
         }
+
+        protected override IExpression UseCosine(decimal value)
+        {
+            return new CosineExpression {Value = value};
+        }
+
+        protected override IExpression UseTangent(decimal value)
+        {
+            return new TangentExpression { Value = value };
+        }
+
+        protected override IExpression UseSinus(decimal value)
+        {
+            return new SinusExpression { Value = value };
+        }
+
         protected override IExpression UseVariable(string variable)
         {
             return new Variable {Variables = variable};

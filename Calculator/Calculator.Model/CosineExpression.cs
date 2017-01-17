@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculator.Model
 {
-    public class CosineExpression : AnExpressionWithValue
+    public class CosineExpression : ATrigonometricFunction
     {
         public override void Accept(IExpressionVisitor visitor)
         {
@@ -15,7 +11,7 @@ namespace Calculator.Model
 
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)
         {
-            throw new System.NotImplementedException();
+            throw new InvalidOperationException();
         }
     }
 }

@@ -8,44 +8,43 @@ namespace Calculator.Logic
         static IExpression sMovedExpression;
         bool mIsRight;
         bool mWasChanged;
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
         }
+
         public void Visit(Subtraction subtraction)
         {
             CheckIfMoveIsAvailable(subtraction);
             VisitOperands(subtraction);
         }
+
         public void Visit(Multiplication multiplication)
         {
             VisitOperands(multiplication);
         }
+
         public void Visit(Addition addition)
         {
             CheckIfMoveIsAvailable(addition);
             VisitOperands(addition);
         }
+
         public void Visit(Constant constant) {}
+
         public void Visit(Division division)
         {
             VisitOperands(division);
         }
+
         public void Visit(Variable variable) {}
-        public void Visit(CosineExpression cosineExpression)
-        {
-            throw new System.NotImplementedException();
-        }
 
-        public void Visit(TangentExpression tangentExpression)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Visit(CosineExpression cosineExpression) {}
 
-        public void Visit(SinusExpression sinusExpression)
-        {
-            throw new System.NotImplementedException();
-        }
+        public void Visit(TangentExpression tangentExpression) {}
+
+        public void Visit(SinusExpression sinusExpression) {}
 
         public IExpression Simplify(IExpression input)
         {
@@ -54,17 +53,21 @@ namespace Calculator.Logic
             MoveAdditionsOrSubtractions(sMovedExpression);
             return sMovedExpression;
         }
+
         static void MoveAdditionsOrSubtractions(IExpression expression)
         {
             var mover = new AdditionAndSubtractionMover();
             expression.Accept(mover);
         }
+
         void CheckIfMoveIsAvailable(IArithmeticOperation operation)
         {
-            if (operation.Right is Constant && (operation.Left is Addition || operation.Left is Subtraction)) {
+            if (operation.Right is Constant && (operation.Left is Addition || operation.Left is Subtraction))
+            {
                 MakeMove(operation, FindMoveableExpression((IArithmeticOperation) operation.Left));
             }
         }
+
         IArithmeticOperation FindMoveableExpression(IArithmeticOperation operation)
         {
             while (!mWasChanged)
@@ -102,6 +105,7 @@ namespace Calculator.Logic
             }
             return null;
         }
+
         void MakeMove(IArithmeticOperation operation, IArithmeticOperation chainedOperation)
         {
             if (chainedOperation == null) return;
@@ -113,6 +117,7 @@ namespace Calculator.Logic
                 ForSubSub = HandelSubtractionInSubtraction
             }.Execute();
         }
+
         void HandleSubtractionInAddition(Addition operation, Subtraction chainedOperation)
         {
             var parent = (IArithmeticOperation) chainedOperation.Parent;
@@ -131,6 +136,7 @@ namespace Calculator.Logic
                 operation.Right = new Addition {Left = chainedOperation.Left, Right = operation.Right};
             }
         }
+
         void HandleAdditionInAddition(Addition operation, Addition chainedOperation)
         {
             var parent = (IArithmeticOperation) chainedOperation.Parent;
@@ -145,6 +151,7 @@ namespace Calculator.Logic
                 operation.Right = new Addition {Left = chainedOperation.Left, Right = operation.Right};
             }
         }
+
         void HandelSubtractionInSubtraction(Subtraction operation, Subtraction chainedOperation)
         {
             var parent = (IArithmeticOperation) chainedOperation.Parent;
@@ -165,6 +172,7 @@ namespace Calculator.Logic
                 mWasChanged = true;
             }
         }
+
         void HandelAdditionInSubtraction(Subtraction operation, Addition chainedOperation)
         {
             var parent = (IArithmeticOperation) chainedOperation.Parent;
@@ -191,7 +199,8 @@ namespace Calculator.Logic
                 mWasChanged = true;
             }
         }
-        static void CheckForParent(IArithmeticOperation operation, Addition replacement)
+
+        static void CheckForParent(IArithmeticOperation operation, IExpression replacement)
         {
             if (!operation.HasParent) sMovedExpression = replacement;
             else
@@ -199,12 +208,14 @@ namespace Calculator.Logic
                 HandleParent(operation, replacement);
             }
         }
-        static void HandleParent(IArithmeticOperation operation, IExpression replacement)
+
+        static void HandleParent(IExpression operation, IExpression replacement)
         {
             if (operation.Parent is IArithmeticOperation)
             {
                 var operationParent = (IArithmeticOperation) operation.Parent;
-                if (operationParent.Left.Equals(operation)) {
+                if (operationParent.Left.Equals(operation))
+                {
                     operationParent.Left = replacement;
                 }
                 else
@@ -213,6 +224,7 @@ namespace Calculator.Logic
                 }
             }
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);

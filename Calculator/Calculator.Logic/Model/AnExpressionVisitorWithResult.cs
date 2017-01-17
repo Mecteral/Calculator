@@ -41,17 +41,17 @@ namespace Calculator.Logic.Model
 
         public void Visit(CosineExpression cosineExpression)
         {
-            throw new System.NotImplementedException();
+            Result = UseCosine(cosineExpression.Value);
         }
 
         public void Visit(TangentExpression tangentExpression)
         {
-            throw new System.NotImplementedException();
+            Result = UseTangent(tangentExpression.Value);
         }
 
         public void Visit(SinusExpression sinusExpression)
         {
-            throw new System.NotImplementedException();
+            Result = UseSinus(sinusExpression.Value);
         }
 
         void IExpressionVisitor.Visit(Constant constant)
@@ -70,6 +70,9 @@ namespace Calculator.Logic.Model
         protected abstract TResult UseAddition(TResult left, TResult right);
         protected abstract TResult UseDivision(TResult left, TResult right);
         protected abstract TResult UseConstant(decimal value);
+        protected abstract TResult UseCosine(decimal value);
+        protected abstract TResult UseTangent(decimal value);
+        protected abstract TResult UseSinus(decimal value);
         protected abstract TResult UseVariable(string variable);
     }
 }

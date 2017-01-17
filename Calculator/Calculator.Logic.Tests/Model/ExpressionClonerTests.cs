@@ -68,5 +68,29 @@ namespace Calculator.Logic.Tests.Model
             var equalityChecker = new ExpressionEqualityChecker();
             equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
+        [Test]
+        public void ExpressionClonerClonesSimpleAdditionwithCosine()
+        {
+            var underTest = new Addition { Left = new CosineExpression { Value = 1 }, Right = new CosineExpression { Value = 2 } };
+            var result = ExpressionCloner.Clone(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
+        }
+        [Test]
+        public void ExpressionClonerClonesSimpleAdditionwithTangent()
+        {
+            var underTest = new Addition { Left = new TangentExpression { Value = 1 }, Right = new TangentExpression { Value = 2 } };
+            var result = ExpressionCloner.Clone(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
+        }
+        [Test]
+        public void ExpressionClonerClonesSimpleAdditionwithSinus()
+        {
+            var underTest = new Addition { Left = new SinusExpression { Value = 1 }, Right = new SinusExpression { Value = 2 } };
+            var result = ExpressionCloner.Clone(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
+        }
     }
 }

@@ -12,43 +12,41 @@ namespace Calculator.Logic
     public class ParenthesesSimplifier : IExpressionVisitor, ISimplifier
     {
         IExpression mExpression;
+
         public void Visit(Subtraction subtraction)
         {
             RemoveParenthesesIfPossible(subtraction);
         }
+
         public void Visit(Multiplication multiplication)
         {
             RemoveParenthesesIfPossible(multiplication);
         }
+
         public void Visit(Addition addition)
         {
             RemoveParenthesesIfPossible(addition);
         }
+
         public void Visit(Division division)
         {
             RemoveParenthesesIfPossible(division);
         }
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             var wrapped = parenthesed.Wrapped as IArithmeticOperation;
             if (wrapped != null) RemoveParenthesesIfPossible(wrapped);
         }
+
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
-        public void Visit(CosineExpression cosineExpression)
-        {
-            throw new NotImplementedException();
-        }
 
-        public void Visit(TangentExpression tangentExpression)
-        {
-            throw new NotImplementedException();
-        }
+        public void Visit(CosineExpression cosineExpression) {}
 
-        public void Visit(SinusExpression sinusExpression)
-        {
-            throw new NotImplementedException();
-        }
+        public void Visit(TangentExpression tangentExpression) {}
+
+        public void Visit(SinusExpression sinusExpression) {}
 
         public IExpression Simplify(IExpression input)
         {
@@ -56,21 +54,31 @@ namespace Calculator.Logic
             mExpression.Accept(this);
             return mExpression;
         }
+
         void RemoveParenthesesIfPossible(IArithmeticOperation operation)
         {
             VisitOperands(operation);
-            if (operation.Left is ParenthesedExpression) {
+            if (operation.Left is ParenthesedExpression)
+            {
                 HandleParenthesis(operation, o => o.Left);
             }
-            else if (operation.Right is ParenthesedExpression) { HandleParenthesis(operation, o => o.Right); }
+            else if (operation.Right is ParenthesedExpression)
+            {
+                HandleParenthesis(operation, o => o.Right);
+            }
         }
+
         static void HandleParenthesis(
             IArithmeticOperation operation,
             Expression<Func<IArithmeticOperation, IExpression>> propertySelector)
         {
             var parenthesis = (ParenthesedExpression) propertySelector.GetFrom(operation);
-            if (parenthesis.Wrapped is Constant) { propertySelector.SetTo(operation, parenthesis.Wrapped); }
+            if (parenthesis.Wrapped is Constant)
+            {
+                propertySelector.SetTo(operation, parenthesis.Wrapped);
+            }
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);

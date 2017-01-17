@@ -47,5 +47,21 @@ namespace Calculator.Logic.Tests.Model
         {
             Check(TestExpressions.Nested, -0.25M);
         }
+
+        [Test]
+        public void Cosine()
+        {
+            Check(TestExpressions.CosineAddition, 40);
+        }
+        [Test]
+        public void Tangent()
+        {
+            Check(TestExpressions.TangentAddition, 40);
+        }
+        [Test]
+        public void Sinus()
+        {
+            Check(TestExpressions.SinusAddition, 40);
+        }
     }
 }
