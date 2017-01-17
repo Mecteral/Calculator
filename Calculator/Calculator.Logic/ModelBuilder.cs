@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Calculator.Logic.Model;
-using Calculator.Logic.Parsing;
+﻿using System.Collections.Generic;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
 
 namespace Calculator.Logic
@@ -15,12 +10,22 @@ namespace Calculator.Logic
     public class ModelBuilder : ITokenVisitor, IModelBuilder
     {
         IExpression mCurrent;
-        ParenthesedExpression mParenthesed;
         IArithmeticOperation mCurrentOperation;
-        IExpression mResult;
         bool mIsNegated;
-        bool mWasOpening;
+        ParenthesedExpression mParenthesed;
+        IExpression mResult;
         bool mWasMultiplication;
+        bool mWasOpening;
+
+        public IExpression BuildFrom(IEnumerable<IToken> tokens)
+        {
+            foreach (var token in tokens)
+            {
+                token.Accept(this);
+            }
+            mResult = mCurrent;
+            return mResult;
+        }
 
         public void Visit(OperatorToken operatorToken)
         {
@@ -34,71 +39,34 @@ namespace Calculator.Logic
                 mWasMultiplication = false;
                 mIsNegated = false;
             }
-
         }
 
         public void Visit(NumberToken numberToken)
         {
-            mCurrent = new Constant { Value = numberToken.Value };
-            if (!mWasOpening)
-            {
-                FillOperation();
-            }
-            else
-            {
-                mWasOpening = false;
-            }
-
+            mCurrent = new Constant {Value = numberToken.Value};
+            HandleNonParenthesesAndOperation();
         }
 
         public void Visit(ParenthesesToken parenthesesToken)
         {
             if (parenthesesToken.IsOpening)
             {
-                var parenthesedExpression = new ParenthesedExpression();
-                if (mCurrent is ParenthesedExpression)
-                {
-                    var parent = (ParenthesedExpression)mCurrent;
-                    parent.Wrapped = parenthesedExpression;
-                }
-                mCurrent = parenthesedExpression;
-                mParenthesed = (ParenthesedExpression) mCurrent;
-                if (mCurrentOperation != null)
-                {
-                    mCurrentOperation.Right = mCurrent;
-                    mWasOpening = true;
-                    mCurrentOperation = null;
-                }
+                AddNewParenthesesExpression();
             }
             else
             {
-                mWasOpening = false;
-                if (mCurrent is Constant)
-                {
-                    mParenthesed.Wrapped = mCurrent;
-                }
-                mCurrent = mParenthesed;
-                mParenthesed = null;
-                if (mCurrent.HasParent)
-                {
-                    var temp = mCurrent;
-                    while (temp.HasParent)
-                    {
-                        temp = temp.Parent;
-                        if (temp is ParenthesedExpression)
-                        {
-                            mParenthesed = (ParenthesedExpression) temp;
-                            break;
-                        }
-                        mCurrent = temp;
-                    }
-                }
+                HandleClosingParenthesis();
             }
         }
 
         public void Visit(VariableToken variableToken)
         {
-            mCurrent = new Variable { Variables= variableToken.Variable};
+            mCurrent = new Variable {Variables = variableToken.Variable};
+            HandleNonParenthesesAndOperation();
+        }
+
+        void HandleNonParenthesesAndOperation()
+        {
             if (!mWasOpening)
             {
                 FillOperation();
@@ -109,15 +77,53 @@ namespace Calculator.Logic
             }
         }
 
-        public IExpression BuildFrom(IEnumerable<IToken> tokens)
+        void HandleClosingParenthesis()
         {
-            foreach (var token in tokens)
+            if (mCurrent is Constant)
             {
-                token.Accept(this);
+                mParenthesed.Wrapped = mCurrent;
             }
-            mResult = mCurrent;
-            return mResult;
+            mCurrent = mParenthesed;
+            mParenthesed = null;
+            if (mCurrent.HasParent)
+            {
+                FindParentForParentheses();
+            }
         }
+
+        void AddNewParenthesesExpression()
+        {
+            var parenthesedExpression = new ParenthesedExpression();
+            if (mCurrent is ParenthesedExpression)
+            {
+                var parent = (ParenthesedExpression) mCurrent;
+                parent.Wrapped = parenthesedExpression;
+            }
+            mCurrent = parenthesedExpression;
+            mParenthesed = (ParenthesedExpression) mCurrent;
+            if (mCurrentOperation != null)
+            {
+                mCurrentOperation.Right = mCurrent;
+                mWasOpening = true;
+                mCurrentOperation = null;
+            }
+        }
+
+        void FindParentForParentheses()
+        {
+            var temp = mCurrent;
+            while (temp.HasParent)
+            {
+                temp = temp.Parent;
+                if (temp is ParenthesedExpression)
+                {
+                    mParenthesed = (ParenthesedExpression) temp;
+                    break;
+                }
+                mCurrent = temp;
+            }
+        }
+
         void CreateOperatorExpression(OperatorToken operatorToken)
         {
             switch (operatorToken.Operator)
@@ -126,40 +132,42 @@ namespace Calculator.Logic
                     mCurrentOperation = new Addition();
                     break;
                 case Operator.Subtract:
-                    HandleNegation();
+                    HandleNegationIfNeeded();
                     break;
                 case Operator.Multiply:
                     HandleMultiplicationBeforeAdditiveOperation<Multiplication>();
                     break;
                 case Operator.Divide:
-                    
+
                     HandleMultiplicationBeforeAdditiveOperation<Division>();
                     break;
             }
         }
 
-        void HandleNegation()
+        void HandleNegationIfNeeded()
         {
             var parentheses = mCurrent as ParenthesedExpression;
             if (mCurrent != null && !(mCurrent is ParenthesedExpression))
                 mCurrentOperation = new Subtraction();
             else if (parentheses?.Wrapped != null)
             {
-                    mCurrentOperation = new Subtraction();
+                mCurrentOperation = new Subtraction();
             }
             else
             {
-                var constant = new Constant { Value = 0 };
-                mCurrentOperation = new Subtraction { Left = constant };
+                var constant = new Constant {Value = 0};
+                mCurrentOperation = new Subtraction {Left = constant};
                 mIsNegated = true;
             }
         }
+
         void HandleMultiplicationBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
         {
-            if (mCurrentOperation is Subtraction || mCurrentOperation is Addition && !(mCurrent is ParenthesedExpression))
+            if (mCurrentOperation is Subtraction ||
+                mCurrentOperation is Addition && !(mCurrent is ParenthesedExpression))
             {
                 var temp = mCurrentOperation.Right;
-                var multiplicationOrDivision = new TSelf { Left = temp };
+                var multiplicationOrDivision = new TSelf {Left = temp};
                 mCurrentOperation.Right = multiplicationOrDivision;
                 mCurrentOperation = multiplicationOrDivision;
                 mWasMultiplication = true;
@@ -167,6 +175,7 @@ namespace Calculator.Logic
             else
                 mCurrentOperation = new TSelf();
         }
+
         void FillOperation()
         {
             if (mCurrentOperation != null)
