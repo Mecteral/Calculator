@@ -12,5 +12,8 @@
         void Visit(Constant constant);
         void Visit(Division division);
         void Visit(Variable variable);
+        void Visit(CosineExpression cosineExpression);
+        void Visit(TangentExpression tangentExpression);
+        void Visit(SinusExpression sinusExpression);
     }
 }

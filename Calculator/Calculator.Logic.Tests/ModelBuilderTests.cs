@@ -23,6 +23,9 @@ namespace Calculator.Logic.Tests
         static OperatorToken Times => new OperatorToken('*');
         static OperatorToken DividedBy => new OperatorToken('/');
         static VariableToken Variable(char variable) => new VariableToken(variable);
+        static TangentToken Tangent(string input) => new TangentToken($"tan({input})");
+        static SinusToken Sinus(string input) => new SinusToken($"sin({input})");
+        static CosineToken Cosine(string input) => new CosineToken($"cos({input})");
         [Test]
         public void Complex_Case()
         {
@@ -208,6 +211,28 @@ namespace Calculator.Logic.Tests
             //a-4
             var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
             subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+
+        [Test]
+        public void CosineMinusConstant()
+        {
+            var subtraction = TestExpecting<Subtraction>(Cosine("60deg"), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<CosineExpression>().Which.Value.Should().Be(0.5M);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+        [Test]
+        public void TangentMinusConstant()
+        {
+            var subtraction = TestExpecting<Subtraction>(Tangent("45deg"), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<TangentExpression>().Which.Value.Should().Be(1.0M);
+            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+        [Test]
+        public void SinusMinusConstant()
+        {
+            var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
+            subtraction.Left.Should().BeOfType<SinusExpression>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
     }

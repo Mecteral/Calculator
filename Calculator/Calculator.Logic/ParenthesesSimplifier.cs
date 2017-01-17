@@ -35,6 +35,21 @@ namespace Calculator.Logic
         }
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
+        public void Visit(CosineExpression cosineExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(TangentExpression tangentExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Visit(SinusExpression sinusExpression)
+        {
+            throw new NotImplementedException();
+        }
+
         public IExpression Simplify(IExpression input)
         {
             mExpression = ExpressionCloner.Clone(input);

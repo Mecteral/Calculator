@@ -38,6 +38,22 @@ namespace Calculator.Logic.Model
         {
             Result = UseVariable(variable.Variables);
         }
+
+        public void Visit(CosineExpression cosineExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(TangentExpression tangentExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(SinusExpression sinusExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
         void IExpressionVisitor.Visit(Constant constant)
         {
             Result = UseConstant(constant.Value);

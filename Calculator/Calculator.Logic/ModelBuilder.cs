@@ -67,17 +67,20 @@ namespace Calculator.Logic
 
         public void Visit(CosineToken cosineToken)
         {
-            throw new System.NotImplementedException();
+            mCurrent = new CosineExpression { Value = cosineToken.Value};
+            HandleNonParenthesesAndOperation();
         }
 
         public void Visit(TangentToken tangentToken)
         {
-            throw new System.NotImplementedException();
+            mCurrent = new TangentExpression { Value = tangentToken.Value};
+            HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SinusToken sinusToken)
         {
-            throw new System.NotImplementedException();
+            mCurrent = new SinusExpression { Value = sinusToken.Value};
+            HandleNonParenthesesAndOperation();
         }
 
         void HandleNonParenthesesAndOperation()

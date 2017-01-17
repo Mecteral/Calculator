@@ -40,6 +40,22 @@ namespace Calculator.Logic
         {
             mSecondExpressions.Add(variable);
         }
+
+        public void Visit(CosineExpression cosineExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(TangentExpression tangentExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(SinusExpression sinusExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
         {
             mSecondExpressions.Clear();

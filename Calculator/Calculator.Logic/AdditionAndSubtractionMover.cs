@@ -32,6 +32,21 @@ namespace Calculator.Logic
             VisitOperands(division);
         }
         public void Visit(Variable variable) {}
+        public void Visit(CosineExpression cosineExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(TangentExpression tangentExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(SinusExpression sinusExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IExpression Simplify(IExpression input)
         {
             mWasChanged = false;

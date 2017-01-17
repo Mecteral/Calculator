@@ -41,6 +41,22 @@ namespace Calculator.Logic
         {
             mExpressionCount++;
         }
+
+        public void Visit(CosineExpression cosineExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(TangentExpression tangentExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void Visit(SinusExpression sinusExpression)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IExpression FindSmallesExpressionInEnumerable(IEnumerable<IExpression> expressions)
         {
             if (expressions == null) throw new InvalidExpressionException();
