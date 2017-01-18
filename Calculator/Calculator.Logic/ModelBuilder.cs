@@ -97,7 +97,7 @@ namespace Calculator.Logic
 
         void HandleClosingParenthesis()
         {
-            if (mCurrent is Constant)
+            if (mCurrent is Constant || mCurrent is SinusExpression || mCurrent is CosineExpression || mCurrent is TangentExpression)
             {
                 mParenthesed.Wrapped = mCurrent;
             }

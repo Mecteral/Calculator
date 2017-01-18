@@ -67,5 +67,21 @@ namespace Calculator.Logic.Tests
         {
             Check("a+2b+3a+4b", "4*a + 6*b");
         }
+
+        [Test]
+        public void SimplificationWithCosine()
+        {
+            Check("cos(60deg)+1a+23a+23-13", "0.5 + 24*a + 10");
+        }
+        [Test]
+        public void SimplificationWithTangent()
+        {
+            Check("tan(45deg)+1a+23a+23-13", "1.0 + 24*a + 10");
+        }
+        [Test]
+        public void SimplificationWithSinus()
+        {
+            Check("sin(30deg)+1a+23a+23-13", "0.5 + 24*a + 10");
+        }
     }
 }
