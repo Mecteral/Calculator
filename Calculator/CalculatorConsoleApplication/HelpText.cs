@@ -9,8 +9,9 @@ namespace CalculatorConsoleApplication
 {
     public class HelpText
     {
-        public readonly string[] HelpStrings = {UnitConversion, ConversionToDegree, GetAttributeSnippet.Do()};
-        const string UnitConversion = "-u or --unit   | specifies unit\n";
-        const string ConversionToDegree = "-d or --degree | sets degrees\n";
+        public readonly string[] HelpStrings = {sUnitConversion, sConversionToDegree, GetAttributeSnippet.Do()};
+        //$"\n{"Units",4} {"Abbreviations",32}\n\n"
+        static readonly string sUnitConversion = $"{"-u or -- unit", -22}| specifies unit\n";
+        static readonly string sConversionToDegree = $"{"-d or --degree",-22}| sets degrees\n";
     }
 }

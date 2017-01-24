@@ -6,7 +6,7 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
     {
         public static string Do()
         {
-            var abbreviations = $"\n{"Units",4} {"Abbreviations",32}\n\n"; ;
+            var abbreviations = $"\n{"Units",4} {"Abbreviations",32}\n\n";
             var abbreviation = new UnitAbbreviations();
             var fieldValues = abbreviation.GetType()
                 .GetFields()
