@@ -9,7 +9,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     {
         double mNumber;
         bool mToDegree;
-        ApplicationArguments mArgs;
+        readonly ApplicationArguments mArgs;
 
         protected AnTrigonometricToken(string input, ApplicationArguments args)
         {

@@ -14,10 +14,10 @@ namespace Calculator.Logic.Tests
     [TestFixture]
     public class ImperialToMetricConverterTests
     {
-        IConversionExpression ConvertFromString(string input)
+        static IConversionExpression ConvertFromString(string input)
         {
             var tokens = new ConversionTokenizer();
-            tokens.Tokenize(input);
+            tokens.Tokenize(input, null);
             var model = new ConversionModelBuilder();
             var converter = new ImperialToMetricConverter();
             return converter.Convert(model.BuildFrom(tokens.Tokens));

@@ -14,10 +14,10 @@ namespace Calculator.Logic.Tests.Model.ConversionModel
     [TestFixture]
     public class ConversionModelBuilderTests
     {
-        IConversionExpression BuildModel(string input)
+        static IConversionExpression BuildModel(string input)
         {
             var tokenizer = new ConversionTokenizer();
-            tokenizer.Tokenize(input);
+            tokenizer.Tokenize(input, null);
             var modelBuilder = new ConversionModelBuilder();
             return modelBuilder.BuildFrom(tokenizer.Tokens);
         }

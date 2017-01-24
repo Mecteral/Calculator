@@ -17,7 +17,7 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         static void CheckWithNumber(string input, int position, decimal expected)
         {
             var converter = new Logic.Parsing.ConversionTokenizer.ConversionTokenizer();
-            converter.Tokenize(input);
+            converter.Tokenize(input, null);
             var underTest = converter.Tokens;
             var result = (MetricLengthToken)underTest.ElementAt(position);
             result.Value.Should().Be(expected);
@@ -48,7 +48,7 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         public void MetricUnitsWithAddition()
         {
             var converter = new Logic.Parsing.ConversionTokenizer.ConversionTokenizer();
-            converter.Tokenize("10m+20.3km");
+            converter.Tokenize("10m+20.3km", null);
             var underTest = converter.Tokens;
             underTest.ElementAt(0).Should().BeOfType<MetricLengthToken>().Which.Value.Should().Be(10);
             underTest.ElementAt(1).Should().BeOfType<ConversionOperatorToken>().Which.Operator.Should().Be(Operator.Add);

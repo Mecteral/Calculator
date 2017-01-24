@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Globalization;
+using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
@@ -62,11 +63,12 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
         decimal mNumber;
         string mNumberAsText;
         string mUnit;
+        readonly ApplicationArguments mArgs;
 
-        protected AConversionTokens(string asText)
+        protected AConversionTokens(string asText, ApplicationArguments arg)
         {
+            mArgs = arg;
             asText = asText.Replace(',', '.');
-
 
             foreach (var c in asText)
             {
@@ -80,6 +82,11 @@ namespace Calculator.Logic.Parsing.ConversionTokenizer
                     ParseIfPossible();
                     mUnit += c;
                 }
+            }
+            if (mUnit == null && mNumber == 0)
+            {
+                mUnit = mArgs.UnitForConversion;
+                ParseIfPossible();
             }
             ConvertIfPossible();
         }

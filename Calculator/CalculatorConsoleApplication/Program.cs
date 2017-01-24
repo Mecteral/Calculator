@@ -15,12 +15,13 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
-        static ApplicationArguments mArgs;
+        static ApplicationArguments sArgs;
         static void Main(string[] args)
         {
-            mArgs = new ApplicationArguments();
+            sArgs = new ApplicationArguments();
             var parser = new FluentCommandLineParser();
-            parser.Setup<bool>('d', "degree").Callback(arg => mArgs.ToDegree = arg).SetDefault(false);
+            parser.Setup<bool>('d', "degree").Callback(arg => sArgs.ToDegree = arg).SetDefault(false);
+            parser.Setup<string>('u', "unit").Callback(arg => sArgs.UnitForConversion = arg).SetDefault(null);
             parser.Parse(args);
             var input = GetUserInput();
             if (input.Contains("=?"))
@@ -38,14 +39,14 @@ namespace CalculatorConsoleApplication
         static Tokenizer CreateTokens(string input)
         {
             var token = new Tokenizer();
-            token.Tokenize(input, mArgs);
+            token.Tokenize(input, sArgs);
             return token;
         }
 
         static ConversionTokenizer CreateConversionTokens(string input)
         {
             var token = new ConversionTokenizer();
-            token.Tokenize(input);
+            token.Tokenize(input, sArgs);
             return token;
         }
 

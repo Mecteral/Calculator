@@ -18,7 +18,7 @@ namespace Calculator.Logic.Tests
         static ConversionTokenizer CreateConversionTokens(string input)
         {
             var token = new ConversionTokenizer();
-            token.Tokenize(input);
+            token.Tokenize(input, null);
             return token;
         }
         static void Check(string input, bool toMetric, string expected)

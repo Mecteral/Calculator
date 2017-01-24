@@ -16,7 +16,7 @@ namespace Calculator.Logic.Tests.Parsing.ConversionTokenizer
         static void CheckWithNumber(string input, int position, decimal expected)
         {
             var converter = new Logic.Parsing.ConversionTokenizer.ConversionTokenizer();
-            converter.Tokenize(input);
+            converter.Tokenize(input, null);
             var underTest = converter.Tokens;
             var result = (ImperialLengthToken)underTest.ElementAt(position);
             result.Value.Should().Be(expected);

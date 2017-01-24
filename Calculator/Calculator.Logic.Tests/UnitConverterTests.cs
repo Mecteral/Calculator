@@ -19,7 +19,7 @@ namespace Calculator.Logic.Tests
         static IConversionExpression Convert(string input, bool toMetric)
         {
             var tokens = new ConversionTokenizer();
-            tokens.Tokenize(input);
+            tokens.Tokenize(input, null);
             var model = new ConversionModelBuilder();
             var converter = new UnitConverter();
             return converter.Convert(model.BuildFrom(tokens.Tokens), toMetric);
@@ -57,7 +57,7 @@ namespace Calculator.Logic.Tests
         public void DifferentSystemsThrowException()
         {
             var tokens = new ConversionTokenizer();
-            tokens.Tokenize("10sft+10ft");
+            tokens.Tokenize("10sft+10ft", null);
             var model = new ConversionModelBuilder();
             var converter = new UnitConverter();
             Action a= () => converter.Convert(model.BuildFrom(tokens.Tokens), false);
