@@ -1,15 +1,19 @@
+using System;
+using System.Reflection;
+using Microsoft.VisualBasic;
+
 namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
-    public static class UnitAbbreviations
+    public class UnitAbbreviations
     {
-        public static string[] MetricLengths = {Millimeters, Centimeters, Meters, Kilometers};
-        public static string[] MetricMasses = {Milligram, Gram, Kilogram, Ton};
-        public static string[] MetricVolumes = {Milliliters, Centiliters, Liters, Hectoliters};
-        public static string[] MetricAreas = {Squaremillimeters, Squarecentimeters, Sqauremeters, Squarekilometers, Hectas};
-        public static string[] ImperialLengths = { Though , Inch , Foot , Yard , Chain , Furlong , Mile , League , Fathom };
-        public static string[] ImperialMasses = { Grain , Drachm , Ounce , Pound , Stone , HundredWeight , ImperialTon };
-        public static string[] ImperialVolumes = { FluidOunce , Gill , Pint , Quart , Gallon };
-        public static string[] ImperialAreas = { Squarefoot , Perch , Rood , Acre };
+        public static readonly string[] MetricLengths = {Millimeters, Centimeters, Meters, Kilometers};
+        public static readonly string[] MetricMasses = {Milligram, Gram, Kilogram, Ton};
+        public static readonly string[] MetricVolumes = {Milliliters, Centiliters, Liters, Hectoliters};
+        public static readonly string[] MetricAreas = {Squaremillimeters, Squarecentimeters, Sqauremeters, Squarekilometers, Hectas};
+        public static readonly string[] ImperialLengths = { Though , Inch , Foot , Yard , Chain , Furlong , Mile , League , Fathom };
+        public static readonly string[] ImperialMasses = { Grain , Drachm , Ounce , Pound , Stone , HundredWeight , ImperialTon };
+        public static readonly string[] ImperialVolumes = { FluidOunce , Gill , Pint , Quart , Gallon };
+        public static readonly string[] ImperialAreas = { Squarefoot , Perch , Rood , Acre };
         //Metric Length
         public const string Millimeters = "mm";
         public const string Centimeters = "cm";

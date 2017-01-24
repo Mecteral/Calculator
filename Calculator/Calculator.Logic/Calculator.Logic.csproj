@@ -35,6 +35,7 @@
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernRonin.PraeterArtem.1.3.1\lib\ModernRonin.PraeterArtem.dll</HintPath>
       <Private>True</Private>
@@ -107,6 +108,7 @@
     <Compile Include="Parsing\ConversionTokenizer\ConversionFactors.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionOperatorToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ConversionTokenizer.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\GetAttributeSnippet.cs" />
     <Compile Include="Parsing\ConversionTokenizer\IConversionToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\IConversionTokenVisitor.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ImperialAreaToken.cs" />
