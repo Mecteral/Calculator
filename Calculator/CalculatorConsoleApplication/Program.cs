@@ -22,6 +22,11 @@ namespace CalculatorConsoleApplication
             var parser = ArgumentsSetup();
             parser.Parse(args);
             var input = GetUserInput();
+            while (input == "-h" || input == "--help")
+            {
+                parser.HelpOption.ShowHelp(parser.Options);
+                input = GetUserInput();
+            }
             if (input.Contains("=?"))
             {
                 ConvertUnits(input);
