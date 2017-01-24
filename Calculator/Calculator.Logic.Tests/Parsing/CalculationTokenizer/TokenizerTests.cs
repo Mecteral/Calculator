@@ -14,7 +14,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " ( 2 + 3 )";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.Count().Should().Be(5);
         }
         [Test]
@@ -22,7 +22,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = "((1.1+22)*3.1/4-5.1)";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<ParenthesesToken>().Which.IsOpening.Should().BeTrue();
             result.Tokens.ElementAt(1).Should().BeOfType<ParenthesesToken>().Which.IsOpening.Should().BeTrue();
             result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(1.1M);
@@ -43,7 +43,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 2 + 3 ";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>();
         }
         [Test]
@@ -51,7 +51,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = "2a";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(2);
             result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
             result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
@@ -61,7 +61,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 24 +3";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(24);
         }
         [Test]
@@ -69,7 +69,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 2,2345 +3";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(2.2345M);
         }
         [Test]
@@ -77,7 +77,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 2.2345 +3";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(2.2345M);
         }
         [Test]
@@ -85,7 +85,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = "+";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<OperatorToken>();
         }
         [Test]
@@ -93,7 +93,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " ( 2 + 3 ) ";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<ParenthesesToken>();
         }
         [Test]
@@ -101,7 +101,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = "a";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(1);
             result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
             result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
@@ -111,7 +111,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = "a+a";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.First().Should().BeOfType<NumberToken>().Which.Value.Should().Be(1);
             result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>().Which.Operator.Should().Be(Operator.Multiply);
             result.Tokens.ElementAt(2).Should().BeOfType<VariableToken>().Which.Variable.Should().Be("a");
@@ -125,7 +125,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " ( 2 + 3 )";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(1).Should().BeOfType<NumberToken>();
         }
         [Test]
@@ -133,7 +133,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 2\n +3";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.Count().Should().Be(3);
         }
         [Test]
@@ -141,7 +141,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " 2\t +3";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.Count().Should().Be(3);
         }
 
@@ -150,7 +150,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " cos(90)";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(0).Should().BeOfType<CosineToken>();
         }
         [Test]
@@ -158,7 +158,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " tan(90rad)";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(0).Should().BeOfType<TangentToken>();
         }
         [Test]
@@ -166,7 +166,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " sin(90)";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(0).Should().BeOfType<SinusToken>();
         }
 
@@ -175,7 +175,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " sin(67)+20";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(0).Should().BeOfType<SinusToken>().Which.Value.Should().Be(-0.855519978975322M);
             result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>();
             result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(20);
@@ -185,7 +185,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         {
             var underTest = " cos(60deg)+20";
             var result = new Tokenizer();
-            result.Tokenize(underTest);
+            result.Tokenize(underTest, null);
             result.Tokens.ElementAt(0).Should().BeOfType<CosineToken>().Which.Value.Should().Be(0.5M);
             result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>();
             result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(20);

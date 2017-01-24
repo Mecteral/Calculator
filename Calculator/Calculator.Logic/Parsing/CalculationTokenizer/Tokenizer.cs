@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
@@ -8,6 +9,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     /// </summary>
     public class Tokenizer : ITokenizer
     {
+        ApplicationArguments mArgs;
         readonly List<IToken> mTempTokens = new List<IToken>();
         string mInput;
         string mNumber;
@@ -15,8 +17,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         bool mWasNumber;
         public IEnumerable<IToken> Tokens { get; private set; }
 
-        public void Tokenize(string input)
+        public void Tokenize(string input, ApplicationArguments args)
         {
+            mArgs = args;
             mTempTokens.Clear();
             mInput = input;
             Tokens = FillTokens();
@@ -65,15 +68,15 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         {
             if (mTrigonometricString.Contains("cos"))
             {
-                mTempTokens.Add(new CosineToken(mTrigonometricString));
+                mTempTokens.Add(new CosineToken(mTrigonometricString, mArgs));
             }
             else if (mTrigonometricString.Contains("sin"))
             {
-                mTempTokens.Add(new SinusToken(mTrigonometricString));
+                mTempTokens.Add(new SinusToken(mTrigonometricString, mArgs));
             }
             else if (mTrigonometricString.Contains("tan"))
             {
-                mTempTokens.Add(new TangentToken(mTrigonometricString));
+                mTempTokens.Add(new TangentToken(mTrigonometricString, mArgs));
             }
             mTrigonometricString = null;
         }

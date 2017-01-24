@@ -1,20 +1,27 @@
 ﻿using System;
 using System.Linq;
 using Calculator.Logic;
+using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Model;
 using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
+using Fclp;
 
 namespace CalculatorConsoleApplication
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
-        static void Main()
+        static ApplicationArguments mArgs;
+        static void Main(string[] args)
         {
+            mArgs = new ApplicationArguments();
+            var parser = new FluentCommandLineParser();
+            parser.Setup<bool>('d', "degree").Callback(arg => mArgs.ToDegree = arg).SetDefault(false);
+            parser.Parse(args);
             var input = GetUserInput();
             if (input.Contains("=?"))
             {
@@ -31,7 +38,7 @@ namespace CalculatorConsoleApplication
         static Tokenizer CreateTokens(string input)
         {
             var token = new Tokenizer();
-            token.Tokenize(input);
+            token.Tokenize(input, mArgs);
             return token;
         }
 

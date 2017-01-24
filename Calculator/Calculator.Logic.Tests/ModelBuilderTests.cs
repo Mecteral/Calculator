@@ -22,9 +22,9 @@ namespace Calculator.Logic.Tests
         static OperatorToken Times => new OperatorToken('*');
         static OperatorToken DividedBy => new OperatorToken('/');
         static VariableToken Variable(char variable) => new VariableToken(variable);
-        static TangentToken Tangent(string input) => new TangentToken($"tan({input})");
-        static SinusToken Sinus(string input) => new SinusToken($"sin({input})");
-        static CosineToken Cosine(string input) => new CosineToken($"cos({input})");
+        static TangentToken Tangent(string input) => new TangentToken($"tan({input})", null);
+        static SinusToken Sinus(string input) => new SinusToken($"sin({input})", null);
+        static CosineToken Cosine(string input) => new CosineToken($"cos({input})", null);
         //(1+2)+(3+4)
         [Test]
         public void AdditionWithDoubleParenthesed()

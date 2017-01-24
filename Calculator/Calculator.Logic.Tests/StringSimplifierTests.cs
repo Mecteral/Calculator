@@ -27,7 +27,7 @@ namespace Calculator.Logic.Tests
             formatter.Format(simplified).Returns("expected");
 
             underTest.Simplify("blabla").Should().Be("expected");
-            tokenizer.Received().Tokenize("blabla");
+            tokenizer.Received().Tokenize("blabla", null);
         }
     }
 }

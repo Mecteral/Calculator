@@ -25,7 +25,7 @@ namespace Calculator.Logic.Tests
         static IEnumerable<IToken> Tokenize(string input)
         {
             var tokenizer = new Tokenizer();
-            tokenizer.Tokenize(input);
+            tokenizer.Tokenize(input, null);
             var tokens = tokenizer.Tokens;
             return tokens;
         }

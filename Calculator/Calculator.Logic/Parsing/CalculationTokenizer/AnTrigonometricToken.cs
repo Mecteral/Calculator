@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public abstract class AnTrigonometricToken
     {
         double mNumber;
-        readonly bool mToRadiant = true;
+        bool mToDegree;
+        ApplicationArguments mArgs;
 
-        protected AnTrigonometricToken(string input)
+        protected AnTrigonometricToken(string input, ApplicationArguments args)
         {
+            mArgs = args;
             input = input.Replace(',', '.');
-            if (input.Contains("rad"))
-                mToRadiant = true;
-            else if (input.Contains("deg"))
-                mToRadiant = false;
+            SetConversionIfSpecified(input);
             mNumber = double.Parse(ExtractNumber(input), NumberStyles.Any, CultureInfo.InvariantCulture);
             ConvertToDegreeIfNeeded();
             UseFunctions(input);
@@ -25,7 +25,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
 
         void ConvertToDegreeIfNeeded()
         {
-            if (!mToRadiant)
+            if (mToDegree)
                 mNumber = mNumber * (Math.PI / 180);
         }
 
@@ -46,6 +46,17 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             }
         }
 
+        void SetConversionIfSpecified(string input)
+        {
+            if (mArgs != null)
+            {
+                mToDegree = mArgs.ToDegree;
+            }
+            if (input.Contains("rad"))
+                mToDegree = false;
+            else if (input.Contains("deg"))
+                mToDegree = true;
+        }
         static string ExtractNumber(string input)
         {
             return input.Where(c => char.IsNumber(c) || c == '.').Aggregate("", (current, c) => current + c);

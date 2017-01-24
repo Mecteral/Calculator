@@ -23,7 +23,7 @@ namespace Calculator.Logic
         }
         public string Simplify(string input)
         {
-            mTokenizer.Tokenize(input);
+            mTokenizer.Tokenize(input, null);
             var expressionTree = mModelBuilder.BuildFrom(mTokenizer.Tokens);
             var simplified = mSimplifier.Simplify(expressionTree);
             return mFormatter.Format(simplified);
