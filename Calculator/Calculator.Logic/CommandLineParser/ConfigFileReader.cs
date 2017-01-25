@@ -23,7 +23,7 @@ namespace Calculator.Logic.CommandLineParser
                 CheckForInvalidEntries();
                 return config;
             }
-            return null;
+            return new string[0];
         }
 
         static void ExtractReceiversAndValues(IEnumerable<string> config)

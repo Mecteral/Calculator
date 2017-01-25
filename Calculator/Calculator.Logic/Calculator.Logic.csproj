@@ -101,7 +101,6 @@
     <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="ParenthesesNode.cs" />
     <Compile Include="ParenthesesSimplifier.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />

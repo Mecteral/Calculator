@@ -1,5 +1,6 @@
 ﻿namespace Calculator.Logic.CommandLineParser
 {
+    //If a parser option is added, add the errorcases in ConfigFileReader!
     public class ParserShortAndLongNames
     {
         public const string ToDegreeLong = "degree";
