@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.CommandLineParser;
 using Calculator.Logic.Model;
 using Calculator.Logic.Model.ConversionModel;
-using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
@@ -15,14 +16,16 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
-        static ApplicationArguments sArgs;
+        static readonly ApplicationArguments sArgs = new ApplicationArguments();
         static void Main(string[] args)
         {
-            sArgs = new ApplicationArguments();
-            var parser = ArgumentsSetup();
+            var config = ConfigFileReader.ReadFile();
+            var fileParser = CommandLineParserCreator.ArgumentsSetup(sArgs);
+            fileParser.Parse(config);
+            var parser = CommandLineParserCreator.ArgumentsSetup(sArgs);
             parser.Parse(args);
             var input = GetUserInput();
-            while (input == "-h" || input == "--help")
+            while (input == ParserShortAndLongNames.HelpShort || input == ParserShortAndLongNames.HelpLong)
             {
                 parser.HelpOption.ShowHelp(parser.Options);
                 input = GetUserInput();
@@ -40,15 +43,6 @@ namespace CalculatorConsoleApplication
             Console.ReadKey();
         }
 
-        static FluentCommandLineParser ArgumentsSetup()
-        {
-            var help = new HelpText();
-            var parser = new FluentCommandLineParser();
-            parser.Setup<bool>('d', "degree").Callback(arg => sArgs.ToDegree = arg).SetDefault(false);
-            parser.Setup<string>('u', "unit").Callback(arg => sArgs.UnitForConversion = arg).SetDefault(null);
-            parser.SetupHelp("h", "help").Callback(text => Console.WriteLine(help.HelpStrings.Aggregate("", (current, s) => current + s)));
-            return parser;
-        }
         static Tokenizer CreateTokens(string input)
         {
             var token = new Tokenizer();

@@ -62,6 +62,9 @@
     <Compile Include="AdditionSubtractionDispatcher.cs" />
     <Compile Include="AnImperialReadabilityCreator.cs" />
     <Compile Include="ArgumentParsing\ApplicationArguments.cs" />
+    <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
+    <Compile Include="CommandLineParser\HelpText.cs" />
+    <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
     <Compile Include="DirectCalculationSimplifier.cs" />
     <Compile Include="ExpressionEqualityChecker.cs" />
     <Compile Include="IConverters.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="StringSimplifier.cs" />
     <Compile Include="UnitConverter.cs" />
+    <Compile Include="CommandLineParser\ConfigFileReader.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="VariableCalculator.cs" />
   </ItemGroup>
