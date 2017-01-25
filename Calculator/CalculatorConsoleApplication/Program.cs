@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
@@ -9,7 +8,6 @@ using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Model;
-using Fclp;
 
 namespace CalculatorConsoleApplication
 {
@@ -17,6 +15,7 @@ namespace CalculatorConsoleApplication
     class Program
     {
         static readonly ApplicationArguments sArgs = new ApplicationArguments();
+
         static void Main(string[] args)
         {
             var config = ConfigFileReader.ReadFile();
@@ -37,7 +36,8 @@ namespace CalculatorConsoleApplication
             else
             {
                 var token = CreateTokens(input);
-                if (IsSimplificationNecessary(token)) Console.WriteLine(UseFormattingExpressionVisitor(UseSimplifier(token)));
+                if (IsSimplificationNecessary(token))
+                    Console.WriteLine(UseFormattingExpressionVisitor(UseSimplifier(token)));
                 else Console.WriteLine(UseEvaluationExpressionVisitor(token));
             }
             Console.ReadKey();
@@ -65,16 +65,23 @@ namespace CalculatorConsoleApplication
             var token = CreateConversionTokens(input);
             var converted = UseUnitConverter(CreateConversionInMemoryModel(token), toMetric);
             var output = new ReadableOutputCreator();
-            Console.WriteLine(output.MakeReadable((IConversionExpressionWithValue)converted));
+            Console.WriteLine(output.MakeReadable((IConversionExpressionWithValue) converted));
         }
-        static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token) => new ConversionModelBuilder().BuildFrom(token.Tokens);
-        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter().Convert(expression, toMetric);
+
+        static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token)
+            => new ConversionModelBuilder().BuildFrom(token.Tokens);
+
+        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric)
+            => new UnitConverter().Convert(expression, toMetric);
+
         static IExpression CreateInMemoryModel(ITokenizer token) => new ModelBuilder().BuildFrom(token.Tokens);
         static IExpression UseSimplifier(ITokenizer token) => new Simplifier().Simplify(CreateInMemoryModel(token));
         static string GetUserInput() => Console.ReadLine();
         static bool IsSimplificationNecessary(ITokenizer tokenized) => tokenized.Tokens.OfType<VariableToken>().Any();
+
         static decimal UseEvaluationExpressionVisitor(ITokenizer token)
             => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
+
         static string UseFormattingExpressionVisitor(IExpression expression)
             => new FormattingExpressionVisitor().Format(expression);
     }
