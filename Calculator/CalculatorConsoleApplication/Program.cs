@@ -3,10 +3,12 @@ using System.Linq;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.CommandLineParser;
+using Calculator.Logic.Conversion;
 using Calculator.Logic.Model;
 using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Parsing.ConversionTokenizer;
+using Calculator.Logic.Simplifying;
 using Calculator.Model;
 
 namespace CalculatorConsoleApplication

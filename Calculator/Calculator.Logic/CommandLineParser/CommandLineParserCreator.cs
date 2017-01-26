@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using Calculator.Logic.ArgumentParsing;
-using CalculatorConsoleApplication;
 using Fclp;
 
 namespace Calculator.Logic.CommandLineParser

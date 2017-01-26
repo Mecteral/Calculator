@@ -1,6 +1,6 @@
 ﻿using Calculator.Logic.Parsing.ConversionTokenizer;
 
-namespace CalculatorConsoleApplication
+namespace Calculator.Logic.CommandLineParser
 {
     public class HelpText
     {

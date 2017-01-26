@@ -58,22 +58,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionAndSubtractionMover.cs" />
-    <Compile Include="AdditionSubtractionDispatcher.cs" />
-    <Compile Include="AnImperialReadabilityCreator.cs" />
+    <Compile Include="Simplifying\AdditionAndSubtractionMover.cs" />
+    <Compile Include="Simplifying\AdditionSubtractionDispatcher.cs" />
+    <Compile Include="Conversion\AnImperialReadabilityCreator.cs" />
     <Compile Include="ArgumentParsing\ApplicationArguments.cs" />
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
-    <Compile Include="DirectCalculationSimplifier.cs" />
-    <Compile Include="ExpressionEqualityChecker.cs" />
-    <Compile Include="IConverters.cs" />
+    <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
+    <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
+    <Compile Include="Conversion\IConverters.cs" />
+    <Compile Include="Conversion\IImperialReadabilityCreator.cs" />
     <Compile Include="IModelBuilder.cs" />
-    <Compile Include="ImperialAreaReadabilityCreator.cs" />
-    <Compile Include="ImperialLengthReadabilityCreator.cs" />
-    <Compile Include="ImperialMassReadabilityCreator.cs" />
-    <Compile Include="ImperialVolumeReadabilityCreator.cs" />
-    <Compile Include="ISimplifier.cs" />
+    <Compile Include="Conversion\ImperialAreaReadabilityCreator.cs" />
+    <Compile Include="Conversion\ImperialLengthReadabilityCreator.cs" />
+    <Compile Include="Conversion\ImperialMassReadabilityCreator.cs" />
+    <Compile Include="Conversion\ImperialVolumeReadabilityCreator.cs" />
+    <Compile Include="Simplifying\ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
     <Compile Include="Model\ConversionModel\AnArithmeticConversionOperation.cs" />
@@ -101,7 +102,7 @@
     <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="ParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\ParenthesesSimplifier.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />
@@ -119,7 +120,7 @@
     <Compile Include="Parsing\CalculationTokenizer\ITokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\ITokenVisitor.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ImperialMassToken.cs" />
-    <Compile Include="ImperialToMetricConverter.cs" />
+    <Compile Include="Conversion\ImperialToMetricConverter.cs" />
     <Compile Include="Parsing\ConversionTokenizer\ImperialVolumeToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricAreaToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricLengthToken.cs" />
@@ -130,19 +131,19 @@
     <Compile Include="Parsing\CalculationTokenizer\Tokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\VariableToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricMassToken.cs" />
-    <Compile Include="MetricToImperialConverter.cs" />
+    <Compile Include="Conversion\MetricToImperialConverter.cs" />
     <Compile Include="Parsing\ConversionTokenizer\MetricVolumeToken.cs" />
     <Compile Include="Parsing\ConversionTokenizer\UnitAbbreviations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadableOutputCreator.cs" />
-    <Compile Include="SimplificationEvaluator.cs" />
-    <Compile Include="Simplifier.cs" />
+    <Compile Include="Conversion\ReadableOutputCreator.cs" />
+    <Compile Include="Simplifying\SimplificationEvaluator.cs" />
+    <Compile Include="Simplifying\Simplifier.cs" />
     <Compile Include="TokenFormatter.cs" />
-    <Compile Include="StringSimplifier.cs" />
-    <Compile Include="UnitConverter.cs" />
+    <Compile Include="Simplifying\StringSimplifier.cs" />
+    <Compile Include="Conversion\UnitConverter.cs" />
     <Compile Include="CommandLineParser\ConfigFileReader.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
-    <Compile Include="VariableCalculator.cs" />
+    <Compile Include="Simplifying\VariableCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -155,6 +156,7 @@
       <Name>Calculator.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
