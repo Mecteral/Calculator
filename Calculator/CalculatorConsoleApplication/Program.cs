@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.CommandLineParser;
@@ -20,10 +21,12 @@ namespace CalculatorConsoleApplication
 
         static void Main(string[] args)
         {
+            
             var config = ConfigFileReader.ReadFile();
-            var fileParser = CommandLineParserCreator.ArgumentsSetup(sArgs);
+            var creator  = new CommandLineParserCreator();
+            var fileParser = creator.ArgumentsSetup(sArgs);
             fileParser.Parse(config);
-            var parser = CommandLineParserCreator.ArgumentsSetup(sArgs);
+            var parser = creator.ArgumentsSetup(sArgs);
             parser.Parse(args);
             var input = GetUserInput();
             while (input == ParserShortAndLongNames.HelpShort || input == ParserShortAndLongNames.HelpLong)

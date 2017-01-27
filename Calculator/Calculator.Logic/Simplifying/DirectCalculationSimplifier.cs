@@ -6,7 +6,7 @@ namespace Calculator.Logic.Simplifying
     /// <summary>
     /// This Class calculates all possible calculations without variables
     /// </summary>
-    public class DirectCalculationSimplifier : IExpressionVisitor, ISimplifier
+    public class DirectCalculationSimplifier : IDirectCalculationSimplifier
     {
         IExpression mExpression;
 

@@ -6,7 +6,7 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Calculator.Logic.Tests.Simplification
+namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
     public class StringSimplifierTests

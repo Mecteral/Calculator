@@ -9,7 +9,7 @@ namespace Calculator.Logic.Simplifying
     /// <summary>
     /// Removes all unnecessary Parentheses
     /// </summary>
-    public class ParenthesesSimplifier : IExpressionVisitor, ISimplifier
+    public class ParenthesesSimplifier : IParenthesesSimplifier
     {
         IExpression mExpression;
 

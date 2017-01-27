@@ -4,7 +4,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class VariableCalculator : IExpressionVisitor, ISimplifier
+    public class VariableCalculator : IVariableCalculator
     {
         IExpression mCalculatedExpression;
         string mCurrentVariable;

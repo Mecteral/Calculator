@@ -3,7 +3,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class AdditionAndSubtractionMover : IExpressionVisitor, ISimplifier
+    public class AdditionAndSubtractionMover : IAdditionAndSubtractionMover
     {
         static IExpression sMovedExpression;
         bool mIsRight;

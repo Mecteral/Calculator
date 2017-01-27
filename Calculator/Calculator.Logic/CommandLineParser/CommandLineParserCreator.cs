@@ -5,9 +5,9 @@ using Fclp;
 
 namespace Calculator.Logic.CommandLineParser
 {
-    public static class CommandLineParserCreator
+    public class CommandLineParserCreator : ICommandLineParserCreator
     {
-        public static FluentCommandLineParser ArgumentsSetup(ApplicationArguments args)
+        public FluentCommandLineParser ArgumentsSetup(ApplicationArguments args)
         {
             var help = new HelpText();
             var parser = new FluentCommandLineParser();
@@ -19,5 +19,10 @@ namespace Calculator.Logic.CommandLineParser
                 .Callback(text => Console.WriteLine(help.HelpStrings.Aggregate("", (current, s) => current + s)));
             return parser;
         }
+    }
+
+    public interface ICommandLineParserCreator
+    {
+        FluentCommandLineParser ArgumentsSetup(ApplicationArguments args);
     }
 }

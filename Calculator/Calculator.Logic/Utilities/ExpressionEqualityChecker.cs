@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using Calculator.Model;
 
 namespace Calculator.Logic.Utilities
 {
-    public class ExpressionEqualityChecker : IExpressionVisitor
+    public class ExpressionEqualityChecker : IExpressionEqualityChecker
     {
         IList<IExpression> mFirstExpressions = new List<IExpression>();
         IList<IExpression> mSecondExpressions = new List<IExpression>();
@@ -83,6 +84,7 @@ namespace Calculator.Logic.Utilities
             }
             return true;
         }
+
         static bool AreEqual(IExpression first, IExpression second)
         {
             if (first.GetType() != second.GetType()) return false;

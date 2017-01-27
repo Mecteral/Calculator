@@ -66,6 +66,10 @@
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
+    <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
+    <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
+    <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="Conversion\IConverters.cs" />
     <Compile Include="Conversion\IImperialReadabilityCreator.cs" />
@@ -142,6 +146,7 @@
     <Compile Include="Simplifying\StringSimplifier.cs" />
     <Compile Include="Conversion\UnitConverter.cs" />
     <Compile Include="CommandLineParser\ConfigFileReader.cs" />
+    <Compile Include="Utilities\IExpressionEqualityChecker.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />
   </ItemGroup>

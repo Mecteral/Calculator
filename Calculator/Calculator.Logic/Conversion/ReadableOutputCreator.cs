@@ -6,7 +6,7 @@ namespace Calculator.Logic.Conversion
 {
     public class ReadableOutputCreator
     {
-        public string Unit { get; set; }
+        string Unit { get; set; }
 
         public string MakeReadable(IConversionExpressionWithValue expression)
         {
