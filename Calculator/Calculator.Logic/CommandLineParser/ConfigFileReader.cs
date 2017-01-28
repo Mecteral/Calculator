@@ -8,12 +8,13 @@ using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.CommandLineParser
 {
-    public static class ConfigFileReader
+    public class ConfigFileReader
     {
         const string Path = @"C:\Users\Public\Calc\ConfigFileCalculator.txt";
         static readonly List<string> sReceivers = new List<string>();
         static readonly List<string> sValues = new List<string>();
-        public static string[] ReadFile()
+        public List<string> Errors { get; set; } = new List<string>();
+        public string[] ReadFile()
         {
             if (File.Exists(Path))
             {
@@ -73,7 +74,7 @@ namespace Calculator.Logic.CommandLineParser
             }
         }
 
-        static void CheckForInvalidEntries()
+        void CheckForInvalidEntries()
         {
             string usedUnit = null;
             string usedRad = null;
@@ -90,20 +91,20 @@ namespace Calculator.Logic.CommandLineParser
                     if (usedUnit == null)
                         usedUnit = sValues[i];
                     if (usedUnit != null && sValues[i] != usedUnit)
-                        throw new InvalidExpressionException("Conflicting entries with unit or u");
+                        Errors.Add("Conflicting entries with unit or u");
                     if (!fieldValues.Contains(usedUnit))
-                        throw new InvalidExpressionException("Wrong abbreviation in config file");
+                        Errors.Add("Wrong abbreviation in config file");
                 }
                 else if (sReceivers[i] == "d" || sReceivers[i] == "degree")
                 {
                     if (usedRad == null)
                         usedRad = sValues[i];
                     if (usedRad != null && sValues[i] != usedRad)
-                        throw new InvalidExpressionException("Conflicting entries with degree or d");
+                        Errors.Add("Conflicting entries with degree or d");
                 }
             }
         }
-        static void CheckForInvalidArguments()
+        void CheckForInvalidArguments()
         {
             var names = new ParserShortAndLongNames();
             var fieldValues = names.GetType()
@@ -113,7 +114,7 @@ namespace Calculator.Logic.CommandLineParser
             .ToList();
             if (sReceivers.Select(s => fieldValues.Select(fieldValue => fieldValue.ToString()).Any(toTest => s == toTest)).Any(isEqual => !isEqual))
             {
-                throw new InvalidExpressionException("There is an Argument defined in the config file that doesnt exist.");
+                Errors.Add("There is an Argument defined in the config file that doesnt exist.");
             }
         }
     }

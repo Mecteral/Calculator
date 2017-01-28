@@ -21,8 +21,17 @@ namespace CalculatorConsoleApplication
 
         static void Main(string[] args)
         {
-            
-            var config = ConfigFileReader.ReadFile();
+            var reader = new ConfigFileReader();
+            var config = reader.ReadFile();
+            if (reader.Errors.Count != 0)
+            {
+                foreach (var error in reader.Errors)
+                {
+                    Console.WriteLine(error);
+                }
+                Console.ReadKey();
+                return;
+            }
             var creator  = new CommandLineParserCreator();
             var fileParser = creator.ArgumentsSetup(sArgs);
             fileParser.Parse(config);
