@@ -64,7 +64,7 @@
     <Compile Include="Facades\EvaluationFacade.cs" />
     <Compile Include="Facades\IConversionFacade.cs" />
     <Compile Include="Facades\IEvaluationFasade.cs" />
-    <Compile Include="Facades\IReadableOutputCreator.cs" />
+    <Compile Include="Conversion\IReadableOutputCreator.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
     <Compile Include="Model\ConversionModel\IConversionModelBuilder.cs" />
