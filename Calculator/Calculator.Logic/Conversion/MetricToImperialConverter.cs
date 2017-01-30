@@ -3,7 +3,7 @@ using Calculator.Logic.Model.ConversionModel;
 
 namespace Calculator.Logic.Conversion
 {
-    public class MetricToImperialConverter : IConverters
+    public class MetricToImperialConverter : IMetricToImperialConverter
     {
         public IConversionExpression Convert(IConversionExpression expression)
         {

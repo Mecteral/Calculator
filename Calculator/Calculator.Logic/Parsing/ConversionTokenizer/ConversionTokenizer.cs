@@ -5,7 +5,7 @@ using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.Parsing.ConversionTokenizer
 {
-    public class ConversionTokenizer
+    public class ConversionTokenizer : IConversionTokenizer
     {
         ApplicationArguments mArgs;
         readonly List<IConversionToken> mTempTokens = new List<IConversionToken>();

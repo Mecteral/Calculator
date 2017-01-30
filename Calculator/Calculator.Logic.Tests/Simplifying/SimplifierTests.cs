@@ -15,7 +15,7 @@ namespace Calculator.Logic.Tests.Simplification
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var simplified = new Simplifier().Simplify(inputTree);
+            var simplified = new Simplifier(null, null).Simplify(inputTree);
             var asString = new FormattingExpressionVisitor().Format(simplified);
             asString.Should().Be(expected);
         }

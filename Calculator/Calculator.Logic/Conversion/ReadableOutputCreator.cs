@@ -1,10 +1,11 @@
 using System.Data;
+using Calculator.Logic.Facades;
 using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing.ConversionTokenizer;
 
 namespace Calculator.Logic.Conversion
 {
-    public class ReadableOutputCreator
+    public class ReadableOutputCreator : IReadableOutputCreator
     {
         string Unit { get; set; }
 

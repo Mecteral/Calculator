@@ -4,7 +4,7 @@ using Calculator.Logic.Parsing.ConversionTokenizer;
 
 namespace Calculator.Logic.Model.ConversionModel
 {
-    public class ConversionModelBuilder : IConversionTokenVisitor
+    public class ConversionModelBuilder : IConversionTokenVisitor, IConversionModelBuilder
     {
         IConversionExpression mCurrent;
         IArithmeticConversionOperation mCurrentOperation;

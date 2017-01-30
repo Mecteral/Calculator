@@ -7,27 +7,12 @@ namespace Calculator.Logic.Simplifying
 {
     public class Simplifier : ISimplify
     {
-        readonly IList<ISimplifier> mSimplifiersInCorrectOrder = new List<ISimplifier>
-        {
-            new DirectCalculationSimplifier(),
-            new ParenthesesSimplifier(),
-            new AdditionAndSubtractionMover(),
-            new VariableCalculator()
-        };
-
-        readonly IDirectCalculationSimplifier mDirect;
-        readonly IParenthesesSimplifier mParentheses;
-        readonly IAdditionAndSubtractionMover mMover;
-        readonly IVariableCalculator mVariableCalculator;
+        readonly IEnumerable<ISimplifier> mSimplifiers;
         readonly IExpressionEqualityChecker mChecker;
 
-        public Simplifier(){}
-        Simplifier(IDirectCalculationSimplifier direct, IParenthesesSimplifier parentheses, IAdditionAndSubtractionMover mover, IVariableCalculator variableCalculator, IExpressionEqualityChecker checker)
+        public Simplifier(IEnumerable<ISimplifier> simplifiers, IExpressionEqualityChecker checker)
         {
-            mDirect = direct;
-            mParentheses = parentheses;
-            mMover = mover;
-            mVariableCalculator = variableCalculator;
+            mSimplifiers = simplifiers;
             mChecker = checker;
         }
 
@@ -37,11 +22,7 @@ namespace Calculator.Logic.Simplifying
             bool hasChanged;
             do
             {
-                var transformed = mDirect.Simplify(input);
-                transformed = mParentheses.Simplify(transformed);
-                transformed = mMover.Simplify(transformed);
-                transformed = mVariableCalculator.Simplify(transformed);
-
+                var transformed = ApplyAllSimplifications(result);
                 hasChanged = !mChecker.IsEqual(result, transformed);
                 if (hasChanged) { result = transformed; }
             }
@@ -50,12 +31,7 @@ namespace Calculator.Logic.Simplifying
         }
         IExpression ApplyAllSimplifications(IExpression result)
         {
-            return mSimplifiersInCorrectOrder.Aggregate(result, (current, simplifier) => simplifier.Simplify(current));
+            return mSimplifiers.Aggregate(result, (current, simplifier) => simplifier.Simplify(current));
         }
-    }
-
-    public interface ISimplify
-    {
-        IExpression Simplify(IExpression input);
     }
 }

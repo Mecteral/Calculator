@@ -31,9 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentCommandLineParser, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="FluentCommandLineParser">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -58,6 +57,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Conversion\IImperialToMetricConverter.cs" />
+    <Compile Include="Conversion\IMetricToImperialConverter.cs" />
+    <Compile Include="Conversion\IUnitConverter.cs" />
+    <Compile Include="Facades\ConversionFacade.cs" />
+    <Compile Include="Facades\EvaluationFacade.cs" />
+    <Compile Include="Facades\IConversionFacade.cs" />
+    <Compile Include="Facades\IEvaluationFasade.cs" />
+    <Compile Include="Facades\IReadableOutputCreator.cs" />
+    <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
+    <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
+    <Compile Include="Model\ConversionModel\IConversionModelBuilder.cs" />
+    <Compile Include="Parsing\ConversionTokenizer\IConversionTokenizer.cs" />
+    <Compile Include="Pipelines\IPipelineEvaluator.cs" />
+    <Compile Include="Pipelines\ISimplificationPipeline.cs" />
+    <Compile Include="Pipelines\PipelineEvaluator.cs" />
+    <Compile Include="Pipelines\SimplificationPipeline.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\AdditionSubtractionDispatcher.cs" />
     <Compile Include="Conversion\AnImperialReadabilityCreator.cs" />
@@ -69,6 +84,7 @@
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="Conversion\IConverters.cs" />

@@ -3,8 +3,10 @@ using Calculator.Logic.Model.ConversionModel;
 
 namespace Calculator.Logic.Conversion
 {
-    public class UnitConverter : IConversionExpressionVisitor
+    public class UnitConverter : IConversionExpressionVisitor, IUnitConverter
     {
+        readonly IImperialToMetricConverter mImperialToMetricConverter;
+        readonly IMetricToImperialConverter mMetricToImperialConverter;
         IConverters mConverter;
         IConversionExpression mReplacement;
         IConversionExpression mResult;
@@ -50,6 +52,14 @@ namespace Calculator.Logic.Conversion
 
         public void Visit(MetricMassExpression metricMassExpression) {}
 
+        public UnitConverter()
+        { }
+        public UnitConverter(IImperialToMetricConverter imperialToMetricConverter,
+            IMetricToImperialConverter metricToImperialConverter)
+        {
+            mImperialToMetricConverter = imperialToMetricConverter;
+            mMetricToImperialConverter = metricToImperialConverter;
+        }
         public IConversionExpression Convert(IConversionExpression expression, bool toMetric)
         {
             mToMetric = toMetric;
@@ -63,9 +73,9 @@ namespace Calculator.Logic.Conversion
         void CreateConverter(bool toMetric)
         {
             if (toMetric)
-                mConverter = new ImperialToMetricConverter();
+                mConverter = mImperialToMetricConverter;
             else
-                mConverter = new MetricToImperialConverter();
+                mConverter = mMetricToImperialConverter;
         }
 
         static bool CheckIfVisitorIsNecessary(IConversionExpression expression)
