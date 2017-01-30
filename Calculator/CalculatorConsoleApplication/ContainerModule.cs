@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System;
+using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.Conversion;
 using Calculator.Logic.Facades;
@@ -24,7 +25,19 @@ namespace CalculatorConsoleApplication
             builder.RegisterType<PipelineEvaluator>().As<IPipelineEvaluator>();
             builder.RegisterType<ReadableOutputCreator>().As<IReadableOutputCreator>();
             builder.RegisterType<ConversionFacade>().As<IConversionFacade>();
-            builder.RegisterType<UnitConverter>().As<IUnitConverter>();
+            builder.RegisterType<UnitConverter>()
+                .As<IUnitConverter>()
+                .WithParameter((parameter, context) => parameter.ParameterType == typeof(Func<bool, IConverters>),
+                    (parameter, context) =>
+                    {
+                        var cc = context;
+                        Func<bool, IConverters> result =
+                            toMetric =>
+                                toMetric
+                                    ? (IConverters)cc.Resolve<IImperialToMetricConverter>()
+                                    : cc.Resolve<IMetricToImperialConverter>();
+                        return result;
+                    });
             builder.RegisterType<ImperialToMetricConverter>().As<IImperialToMetricConverter>();
             builder.RegisterType<MetricToImperialConverter>().As<IMetricToImperialConverter>();
             builder.RegisterType<SimplificationPipeline>().As<ISimplificationPipeline>();

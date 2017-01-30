@@ -1,3 +1,4 @@
+using System;
 using System.Data;
 using Calculator.Logic.Model.ConversionModel;
 
@@ -5,6 +6,7 @@ namespace Calculator.Logic.Conversion
 {
     public class UnitConverter : IConversionExpressionVisitor, IUnitConverter
     {
+        readonly Func<bool, IConverters> mConverterFactory;
         readonly IImperialToMetricConverter mImperialToMetricConverter;
         readonly IMetricToImperialConverter mMetricToImperialConverter;
         IConverters mConverter;
@@ -55,29 +57,21 @@ namespace Calculator.Logic.Conversion
         public UnitConverter()
         { }
         public UnitConverter(IImperialToMetricConverter imperialToMetricConverter,
-            IMetricToImperialConverter metricToImperialConverter)
+            IMetricToImperialConverter metricToImperialConverter, Func<bool, IConverters> converterFactory)
         {
             mImperialToMetricConverter = imperialToMetricConverter;
             mMetricToImperialConverter = metricToImperialConverter;
+            mConverterFactory = converterFactory;
         }
         public IConversionExpression Convert(IConversionExpression expression, bool toMetric)
         {
             mToMetric = toMetric;
-            CreateConverter(toMetric);
+            mConverter = mConverterFactory(toMetric);
             if (!CheckIfVisitorIsNecessary(expression))
                 return ConvertSingleExpression(expression);
             expression.Accept(this);
             return mResult;
         }
-
-        void CreateConverter(bool toMetric)
-        {
-            if (toMetric)
-                mConverter = mImperialToMetricConverter;
-            else
-                mConverter = mMetricToImperialConverter;
-        }
-
         static bool CheckIfVisitorIsNecessary(IConversionExpression expression)
         {
             return expression is AnArithmeticConversionOperation;
