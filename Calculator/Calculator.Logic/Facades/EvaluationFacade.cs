@@ -7,19 +7,17 @@ namespace Calculator.Logic.Facades
     public class EvaluationFacade : IEvaluationFacade
     {
         readonly IModelBuilder mModelBuilder;
-        public EvaluationFacade(IModelBuilder modelBuilder)
+        readonly IExpressionEvaluator mExpressionEvaluator;
+        public EvaluationFacade(IModelBuilder modelBuilder, IExpressionEvaluator expressionEvaluator)
         {
             mModelBuilder = modelBuilder;
+            mExpressionEvaluator = expressionEvaluator;
         }
 
         public decimal Evaluate(ITokenizer token)
         {
-            return UseEvaluationExpressionVisitor(token);
+            var expression = mModelBuilder.BuildFrom(token.Tokens);
+            return mExpressionEvaluator.Evaluate(expression);
         }
-
-        IExpression CreateInMemoryModel(ITokenizer token) => mModelBuilder.BuildFrom(token.Tokens);
-
-        decimal UseEvaluationExpressionVisitor(ITokenizer token)
-            => EvaluatingExpressionVisitor.Evaluate(CreateInMemoryModel(token));
     }
 }

@@ -10,7 +10,7 @@ namespace Calculator.Logic.Tests.Model
     {
         static void Check(IExpression input, decimal expected)
         {
-            EvaluatingExpressionVisitor.Evaluate(input).Should().Be(expected);
+            new EvaluatingExpressionVisitor().Evaluate(input).Should().Be(expected);
         }
         [Test]
         public void Evaluate_Addition()

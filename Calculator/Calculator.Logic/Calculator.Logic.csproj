@@ -68,6 +68,7 @@
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
     <Compile Include="Model\ConversionModel\IConversionModelBuilder.cs" />
+    <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\ConversionTokenizer\IConversionTokenizer.cs" />
     <Compile Include="Pipelines\IPipelineEvaluator.cs" />
     <Compile Include="Pipelines\ISimplificationPipeline.cs" />

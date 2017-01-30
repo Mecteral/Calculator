@@ -9,7 +9,11 @@ namespace Calculator.Logic.Simplifying
     public class DirectCalculationSimplifier : IDirectCalculationSimplifier
     {
         IExpression mExpression;
-
+        readonly IExpressionEvaluator mEvaluator;
+        public DirectCalculationSimplifier(IExpressionEvaluator evaluator)
+        {
+            mEvaluator = evaluator;
+        }
         public void Visit(Subtraction subtraction)
         {
             CalculateResultIfPossible(subtraction);
@@ -62,7 +66,7 @@ namespace Calculator.Logic.Simplifying
                 {
                     operation = ChangeSubtractionIfRighthandsideIsNegative(operation);
                 }
-                var replacement = new Constant {Value = EvaluatingExpressionVisitor.Evaluate(operation)};
+                var replacement = new Constant {Value = mEvaluator.Evaluate(operation)};
                 if (operation.HasParent) operation.Parent.ReplaceChild(operation, replacement);
                 else mExpression = replacement;
             }

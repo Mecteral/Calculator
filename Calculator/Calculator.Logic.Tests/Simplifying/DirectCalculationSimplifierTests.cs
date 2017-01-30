@@ -4,6 +4,7 @@ using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Simplifying;
 using Calculator.Model;
 using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests.Simplification
@@ -11,11 +12,18 @@ namespace Calculator.Logic.Tests.Simplification
     [TestFixture]
     public class DirectCalculationSimplifierTests
     {
-        static void Check(string input, string expected)
+        IExpressionEvaluator mEvaluator;
+
+        [SetUp]
+        public void Setup()
+        {
+            mEvaluator = Substitute.For<IExpressionEvaluator>();
+        }
+        void Check(string input, string expected)
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var underTest = new DirectCalculationSimplifier();
+            var underTest = new DirectCalculationSimplifier(mEvaluator);
             var simplified = underTest.Simplify(inputTree);
             var asString = new FormattingExpressionVisitor().Format(simplified);
             asString.Should().Be(expected);
@@ -72,7 +80,7 @@ namespace Calculator.Logic.Tests.Simplification
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
-            var underTest = new DirectCalculationSimplifier();
+            var underTest = new DirectCalculationSimplifier(mEvaluator);
             underTest.Simplify(input);
             ((Addition) input).Left.Should().BeOfType<Addition>();
         }

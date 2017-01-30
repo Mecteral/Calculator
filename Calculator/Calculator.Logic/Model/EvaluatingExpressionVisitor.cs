@@ -3,9 +3,9 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {
-    public class EvaluatingExpressionVisitor : AnExpressionVisitorWithResult<EvaluatingExpressionVisitor, decimal>
+    public class EvaluatingExpressionVisitor : AnExpressionVisitorWithResult<EvaluatingExpressionVisitor, decimal>, IExpressionEvaluator
     {
-        public static decimal Evaluate(IExpression expression) => GetResultFor(expression);
+        public decimal Evaluate(IExpression expression) => GetResultFor(expression);
         protected override decimal UseSinus(decimal value) => value;
 
         protected override decimal UseVariable(string variable)

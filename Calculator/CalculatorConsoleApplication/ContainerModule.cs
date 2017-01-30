@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.Conversion;
 using Calculator.Logic.Facades;
@@ -37,6 +36,7 @@ namespace CalculatorConsoleApplication
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<Simplifier>().As<ISimplify>();
+            builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
         }
     }
 }

@@ -15,7 +15,7 @@ namespace Calculator.Logic.Tests.Simplification
         {
             var tokens = Tokenize(input);
             var inputTree = CreateInMemoryModel(tokens);
-            var directCalculator = new DirectCalculationSimplifier();
+            var directCalculator = new DirectCalculationSimplifier(null);
             var directSimplified = directCalculator.Simplify(inputTree);
             var underTest = new ParenthesesSimplifier();
             var simplified = underTest.Simplify(directSimplified);
