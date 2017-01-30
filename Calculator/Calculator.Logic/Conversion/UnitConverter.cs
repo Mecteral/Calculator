@@ -7,8 +7,6 @@ namespace Calculator.Logic.Conversion
     public class UnitConverter : IConversionExpressionVisitor, IUnitConverter
     {
         readonly Func<bool, IConverters> mConverterFactory;
-        readonly IImperialToMetricConverter mImperialToMetricConverter;
-        readonly IMetricToImperialConverter mMetricToImperialConverter;
         IConverters mConverter;
         IConversionExpression mReplacement;
         IConversionExpression mResult;
@@ -53,24 +51,18 @@ namespace Calculator.Logic.Conversion
         public void Visit(MetricLengthExpression metricLengthExpression) {}
 
         public void Visit(MetricMassExpression metricMassExpression) {}
-
-        public UnitConverter()
-        { }
-        public UnitConverter(IImperialToMetricConverter imperialToMetricConverter,
-            IMetricToImperialConverter metricToImperialConverter, Func<bool, IConverters> converterFactory)
+        public UnitConverter (Func<bool, IConverters> converterFactory)
         {
-            mImperialToMetricConverter = imperialToMetricConverter;
-            mMetricToImperialConverter = metricToImperialConverter;
             mConverterFactory = converterFactory;
         }
-        public IConversionExpression Convert(IConversionExpression expression, bool toMetric)
+        public IConversionExpressionWithValue Convert(IConversionExpression expression, bool toMetric)
         {
             mToMetric = toMetric;
             mConverter = mConverterFactory(toMetric);
             if (!CheckIfVisitorIsNecessary(expression))
-                return ConvertSingleExpression(expression);
+                return (IConversionExpressionWithValue)ConvertSingleExpression(expression);
             expression.Accept(this);
-            return mResult;
+            return (IConversionExpressionWithValue)mResult;
         }
         static bool CheckIfVisitorIsNecessary(IConversionExpression expression)
         {

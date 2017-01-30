@@ -25,7 +25,7 @@ namespace Calculator.Logic.Tests.Conversion
             result.Should().Be(expected);
         }
         static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token) => new ConversionModelBuilder().BuildFrom(token.Tokens);
-        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter().Convert(expression, toMetric);
+        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter(null).Convert(expression, toMetric);
         [Test]
         public void ImperialMassOutput()
         {

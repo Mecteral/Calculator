@@ -4,6 +4,6 @@ namespace Calculator.Logic.Conversion
 {
     public interface IUnitConverter
     {
-        IConversionExpression Convert(IConversionExpression expression, bool toMetric);
+        IConversionExpressionWithValue Convert(IConversionExpression expression, bool toMetric);
     }
 }

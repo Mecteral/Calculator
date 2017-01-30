@@ -16,7 +16,7 @@ namespace Calculator.Logic.Tests.Conversion
             var tokens = new ConversionTokenizer();
             tokens.Tokenize(input, null);
             var model = new ConversionModelBuilder();
-            var converter = new UnitConverter();
+            var converter = new UnitConverter(null);
             return converter.Convert(model.BuildFrom(tokens.Tokens), toMetric);
         }
 
@@ -54,7 +54,7 @@ namespace Calculator.Logic.Tests.Conversion
             var tokens = new ConversionTokenizer();
             tokens.Tokenize("10sft+10ft", null);
             var model = new ConversionModelBuilder();
-            var converter = new UnitConverter();
+            var converter = new UnitConverter(null);
             Action a= () => converter.Convert(model.BuildFrom(tokens.Tokens), false);
 
             a.ShouldThrow<InvalidExpressionException>();
