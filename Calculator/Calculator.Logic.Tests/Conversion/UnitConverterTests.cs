@@ -37,7 +37,7 @@ namespace Calculator.Logic.Tests.Conversion
             mUnderTest = new UnitConverter(mConverterFactory);
             var expression = Substitute.For<IConversionExpressionWithValue>();
             mUnderTest.Convert(expression, true);
-        }s
+        }
         void ConversionVariaton<TOperation, TFirst, TSecond, TResult>(bool toMetric) where TOperation : IArithmeticConversionOperation, new() where TFirst : IConversionExpressionWithValue, new() where TSecond : IConversionExpressionWithValue, new() where TResult : IConversionExpressionWithValue, new()
         {
             var expression = new TOperation {Left = new TFirst() {Value = 20M}, Right = new TSecond() {Value = 20M}};

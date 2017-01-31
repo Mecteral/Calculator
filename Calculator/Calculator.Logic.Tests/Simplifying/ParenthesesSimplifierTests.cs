@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using Calculator.Logic.Model;
-using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Simplifying;
+﻿using Calculator.Logic.Simplifying;
 using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
@@ -11,44 +8,66 @@ namespace Calculator.Logic.Tests.Simplification
     [TestFixture]
     public class ParenthesesSimplifierTests
     {
-        static void Check(string input, string expected)
+        ParenthesesSimplifier mUnderTest;
+        [SetUp]
+        public void SetUp()
         {
-            var tokens = Tokenize(input);
-            var inputTree = CreateInMemoryModel(tokens);
-            var directCalculator = new DirectCalculationSimplifier(null);
-            var directSimplified = directCalculator.Simplify(inputTree);
-            var underTest = new ParenthesesSimplifier();
-            var simplified = underTest.Simplify(directSimplified);
-            var asString = new FormattingExpressionVisitor().Format(simplified);
-            asString.Should().Be(expected);
+            mUnderTest = new ParenthesesSimplifier();
         }
-        static IEnumerable<IToken> Tokenize(string input)
-        {
-            var tokenizer = new Tokenizer();
-            tokenizer.Tokenize(input, null);
-            var tokens = tokenizer.Tokens;
-            return tokens;
-        }
-        static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
+
         [Test]
-        public void ParenthesesDeletionBeforeMultiplication()
+        public void Parentheses_Deletion_Before_Multiplication()
         {
-            Check("(3)*3a", "3*3*a");
+            var expression = new Multiplication()
+            {
+                Left = new ParenthesedExpression() {Wrapped = new Constant() {Value = 3M}},
+                Right = new Constant() {Value = 13M}
+            };
+            mUnderTest.Simplify(expression).Should().BeOfType<Multiplication>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
         }
         [Test]
-        public void ParenthesesSimplifierDoesntRemoveParethesesFromNestedExpressionsWithOperations()
+        public void Parentheses_Deletion_Before_Division()
         {
-            Check("(3*2a)+2a", "(6*a) + 2*a");
+            var expression = new Division()
+            {
+                Left = new ParenthesedExpression() { Wrapped = new Constant() { Value = 3M } },
+                Right = new Constant() { Value = 13M }
+            };
+            mUnderTest.Simplify(expression).Should().BeOfType<Division>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
         }
         [Test]
-        public void ParenthesesSimplifierRemovesParenthesesFromSingleConstant()
+        public void Parentheses_Deletion_Before_Addition()
         {
-            Check("(3)+2a", "3 + 2*a");
+            var expression = new Addition()
+            {
+                Left = new ParenthesedExpression() { Wrapped = new Constant() { Value = 3M } },
+                Right = new SinusExpression() { Value = 13M }
+            };
+            mUnderTest.Simplify(expression).Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
         }
         [Test]
-        public void ParenthesesSimplifierWithDivisionAndSubtraction()
+        public void Parentheses_Deletion_Before_Subtraction()
         {
-            Check("(1/2)/3 - 4a", "0.5/3 - 4*a");
+            var expression = new Subtraction()
+            {
+                Left = new ParenthesedExpression() { Wrapped = new Constant() { Value = 3M } },
+                Right = new Constant() { Value = 13M }
+            };
+            mUnderTest.Simplify(expression).Should().BeOfType<Subtraction>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(3);
+        }
+        [Test]
+        public void ParenthesesSimplifier_Doesnt_Remove_Paretheses_From_Nested_Expressions_With_Operations()
+        {
+            var expression = new ParenthesedExpression()
+            {
+                Wrapped =
+                    new Addition()
+                    {
+                        Left = new CosineExpression() {Value = 12},
+                        Right = new TangentExpression() {Value = 12}
+                    }
+            };
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>();
         }
     }
 }
