@@ -7,11 +7,9 @@ namespace Calculator.Logic.Conversion
     public class UnitConverter : IConversionExpressionVisitor, IUnitConverter
     {
         readonly Func<bool, IConverters> mConverterFactory;
-        readonly IImperialToMetricConverter mImperialToMetricConverter;
-        readonly IMetricToImperialConverter mMetricToImperialConverter;
         IConverters mConverter;
         IConversionExpression mReplacement;
-        IConversionExpression mResult;
+        IConversionExpressionWithValue mResult;
         bool mToMetric;
 
         public void Visit(ConversionAddition conversionAddition)
@@ -53,17 +51,11 @@ namespace Calculator.Logic.Conversion
         public void Visit(MetricLengthExpression metricLengthExpression) {}
 
         public void Visit(MetricMassExpression metricMassExpression) {}
-
-        public UnitConverter()
-        { }
-        public UnitConverter(IImperialToMetricConverter imperialToMetricConverter,
-            IMetricToImperialConverter metricToImperialConverter, Func<bool, IConverters> converterFactory)
+        public UnitConverter (Func<bool, IConverters> converterFactory)
         {
-            mImperialToMetricConverter = imperialToMetricConverter;
-            mMetricToImperialConverter = metricToImperialConverter;
             mConverterFactory = converterFactory;
         }
-        public IConversionExpression Convert(IConversionExpression expression, bool toMetric)
+        public IConversionExpressionWithValue Convert(IConversionExpression expression, bool toMetric)
         {
             mToMetric = toMetric;
             mConverter = mConverterFactory(toMetric);
@@ -95,7 +87,7 @@ namespace Calculator.Logic.Conversion
             }
             else
             {
-                mResult = mReplacement;
+                mResult = (IConversionExpressionWithValue) mReplacement;
             }
         }
 
@@ -328,7 +320,7 @@ namespace Calculator.Logic.Conversion
             }
         }
 
-        IConversionExpression ConvertSingleExpression(IConversionExpression expression)
+        IConversionExpressionWithValue ConvertSingleExpression(IConversionExpression expression)
         {
             return mConverter.Convert(expression);
         }

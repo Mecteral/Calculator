@@ -71,7 +71,9 @@
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="ExceptionTests.cs" />
+    <Compile Include="Facades\ConversionFacadeTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
+    <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
     <Compile Include="Conversion\ReadableOutputCreatorTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />

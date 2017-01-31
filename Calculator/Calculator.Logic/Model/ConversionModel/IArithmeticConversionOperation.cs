@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Calculator.Logic.Model.ConversionModel
 {
-    interface IArithmeticConversionOperation : IConversionExpression
+    public interface IArithmeticConversionOperation : IConversionExpression
     {
         IConversionExpression Left { get; set; }
         IConversionExpression Right { get; set; }

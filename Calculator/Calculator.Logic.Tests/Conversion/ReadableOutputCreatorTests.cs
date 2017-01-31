@@ -1,6 +1,6 @@
-﻿using Calculator.Logic.Conversion;
+﻿using System.Collections.Generic;
+using Calculator.Logic.Conversion;
 using Calculator.Logic.Model.ConversionModel;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -9,62 +9,117 @@ namespace Calculator.Logic.Tests.Conversion
     [TestFixture]
     public class ReadableOutputCreatorTests
     {
+        [SetUp]
+        public void SetUp()
+        {
+            mUnderTest = new ReadableOutputCreator();
+        }
 
-        static ConversionTokenizer CreateConversionTokens(string input)
+        ReadableOutputCreator mUnderTest;
+
+        static IEnumerable<object[]> TestCases
         {
-            var token = new ConversionTokenizer();
-            token.Tokenize(input, null);
-            return token;
+            get
+            {
+                yield return new object[]
+                {
+                    new ImperialMassExpression {Value = 25M}, " 1 st 11 lb"
+                };
+                yield return new object[]
+                {
+                    new ImperialAreaExpression() {Value = 37M}, " 37 sft"
+                };
+                yield return new object[]
+                {
+                    new ImperialLengthExpression() {Value = 128M}, " 1 ch 20 yd 2 ft"
+                };
+                yield return new object[]
+                {
+                    new ImperialVolumeExpression() {Value = 39M}, " 1 pt 3 gi 4 floz"
+                };
+                yield return new object[]
+                {
+                    new MetricAreaExpression() {Value = 31239M}, "3.1239 ha"
+                };
+                yield return new object[]
+                {
+                    new MetricAreaExpression() {Value = 31M}, "31 qm"
+                };
+                yield return new object[]
+                {
+                    new MetricAreaExpression() {Value = 0.0000032M}, "3.2 qmm"
+                };
+                yield return new object[]
+                {
+                    new MetricAreaExpression() {Value = 0.00032M}, "3.2 qcm"
+                };
+                yield return new object[]
+                {
+                    new MetricAreaExpression() {Value = 312391231M}, "312.391231 qkm"
+                };
+                yield return new object[]
+                {
+                    new MetricLengthExpression() {Value = 4231M}, "4.231 km"
+                };
+                yield return new object[]
+                {
+                    new MetricLengthExpression() {Value = 423M}, "423 m"
+                };
+                yield return new object[]
+                {
+                    new MetricLengthExpression() {Value = 0.00004231M}, "0.04231 mm"
+                };
+                yield return new object[]
+                {
+                    new MetricLengthExpression() {Value = 0.04231M}, "4.231 cm"
+                };
+                yield return new object[]
+                {
+                    new MetricMassExpression() {Value = 6942M}, "6.942 kg"
+                };
+                yield return new object[]
+                {
+                    new MetricMassExpression() {Value = 6942456M}, "6.942456 t"
+                };
+                yield return new object[]
+                {
+                    new MetricMassExpression() {Value = 0.6942M}, "0.6942 g"
+                };
+                yield return new object[]
+                {
+                    new MetricMassExpression() {Value = 0.006942M}, "6.942 mg"
+                };
+                yield return new object[]
+                {
+                    new MetricVolumeExpression() {Value = 5432M}, "54.32 hl"
+                };
+                yield return new object[]
+                {
+                    new MetricVolumeExpression() {Value = 54M}, "54 l"
+                };
+                yield return new object[]
+                {
+                    new MetricVolumeExpression() {Value = 0.005432M}, "5.432 ml"
+                };
+                yield return new object[]
+                {
+                    new MetricVolumeExpression() {Value = 0.05432M}, "5.432 cl"
+                };
+            }
         }
-        static void Check(string input, bool toMetric, string expected)
-        {
-            var token = CreateConversionTokens(input);
-            var converted = UseUnitConverter(CreateConversionInMemoryModel(token), toMetric);
-            var output = new ReadableOutputCreator();
-            var result = output.MakeReadable((IConversionExpressionWithValue) converted);
-            result.Should().Be(expected);
-        }
-        static IConversionExpression CreateConversionInMemoryModel(ConversionTokenizer token) => new ConversionModelBuilder().BuildFrom(token.Tokens);
-        static IConversionExpression UseUnitConverter(IConversionExpression expression, bool toMetric) => new UnitConverter().Convert(expression, toMetric);
+
         [Test]
-        public void ImperialMassOutput()
+        public void ReadableOuput_From_Imperial_Weight()
         {
-            Check("1it+23lb+234oz+345gr", false," 1 it 2 st 9 lb 10 oz 12 dr 16 gr");
+            var underTest = new ImperialAreaExpression {Value = 37M};
+            mUnderTest.MakeReadable(underTest).Should().Be(" 37 sft");
         }
+
         [Test]
-        public void ImperialVolumeOutput()
+        [TestCaseSource(nameof(TestCases))]
+        public void ReadableOutput(IConversionExpressionWithValue input, string expectedOutput)
         {
-            Check("1floz + 45335floz", false, " 283 gal 1 qt 3 gi 1 floz");
-        }
-        [Test]
-        public void ImperialAreaOutput()
-        {
-            Check("1sft + 1acre", false, " 1 acre 1 sft");
-        }
-        [Test]
-        public void ImperialLengthOutput()
-        {
-            Check("1ft+23454ft", false, " 1 lea 1 mI 3 fur 5 ch 8 yd 1 ft");
-        }
-        [Test]
-        public void MetricMassOutput()
-        {
-            Check("1t +1kg + 1g+1mg", true, "1.001001001 t");
-        }
-        [Test]
-        public void MetricVolumeOutput()
-        {
-            Check("1hl+1l+1ml", true, "1.01001 hl");
-        }
-        [Test]
-        public void MetricAreaOutput()
-        {
-            Check("1qkm+1qm", true, "1.000001 qkm");
-        }
-        [Test]
-        public void MetricLengthOutput()
-        {
-            Check("1km+1m+1cm", true, "1.00101 km");
+            mUnderTest.MakeReadable(input).Should().Be(expectedOutput);
         }
     }
 }

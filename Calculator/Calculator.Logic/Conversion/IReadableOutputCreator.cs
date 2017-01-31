@@ -1,6 +1,6 @@
 ﻿using Calculator.Logic.Model.ConversionModel;
 
-namespace Calculator.Logic.Facades
+namespace Calculator.Logic.Conversion
 {
     public interface IReadableOutputCreator
     {

@@ -5,7 +5,7 @@ namespace Calculator.Logic.Conversion
 {
     public class ImperialToMetricConverter : IImperialToMetricConverter
     {
-        public IConversionExpression Convert(IConversionExpression expression)
+        public IConversionExpressionWithValue Convert(IConversionExpression expression)
         {
             if (expression is ImperialLengthExpression)
             {
