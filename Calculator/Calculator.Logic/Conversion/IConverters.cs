@@ -4,6 +4,6 @@ namespace Calculator.Logic.Conversion
 {
     public interface IConverters
     {
-        IConversionExpression Convert(IConversionExpression expression);
+        IConversionExpressionWithValue Convert(IConversionExpression expression);
     }
 }

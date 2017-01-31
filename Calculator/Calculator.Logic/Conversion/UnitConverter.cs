@@ -9,7 +9,7 @@ namespace Calculator.Logic.Conversion
         readonly Func<bool, IConverters> mConverterFactory;
         IConverters mConverter;
         IConversionExpression mReplacement;
-        IConversionExpression mResult;
+        IConversionExpressionWithValue mResult;
         bool mToMetric;
 
         public void Visit(ConversionAddition conversionAddition)
@@ -60,9 +60,9 @@ namespace Calculator.Logic.Conversion
             mToMetric = toMetric;
             mConverter = mConverterFactory(toMetric);
             if (!CheckIfVisitorIsNecessary(expression))
-                return (IConversionExpressionWithValue)ConvertSingleExpression(expression);
+                return ConvertSingleExpression(expression);
             expression.Accept(this);
-            return (IConversionExpressionWithValue)mResult;
+            return mResult;
         }
         static bool CheckIfVisitorIsNecessary(IConversionExpression expression)
         {
@@ -87,7 +87,7 @@ namespace Calculator.Logic.Conversion
             }
             else
             {
-                mResult = mReplacement;
+                mResult = (IConversionExpressionWithValue) mReplacement;
             }
         }
 
@@ -320,7 +320,7 @@ namespace Calculator.Logic.Conversion
             }
         }
 
-        IConversionExpression ConvertSingleExpression(IConversionExpression expression)
+        IConversionExpressionWithValue ConvertSingleExpression(IConversionExpression expression)
         {
             return mConverter.Convert(expression);
         }
