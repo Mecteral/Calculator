@@ -70,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdditionAndSubtractionMoverTests.cs" />
+    <Compile Include="ExceptionTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
     <Compile Include="Conversion\ReadableOutputCreatorTests.cs" />
