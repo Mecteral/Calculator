@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigFile\ConfigFileValidator.cs" />
     <Compile Include="Conversion\IImperialToMetricConverter.cs" />
     <Compile Include="Conversion\IMetricToImperialConverter.cs" />
     <Compile Include="Conversion\IUnitConverter.cs" />
@@ -162,7 +163,7 @@
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="Simplifying\StringSimplifier.cs" />
     <Compile Include="Conversion\UnitConverter.cs" />
-    <Compile Include="CommandLineParser\ConfigFileReader.cs" />
+    <Compile Include="ConfigFile\ConfigFileReader.cs" />
     <Compile Include="Utilities\IExpressionEqualityChecker.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />

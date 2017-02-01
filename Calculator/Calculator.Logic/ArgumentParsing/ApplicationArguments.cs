@@ -3,6 +3,14 @@
     public class ApplicationArguments
     {
         public bool ToDegree { get; set; }
+        public bool ShowSteps { get; set; }
+        public bool WriteDefault { get; set; }
+        public bool RevertConfig { get; set; }
+
         public string UnitForConversion { get; set; }
+        public string ImportFromSpecificConfigFile { get; set; }
+        public string UseCustomConfigFile { get; set; }
+
+
     }
 }
