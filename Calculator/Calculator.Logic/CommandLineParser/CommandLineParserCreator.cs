@@ -18,9 +18,11 @@ namespace Calculator.Logic.CommandLineParser
             parser.Setup<bool>(ParserShortAndLongNames.ShowStepsShort, ParserShortAndLongNames.ShowStepsLong)
                 .Callback(arg => args.ShowSteps = arg);
             parser.Setup<bool>(ParserShortAndLongNames.WriteToConfigShort, ParserShortAndLongNames.WriteToConfigLong)
-                .Callback(arg => args.WriteDefault = arg);
+                .Callback(arg => args.WriteSwitchesToDefault = arg);
             parser.Setup<bool>(ParserShortAndLongNames.RevertShort, ParserShortAndLongNames.RevertLong)
                 .Callback(arg => args.RevertConfig = arg);
+            parser.Setup<bool>(ParserShortAndLongNames.SaveAllSwitchesShort, ParserShortAndLongNames.SaveAllSwitchesLong)
+                .Callback(arg => args.SaveAllOrIgnoreAllDifferingSwitches = arg);
             parser.Setup<string>(ParserShortAndLongNames.UnitConversionShort, ParserShortAndLongNames.UnitConversionLong)
                 .Callback(arg => args.UnitForConversion = arg);
             parser.Setup<string>(ParserShortAndLongNames.ImportShort, ParserShortAndLongNames.ImportLong)

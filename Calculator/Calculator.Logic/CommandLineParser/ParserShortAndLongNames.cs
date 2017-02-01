@@ -19,6 +19,8 @@
         public const char ImportShort = 'i';
         public const string CustomLong = "custom";
         public const char CustomShort = 'c';
+        public const string SaveAllSwitchesLong = "saveAll";
+        public const char SaveAllSwitchesShort = 'a';
 
     }
 }

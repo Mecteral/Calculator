@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using Autofac;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.CommandLineParser;
@@ -12,27 +12,46 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
+        const string DefaultConfig = "E:\\Programmieren\\ExercisesFromMax\\koans\\Calculator\\Calculator\\CalculatorConsoleApplication\\DefaultConfig.txt";
+        const string CommandLineError = "Commandline Switches";
         static readonly ConfigFileReader sReader = new ConfigFileReader();
-        static readonly string sPath = Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + $"\\CalculatorConfig\\ConfigFileCalculator.txt";
+        static readonly ConfigFileValidator sValidator = new ConfigFileValidator();
+
+        static readonly string sUserPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) +
+                                       $"\\CalculatorConfig\\ConfigFileCalculator.txt";
+
         static readonly ApplicationArguments sArgs = new ApplicationArguments();
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
+        static readonly CommandLineParserCreator sCreator = new CommandLineParserCreator();
+
         static void Main(string[] args)
         {
-            var userConfig = sReader.ReadFile(sPath);
+            var defaultConfig = sReader.ReadFile(DefaultConfig);
+            var defaultParser = sCreator.ArgumentsSetup(sArgs);
+            defaultParser.Parse(defaultConfig);
+
+            var userConfig = sReader.ReadFile(sUserPath);
+            sValidator.CheckForValidation(userConfig, sUserPath);
             OutputErrorsIfExistent();
 
-            var customConfig = sReader.ReadFile(FindCustomFilePath(args));
+            sValidator.CheckForValidation(args, CommandLineError);
             OutputErrorsIfExistent();
 
-            var creator  = new CommandLineParserCreator();
-            var fileParser = creator.ArgumentsSetup(sArgs);
+            var fileParser = sCreator.ArgumentsSetup(sArgs);
             fileParser.Parse(userConfig);
 
-            var specificFileParser = creator.ArgumentsSetup(sArgs);
-            specificFileParser.Parse(customConfig);
-
-            var parser = creator.ArgumentsSetup(sArgs);
+            var parser = sCreator.ArgumentsSetup(sArgs);
             parser.Parse(args);
+
+            if (sArgs.UseCustomConfigFile != "")
+                RunCustomParser(args);
+            if (sArgs.ImportFromSpecificConfigFile != "")
+                ImportSpecificFile();
+            if (sArgs.WriteSwitchesToDefault)
+                WriteSwitchesToDefault();
+            if (sArgs.RevertConfig)
+                RevertConfig();
+
 
             sBuilder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
             var container = sBuilder.Build();
@@ -42,49 +61,68 @@ namespace CalculatorConsoleApplication
             Console.WriteLine(pipelineEvaluator.Evaluate(input, sArgs));
             Console.ReadKey();
         }
+
         static string GetUserInput() => Console.ReadLine();
+
+        static void WriteSwitchesToDefault()
+        {
+            
+        }
+        static void RunCustomParser(string[] args)
+        {
+            var customConfig = sReader.ReadFile(sArgs.UseCustomConfigFile);
+            sValidator.CheckForValidation(customConfig, sArgs.UseCustomConfigFile);
+            OutputErrorsIfExistent();
+
+            var specificFileParser = sCreator.ArgumentsSetup(sArgs);
+            specificFileParser.Parse(customConfig);
+
+            var afterSpecificParser = sCreator.ArgumentsSetup(sArgs);
+            afterSpecificParser.Parse(args);
+        }
+
+        static void ImportSpecificFile()
+        {
+            if (File.Exists(sArgs.ImportFromSpecificConfigFile))
+            {
+                var specific = sReader.ReadFile(sArgs.ImportFromSpecificConfigFile);
+                sValidator.CheckForValidation(specific,sArgs.ImportFromSpecificConfigFile);
+                OutputErrorsIfExistent();
+                File.Copy(sArgs.ImportFromSpecificConfigFile, sUserPath, true);
+            }
+            else
+            {
+                Console.WriteLine("The Specific Config File does not exist");
+                Console.ReadKey();
+                Environment.Exit(-1);
+            }
+        }
+        static void RevertConfig()
+        {
+                if (File.Exists(DefaultConfig))
+                {
+                    File.Copy(DefaultConfig, sUserPath, true);
+                }
+                else
+                {
+                    Console.WriteLine("The Default Config File does not exist anymore!");
+                    Console.ReadKey();
+                    Environment.Exit(-1);
+                }
+        }
+
         static void OutputErrorsIfExistent()
         {
-            if (sReader.Errors.Count != 0)
+            if (sValidator.Errors.Count != 0)
             {
-                foreach (var error in sReader.Errors)
+                foreach (var error in sValidator.Errors)
                 {
-                    Console.WriteLine($"Error in Path: \"{sReader.FilePath}\"");
+                    Console.WriteLine($"Error in: \"{sValidator.FilePath}\"\n");
                     Console.WriteLine(error);
                 }
                 Console.ReadKey();
-                Environment.Exit(0);
+                Environment.Exit(-1);
             }
-        }
-
-        static string FindCustomFilePath(IEnumerable<string> args)
-        {
-            foreach (var s in args)
-            {
-                if (s.Contains("c=")||s.Contains("custom="))
-                {
-                    return ExtractCustomFilePath(s);
-                }
-            }
-            return "";
-        }
-
-        static string ExtractCustomFilePath(string path)
-        {
-            var afterequal = false;
-            var result = "";
-            foreach (var c in path)
-            {
-                if (c == '=')
-                {
-                    afterequal = true;
-                }
-                else if (afterequal)
-                {
-                    result += c;
-                }
-            }
-            return result;
         }
     }
 }
