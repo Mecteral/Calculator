@@ -13,12 +13,12 @@ namespace CalculatorConsoleApplication
     class Program
     {
         static readonly ConfigFileReader sReader = new ConfigFileReader();
-        const string Path = @"C:\Users\Public\Calc\ConfigFileCalculator.txt";
+        static readonly string sPath = Environment.GetFolderPath(System.Environment.SpecialFolder.Personal) + $"\\CalculatorConfig\\ConfigFileCalculator.txt";
         static readonly ApplicationArguments sArgs = new ApplicationArguments();
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
         static void Main(string[] args)
         {
-            var userConfig = sReader.ReadFile(Path);
+            var userConfig = sReader.ReadFile(sPath);
             OutputErrorsIfExistent();
 
             var customConfig = sReader.ReadFile(FindCustomFilePath(args));
