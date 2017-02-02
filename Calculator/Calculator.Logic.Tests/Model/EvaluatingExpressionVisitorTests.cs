@@ -1,4 +1,5 @@
-﻿using Calculator.Logic.Model;
+﻿using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.Model;
 using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
@@ -62,6 +63,14 @@ namespace Calculator.Logic.Tests.Model
         public void Sinus()
         {
             Check(TestExpressions.SinusAddition, 40);
+        }
+
+        [Test]
+        public void OutputSteps()
+        {
+            var args = new ApplicationArguments {ShowSteps = true};
+            new EvaluatingExpressionVisitor().Evaluate(new Addition() { Left = new Constant() {Value = 13},Right = new Constant() {Value = 17} }, args);
+            EvaluatingExpressionVisitor.Steps.Should().Contain("13+17\n 30");
         }
     }
 }
