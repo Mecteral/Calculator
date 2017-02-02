@@ -23,13 +23,6 @@ namespace Calculator.Logic
             {
                 token.Accept(this);
             }
-            if (mCurrent.HasParent)
-            {
-                while (mCurrent.HasParent)
-                {
-                    mCurrent = mCurrent.Parent;
-                }
-            }
             mResult = mCurrent;
             return mResult;
         }
@@ -211,7 +204,10 @@ namespace Calculator.Logic
             }
             if (mCurrentOperation != null && !(mCurrentOperation.Parent is ParenthesedExpression))
             {
-                mCurrent = mCurrentOperation.HasParent ? mCurrentOperation.Parent : mCurrentOperation;
+                while (mCurrent.HasParent && !(mCurrent.Parent is ParenthesedExpression))
+                {
+                    mCurrent = mCurrent.HasParent ? mCurrent.Parent : mCurrentOperation;
+                }
             }
             if (mParenthesed != null)
             {
