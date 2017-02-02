@@ -66,7 +66,7 @@ namespace Calculator.Logic.Simplifying
                 {
                     operation = ChangeSubtractionIfRighthandsideIsNegative(operation);
                 }
-                var replacement = new Constant {Value = mEvaluator.Evaluate(operation)};
+                var replacement = new Constant {Value = mEvaluator.Evaluate(operation, null)};
                 if (operation.HasParent) operation.Parent.ReplaceChild(operation, replacement);
                 else mExpression = replacement;
             }

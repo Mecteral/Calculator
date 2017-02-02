@@ -1,11 +1,27 @@
 ﻿using System;
+using System.Collections.Generic;
+using Calculator.Logic.ArgumentParsing;
 using Calculator.Model;
 
 namespace Calculator.Logic.Model
 {
     public class EvaluatingExpressionVisitor : AnExpressionVisitorWithResult<EvaluatingExpressionVisitor, decimal>, IExpressionEvaluator
     {
-        public decimal Evaluate(IExpression expression) => GetResultFor(expression);
+        public static List<string> Steps { get; set; } = new List<string>();
+        decimal Result { get; set; }
+        public decimal Evaluate(IExpression expression, ApplicationArguments args)
+        {
+            Result = GetResultFor(expression);
+            if (args != null && args.ShowSteps)
+            {
+                foreach (var step in Steps)
+                {
+                    Console.WriteLine(step);
+                }
+            }
+            return Result;
+        } 
+        
         protected override decimal UseSinus(decimal value) => value;
 
         protected override decimal UseVariable(string variable)

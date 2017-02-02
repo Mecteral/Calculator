@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Calculator.Model;
 
 namespace Calculator.Logic.Model
@@ -15,24 +16,28 @@ namespace Calculator.Logic.Model
             var left = GetResultFor(subtraction.Left);
             var right = GetResultFor(subtraction.Right);
             Result = UseSubtraction(left, right);
+            EvaluatingExpressionVisitor.Steps.Add($"{left}-{right}\n {Result}");
         }
         void IExpressionVisitor.Visit(Multiplication multiplication)
         {
             var left = GetResultFor(multiplication.Left);
             var right = GetResultFor(multiplication.Right);
             Result = UseMultiplication(left, right);
+            EvaluatingExpressionVisitor.Steps.Add($"{left}*{right}\n {Result}");
         }
         void IExpressionVisitor.Visit(Addition addition)
         {
             var left = GetResultFor(addition.Left);
             var right = GetResultFor(addition.Right);
             Result = UseAddition(left, right);
+            EvaluatingExpressionVisitor.Steps.Add($"{left}+{right}\n {Result}");
         }
         void IExpressionVisitor.Visit(Division division)
         {
             var left = GetResultFor(division.Left);
             var right = GetResultFor(division.Right);
             Result = UseDivision(left, right);
+            EvaluatingExpressionVisitor.Steps.Add($"{left}/{right}\n {Result}");
         }
         public void Visit(Variable variable)
         {

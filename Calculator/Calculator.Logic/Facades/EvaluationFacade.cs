@@ -1,4 +1,6 @@
-﻿using Calculator.Logic.Model;
+﻿using System;
+using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 
@@ -14,10 +16,10 @@ namespace Calculator.Logic.Facades
             mExpressionEvaluator = expressionEvaluator;
         }
 
-        public decimal Evaluate(ITokenizer token)
+        public decimal Evaluate(ITokenizer token, ApplicationArguments args)
         {
             var expression = mModelBuilder.BuildFrom(token.Tokens);
-            return mExpressionEvaluator.Evaluate(expression);
+            return mExpressionEvaluator.Evaluate(expression, args);
         }
     }
 }

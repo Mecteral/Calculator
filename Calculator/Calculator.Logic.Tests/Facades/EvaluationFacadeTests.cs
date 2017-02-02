@@ -28,7 +28,7 @@ namespace Calculator.Logic.Tests.Facades
             var tokenizer = Substitute.For<ITokenizer>();
             tokenizer.Tokens.Returns(new List<IToken>());
 
-            mUnderTest.Evaluate(tokenizer);
+            mUnderTest.Evaluate(tokenizer, null);
 
             mModelBuilder.Received().BuildFrom(tokenizer.Tokens);
         }
@@ -39,9 +39,9 @@ namespace Calculator.Logic.Tests.Facades
             var modelBuilderResult = new Constant();
             mModelBuilder.BuildFrom(tokenizer.Tokens).Returns(modelBuilderResult);
 
-            mUnderTest.Evaluate(tokenizer);
+            mUnderTest.Evaluate(tokenizer, null);
 
-            mExpressionEvaluator.Received().Evaluate(modelBuilderResult);
+            mExpressionEvaluator.Received().Evaluate(modelBuilderResult, null);
         }
         [Test]
         public void Evaluate_Returns_Result_Of_ExpressionEvaluator_Evaluate()
@@ -49,9 +49,9 @@ namespace Calculator.Logic.Tests.Facades
             var tokenizer = Substitute.For<ITokenizer>();
             var modelBuilderResult = new Constant();
             mModelBuilder.BuildFrom(tokenizer.Tokens).Returns(modelBuilderResult);
-            mExpressionEvaluator.Evaluate(modelBuilderResult).Returns(17M);
+            mExpressionEvaluator.Evaluate(modelBuilderResult, null).Returns(17M);
 
-            mUnderTest.Evaluate(tokenizer).Should().Be(17M);
+            mUnderTest.Evaluate(tokenizer, null).Should().Be(17M);
         }
     }
 }

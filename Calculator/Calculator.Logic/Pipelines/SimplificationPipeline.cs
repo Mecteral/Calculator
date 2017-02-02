@@ -34,7 +34,7 @@ namespace Calculator.Logic.Pipelines
             else
             {
                 var evaluationSimplifier = mEvaluationFactory();
-                result = evaluationSimplifier.Evaluate(mTokenizer).ToString(CultureInfo.InvariantCulture);
+                result = evaluationSimplifier.Evaluate(mTokenizer, args).ToString(CultureInfo.InvariantCulture);
             }
             return result;
         }
