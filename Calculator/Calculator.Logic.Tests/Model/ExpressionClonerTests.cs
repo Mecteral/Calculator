@@ -70,6 +70,14 @@ namespace Calculator.Logic.Tests.Model
             equalityChecker.IsEqual(result, underTest).Should().BeTrue();
         }
         [Test]
+        public void ExpressionClonerClonesSimpleAdditionWithSquareAndRoot()
+        {
+            var underTest = new Addition { Left = new SquareRootExpression { Value = 1 }, Right = new Square { Left = new Constant {Value = 13}, Right = new Constant {Value = 2} } };
+            var result = ExpressionCloner.Clone(underTest);
+            var equalityChecker = new ExpressionEqualityChecker();
+            equalityChecker.IsEqual(result, underTest).Should().BeTrue();
+        }
+        [Test]
         public void ExpressionClonerClonesSimpleAdditionwithCosine()
         {
             var underTest = new Addition { Left = new CosineExpression { Value = 1 }, Right = new CosineExpression { Value = 2 } };

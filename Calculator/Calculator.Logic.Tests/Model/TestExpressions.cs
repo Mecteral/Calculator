@@ -34,5 +34,6 @@ namespace Calculator.Logic.Tests.Model
         public static Addition CosineAddition => new Addition {Left = new CosineExpression{Value = 23}, Right = new CosineExpression {Value = 17} };
         public static Addition TangentAddition => new Addition {Left = new TangentExpression{Value = 23}, Right = new TangentExpression { Value = 17} };
         public static Addition SinusAddition => new Addition {Left = new SinusExpression{Value = 23}, Right = new SinusExpression { Value = 17} };
+        public static Square SquarewithRoot=> new Square() {Left = new SquareRootExpression{Value = 9}, Right = new Constant() { Value = 2} };
     }
 }

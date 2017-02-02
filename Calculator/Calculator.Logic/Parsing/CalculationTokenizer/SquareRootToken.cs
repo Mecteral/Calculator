@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
-    public class SqaureRootToken : IToken
+    public class SquareRootToken : IToken
     {
         public decimal Value { get; private set; }
 
-        public SqaureRootToken(string input)
+        public SquareRootToken(string input)
         {
             input = input.Replace(',', '.');
             var number = double.Parse(ExtractNumber(input), NumberStyles.Any, CultureInfo.InvariantCulture);

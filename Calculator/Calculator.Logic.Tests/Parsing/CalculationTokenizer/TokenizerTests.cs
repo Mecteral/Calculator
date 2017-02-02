@@ -162,6 +162,14 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
             result.Tokens.ElementAt(0).Should().BeOfType<TangentToken>();
         }
         [Test]
+        public void SquareRootTokenGetsCreated()
+        {
+            var underTest = "sqrt(9)";
+            var result = new Tokenizer();
+            result.Tokenize(underTest, null);
+            result.Tokens.ElementAt(0).Should().BeOfType<SquareRootToken>();
+        }
+        [Test]
         public void SinusTokenGetsCreated()
         {
             var underTest = " sin(90)";

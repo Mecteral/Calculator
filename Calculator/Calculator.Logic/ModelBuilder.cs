@@ -83,9 +83,9 @@ namespace Calculator.Logic
             HandleNonParenthesesAndOperation();
         }
 
-        public void Visit(SqaureRootToken sqaureRootToken)
+        public void Visit(SquareRootToken sqaureRootToken)
         {
-            mCurrent = new SinusExpression { Value = sqaureRootToken.Value };
+            mCurrent = new SquareRootExpression { Value = sqaureRootToken.Value };
             HandleNonParenthesesAndOperation();
         }
 
@@ -165,8 +165,8 @@ namespace Calculator.Logic
                     HandleMultiplicationOrDivisionBeforeAdditiveOperation<Division>();
                     break;
                 case Operator.Square:
-                HandleMultiplicationOrDivisionBeforeAdditiveOperation<Square>();
-                break;
+                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Square>();
+                    break;
             }
         }
 

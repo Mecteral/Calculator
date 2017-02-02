@@ -66,6 +66,12 @@ namespace Calculator.Logic.Tests.Model
         }
 
         [Test]
+        public void SquarewithRoot()
+        {
+            Check(TestExpressions.SquarewithRoot, 81);
+        }
+
+        [Test]
         public void OutputSteps()
         {
             var args = new ApplicationArguments {ShowSteps = true};

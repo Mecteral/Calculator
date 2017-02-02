@@ -82,7 +82,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             }
             else if (mFunctionString.Contains("sqrt"))
             {
-                mTempTokens.Add(new SqaureRootToken(mFunctionString));
+                mTempTokens.Add(new SquareRootToken(mFunctionString));
             }
             mFunctionString = null;
         }
