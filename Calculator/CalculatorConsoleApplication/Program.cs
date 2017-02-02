@@ -17,39 +17,39 @@ namespace CalculatorConsoleApplication
         static readonly ConfigFileReader sReader = new ConfigFileReader();
         static readonly ConfigFileValidator sValidator = new ConfigFileValidator();
 
-        static readonly string sUserPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal) +
+        static readonly string sPathToUserFile = Environment.GetFolderPath(Environment.SpecialFolder.Personal) +
                                        $"\\CalculatorConfig\\ConfigFileCalculator.txt";
 
-        static readonly ApplicationArguments sArgs = new ApplicationArguments();
+        static readonly ApplicationArguments sArguments = new ApplicationArguments();
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
         static readonly CommandLineParserCreator sCreator = new CommandLineParserCreator();
 
         static void Main(string[] args)
         {
             var defaultConfig = sReader.ReadFile(DefaultConfig);
-            var defaultParser = sCreator.ArgumentsSetup(sArgs);
+            var defaultParser = sCreator.ArgumentsSetup(sArguments);
             defaultParser.Parse(defaultConfig);
 
-            var userConfig = sReader.ReadFile(sUserPath);
-            sValidator.CheckForValidation(userConfig, sUserPath);
+            var userConfig = sReader.ReadFile(sPathToUserFile);
+            sValidator.CheckForValidation(userConfig, sPathToUserFile);
             OutputErrorsIfExistent();
 
             sValidator.CheckForValidation(args, CommandLineError);
             OutputErrorsIfExistent();
 
-            var fileParser = sCreator.ArgumentsSetup(sArgs);
+            var fileParser = sCreator.ArgumentsSetup(sArguments);
             fileParser.Parse(userConfig);
 
-            var parser = sCreator.ArgumentsSetup(sArgs);
+            var parser = sCreator.ArgumentsSetup(sArguments);
             parser.Parse(args);
 
-            if (sArgs.UseCustomConfigFile != "")
+            if (sArguments.UseCustomConfigFile != "")
                 RunCustomParser(args);
-            if (sArgs.ImportFromSpecificConfigFile != "")
+            if (sArguments.ImportFromSpecificConfigFile != "")
                 ImportSpecificFile();
-            if (sArgs.WriteSwitchesToDefault)
-                WriteSwitchesToDefault();
-            if (sArgs.RevertConfig)
+            if (sArguments.WriteSwitchesToDefault)
+                WriteSwitchesToDefault(args, userConfig);
+            if (sArguments.RevertConfig)
                 RevertConfig();
 
 
@@ -58,37 +58,38 @@ namespace CalculatorConsoleApplication
             var pipelineEvaluator = container.Resolve<IPipelineEvaluator>();
 
             var input = GetUserInput();
-            Console.WriteLine(pipelineEvaluator.Evaluate(input, sArgs));
+            Console.WriteLine(pipelineEvaluator.Evaluate(input, sArguments));
             Console.ReadKey();
         }
 
         static string GetUserInput() => Console.ReadLine();
 
-        static void WriteSwitchesToDefault()
+        static void WriteSwitchesToDefault(IEnumerable<string> args, IEnumerable<string> userConfig)
         {
-            
+            var writer = new SwitchesToConfigFileWriter();
+            writer.WriteToConfigFile(args, userConfig, sArguments, sPathToUserFile);
         }
         static void RunCustomParser(string[] args)
         {
-            var customConfig = sReader.ReadFile(sArgs.UseCustomConfigFile);
-            sValidator.CheckForValidation(customConfig, sArgs.UseCustomConfigFile);
+            var customConfig = sReader.ReadFile(sArguments.UseCustomConfigFile);
+            sValidator.CheckForValidation(customConfig, sArguments.UseCustomConfigFile);
             OutputErrorsIfExistent();
 
-            var specificFileParser = sCreator.ArgumentsSetup(sArgs);
+            var specificFileParser = sCreator.ArgumentsSetup(sArguments);
             specificFileParser.Parse(customConfig);
 
-            var afterSpecificParser = sCreator.ArgumentsSetup(sArgs);
+            var afterSpecificParser = sCreator.ArgumentsSetup(sArguments);
             afterSpecificParser.Parse(args);
         }
 
         static void ImportSpecificFile()
         {
-            if (File.Exists(sArgs.ImportFromSpecificConfigFile))
+            if (File.Exists(sArguments.ImportFromSpecificConfigFile))
             {
-                var specific = sReader.ReadFile(sArgs.ImportFromSpecificConfigFile);
-                sValidator.CheckForValidation(specific,sArgs.ImportFromSpecificConfigFile);
+                var specific = sReader.ReadFile(sArguments.ImportFromSpecificConfigFile);
+                sValidator.CheckForValidation(specific,sArguments.ImportFromSpecificConfigFile);
                 OutputErrorsIfExistent();
-                File.Copy(sArgs.ImportFromSpecificConfigFile, sUserPath, true);
+                File.Copy(sArguments.ImportFromSpecificConfigFile, sPathToUserFile, true);
             }
             else
             {
@@ -101,7 +102,7 @@ namespace CalculatorConsoleApplication
         {
                 if (File.Exists(DefaultConfig))
                 {
-                    File.Copy(DefaultConfig, sUserPath, true);
+                    File.Copy(DefaultConfig, sPathToUserFile, true);
                 }
                 else
                 {

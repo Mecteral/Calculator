@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
+    <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
+    <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
     <Compile Include="Conversion\IImperialToMetricConverter.cs" />
     <Compile Include="Conversion\IMetricToImperialConverter.cs" />
     <Compile Include="Conversion\IUnitConverter.cs" />

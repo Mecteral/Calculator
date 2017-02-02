@@ -12,4 +12,4 @@
 
 --revert = false
 
---saveAll = false
+--saveAll = null
