@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using Calculator.Logic.ArgumentParsing;
 
@@ -21,6 +22,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         {
             mArgs = args;
             mTempTokens.Clear();
+            input = RemoveWhitespaces(input);
             mInput = input;
             Tokens = FillTokens();
         }
@@ -40,8 +42,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                 }
                 else if (c == '+' || c == '-' || c == '*' || c == '/' || c== '^') AddOperatorToken(c);
                 else if (c == '(' || c == ')') AddParenthesisToken(c);
-                else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' &&
-                         mInput[i + 3] == '(' ||
+                else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' && mInput[i + 3] == '(' ||
                          (c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
                          (c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
                          (i+4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' && mInput[i + 3] == 't' && mInput[i + 4] == '('))
@@ -49,10 +50,20 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                     i = CreateTokenStringForFunctionTokensAndSetCounterAnew(i);
                     AddFunctionTokens();
                 }
-                else if (char.IsLetter(c)) AddVariableToken(c);
+                else if (mTempTokens.Count == 0 || (!(mTempTokens.Last() is VariableToken) && char.IsLetter(c)))
+                    AddVariableToken(c);
+                else
+                {
+                    throw new InvalidExpressionException();
+                }
             }
             if (mNumber != null) mTempTokens.Add(new NumberToken(mNumber));
             return mTempTokens;
+        }
+
+        static string RemoveWhitespaces(string input)
+        {
+            return input.Where(c => !char.IsWhiteSpace(c)).Aggregate("", (current, c) => current + c);
         }
 
         int CreateTokenStringForFunctionTokensAndSetCounterAnew(int i)

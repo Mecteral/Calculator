@@ -74,6 +74,7 @@
     <Compile Include="Facades\ConversionFacadeTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
     <Compile Include="Conversion\ReadableOutputCreatorTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
