@@ -21,6 +21,9 @@
                 case '/':
                     Operator = Operator.Divide;
                     break;
+                case '^':
+                    Operator = Operator.Square;
+                    break;
             }
         }
         public Operator Operator { get; }

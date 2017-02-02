@@ -44,17 +44,28 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(CosineExpression cosineExpression)
         {
-            throw new System.NotImplementedException();
+            mExpressionCount++;
         }
 
         public void Visit(TangentExpression tangentExpression)
         {
-            throw new System.NotImplementedException();
+            mExpressionCount++;
         }
 
         public void Visit(SinusExpression sinusExpression)
         {
-            throw new System.NotImplementedException();
+            mExpressionCount++;
+        }
+
+        public void Visit(SquareRootExpression squareRootExpression)
+        {
+            mExpressionCount++;
+        }
+
+        public void Visit(Square square)
+        {
+            VisitOperands(square);
+            mExpressionCount++;
         }
 
         public IExpression FindSmallesExpressionInEnumerable(IEnumerable<IExpression> expressions)

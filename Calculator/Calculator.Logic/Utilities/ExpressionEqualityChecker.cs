@@ -23,20 +23,30 @@ namespace Calculator.Logic.Utilities
             VisitOperands(multiplication);
             mSecondExpressions.Add(multiplication);
         }
+
         public void Visit(Addition addition)
         {
             VisitOperands(addition);
             mSecondExpressions.Add(addition);
         }
+
         public void Visit(Constant constant)
         {
             mSecondExpressions.Add(constant);
         }
+
         public void Visit(Division division)
         {
             VisitOperands(division);
             mSecondExpressions.Add(division);
         }
+
+        public void Visit(Square square)
+        {
+            VisitOperands(square);
+            mSecondExpressions.Add(square);
+        }
+
         public void Visit(Variable variable)
         {
             mSecondExpressions.Add(variable);
@@ -55,6 +65,11 @@ namespace Calculator.Logic.Utilities
         public void Visit(SinusExpression sinusExpression)
         {
             mSecondExpressions.Add(sinusExpression);
+        }
+
+        public void Visit(SquareRootExpression squareRootExpression)
+        {
+            mSecondExpressions.Add(squareRootExpression);
         }
 
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)

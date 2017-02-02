@@ -14,5 +14,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         void Visit(CosineToken cosineToken);
         void Visit(TangentToken tangentToken);
         void Visit(SinusToken sinusToken);
+        void Visit(SqaureRootToken sqaureRootToken);
     }
 }

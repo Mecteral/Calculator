@@ -15,5 +15,7 @@
         void Visit(CosineExpression cosineExpression);
         void Visit(TangentExpression tangentExpression);
         void Visit(SinusExpression sinusExpression);
+        void Visit(SquareRootExpression squareRootExpression);
+        void Visit(Square square);
     }
 }

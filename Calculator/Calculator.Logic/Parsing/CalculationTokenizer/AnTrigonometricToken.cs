@@ -31,7 +31,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
 
         void UseFunctions(string input)
         {
-            var radians = mNumber*(Math.PI/180);
             if (input.Contains("cos"))
             {
                 Value = (decimal) Math.Cos(mNumber);

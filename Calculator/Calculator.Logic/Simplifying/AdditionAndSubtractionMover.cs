@@ -38,6 +38,11 @@ namespace Calculator.Logic.Simplifying
             VisitOperands(division);
         }
 
+        public void Visit(Square square)
+        {
+            VisitOperands(square);
+        }
+
         public void Visit(Variable variable) {}
 
         public void Visit(CosineExpression cosineExpression) {}
@@ -45,6 +50,8 @@ namespace Calculator.Logic.Simplifying
         public void Visit(TangentExpression tangentExpression) {}
 
         public void Visit(SinusExpression sinusExpression) {}
+
+        public void Visit(SquareRootExpression squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {

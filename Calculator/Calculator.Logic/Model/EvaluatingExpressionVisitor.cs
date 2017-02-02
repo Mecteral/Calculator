@@ -23,6 +23,7 @@ namespace Calculator.Logic.Model
         } 
         
         protected override decimal UseSinus(decimal value) => value;
+        protected override decimal UseSquareRoot(decimal value) => value;
 
         protected override decimal UseVariable(string variable)
         {
@@ -31,6 +32,7 @@ namespace Calculator.Logic.Model
         protected override decimal UseParenthesed(decimal wrapped) => wrapped;
         protected override decimal UseSubtraction(decimal left, decimal right) => left - right;
         protected override decimal UseMultiplication(decimal left, decimal right) => left * right;
+        protected override decimal UseSquare(decimal left, decimal right) => (decimal) Math.Pow((double) left,(double) right);
         protected override decimal UseAddition(decimal left, decimal right) => left + right;
         protected override decimal UseDivision(decimal left, decimal right) => left / right;
         protected override decimal UseConstant(decimal value) => value;

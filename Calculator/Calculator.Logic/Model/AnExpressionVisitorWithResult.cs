@@ -32,6 +32,7 @@ namespace Calculator.Logic.Model
             Result = UseAddition(left, right);
             EvaluatingExpressionVisitor.Steps.Add($"{left}+{right}\n {Result}");
         }
+
         void IExpressionVisitor.Visit(Division division)
         {
             var left = GetResultFor(division.Left);
@@ -39,6 +40,15 @@ namespace Calculator.Logic.Model
             Result = UseDivision(left, right);
             EvaluatingExpressionVisitor.Steps.Add($"{left}/{right}\n {Result}");
         }
+
+        public void Visit(Square square)
+        {
+            var left = GetResultFor(square.Left);
+            var right = GetResultFor(square.Right);
+            Result = UseSquare(left, right);
+            EvaluatingExpressionVisitor.Steps.Add($"{left}^{right}\n {Result}");
+        }
+
         public void Visit(Variable variable)
         {
             Result = UseVariable(variable.Variables);
@@ -57,6 +67,11 @@ namespace Calculator.Logic.Model
         public void Visit(SinusExpression sinusExpression)
         {
             Result = UseSinus(sinusExpression.Value);
+        }
+
+        public void Visit(SquareRootExpression squareRootExpression)
+        {
+            Result = UseSquareRoot(squareRootExpression.Value);
         }
 
         void IExpressionVisitor.Visit(Constant constant)
@@ -78,6 +93,8 @@ namespace Calculator.Logic.Model
         protected abstract TResult UseCosine(decimal value);
         protected abstract TResult UseTangent(decimal value);
         protected abstract TResult UseSinus(decimal value);
+        protected abstract TResult UseSquareRoot(decimal value);
         protected abstract TResult UseVariable(string variable);
+        protected abstract TResult UseSquare(TResult left, TResult right);
     }
 }

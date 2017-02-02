@@ -13,7 +13,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         readonly List<IToken> mTempTokens = new List<IToken>();
         string mInput;
         string mNumber;
-        string mTrigonometricString;
+        string mFunctionString;
         bool mWasNumber;
         public IEnumerable<IToken> Tokens { get; private set; }
 
@@ -38,15 +38,16 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                     mWasNumber = true;
                     mNumber += c;
                 }
-                else if (c == '+' || c == '-' || c == '*' || c == '/') AddOperatorToken(c);
+                else if (c == '+' || c == '-' || c == '*' || c == '/' || c== '^') AddOperatorToken(c);
                 else if (c == '(' || c == ')') AddParenthesisToken(c);
                 else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' &&
                          mInput[i + 3] == '(' ||
                          (c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
-                         (c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '('))
+                         (c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
+                         (i+4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' && mInput[i + 3] == 't' && mInput[i + 4] == '('))
                 {
-                    i = CreateTokenStringForTrigonometricTokensAndSetCounterAnew(i);
-                    AddTrigonometricTokens();
+                    i = CreateTokenStringForFunctionTokensAndSetCounterAnew(i);
+                    AddFunctionTokens();
                 }
                 else if (char.IsLetter(c)) AddVariableToken(c);
             }
@@ -54,31 +55,36 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             return mTempTokens;
         }
 
-        int CreateTokenStringForTrigonometricTokensAndSetCounterAnew(int i)
+        int CreateTokenStringForFunctionTokensAndSetCounterAnew(int i)
         {
             do
             {
-                mTrigonometricString += mInput[i];
+                mFunctionString += mInput[i];
                 i++;
             } while (mInput[i] != ')');
             return i;
         }
 
-        void AddTrigonometricTokens()
+        void AddFunctionTokens()
         {
-            if (mTrigonometricString.Contains("cos"))
+            AddNumberTokenIfNecessary();
+            if (mFunctionString.Contains("cos"))
             {
-                mTempTokens.Add(new CosineToken(mTrigonometricString, mArgs));
+                mTempTokens.Add(new CosineToken(mFunctionString, mArgs));
             }
-            else if (mTrigonometricString.Contains("sin"))
+            else if (mFunctionString.Contains("sin"))
             {
-                mTempTokens.Add(new SinusToken(mTrigonometricString, mArgs));
+                mTempTokens.Add(new SinusToken(mFunctionString, mArgs));
             }
-            else if (mTrigonometricString.Contains("tan"))
+            else if (mFunctionString.Contains("tan"))
             {
-                mTempTokens.Add(new TangentToken(mTrigonometricString, mArgs));
+                mTempTokens.Add(new TangentToken(mFunctionString, mArgs));
             }
-            mTrigonometricString = null;
+            else if (mFunctionString.Contains("sqrt"))
+            {
+                mTempTokens.Add(new SqaureRootToken(mFunctionString));
+            }
+            mFunctionString = null;
         }
 
         void AddNumberTokenIfNecessary()

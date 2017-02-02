@@ -8,6 +8,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         Add,
         Subtract,
         Multiply,
-        Divide
+        Divide,
+        Square
     }
 }

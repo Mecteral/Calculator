@@ -34,12 +34,18 @@ namespace Calculator.Logic.Simplifying
             CalculateResultIfPossible(division);
         }
 
+        public void Visit(Square square)
+        {
+            CalculateResultIfPossible(square);
+        }
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
         }
 
         public void Visit(Constant constant) {}
+
         public void Visit(Variable variable) {}
 
         public void Visit(CosineExpression cosineExpression) {}
@@ -47,6 +53,8 @@ namespace Calculator.Logic.Simplifying
         public void Visit(TangentExpression tangentExpression) {}
 
         public void Visit(SinusExpression sinusExpression) {}
+
+        public void Visit(SquareRootExpression squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {

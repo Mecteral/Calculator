@@ -47,6 +47,11 @@ namespace Calculator.Logic.Simplifying
         public void Visit(TangentExpression tangentExpression) {}
 
         public void Visit(SinusExpression sinusExpression) {}
+        public void Visit(SquareRootExpression squareRootExpression){}
+        public void Visit(Square square)
+        {
+            RemoveParenthesesIfPossible(square);
+        }
 
         public IExpression Simplify(IExpression input)
         {
