@@ -28,6 +28,11 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         }
 
         [Test]
+        public void Validator_Accepts_Scientific_Notation()
+        {
+            mValidator.Validate("30E-1+35");
+        }
+        [Test]
         public void Validator_Accepts_Rad()
         {
             mValidator.Validate("sin(90rad)");

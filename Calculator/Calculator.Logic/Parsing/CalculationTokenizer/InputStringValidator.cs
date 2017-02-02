@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,12 +10,13 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     {
         int mFunctionEnd;
         string mInput;
+        public Action<string> OnError { get; set; }
         public void Validate(string input)
         {
-            mInput = input;
-            CheckForUnknownCharacters();
-            CheckParanthesesCount();
-            CheckForDoubleVariableAndFunction();
+                mInput = input;
+                CheckForUnknownCharacters();
+                CheckParanthesesCount();
+                CheckForDoubleVariableAndFunction();
         }
 
         void CheckForUnknownCharacters()

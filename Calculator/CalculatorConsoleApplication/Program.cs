@@ -5,6 +5,7 @@ using Autofac;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.CommandLineParser;
 using Calculator.Logic.ConfigFile;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Pipelines;
 
 namespace CalculatorConsoleApplication
@@ -12,17 +13,20 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
-        const string DefaultConfig = "E:\\Programmieren\\ExercisesFromMax\\koans\\Calculator\\Calculator\\CalculatorConsoleApplication\\DefaultConfig.txt";
+        const string DefaultConfig =
+            "E:\\Programmieren\\ExercisesFromMax\\koans\\Calculator\\Calculator\\CalculatorConsoleApplication\\DefaultConfig.txt";
+
         const string CommandLineError = "Commandline Switches";
         static readonly ConfigFileReader sReader = new ConfigFileReader();
         static readonly ConfigFileValidator sValidator = new ConfigFileValidator();
 
         static readonly string sPathToUserFile = Environment.GetFolderPath(Environment.SpecialFolder.Personal) +
-                                       $"\\CalculatorConfig\\ConfigFileCalculator.txt";
+                                                 $"\\CalculatorConfig\\ConfigFileCalculator.txt";
 
         static readonly ApplicationArguments sArguments = new ApplicationArguments();
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
         static readonly CommandLineParserCreator sCreator = new CommandLineParserCreator();
+        static readonly InputStringValidator sStringValidator = new InputStringValidator();
 
         static void Main(string[] args)
         {
@@ -52,18 +56,38 @@ namespace CalculatorConsoleApplication
             if (sArguments.RevertConfig)
                 RevertConfig();
 
+            var input = GetUserInput();
+            try
+            {
+                sStringValidator.Validate(input);
+            }
+            catch (CalculationException x)
+            {
+                OnStringError(x, input);
+            }
+
 
             sBuilder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
             var container = sBuilder.Build();
             var pipelineEvaluator = container.Resolve<IPipelineEvaluator>();
 
-            var input = GetUserInput();
             Console.WriteLine(pipelineEvaluator.Evaluate(input, sArguments));
             Console.ReadKey();
         }
 
         static string GetUserInput() => Console.ReadLine();
 
+        static void OnStringError(CalculationException x, string input)
+        {
+            Console.WriteLine($"{x.Error} \n{input}");
+            for (var i = 0; i < x.Index; i++)
+            {
+                Console.Write(".");
+            }
+            Console.Write("^");
+            Console.ReadKey();
+            Environment.Exit(-1);
+        }
         static void WriteSwitchesToDefault(IEnumerable<string> args, IEnumerable<string> userConfig)
         {
             var writer = new SwitchesToConfigFileWriter();
