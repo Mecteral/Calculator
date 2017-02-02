@@ -23,6 +23,13 @@ namespace Calculator.Logic
             {
                 token.Accept(this);
             }
+            if (mCurrent.HasParent)
+            {
+                while (mCurrent.HasParent)
+                {
+                    mCurrent = mCurrent.Parent;
+                }
+            }
             mResult = mCurrent;
             return mResult;
         }
@@ -153,11 +160,10 @@ namespace Calculator.Logic
                     HandleNegationIfNeeded();
                     break;
                 case Operator.Multiply:
-                    HandleMultiplicationBeforeAdditiveOperation<Multiplication>();
+                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Multiplication>();
                     break;
                 case Operator.Divide:
-
-                    HandleMultiplicationBeforeAdditiveOperation<Division>();
+                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Division>();
                     break;
             }
         }
@@ -179,10 +185,9 @@ namespace Calculator.Logic
             }
         }
 
-        void HandleMultiplicationBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
+        void HandleMultiplicationOrDivisionBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
         {
-            if (mCurrentOperation is Subtraction ||
-                mCurrentOperation is Addition && !(mCurrent is ParenthesedExpression))
+            if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
             {
                 var temp = mCurrentOperation.Right;
                 var multiplicationOrDivision = new TSelf {Left = temp};
