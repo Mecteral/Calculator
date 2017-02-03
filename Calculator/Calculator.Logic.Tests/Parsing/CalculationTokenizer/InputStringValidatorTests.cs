@@ -59,6 +59,13 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         }
 
         [Test]
+        public void Validator_Throws_Exception_If_Variable_Is_Found_In_Trigonometric_Function()
+        {
+            Action a = () => mValidator.Validate("tan(90de)");
+            a.ShouldThrow<CalculationException>();
+        }
+
+        [Test]
         public void Validator_Throws_Exception_If_String_Holds_Unknown_Character()
         {
             Action a = () => mValidator.Validate("#+tan(90)");

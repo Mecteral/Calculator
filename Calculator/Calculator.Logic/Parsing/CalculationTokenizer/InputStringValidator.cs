@@ -10,7 +10,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     {
         int mFunctionEnd;
         string mInput;
-        public Action<string> OnError { get; set; }
         public void Validate(string input)
         {
                 mInput = input;
@@ -85,6 +84,10 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             for (var i = 0; i < input.Length; i++)
             {
                 var c = input[i];
+                if (char.IsLetter(c) && input.Length <=i+2)
+                {
+                    return i;
+                }
                 if (!degOrRadDefined && input.Length >= i + 2 && (c == 'r' && input[i + 1] == 'a' && input[i + 2] == 'd') || (c == 'd' && input[i + 1] == 'e' && input[i + 2] == 'g'))
                 {
                     numberIsOver = true;

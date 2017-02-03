@@ -52,10 +52,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                 }
                 else if (mTempTokens.Count == 0 || (!(mTempTokens.Last() is VariableToken) && char.IsLetter(c)))
                     AddVariableToken(c);
-                else
-                {
-                    throw new InvalidExpressionException();
-                }
             }
             if (mNumber != null) mTempTokens.Add(new NumberToken(mNumber));
             return mTempTokens;
