@@ -76,11 +76,8 @@
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
-    <Compile Include="Conversion\ReadableOutputCreatorTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
-    <Compile Include="Conversion\ImperialToMetricConverterTests.cs" />
-    <Compile Include="Conversion\MetricToImperialConverterTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\ConversionModel\ConversionModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />
@@ -97,7 +94,6 @@
     <Compile Include="Simplifying\SimplifierTests.cs" />
     <Compile Include="Simplifying\StringSimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
-    <Compile Include="Conversion\UnitConverterTests.cs" />
     <Compile Include="Simplifying\VariableCalculatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
