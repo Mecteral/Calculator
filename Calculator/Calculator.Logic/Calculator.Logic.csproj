@@ -63,9 +63,7 @@
     <Compile Include="Conversion\IImperialToMetricConverter.cs" />
     <Compile Include="Conversion\IMetricToImperialConverter.cs" />
     <Compile Include="Conversion\IUnitConverter.cs" />
-    <Compile Include="Facades\ConversionFacade.cs" />
     <Compile Include="Facades\EvaluationFacade.cs" />
-    <Compile Include="Facades\IConversionFacade.cs" />
     <Compile Include="Facades\IEvaluationFasade.cs" />
     <Compile Include="Conversion\IReadableOutputCreator.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />

@@ -12,8 +12,15 @@ namespace Calculator.Logic.Pipelines
         {
             if (input.Contains("=?"))
             {
+                var toMetric = false;
+                Console.WriteLine("Do you want to convert to the metric system? \n y, or yes for yes.");
+                var metric = Console.ReadLine();
+                if (metric == "y" || metric == "yes")
+                {
+                    toMetric = true;
+                }
                 var conversion = mConversionFactory();
-                return conversion.ConvertUnits(input, args);
+                return conversion.ConvertUnits(input, args.UnitForConversion, toMetric);
             }
             else
             {
