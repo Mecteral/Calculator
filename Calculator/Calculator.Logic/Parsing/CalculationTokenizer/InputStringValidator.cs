@@ -23,7 +23,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             for (var i = 0; i < mInput.Length; i++)
             {
                 var c = mInput[i];
-                if (!(char.IsLetter(c) || c == '-' || c == '+' || c == '*' || c == '/' || c == '^' || char.IsWhiteSpace(c) || char.IsNumber(c) || c == '.' || c== ',' || c == '(' || c == ')'))
+                if (!(char.IsLetter(c) || c == '-' || c == '+' || c == '*' || c == '/' || c == '^' || char.IsWhiteSpace(c) || char.IsNumber(c) || c == '.' || c== ',' || c == '(' || c == ')' || c == '=' || c == '?'))
                 {
                     throw new CalculationException("Unknown character in input", i);
                 }
