@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic.CommandLineParser;
-using Calculator.Logic.Parsing.ConversionTokenizer;
+using Mecteral.UnitConversion;
 using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.ConfigFile

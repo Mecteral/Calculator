@@ -1,6 +1,7 @@
 using System.Linq;
+using Mecteral.UnitConversion;
 
-namespace Calculator.Logic.Parsing.ConversionTokenizer
+namespace Calculator.Logic.CommandLineParser
 {
     public static class GetAttributeSnippet
     {

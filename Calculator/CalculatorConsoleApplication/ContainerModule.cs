@@ -1,15 +1,13 @@
 ﻿using System;
 using Autofac;
 using Calculator.Logic;
-using Calculator.Logic.Conversion;
 using Calculator.Logic.Facades;
 using Calculator.Logic.Model;
-using Calculator.Logic.Model.ConversionModel;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using Calculator.Logic.Pipelines;
 using Calculator.Logic.Simplifying;
 using Calculator.Logic.Utilities;
+using Mecteral.UnitConversion;
 
 namespace CalculatorConsoleApplication
 {
@@ -30,7 +28,7 @@ namespace CalculatorConsoleApplication
                 .WithParameter((parameter, context) => parameter.ParameterType == typeof(Func<bool, IConverters>),
                     (parameter, context) =>
                     {
-                        var cc = context;
+                        var cc = context.Resolve<IComponentContext>();
                         Func<bool, IConverters> result =
                             toMetric =>
                                 toMetric

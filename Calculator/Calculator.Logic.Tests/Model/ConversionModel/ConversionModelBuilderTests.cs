@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Calculator.Logic.Model.ConversionModel;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using FluentAssertions;
+using Mecteral.UnitConversion;
 using NUnit.Framework.Internal;
 using NUnit.Framework;
 

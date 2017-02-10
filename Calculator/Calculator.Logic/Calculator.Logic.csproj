@@ -34,6 +34,10 @@
     <Reference Include="FluentCommandLineParser">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
+    <Reference Include="Mecteral.UnitConversion, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Mecteral.UnitConversion.1.0.16\lib\Mecteral.UnitConversion.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ModernRonin.PraeterArtem.1.3.1\lib\ModernRonin.PraeterArtem.dll</HintPath>
@@ -60,27 +64,20 @@
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
-    <Compile Include="Conversion\IImperialToMetricConverter.cs" />
-    <Compile Include="Conversion\IMetricToImperialConverter.cs" />
-    <Compile Include="Conversion\IUnitConverter.cs" />
     <Compile Include="Facades\EvaluationFacade.cs" />
     <Compile Include="Facades\IEvaluationFasade.cs" />
-    <Compile Include="Conversion\IReadableOutputCreator.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
-    <Compile Include="Model\ConversionModel\IConversionModelBuilder.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SquareRootToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\IConversionTokenizer.cs" />
     <Compile Include="Pipelines\IPipelineEvaluator.cs" />
     <Compile Include="Pipelines\ISimplificationPipeline.cs" />
     <Compile Include="Pipelines\PipelineEvaluator.cs" />
     <Compile Include="Pipelines\SimplificationPipeline.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\AdditionSubtractionDispatcher.cs" />
-    <Compile Include="Conversion\AnImperialReadabilityCreator.cs" />
     <Compile Include="ArgumentParsing\ApplicationArguments.cs" />
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
@@ -92,36 +89,10 @@
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
-    <Compile Include="Conversion\IConverters.cs" />
-    <Compile Include="Conversion\IImperialReadabilityCreator.cs" />
     <Compile Include="IModelBuilder.cs" />
-    <Compile Include="Conversion\ImperialAreaReadabilityCreator.cs" />
-    <Compile Include="Conversion\ImperialLengthReadabilityCreator.cs" />
-    <Compile Include="Conversion\ImperialMassReadabilityCreator.cs" />
-    <Compile Include="Conversion\ImperialVolumeReadabilityCreator.cs" />
     <Compile Include="Simplifying\ISimplifier.cs" />
     <Compile Include="ModelBuilder.cs" />
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
-    <Compile Include="Model\ConversionModel\AnArithmeticConversionOperation.cs" />
-    <Compile Include="Model\ConversionModel\AnConversionExpression.cs" />
-    <Compile Include="Model\ConversionModel\ConversionAddition.cs" />
-    <Compile Include="Model\ConversionModel\ConversionDivision.cs" />
-    <Compile Include="Model\ConversionModel\ConversionModelBuilder.cs" />
-    <Compile Include="Model\ConversionModel\ConversionMultiplication.cs" />
-    <Compile Include="Model\ConversionModel\ConversionSubtraction.cs" />
-    <Compile Include="Model\ConversionModel\ExpressionExtension.cs" />
-    <Compile Include="Model\ConversionModel\IArithmeticConversionOperation.cs" />
-    <Compile Include="Model\ConversionModel\IConversionExpression.cs" />
-    <Compile Include="Model\ConversionModel\IConversionExpressionVisitor.cs" />
-    <Compile Include="Model\ConversionModel\IConversionExpressionWithValue.cs" />
-    <Compile Include="Model\ConversionModel\ImperialAreaExpression.cs" />
-    <Compile Include="Model\ConversionModel\ImperialLengthExpression.cs" />
-    <Compile Include="Model\ConversionModel\ImperialMassExpression.cs" />
-    <Compile Include="Model\ConversionModel\ImperialVolumeExpression.cs" />
-    <Compile Include="Model\ConversionModel\MetricAreaExpression.cs" />
-    <Compile Include="Model\ConversionModel\MetricLengthExpression.cs" />
-    <Compile Include="Model\ConversionModel\MetricMassExpression.cs" />
-    <Compile Include="Model\ConversionModel\MetricVolumeExpression.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\ExpressionExtensions.cs" />
@@ -132,40 +103,21 @@
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\TangentToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\AConversionTokens.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ConversionFactors.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ConversionOperatorToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ConversionTokenizer.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\GetAttributeSnippet.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\IConversionToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\IConversionTokenVisitor.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ImperialAreaToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ImperialLengthToken.cs" />
+    <Compile Include="CommandLineParser\GetAttributeSnippet.cs" />
     <Compile Include="Parsing\CalculationTokenizer\IToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\ITokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\ITokenVisitor.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ImperialMassToken.cs" />
-    <Compile Include="Conversion\ImperialToMetricConverter.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\ImperialVolumeToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricAreaToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricLengthToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\NumberToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\Operator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\OperatorToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\ParenthesesToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\Tokenizer.cs" />
     <Compile Include="Parsing\CalculationTokenizer\VariableToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricMassToken.cs" />
-    <Compile Include="Conversion\MetricToImperialConverter.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\MetricVolumeToken.cs" />
-    <Compile Include="Parsing\ConversionTokenizer\UnitAbbreviations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Conversion\ReadableOutputCreator.cs" />
     <Compile Include="Simplifying\SimplificationEvaluator.cs" />
     <Compile Include="Simplifying\Simplifier.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="Simplifying\StringSimplifier.cs" />
-    <Compile Include="Conversion\UnitConverter.cs" />
     <Compile Include="ConfigFile\ConfigFileReader.cs" />
     <Compile Include="Utilities\IExpressionEqualityChecker.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />

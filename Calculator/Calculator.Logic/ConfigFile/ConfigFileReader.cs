@@ -2,7 +2,6 @@
 using System.IO;
 using System.Linq;
 using Calculator.Logic.CommandLineParser;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.ConfigFile

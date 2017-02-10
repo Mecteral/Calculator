@@ -2,7 +2,6 @@
 using System.Globalization;
 using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Parsing.ConversionTokenizer;
 
 namespace Calculator.Logic
 {
