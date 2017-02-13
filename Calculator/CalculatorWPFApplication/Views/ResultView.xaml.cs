@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace CalculatorWPFApplication
+namespace CalculatorWPFApplication.Views
 {
     /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
+    /// Interaktionslogik für ResultView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ResultView : UserControl
     {
-        public MainWindow()
+        public ResultView()
         {
             InitializeComponent();
         }
