@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationViewModel.cs" />
+    <Compile Include="ConversionAndCalculationButtonViewModel.cs" />
     <Compile Include="ConversionViewModel.cs" />
     <Compile Include="InputViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

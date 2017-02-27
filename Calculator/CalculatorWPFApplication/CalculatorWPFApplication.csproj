@@ -91,6 +91,9 @@
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConversionAndCalculationButtonView.xaml.cs">
+      <DependentUpon>ConversionAndCalculationButtonView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConversionView.xaml.cs">
       <DependentUpon>ConversionView.xaml</DependentUpon>
     </Compile>
@@ -134,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConversionAndCalculationButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
