@@ -20,11 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{46C8C2F0
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.Model.Tests", "Calculator.Model.Tests\Calculator.Model.Tests.csproj", "{C07D9181-3527-4372-AFEB-83B45D127EF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWPFApplication", "..\..\..\Mecteral\Mecteral\CalculatorWPFApplication\CalculatorWPFApplication.csproj", "{65C381F8-40B1-4A3F-9DED-65C29C8393CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWPFApplication", "CalculatorWPFApplication\CalculatorWPFApplication.csproj", "{65C381F8-40B1-4A3F-9DED-65C29C8393CB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "..\..\..\Mecteral\Mecteral\ViewModels\ViewModels.csproj", "{F2925D10-8E84-4761-9FE6-8B65E109932B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\ViewModels.csproj", "{F2925D10-8E84-4761-9FE6-8B65E109932B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelsTests", "..\..\..\Mecteral\Mecteral\ViewModelsTests\ViewModelsTests.csproj", "{81DEC03A-7787-43A2-8333-69EB5434E6E0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelsTests", "ViewModelsTests\ViewModelsTests.csproj", "{81DEC03A-7787-43A2-8333-69EB5434E6E0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
