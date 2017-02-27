@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-using Calculator.Logic;
 using Calculator.Logic.Facades;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
@@ -9,7 +8,7 @@ using Calculator.Logic.Simplifying;
 using Calculator.Logic.Utilities;
 using Mecteral.UnitConversion;
 
-namespace CalculatorConsoleApplication
+namespace Calculator.Logic
 {
     public class ContainerModule : Module
     {
