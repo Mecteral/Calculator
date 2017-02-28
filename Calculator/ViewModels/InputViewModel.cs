@@ -17,7 +17,7 @@ namespace ViewModels
             }
         }
 
-        public void Calculate()
+        public static void Calculate()
         {
         }
     }

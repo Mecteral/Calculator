@@ -15,8 +15,10 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name ="InputString" MinWidth="100" Grid.Column="0" Grid.Row="0"/>
+        <TextBox x:Name ="InputString" MinWidth="100" Grid.Column="0" Grid.Row="0" KeyDown="InputString_OnEnter"/>
         <Button x:Name ="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate"/>
     </Grid>
 </UserControl>
+
+
 

@@ -6,7 +6,6 @@ namespace ViewModels
 {
     public class ResultViewModel : PropertyChangedBase
     {
-        string mResult;
         List<string> mSteps = new List<string>();
 
         public List<string> Steps
@@ -20,15 +19,7 @@ namespace ViewModels
                 NotifyOfPropertyChange(() => mSteps);
             }
         }
-        public string Result
-        {
-            get { return mResult; }
-            set
-            {
-                if (value == mResult) return;
-                mResult = value;
-                NotifyOfPropertyChange(() => Result);
-            }
-        }
+
+        public string Result { get; set; }
     }
 }

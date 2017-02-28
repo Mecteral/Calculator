@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ViewModels;
 
 namespace CalculatorWPFApplication.Views
 {
@@ -23,6 +24,14 @@ namespace CalculatorWPFApplication.Views
         public InputView()
         {
             InitializeComponent();
+        }
+
+        void InputString_OnEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                InputViewModel.Calculate();
+            }
         }
     }
 }
