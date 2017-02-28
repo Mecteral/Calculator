@@ -21,6 +21,7 @@ namespace CalculatorWPFApplication
                 .AsSelf()
                 .SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
+            builder.RegisterAssemblyModules(typeof(Calculator.Logic.ContainerModule).Assembly);
             return builder.Build();
         }
         protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)

@@ -162,6 +162,10 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
+      <Project>{881dae72-f0fc-4367-b308-eb585d5468ff}</Project>
+      <Name>Calculator.Logic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ViewModels\ViewModels.csproj">
       <Project>{f2925d10-8e84-4761-9fe6-8b65e109932b}</Project>
       <Name>ViewModels</Name>
