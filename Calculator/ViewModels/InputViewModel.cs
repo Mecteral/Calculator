@@ -1,4 +1,5 @@
-﻿using Caliburn.PresentationFramework;
+﻿using Caliburn.Core.InversionOfControl;
+using Caliburn.PresentationFramework;
 
 namespace ViewModels
 {
@@ -14,6 +15,10 @@ namespace ViewModels
                 mInputString = value;
                 NotifyOfPropertyChange(() => InputString);
             }
+        }
+
+        public void Calculate()
+        {
         }
     }
 }

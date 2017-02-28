@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Column="0" Grid.Row="0" >Result</TextBlock>
+        <TextBox Grid.Column="0" Grid.Row="0" IsReadOnly="True" x:Name="Result"/>
         <Expander Grid.Column="0" Grid.Row="1" Header="Steps">
             <ListView>
                 <ListView.ItemTemplate>
@@ -28,6 +28,10 @@
         </Expander>
     </Grid>
 </UserControl>
+
+
+
+
 
 
 
