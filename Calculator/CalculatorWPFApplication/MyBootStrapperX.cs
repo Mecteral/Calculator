@@ -5,10 +5,10 @@ using Autofac;
 
 namespace CalculatorWPFApplication
 {
-    public class MyBootStrapper : BootstrapperBase
+    public class MyBootStrapperX : BootstrapperBase
     {
         readonly IContainer mContainer;
-        public MyBootStrapper()
+        public MyBootStrapperX()
         {
             Initialize();
             mContainer = WireUpApplication();
