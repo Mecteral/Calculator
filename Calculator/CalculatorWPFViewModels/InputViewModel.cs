@@ -9,7 +9,6 @@ namespace CalculatorWPFViewModels
         string mInputString;
         readonly IWpfCalculationExecutor mExecutor;
 
-        string mResult;
         List<string> mSteps = new List<string>();
 
         public List<string> Steps
@@ -24,17 +23,7 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public string Result
-        {
-            get { return mResult; }
-
-            set
-            {
-                if (value == mResult) return;
-                mResult = value;
-                NotifyOfPropertyChange(() => mSteps);
-            }
-        }
+        public string Result { get; set; }
 
         public InputViewModel(IWpfCalculationExecutor executor)
         {
@@ -54,7 +43,7 @@ namespace CalculatorWPFViewModels
 
         public void Calculate()
         {
-            mExecutor.InitiateCalculation(mInputString);
+            Result = mExecutor.InitiateCalculation(mInputString);
         }
     }
 }
