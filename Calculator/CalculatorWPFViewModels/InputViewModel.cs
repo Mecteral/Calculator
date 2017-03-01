@@ -7,6 +7,7 @@ namespace CalculatorWPFViewModels
     public class InputViewModel : PropertyChangedBase
     {
         string mInputString;
+        string mResult;
         readonly IWpfCalculationExecutor mExecutor;
 
         List<string> mSteps = new List<string>();
@@ -19,11 +20,21 @@ namespace CalculatorWPFViewModels
             {
                 if (value == mSteps) return;
                 mSteps = value;
-                NotifyOfPropertyChange(() => mSteps);
+                NotifyOfPropertyChange(() => Steps);
             }
         }
 
-        public string Result { get; set; }
+        public string Result
+        {
+            get { return mResult; }
+
+            set
+            {
+                if (value == mResult) return;
+                mResult = value;
+                NotifyOfPropertyChange(() => Result);
+            }
+        }
 
         public InputViewModel(IWpfCalculationExecutor executor)
         {
