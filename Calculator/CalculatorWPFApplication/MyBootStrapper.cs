@@ -1,7 +1,7 @@
 ﻿using System;
 using Caliburn.Micro;
-using ViewModels;
 using Autofac;
+using CalculatorWPFViewModels;
 
 namespace CalculatorWPFApplication
 {
@@ -37,7 +37,7 @@ namespace CalculatorWPFApplication
             LogManager.GetLog = t => new DebugLog(t);
             var cfg = new TypeMappingConfiguration
             {
-                DefaultSubNamespaceForViewModels = "ViewModels",
+                DefaultSubNamespaceForViewModels = "CalculatorWPFViewModels",
                 DefaultSubNamespaceForViews = "CalculatorWPFApplication.Views",
                 IncludeViewSuffixInViewModelNames = false
             };

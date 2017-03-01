@@ -1,7 +1,6 @@
-﻿using Caliburn.Core.InversionOfControl;
-using Caliburn.PresentationFramework;
+﻿using Caliburn.Micro;
 
-namespace ViewModels
+namespace CalculatorWPFViewModels
 {
     public class InputViewModel : PropertyChangedBase
     {

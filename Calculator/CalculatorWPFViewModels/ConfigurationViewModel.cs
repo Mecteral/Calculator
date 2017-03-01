@@ -1,6 +1,6 @@
-﻿using Caliburn.PresentationFramework;
+﻿using Caliburn.Micro;
 
-namespace ViewModels
+namespace CalculatorWPFViewModels
 {
     public class ConfigurationViewModel : PropertyChangedBase
     {

@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Caliburn.PresentationFramework;
+﻿using System.Collections.Generic;
+using Caliburn.Micro;
 
-namespace ViewModels
+namespace CalculatorWPFViewModels
 {
     public class ResultViewModel : PropertyChangedBase
     {

@@ -184,9 +184,9 @@
       <Project>{881dae72-f0fc-4367-b308-eb585d5468ff}</Project>
       <Name>Calculator.Logic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewModels\ViewModels.csproj">
-      <Project>{f2925d10-8e84-4761-9fe6-8b65e109932b}</Project>
-      <Name>ViewModels</Name>
+    <ProjectReference Include="..\CalculatorWPFViewModels\CalculatorWPFViewModels.csproj">
+      <Project>{1e244b36-69ca-48d9-be7a-ad21cced7443}</Project>
+      <Name>CalculatorWPFViewModels</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

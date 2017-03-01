@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace ViewModels
+namespace CalculatorWPFViewModels
 {
     public class ShellViewModel : Screen
     {
