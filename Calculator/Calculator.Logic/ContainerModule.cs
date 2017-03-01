@@ -47,6 +47,7 @@ namespace Calculator.Logic
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
+            builder.RegisterType<WpfCalculationExecutor>().As<IWpfCalculationExecutor>();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Calculator.Logic.Pipelines
         readonly Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         public string Evaluate(string input, ApplicationArguments args)
         {
+            if (input == null) return null;
             if (input.Contains("=?"))
             {
                 var toMetric = false;

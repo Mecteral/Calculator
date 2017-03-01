@@ -18,7 +18,6 @@
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="0" x:Name="Input" />
         <ContentControl Grid.Row="1" Grid.Column="0" x:Name="ConversionAndCalculationButton"/>
-        <ContentControl Grid.Row="2" Grid.Column="0" x:Name="Result" />
     </Grid>
 </Window>
 

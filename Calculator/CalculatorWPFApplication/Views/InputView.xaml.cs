@@ -25,13 +25,5 @@ namespace CalculatorWPFApplication.Views
         {
             InitializeComponent();
         }
-
-        void InputString_OnEnter(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                InputViewModel.Calculate();
-            }
-        }
     }
 }
