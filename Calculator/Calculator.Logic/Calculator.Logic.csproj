@@ -127,6 +127,7 @@
     <Compile Include="Utilities\IExpressionEqualityChecker.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />
+    <Compile Include="WPFCalculator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
