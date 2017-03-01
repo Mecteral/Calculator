@@ -18,7 +18,7 @@
         </Grid.RowDefinitions>
         <TextBox Grid.Column="0" Grid.Row="0" IsReadOnly="True" x:Name="Result"/>
         <Expander Grid.Column="0" Grid.Row="1" Header="Steps">
-            <ListView Items="{Binding Steps}">
+            <ListView ItemsSource="{Binding Steps}">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="viewModels:ResultViewModel">
                         <TextBlock Text="{Binding .}" />
@@ -28,6 +28,14 @@
         </Expander>
     </Grid>
 </UserControl>
+
+
+
+
+
+
+
+
 
 
 
