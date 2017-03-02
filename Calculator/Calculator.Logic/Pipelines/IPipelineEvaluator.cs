@@ -4,6 +4,6 @@ namespace Calculator.Logic.Pipelines
 {
     public interface IPipelineEvaluator
     {
-        string Evaluate(string input, ApplicationArguments args);
+        string Evaluate(string input, IApplicationArguments args);
     }
 }

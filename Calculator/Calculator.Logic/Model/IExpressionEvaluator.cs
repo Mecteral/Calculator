@@ -6,6 +6,6 @@ namespace Calculator.Logic.Model
 {
     public interface IExpressionEvaluator
     {
-        decimal Evaluate(IExpression expression, ApplicationArguments args);
+        decimal Evaluate(IExpression expression, IApplicationArguments args);
     }
 }

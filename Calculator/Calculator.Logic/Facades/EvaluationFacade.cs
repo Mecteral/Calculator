@@ -16,7 +16,7 @@ namespace Calculator.Logic.Facades
             mExpressionEvaluator = expressionEvaluator;
         }
 
-        public decimal Evaluate(ITokenizer token, ApplicationArguments args)
+        public decimal Evaluate(ITokenizer token, IApplicationArguments args)
         {
             var expression = mModelBuilder.BuildFrom(token.Tokens);
             return mExpressionEvaluator.Evaluate(expression, args);

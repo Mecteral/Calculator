@@ -9,9 +9,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     {
         double mNumber;
         bool mToDegree;
-        readonly ApplicationArguments mArgs;
+        readonly IApplicationArguments mArgs;
 
-        protected AnTrigonometricToken(string input, ApplicationArguments args)
+        protected AnTrigonometricToken(string input, IApplicationArguments args)
         {
             mArgs = args;
             input = input.Replace(',', '.');

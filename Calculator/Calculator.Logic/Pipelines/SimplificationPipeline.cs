@@ -22,7 +22,7 @@ namespace Calculator.Logic.Pipelines
             mTokenizer = tokenizer;
         }
 
-        public string UseSimplificationPipeline(string input, ApplicationArguments args)
+        public string UseSimplificationPipeline(string input, IApplicationArguments args)
         {
             var result = "";
             mTokenizer.Tokenize(input, args);

@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Facades\IEvaluationFasade.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
+    <Compile Include="IWpfCalculationExecutor.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />

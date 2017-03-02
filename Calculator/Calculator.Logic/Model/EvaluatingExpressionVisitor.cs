@@ -9,7 +9,7 @@ namespace Calculator.Logic.Model
     {
         public static List<string> Steps { get; private set; } = new List<string>();
         decimal Result { get; set; }
-        public decimal Evaluate(IExpression expression, ApplicationArguments args)
+        public decimal Evaluate(IExpression expression, IApplicationArguments args)
         {
             Steps = new List<string>();
             Result = GetResultFor(expression);

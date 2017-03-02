@@ -1,12 +1,85 @@
 ﻿<UserControl x:Class="CalculatorWPFApplication.Views.ConversionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CalculatorWPFApplication.Views"
-             mc:Ignorable="d" 
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:calculatorWpfViewModels="clr-namespace:CalculatorWPFViewModels;assembly=CalculatorWPFViewModels"
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Expander Header="Conversion Units">
+            <TreeView>
+                <TreeViewItem Header="Metrical">
+                    <TreeViewItem Header="Volume">
+                        <RadioButton x:Name ="Milliliter" Content="Milliliter" GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Centiliter" Content="Centiliter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Liter" Content="Liter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Hectoliter" Content="Hectoliter"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Mass">
+                        <RadioButton x:Name ="Milligram" Content="Milligram"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Gram" Content="Gram"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Kilogram" Content="Kilogram"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Ton" Content="Ton"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Area">
+                        <RadioButton x:Name ="Squaremillimeter" Content="Squaremillimeter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Squarecentimeter" Content="Squarecentimeter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Squaremeter" Content="Squaremeter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Squarekilometer" Content="Squarekilometer"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Hectar" Content="Hectar" GroupName="RadioButtonGroupName" />
+                    </TreeViewItem>
+                    <TreeViewItem Header="Length">
+                        <RadioButton x:Name ="Millimeter" Content="Millimeter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Centimeter" Content="Centimeter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Meter" Content="Meter"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Kilometer" Content="Kilometer"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header="Imperial">
+                    <TreeViewItem Header="Volume">
+                        <RadioButton x:Name ="FluidOunce" Content="FluidOunce"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Gill" Content="Gill"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Pint" Content="Pint"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Quart" Content="Quart"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Gallon" Content="Gallon"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Mass">
+                        <RadioButton x:Name ="Grain" Content="Grain"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Drachm" Content="Drachm"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Ounce" Content="Ounce"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Pound" Content="Pound"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Stone" Content="Stone"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="HundredWeight" Content="HundredWeight"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="ImperialTon" Content="ImperialTon"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Area">
+                        <RadioButton x:Name ="Squarefoot" Content="Squarefoot"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Perch" Content="Perch"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Rood" Content="Rood"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Acre" Content="Acre"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                    <TreeViewItem Header="Length">
+                        <RadioButton x:Name ="Though" Content="Though"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Inch" Content="Inch"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Foot" Content="Foot"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Yard" Content="Yard"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Chain" Content="Chain"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Furlong" Content="Furlong"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Mile" Content="Mile"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="League" Content="League"  GroupName="RadioButtonGroupName"/>
+                        <RadioButton x:Name ="Fathom" Content="Fathom"  GroupName="RadioButtonGroupName"/>
+                    </TreeViewItem>
+                </TreeViewItem>
+            </TreeView>
+        </Expander>
     </Grid>
 </UserControl>

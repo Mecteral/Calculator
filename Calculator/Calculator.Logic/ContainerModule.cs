@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Facades;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
@@ -48,6 +49,7 @@ namespace Calculator.Logic
             builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
             builder.RegisterType<WpfCalculationExecutor>().As<IWpfCalculationExecutor>();
+            builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>();
         }
     }
 }

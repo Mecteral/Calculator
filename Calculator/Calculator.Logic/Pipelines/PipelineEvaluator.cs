@@ -9,10 +9,10 @@ namespace Calculator.Logic.Pipelines
     {
         readonly Func<IConversionFacade> mConversionFactory;
         readonly Func<ISimplificationPipeline> mSimplificationPipelineFactory;
-        public string Evaluate(string input, ApplicationArguments args)
+        public string Evaluate(string input, IApplicationArguments args)
         {
             if (input == null) return null;
-            if (input.Contains("=?"))
+            if (input.Contains("=?") || args.UseConversion == true)
             {
                 var toMetric = false;
                 Console.WriteLine("Do you want to convert to the metric system? \n y, or yes for yes.");

@@ -4,6 +4,6 @@ namespace Calculator.Logic.Pipelines
 {
     public interface ISimplificationPipeline
     {
-        string UseSimplificationPipeline(string input, ApplicationArguments args);
+        string UseSimplificationPipeline(string input, IApplicationArguments args);
     }
 }

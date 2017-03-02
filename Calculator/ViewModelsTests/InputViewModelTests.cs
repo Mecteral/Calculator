@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Input;
 using Calculator.Logic;
@@ -14,15 +13,16 @@ namespace ViewModelsTests
     [TestFixture]
     public class InputViewModelTests
     {
-        IWpfCalculationExecutor mExecutor;
-        InputViewModel mUnderTest;
-
         [SetUp]
         public void Setup()
         {
             mExecutor = Substitute.For<IWpfCalculationExecutor>();
-            mUnderTest= new InputViewModel(mExecutor);
+            mUnderTest = new InputViewModel(mExecutor);
         }
+
+        IWpfCalculationExecutor mExecutor;
+        InputViewModel mUnderTest;
+
         [Test]
         public void Calculate_Should_Call_Executor_With_InputString()
         {
@@ -31,6 +31,7 @@ namespace ViewModelsTests
 
             mExecutor.Received().InitiateCalculation("Alpha");
         }
+
         [Test]
         public void Calculate_Should_Set_Result_From_Executor()
         {
@@ -40,28 +41,15 @@ namespace ViewModelsTests
 
             mUnderTest.Result.Should().Be("Bravo");
         }
-        [Test]
-        public void Setting_Result_Notifies()
-        {
-            mUnderTest.MonitorEvents();
-            mUnderTest.Result = "alpha";
-            mUnderTest.ShouldRaisePropertyChangeFor(i => i.Result);
-        }
+
         [Test]
         public void Calculate_Should_Set_Steps_From_Executor()
         {
             mExecutor.InitiateCalculation("Alpha");
-            mExecutor.CalculationSteps = new List<string>() {"Bravo"};
+            mExecutor.CalculationSteps = new List<string> {"Bravo"};
             mUnderTest.Calculate();
 
             mUnderTest.Steps.Should().Contain("Bravo");
-        }
-        [Test]
-        public void Setting_Steps_Notifies()
-        {
-            mUnderTest.MonitorEvents();
-            mUnderTest.Steps = new List<string>() {"Bravo"};
-            mUnderTest.ShouldRaisePropertyChangeFor(i => i.Steps);
         }
 
         [Test]
@@ -70,9 +58,25 @@ namespace ViewModelsTests
             mUnderTest.InputString = "Alpha";
             var presentationSource = Substitute.For<PresentationSource>();
             var context = new ActionExecutionContext();
-            context.EventArgs = new KeyEventArgs(null,presentationSource , 0,Key.Enter);
+            context.EventArgs = new KeyEventArgs(null, presentationSource, 0, Key.Enter);
             mUnderTest.OnEnter(context);
             mExecutor.Received().InitiateCalculation("Alpha");
+        }
+
+        [Test]
+        public void Setting_Result_Notifies()
+        {
+            mUnderTest.MonitorEvents();
+            mUnderTest.Result = "alpha";
+            mUnderTest.ShouldRaisePropertyChangeFor(i => i.Result);
+        }
+
+        [Test]
+        public void Setting_Steps_Notifies()
+        {
+            mUnderTest.MonitorEvents();
+            mUnderTest.Steps = new List<string> {"Bravo"};
+            mUnderTest.ShouldRaisePropertyChangeFor(i => i.Steps);
         }
     }
 }

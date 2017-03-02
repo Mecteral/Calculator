@@ -10,7 +10,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     /// </summary>
     public class Tokenizer : ITokenizer
     {
-        ApplicationArguments mArgs;
+        IApplicationArguments mArgs;
         readonly List<IToken> mTempTokens = new List<IToken>();
         string mInput;
         string mNumber;
@@ -18,7 +18,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         bool mWasNumber;
         public IEnumerable<IToken> Tokens { get; private set; }
 
-        public void Tokenize(string input, ApplicationArguments args)
+        public void Tokenize(string input, IApplicationArguments args)
         {
             mArgs = args;
             mTempTokens.Clear();

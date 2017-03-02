@@ -6,6 +6,6 @@ namespace Calculator.Logic.Facades
 {
     public interface IEvaluationFacade
     {
-        decimal Evaluate(ITokenizer token, ApplicationArguments args);
+        decimal Evaluate(ITokenizer token, IApplicationArguments args);
     }
 }
