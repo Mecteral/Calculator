@@ -62,7 +62,7 @@ namespace CalculatorWPFViewModels
         {
             var keyArgs = context.EventArgs as KeyEventArgs;
 
-            if (keyArgs != null && keyArgs.Key == Key.Enter || keyArgs.Key == Key.Return)
+            if (keyArgs != null && keyArgs.Key == Key.Enter || keyArgs != null && keyArgs.Key == Key.Return)
             {
                 Calculate();
             }

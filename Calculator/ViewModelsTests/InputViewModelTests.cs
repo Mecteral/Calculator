@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
+using System.Windows.Input;
 using Calculator.Logic;
 using CalculatorWPFViewModels;
+using Caliburn.Micro;
 using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
@@ -58,6 +62,17 @@ namespace ViewModelsTests
             mUnderTest.MonitorEvents();
             mUnderTest.Steps = new List<string>() {"Bravo"};
             mUnderTest.ShouldRaisePropertyChangeFor(i => i.Steps);
+        }
+
+        [Test]
+        public void OnEnter_Calls_Calculate()
+        {
+            mUnderTest.InputString = "Alpha";
+            var presentationSource = Substitute.For<PresentationSource>();
+            var context = new ActionExecutionContext();
+            context.EventArgs = new KeyEventArgs(null,presentationSource , 0,Key.Enter);
+            mUnderTest.OnEnter(context);
+            mExecutor.Received().InitiateCalculation("Alpha");
         }
     }
 }
