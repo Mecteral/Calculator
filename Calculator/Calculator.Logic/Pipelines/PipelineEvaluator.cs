@@ -19,10 +19,10 @@ namespace Calculator.Logic.Pipelines
                 var metric = Console.ReadLine();
                 if (metric == "y" || metric == "yes")
                 {
-                    toMetric = true;
+                    args.ToMetric = true;
                 }
                 var conversion = mConversionFactory();
-                return conversion.ConvertUnits(input, args.UnitForConversion, toMetric);
+                return conversion.ConvertUnits(input, args.UnitForConversion, args.ToMetric);
             }
             else
             {

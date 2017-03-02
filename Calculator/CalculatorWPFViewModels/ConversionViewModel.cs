@@ -52,10 +52,37 @@ namespace CalculatorWPFViewModels
         string mMile;
         string mLeague;
         string mFathom;
+        string mHectoliter;
+        bool mToMetric;
+        bool mToImperial;
 
         public ConversionViewModel(IApplicationArguments arguments)
         {
             mArguments = arguments;
+        }
+
+        public bool ToMetric
+        {
+            get { return mToMetric; }
+            set
+            {
+                if (value == mToMetric) return;
+                mToMetric = value;
+                NotifyOfPropertyChange(() => ToMetric);
+                mArguments.ToMetric = true;
+            }
+        }
+
+        public bool ToImperial
+        {
+            get { return mToImperial; }
+            set
+            {
+                if (value == mToImperial) return;
+                mToImperial = value;
+                NotifyOfPropertyChange(() => ToImperial);
+                mArguments.ToMetric = false;
+            }
         }
 
         public string Milliliter
@@ -90,6 +117,18 @@ namespace CalculatorWPFViewModels
                 if (value == mLiter) return;
                 mLiter = value;
                 NotifyOfPropertyChange(() => Liter);
+                SetUnitAbbreviation("l");
+            }
+        }
+
+        public string Hectoliter
+        {
+            get { return mHectoliter; }
+            set
+            {
+                if (value == mHectoliter) return;
+                mHectoliter = value;
+                NotifyOfPropertyChange(() => Hectoliter);
                 SetUnitAbbreviation("hl");
             }
         }

@@ -2,6 +2,7 @@
 {
     public interface IApplicationArguments
     {
+        bool ToMetric { get; set; }
         bool ToDegree { get; set; }
         bool ShowSteps { get; set; }
         bool WriteSwitchesToDefault { get; set; }

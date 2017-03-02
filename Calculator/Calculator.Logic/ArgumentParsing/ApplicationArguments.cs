@@ -2,6 +2,7 @@
 {
     public class ApplicationArguments : IApplicationArguments
     {
+        public bool ToMetric { get; set; }
         public bool ToDegree { get; set; }
         public bool ShowSteps { get; set; }
         public bool WriteSwitchesToDefault { get; set; }
