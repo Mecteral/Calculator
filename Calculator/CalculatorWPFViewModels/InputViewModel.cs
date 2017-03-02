@@ -58,9 +58,11 @@ namespace CalculatorWPFViewModels
             Result = mExecutor.CalculationResult;
             Steps = mExecutor.CalculationSteps;
         }
-        public void OnEnter(Key key)
+        public void OnEnter(ActionExecutionContext context)
         {
-            if (key == Key.Enter)
+            var keyArgs = context.EventArgs as KeyEventArgs;
+
+            if (keyArgs != null && keyArgs.Key == Key.Enter || keyArgs.Key == Key.Return)
             {
                 Calculate();
             }
