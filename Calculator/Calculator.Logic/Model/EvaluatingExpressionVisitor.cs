@@ -7,10 +7,11 @@ namespace Calculator.Logic.Model
 {
     public class EvaluatingExpressionVisitor : AnExpressionVisitorWithResult<EvaluatingExpressionVisitor, decimal>, IExpressionEvaluator
     {
-        public static List<string> Steps { get; } = new List<string>();
+        public static List<string> Steps { get; private set; } = new List<string>();
         decimal Result { get; set; }
         public decimal Evaluate(IExpression expression, ApplicationArguments args)
         {
+            Steps = new List<string>();
             Result = GetResultFor(expression);
             if (args != null && args.ShowSteps)
             {
@@ -20,8 +21,7 @@ namespace Calculator.Logic.Model
                 }
             }
             return Result;
-        } 
-        
+        }
         protected override decimal UseSinus(decimal value) => value;
         protected override decimal UseSquareRoot(decimal value) => value;
 

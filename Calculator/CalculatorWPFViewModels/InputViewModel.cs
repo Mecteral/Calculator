@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Windows.Input;
 using Calculator.Logic;
 using Caliburn.Micro;
 
@@ -9,7 +10,6 @@ namespace CalculatorWPFViewModels
         string mInputString;
         string mResult;
         readonly IWpfCalculationExecutor mExecutor;
-
         List<string> mSteps = new List<string>();
 
         public List<string> Steps
@@ -54,7 +54,16 @@ namespace CalculatorWPFViewModels
 
         public void Calculate()
         {
-            Result = mExecutor.InitiateCalculation(mInputString);
+            mExecutor.InitiateCalculation(mInputString);
+            Result = mExecutor.CalculationResult;
+            Steps = mExecutor.CalculationSteps;
+        }
+        public void OnEnter(Key key)
+        {
+            if (key == Key.Enter)
+            {
+                Calculate();
+            }
         }
     }
 }

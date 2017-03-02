@@ -5,6 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CalculatorWPFApplication.Views"
              xmlns:calculatorWpfViewModels="clr-namespace:CalculatorWPFViewModels;assembly=CalculatorWPFViewModels"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
+             xmlns:global="clr-namespace:;assembly=CalculatorWPFViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
@@ -18,9 +21,16 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <TextBox x:Name ="InputString" MinWidth="100" Grid.Column="0" Grid.Row="0" />
-        <Button x:Name ="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate"/>
-        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" x:Name="Result"/>
+        <DockPanel Grid.Column="0" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=InputString}">
+            <TextBox x:Name ="InputString" MinWidth="100" Text="{Binding UpdateSourceTrigger=PropertyChanged, Path=InputString}">
+                <TextBox.InputBindings>
+                    <KeyBinding Command="{Binding OnEnter}" Key="Enter" />
+                    <KeyBinding Command="{Binding OnEnter}" Key="Return" />
+                </TextBox.InputBindings>
+            </TextBox>
+        </DockPanel>
+        <Button x:Name ="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" />
+        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" x:Name="Result" />
         <Expander Grid.Column="0" Grid.Row="3" Header="Steps">
             <ListView ItemsSource="{Binding Steps}">
                 <ListView.ItemTemplate>
@@ -32,6 +42,10 @@
         </Expander>
     </Grid>
 </UserControl>
+
+
+
+
 
 
 

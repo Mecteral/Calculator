@@ -1,4 +1,5 @@
-﻿using Calculator.Logic;
+﻿using System.Collections.Generic;
+using Calculator.Logic;
 using CalculatorWPFViewModels;
 using FluentAssertions;
 using NSubstitute;
@@ -29,11 +30,11 @@ namespace ViewModelsTests
         [Test]
         public void Calculate_Should_Set_Result_From_Executor()
         {
-            mExecutor.InitiateCalculation("Alpha").Returns("bravo");
-            mUnderTest.InputString = "Alpha";
+            mExecutor.InitiateCalculation("Alpha");
+            mExecutor.CalculationResult = "Bravo";
             mUnderTest.Calculate();
 
-            mUnderTest.Result.Should().Be("bravo");
+            mUnderTest.Result.Should().Be("Bravo");
         }
         [Test]
         public void Setting_Result_Notifies()
@@ -41,6 +42,22 @@ namespace ViewModelsTests
             mUnderTest.MonitorEvents();
             mUnderTest.Result = "alpha";
             mUnderTest.ShouldRaisePropertyChangeFor(i => i.Result);
+        }
+        [Test]
+        public void Calculate_Should_Set_Steps_From_Executor()
+        {
+            mExecutor.InitiateCalculation("Alpha");
+            mExecutor.CalculationSteps = new List<string>() {"Bravo"};
+            mUnderTest.Calculate();
+
+            mUnderTest.Steps.Should().Contain("Bravo");
+        }
+        [Test]
+        public void Setting_Steps_Notifies()
+        {
+            mUnderTest.MonitorEvents();
+            mUnderTest.Steps = new List<string>() {"Bravo"};
+            mUnderTest.ShouldRaisePropertyChangeFor(i => i.Steps);
         }
     }
 }
