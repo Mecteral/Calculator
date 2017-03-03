@@ -14,7 +14,6 @@ namespace Calculator.Logic.Pipelines
             if (input == null) return null;
             if (input.Contains("=?") || args.UseConversion == true)
             {
-                var toMetric = false;
                 Console.WriteLine("Do you want to convert to the metric system? \n y, or yes for yes.");
                 var metric = Console.ReadLine();
                 if (metric == "y" || metric == "yes")
