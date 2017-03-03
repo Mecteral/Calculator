@@ -24,64 +24,78 @@
             <TreeView>
                 <TreeViewItem Header="Metrical">
                     <TreeViewItem Header="Volume">
-                        <RadioButton x:Name ="Milliliter" Content="Milliliter" GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Centiliter" Content="Centiliter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Liter" Content="Liter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Hectoliter" Content="Hectoliter"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding MetricalVolumes}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Mass">
-                        <RadioButton x:Name ="Milligram" Content="Milligram"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Gram" Content="Gram"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Kilogram" Content="Kilogram"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Ton" Content="Ton"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding MetricalMasses}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Area">
-                        <RadioButton x:Name ="Squaremillimeter" Content="Squaremillimeter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Squarecentimeter" Content="Squarecentimeter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Squaremeter" Content="Squaremeter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Squarekilometer" Content="Squarekilometer"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Hectar" Content="Hectar" GroupName="RadioButtonGroupName" />
+                        <ListView ItemsSource="{Binding MetricalAreas}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Length">
-                        <RadioButton x:Name ="Millimeter" Content="Millimeter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Centimeter" Content="Centimeter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Meter" Content="Meter"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Kilometer" Content="Kilometer"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding MetricalLengths}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                 </TreeViewItem>
                 <TreeViewItem Header="Imperial">
                     <TreeViewItem Header="Volume">
-                        <RadioButton x:Name ="FluidOunce" Content="FluidOunce"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Gill" Content="Gill"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Pint" Content="Pint"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Quart" Content="Quart"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Gallon" Content="Gallon"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding ImperialVolumes}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Mass">
-                        <RadioButton x:Name ="Grain" Content="Grain"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Drachm" Content="Drachm"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Ounce" Content="Ounce"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Pound" Content="Pound"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Stone" Content="Stone"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="HundredWeight" Content="HundredWeight"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="ImperialTon" Content="ImperialTon"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding ImperialMasses}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Area">
-                        <RadioButton x:Name ="Squarefoot" Content="Squarefoot"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Perch" Content="Perch"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Rood" Content="Rood"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Acre" Content="Acre"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding ImperialAreas}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                     <TreeViewItem Header="Length">
-                        <RadioButton x:Name ="Though" Content="Though"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Inch" Content="Inch"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Foot" Content="Foot"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Yard" Content="Yard"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Chain" Content="Chain"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Furlong" Content="Furlong"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Mile" Content="Mile"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="League" Content="League"  GroupName="RadioButtonGroupName"/>
-                        <RadioButton x:Name ="Fathom" Content="Fathom"  GroupName="RadioButtonGroupName"/>
+                        <ListView ItemsSource="{Binding ImperialLengths}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
                     </TreeViewItem>
                 </TreeViewItem>
             </TreeView>
