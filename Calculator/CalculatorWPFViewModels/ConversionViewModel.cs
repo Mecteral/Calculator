@@ -8,6 +8,26 @@ namespace CalculatorWPFViewModels
 {
     public class ConversionViewModel : PropertyChangedBase
     {
+        readonly IApplicationArguments mArguments;
+
+        public ConversionViewModel(IApplicationArguments arguments)
+        {
+            mArguments = arguments;
+            SetListsForView();
+            AllUnitsAndAbbreviations = new List<List<UnitAbbreviationsAndNames>>
+            {
+                MetricalMasses,
+                MetricalAreas,
+                MetricalLengths,
+                MetricalVolumes,
+                ImperialMasses,
+                ImperialAreas,
+                ImperialLengths,
+                ImperialVolumes
+            };
+        }
+
+        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
         public List<UnitAbbreviationsAndNames> MetricalMasses { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalAreas { get; set; } = new List<UnitAbbreviationsAndNames>();
@@ -16,14 +36,6 @@ namespace CalculatorWPFViewModels
         public List<UnitAbbreviationsAndNames> ImperialVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> ImperialAreas { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> ImperialLengths { get; set; } = new List<UnitAbbreviationsAndNames>();
-
-        readonly IApplicationArguments mArguments;
-
-        public ConversionViewModel(IApplicationArguments arguments)
-        {
-            mArguments = arguments;
-            SetListsForView();
-        }
 
         protected string RadioButtonGroupName { get; set; }
 
@@ -44,7 +56,7 @@ namespace CalculatorWPFViewModels
                 .Where(fi => fi.IsLiteral && !fi.IsInitOnly)
                 .Select(field => field.Name)
                 .ToList();
-            for (int i = 0; i < fieldValues.Count; i++)
+            for (var i = 0; i < fieldValues.Count; i++)
             {
                 var unitAbbreviationAndName = new UnitAbbreviationsAndNames();
                 unitAbbreviationAndName.Name = fieldNames.ElementAt(i);
@@ -54,7 +66,7 @@ namespace CalculatorWPFViewModels
                 {
                     MetricalAreas.Add(unitAbbreviationAndName);
                 }
-                else if(UnitAbbreviations.MetricLengths.Contains(value))
+                else if (UnitAbbreviations.MetricLengths.Contains(value))
                 {
                     MetricalLengths.Add(unitAbbreviationAndName);
                 }
@@ -88,13 +100,8 @@ namespace CalculatorWPFViewModels
 
     public class UnitAbbreviationsAndNames
     {
-        public  string Abbreviation { get; set; }
-        public  string Name { get; set; }
-    }
-
-    public interface IUnitAbbreviationsAndNames
-    {
-        string Abbreviation { get; set; }
-        string Name { get; set; }
+        public bool IsSelected { get; set; }
+        public string Abbreviation { get; set; }
+        public string Name { get; set; }
     }
 }
