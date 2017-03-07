@@ -107,11 +107,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MyBootStrapper.cs" />
+    <Compile Include="Views\ConductorView.xaml.cs">
+      <DependentUpon>ConductorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConversionAndCalculationButtonView.xaml.cs">
-      <DependentUpon>ConversionAndCalculationButtonView.xaml</DependentUpon>
+    <Compile Include="Views\ConversionButtonView.xaml.cs">
+      <DependentUpon>ConversionButtonView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConversionView.xaml.cs">
       <DependentUpon>ConversionView.xaml</DependentUpon>
@@ -152,11 +155,15 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ConductorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ConversionAndCalculationButtonView.xaml">
+    <Page Include="Views\ConversionButtonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

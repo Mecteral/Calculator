@@ -6,7 +6,7 @@ using Mecteral.UnitConversion;
 
 namespace CalculatorWPFViewModels
 {
-    public class ConversionViewModel : PropertyChangedBase
+    public class ConversionViewModel : Screen
     {
         public List<UnitAbbreviationsAndNames> MetricalMasses { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
@@ -24,7 +24,6 @@ namespace CalculatorWPFViewModels
             mArguments = arguments;
             SetListsForView();
         }
-
         protected string RadioButtonGroupName { get; set; }
 
         public void SetUnitAbbreviation(string abbreviation)
@@ -92,9 +91,4 @@ namespace CalculatorWPFViewModels
         public  string Name { get; set; }
     }
 
-    public interface IUnitAbbreviationsAndNames
-    {
-        string Abbreviation { get; set; }
-        string Name { get; set; }
-    }
 }

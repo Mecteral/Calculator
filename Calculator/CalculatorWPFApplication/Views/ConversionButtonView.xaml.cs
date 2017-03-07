@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CalculatorWPFApplication.Views
 {
     /// <summary>
-    /// Interaktionslogik für ConversionAndCalculationButtonView.xaml
+    /// Interaktionslogik für ConversionButtonView.xaml
     /// </summary>
-    public partial class ConversionAndCalculationButtonView : UserControl
+    public partial class ConversionButtonView : UserControl
     {
-        public ConversionAndCalculationButtonView()
+        public ConversionButtonView()
         {
             InitializeComponent();
         }

@@ -66,8 +66,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConductorViewModel.cs" />
     <Compile Include="ConfigurationViewModel.cs" />
-    <Compile Include="ConversionAndCalculationButtonViewModel.cs" />
+    <Compile Include="ConversionButtonViewModel.cs" />
     <Compile Include="ConversionViewModel.cs" />
     <Compile Include="InputViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

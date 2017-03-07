@@ -10,15 +10,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="0" x:Name="Input" />
-        <ContentControl Grid.Row="1" Grid.Column="0" x:Name="ConversionAndCalculationButton"/>
-        <ContentControl Grid.Row="2" Grid.Column="0" x:Name="Conversion"/>
+        <ContentControl Grid.Row="1" Grid.Column="0" x:Name="Conductor"/>
     </Grid>
 </Window>
 

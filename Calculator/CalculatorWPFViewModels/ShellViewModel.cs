@@ -1,17 +1,16 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
 {
     public class ShellViewModel : Screen
     {
-        public ShellViewModel(InputViewModel input, ConversionAndCalculationButtonViewModel button, ConversionViewModel conversion)
+        public ShellViewModel(InputViewModel input, ConductorViewModel conductor)
         {
             Input = input;
-            ConversionAndCalculationButton = button;
-            Conversion = conversion;
+            Conductor = conductor;
         }
         public InputViewModel Input { get; private set; }
-        public ConversionAndCalculationButtonViewModel ConversionAndCalculationButton { get; private set; }
-        public ConversionViewModel Conversion { get; set; }
+        public ConductorViewModel Conductor { get; private set; }
     }
 }

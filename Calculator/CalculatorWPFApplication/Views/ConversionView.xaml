@@ -11,16 +11,20 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="75" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" VerticalAlignment="Stretch">
+        <Button Grid.Row="0" Grid.Column="0" Content="Calculator"/>
+        <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
             <RadioButton x:Name="ToMetric" Content="Convert to Metrical System"/>
             <RadioButton x:Name="ToImperial" Content="Convert to Imperial System"/>
         </StackPanel>
-        <Expander Header="Conversion Units" Grid.Row="1">
+        <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0">
             <TreeView>
                 <TreeViewItem Header="Metrical">
                     <TreeViewItem Header="Volume">
