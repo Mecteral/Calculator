@@ -11,18 +11,16 @@ namespace Calculator.Logic
         public List<string> CalculationSteps { get; set; }
         readonly IPipelineEvaluator mPipelineEvaluator;
 
-        public WpfCalculationExecutor(IPipelineEvaluator pipelineEvaluator, IApplicationArguments arguments)
+        public WpfCalculationExecutor(IPipelineEvaluator pipelineEvaluator)
         {
             mPipelineEvaluator = pipelineEvaluator;
-            Arguments = arguments;
         }
 
-        public void InitiateCalculation(string input)
+        public void InitiateCalculation(string input, IApplicationArguments arguments)
         {
-            CalculationResult = mPipelineEvaluator.Evaluate(input, Arguments);
+            CalculationResult = mPipelineEvaluator.Evaluate(input, arguments);
             CalculationSteps = EvaluatingExpressionVisitor.Steps;
         }
 
-        public IApplicationArguments Arguments { get; set; }
     }
 }

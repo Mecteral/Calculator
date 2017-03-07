@@ -8,11 +8,36 @@ namespace CalculatorWPFViewModels
 {
     public class ConversionViewModel : PropertyChangedBase
     {
-        readonly IApplicationArguments mArguments;
+        public static bool UseMetric { get; private set; }
+        bool mToMetric;
+        bool mToImperial;
 
-        public ConversionViewModel(IApplicationArguments arguments)
+        public bool ToMetric
         {
-            mArguments = arguments;
+            get { return mToMetric; }
+            set
+            {
+                if (value == mToMetric) return;
+                mToMetric = value;
+                NotifyOfPropertyChange(() => ToMetric);
+                UseMetric = true;
+            }
+        }
+
+        public bool ToImperial
+        {
+            get { return mToImperial; }
+            set
+            {
+                if (value == mToImperial) return;
+                mToImperial = value;
+                NotifyOfPropertyChange(() => ToImperial);
+                UseMetric = false;
+            }
+        }
+
+        public ConversionViewModel()
+        {
             SetListsForView();
             AllUnitsAndAbbreviations = new List<List<UnitAbbreviationsAndNames>>
             {
@@ -27,7 +52,7 @@ namespace CalculatorWPFViewModels
             };
         }
 
-        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
+        public static List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
         public List<UnitAbbreviationsAndNames> MetricalMasses { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalAreas { get; set; } = new List<UnitAbbreviationsAndNames>();
@@ -38,11 +63,6 @@ namespace CalculatorWPFViewModels
         public List<UnitAbbreviationsAndNames> ImperialLengths { get; set; } = new List<UnitAbbreviationsAndNames>();
 
         protected string RadioButtonGroupName { get; set; }
-
-        public void SetUnitAbbreviation(string abbreviation)
-        {
-            mArguments.UnitForConversion = abbreviation;
-        }
 
         void SetListsForView()
         {
@@ -96,12 +116,5 @@ namespace CalculatorWPFViewModels
                 }
             }
         }
-    }
-
-    public class UnitAbbreviationsAndNames
-    {
-        public bool IsSelected { get; set; }
-        public string Abbreviation { get; set; }
-        public string Name { get; set; }
     }
 }

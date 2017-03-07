@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 using Calculator.Logic;
+using Calculator.Logic.ArgumentParsing;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
@@ -10,6 +12,7 @@ namespace CalculatorWPFViewModels
         string mInputString;
         string mResult;
         readonly IWpfCalculationExecutor mExecutor;
+        readonly IApplicationArguments mArguments;
         List<string> mSteps = new List<string>();
 
         public List<string> Steps
@@ -36,9 +39,10 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public InputViewModel(IWpfCalculationExecutor executor)
+        public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments)
         {
             mExecutor = executor;
+            mArguments = arguments;
         }
 
         public string InputString
@@ -54,10 +58,35 @@ namespace CalculatorWPFViewModels
 
         public void Calculate()
         {
-            mExecutor.InitiateCalculation(mInputString);
+            if (ShellViewModel.IsConversionActive)
+            {
+                mArguments.UseConversion = true;
+                mArguments.ToMetric = ConversionViewModel.UseMetric;
+                GetUnitAbbreviation();
+            }
+            else
+            {
+                mArguments.UseConversion = false;
+            }
+            mExecutor.InitiateCalculation(mInputString, mArguments);
             Result = mExecutor.CalculationResult;
             Steps = mExecutor.CalculationSteps;
         }
+
+        void GetUnitAbbreviation()
+        {
+            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+            {
+                foreach (var units in abbreviationList)
+                {
+                    if (units.IsSelected)
+                    {
+                        mArguments.UnitForConversion = units.Abbreviation;
+                    }
+                }
+            }
+        }
+
         public void OnEnter(ActionExecutionContext context)
         {
             var keyArgs = context.EventArgs as KeyEventArgs;

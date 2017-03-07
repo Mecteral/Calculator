@@ -7,7 +7,7 @@ namespace CalculatorWPFViewModels
     {
         bool mConversionButtonIsVisible;
         bool mCalculationButtonIsVisible;
-
+        public static bool IsConversionActive { get; private set; }
         public bool CalculationButtonIsVisible
         {
             get { return mCalculationButtonIsVisible; }
@@ -44,12 +44,14 @@ namespace CalculatorWPFViewModels
         {
             ConversionButtonIsVisible = false;
             CalculationButtonIsVisible = true;
+            IsConversionActive = true;
             ShowConversionView();
         }
         public void OnCalculationButton()
         {
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
+            IsConversionActive = false;
             DeactivateConversionView();
         }
 

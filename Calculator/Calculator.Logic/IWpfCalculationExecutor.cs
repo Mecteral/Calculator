@@ -7,7 +7,6 @@ namespace Calculator.Logic
     {
         string CalculationResult { get; set; }
         List<string> CalculationSteps { get; set; }
-        void InitiateCalculation(string input);
-        IApplicationArguments Arguments { get; set; }
+        void InitiateCalculation(string input, IApplicationArguments arguments);
     }
 }

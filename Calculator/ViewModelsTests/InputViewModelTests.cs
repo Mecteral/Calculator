@@ -2,10 +2,12 @@
 using System.Windows;
 using System.Windows.Input;
 using Calculator.Logic;
+using Calculator.Logic.ArgumentParsing;
 using CalculatorWPFViewModels;
 using Caliburn.Micro;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 
 namespace ViewModelsTests
@@ -17,9 +19,11 @@ namespace ViewModelsTests
         public void Setup()
         {
             mExecutor = Substitute.For<IWpfCalculationExecutor>();
-            mUnderTest = new InputViewModel(mExecutor);
+            mArguments = Substitute.For<IApplicationArguments>();
+            mUnderTest = new InputViewModel(mExecutor, mArguments);
         }
 
+        IApplicationArguments mArguments;
         IWpfCalculationExecutor mExecutor;
         InputViewModel mUnderTest;
 
@@ -29,13 +33,13 @@ namespace ViewModelsTests
             mUnderTest.InputString = "Alpha";
             mUnderTest.Calculate();
 
-            mExecutor.Received().InitiateCalculation("Alpha");
+            mExecutor.Received().InitiateCalculation("Alpha", mArguments);
         }
 
         [Test]
         public void Calculate_Should_Set_Result_From_Executor()
         {
-            mExecutor.InitiateCalculation("Alpha");
+            mExecutor.InitiateCalculation("Alpha", mArguments);
             mExecutor.CalculationResult = "Bravo";
             mUnderTest.Calculate();
 
@@ -45,7 +49,7 @@ namespace ViewModelsTests
         [Test]
         public void Calculate_Should_Set_Steps_From_Executor()
         {
-            mExecutor.InitiateCalculation("Alpha");
+            mExecutor.InitiateCalculation("Alpha", mArguments);
             mExecutor.CalculationSteps = new List<string> {"Bravo"};
             mUnderTest.Calculate();
 
@@ -60,7 +64,7 @@ namespace ViewModelsTests
             var context = new ActionExecutionContext();
             context.EventArgs = new KeyEventArgs(null, presentationSource, 0, Key.Enter);
             mUnderTest.OnEnter(context);
-            mExecutor.Received().InitiateCalculation("Alpha");
+            mExecutor.Received().InitiateCalculation("Alpha", mArguments);
         }
 
         [Test]
