@@ -1,18 +1,23 @@
 ﻿using System;
-using Caliburn.Micro;
+using System.Collections.Generic;
+using System.Windows;
 using Autofac;
+using Calculator.Logic;
 using CalculatorWPFViewModels;
+using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
 {
     public class MyBootStrapper : BootstrapperBase
     {
         readonly IContainer mContainer;
+
         public MyBootStrapper()
         {
             Initialize();
             mContainer = WireUpApplication();
         }
+
         static IContainer WireUpApplication()
         {
             var builder = new ContainerBuilder();
@@ -21,17 +26,26 @@ namespace CalculatorWPFApplication
                 .AsSelf()
                 .SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
-            builder.RegisterAssemblyModules(typeof(Calculator.Logic.ContainerModule).Assembly);
+            builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
             return builder.Build();
         }
-        protected override void OnStartup(object sender, System.Windows.StartupEventArgs e)
+
+        protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            DisplayRootViewFor<ShellViewModel>();
+            var settings = new Dictionary<string, object>
+            {
+                {"SizeToContent", SizeToContent.Manual},
+                {"Height", 200},
+                {"Width", 500}
+            };
+            DisplayRootViewFor<ShellViewModel>(settings);
         }
+
         protected override object GetInstance(Type service, string key)
         {
             return mContainer.Resolve(service);
         }
+
         protected override void Configure()
         {
             LogManager.GetLog = t => new DebugLog(t);

@@ -9,7 +9,7 @@
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:global="clr-namespace:;assembly=CalculatorWPFViewModels"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=InputString}">
-            <TextBox x:Name="InputString" MinWidth="100" Width="100"
+            <TextBox x:Name="InputString" MinWidth="400" Width="400"
                      cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding OnEnter}" Key="Enter" />
@@ -31,7 +31,7 @@
             </TextBox>
         </DockPanel>
         <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" />
-        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MaxWidth="100" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
+        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
         <Expander Grid.Column="0" Grid.Row="3" Header="Steps">
             <ListView ItemsSource="{Binding Steps}">
                 <ListView.ItemTemplate>
