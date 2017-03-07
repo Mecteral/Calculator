@@ -19,7 +19,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Button Grid.Row="0" Grid.Column="0" Content="Calculator"/>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
             <RadioButton x:Name="ToMetric" Content="Convert to Metrical System"/>
             <RadioButton x:Name="ToImperial" Content="Convert to Imperial System"/>

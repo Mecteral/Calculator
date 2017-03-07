@@ -107,9 +107,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MyBootStrapper.cs" />
-    <Compile Include="Views\ConductorView.xaml.cs">
-      <DependentUpon>ConductorView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
@@ -155,10 +152,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ConductorView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
