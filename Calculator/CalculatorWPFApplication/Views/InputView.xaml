@@ -13,7 +13,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -22,7 +22,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=InputString}">
-            <TextBox x:Name="InputString" MinWidth="100"
+            <TextBox x:Name="InputString" MinWidth="100" Width="100"
                      cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]">
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding OnEnter}" Key="Enter" />
@@ -31,7 +31,7 @@
             </TextBox>
         </DockPanel>
         <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" />
-        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" x:Name="Result" />
+        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MaxWidth="100" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
         <Expander Grid.Column="0" Grid.Row="3" Header="Steps">
             <ListView ItemsSource="{Binding Steps}">
                 <ListView.ItemTemplate>
