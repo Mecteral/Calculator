@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:CalculatorWPFApplication.Views"
              xmlns:cal="http://www.caliburnproject.org"
              xmlns:calculatorWpfViewModels="clr-namespace:CalculatorWPFViewModels;assembly=CalculatorWPFViewModels"
-             mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />

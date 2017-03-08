@@ -7,6 +7,7 @@ namespace CalculatorWPFViewModels
     {
         bool mConversionButtonIsVisible;
         bool mCalculationButtonIsVisible;
+        string mIsResizeable;
         public static bool IsConversionActive { get; private set; }
         public bool CalculationButtonIsVisible
         {
@@ -16,6 +17,19 @@ namespace CalculatorWPFViewModels
                 if (value == mCalculationButtonIsVisible) return;
                 mCalculationButtonIsVisible = value;
                 NotifyOfPropertyChange(() => CalculationButtonIsVisible);
+            }
+        }
+
+        public static string WindowName { get; set; } = "Calculator";
+
+        public string IsResizeable
+        {
+            get { return mIsResizeable; }
+            set
+            {
+                if (value == mIsResizeable) return;
+                mIsResizeable = value;
+                NotifyOfPropertyChange(() => IsResizeable);
             }
         }
 
@@ -36,6 +50,7 @@ namespace CalculatorWPFViewModels
             Conversion = conversion;
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
+            IsResizeable = "Resize";
         }
         public InputViewModel Input { get; private set; }
         public ConversionViewModel Conversion { get; set; }

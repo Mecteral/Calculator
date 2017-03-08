@@ -32,13 +32,7 @@ namespace CalculatorWPFApplication
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            var settings = new Dictionary<string, object>
-            {
-                {"SizeToContent", SizeToContent.Manual},
-                {"Height", 200},
-                {"Width", 500}
-            };
-            DisplayRootViewFor<ShellViewModel>(settings);
+            DisplayRootViewFor<ShellViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)
