@@ -70,7 +70,7 @@ namespace CalculatorWPFViewModels
 
         public void Calculate()
         {
-            if (ShellViewModel.IsConversionActive)
+            if (WpfApplicationStatics.IsConversionActive)
             {
                 mArguments.UseConversion = true;
                 mArguments.ToMetric = WpfApplicationStatics.UseMetric;

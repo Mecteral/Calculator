@@ -1,4 +1,5 @@
 ﻿using System;
+using Calculator.Logic;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
@@ -8,7 +9,7 @@ namespace CalculatorWPFViewModels
         bool mConversionButtonIsVisible;
         bool mCalculationButtonIsVisible;
         string mIsResizeable;
-        public static bool IsConversionActive { get; private set; }
+
         public bool CalculationButtonIsVisible
         {
             get { return mCalculationButtonIsVisible; }
@@ -59,14 +60,14 @@ namespace CalculatorWPFViewModels
         {
             ConversionButtonIsVisible = false;
             CalculationButtonIsVisible = true;
-            IsConversionActive = true;
+            WpfApplicationStatics.IsConversionActive = true;
             ShowConversionView();
         }
         public void OnCalculationButton()
         {
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
-            IsConversionActive = false;
+            WpfApplicationStatics.IsConversionActive = false;
             DeactivateConversionView();
         }
 
