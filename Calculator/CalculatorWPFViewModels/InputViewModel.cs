@@ -14,6 +14,7 @@ namespace CalculatorWPFViewModels
         readonly IWpfCalculationExecutor mExecutor;
         readonly IApplicationArguments mArguments;
         List<string> mSteps = new List<string>();
+        bool mStepExpander;
 
         public List<string> Steps
         {
@@ -39,6 +40,17 @@ namespace CalculatorWPFViewModels
             }
         }
 
+        public bool StepExpander
+        {
+            get { return mStepExpander; }
+            set
+            {
+                if (value == mStepExpander) return;
+                mStepExpander = value;
+                NotifyOfPropertyChange(() => StepExpander);
+            }
+        }
+
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments)
         {
             mExecutor = executor;
@@ -61,7 +73,7 @@ namespace CalculatorWPFViewModels
             if (ShellViewModel.IsConversionActive)
             {
                 mArguments.UseConversion = true;
-                mArguments.ToMetric = ConversionViewModel.UseMetric;
+                mArguments.ToMetric = WpfApplicationStatics.UseMetric;
                 GetUnitAbbreviation();
             }
             else

@@ -32,7 +32,7 @@
         </DockPanel>
         <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" />
         <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
-        <Expander Grid.Column="0" Grid.Row="3" Header="Steps">
+        <Expander Grid.Column="0" Grid.Row="3" Header="Steps" IsExpanded="{Binding StepExpander}">
             <ListView ItemsSource="{Binding Steps}">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="calculatorWpfViewModels:InputViewModel">

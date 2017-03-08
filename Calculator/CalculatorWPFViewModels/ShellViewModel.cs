@@ -50,7 +50,7 @@ namespace CalculatorWPFViewModels
             Conversion = conversion;
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
-            IsResizeable = "Resize";
+            IsResizeable = "noResize";
         }
         public InputViewModel Input { get; private set; }
         public ConversionViewModel Conversion { get; set; }

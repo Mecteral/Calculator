@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic;
 using Caliburn.Micro;
 using Mecteral.UnitConversion;
 
@@ -8,7 +8,7 @@ namespace CalculatorWPFViewModels
 {
     public class ConversionViewModel : PropertyChangedBase
     {
-        public static bool UseMetric { get; private set; }
+
         bool mToMetric;
         bool mToImperial;
 
@@ -20,7 +20,7 @@ namespace CalculatorWPFViewModels
                 if (value == mToMetric) return;
                 mToMetric = value;
                 NotifyOfPropertyChange(() => ToMetric);
-                UseMetric = true;
+                SetUseMetric();
             }
         }
 
@@ -32,8 +32,16 @@ namespace CalculatorWPFViewModels
                 if (value == mToImperial) return;
                 mToImperial = value;
                 NotifyOfPropertyChange(() => ToImperial);
-                UseMetric = false;
+                SetUseMetric();
             }
+        }
+
+        void SetUseMetric()
+        {
+            if (ToMetric)
+                WpfApplicationStatics.UseMetric = true;
+            else
+                WpfApplicationStatics.UseMetric = false;
         }
 
         public ConversionViewModel()
