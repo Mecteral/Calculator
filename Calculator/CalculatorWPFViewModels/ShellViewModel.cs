@@ -5,14 +5,16 @@ namespace CalculatorWPFViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<string>
     {
+        readonly IEventAggregator mEvents;
         bool mCalculationButtonIsVisible;
         bool mConversionButtonIsVisible;
         string mIsResizeable;
         string mWindowName = "Calculator";
 
-        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator aggregator)
+        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator)
         {
-            aggregator.Subscribe(this);
+            mEvents = eventAggregator;
+            mEvents.Subscribe(this);
             Input = input;
             Conversion = conversion;
             ConversionButtonIsVisible = true;

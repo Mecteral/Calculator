@@ -9,9 +9,14 @@ namespace CalculatorWPFViewModels
     public class ConversionViewModel : PropertyChangedBase
     {
 
+        public ConversionViewModel(IEventAggregator eventAggregator)
+        {
+            mEventAggregator = eventAggregator;
+        }
         bool mToMetric;
         bool mToImperial;
         bool mUnitExpander;
+        readonly IEventAggregator mEventAggregator;
 
         public bool UnitExpander
         {
@@ -22,6 +27,7 @@ namespace CalculatorWPFViewModels
                 mUnitExpander = value;
                 NotifyOfPropertyChange(() => UnitExpander);
                 WpfApplicationStatics.UnitExpander = value;
+                mEventAggregator.PublishOnUIThread("Resize");
             }
         }
 

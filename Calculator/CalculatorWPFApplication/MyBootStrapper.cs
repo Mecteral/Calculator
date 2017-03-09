@@ -26,7 +26,7 @@ namespace CalculatorWPFApplication
                 .SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
-            builder.RegisterType<EventAggregator>().As<IEventAggregator>();
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
             return builder.Build();
         }
 
