@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.ConfigFile
@@ -11,6 +7,7 @@ namespace Calculator.Logic.ConfigFile
     {
         public List<string> Receivers { get; private set; }
         public List<string> Values { get; private set; }
+
         public void ExtractReceiversAndValues(IEnumerable<string> config)
         {
             Receivers = new List<string>();
@@ -20,7 +17,7 @@ namespace Calculator.Logic.ConfigFile
             var valueStart = 0;
             foreach (var s in config)
             {
-                var start = 0;
+                int start;
                 if (s.IsEmpty())
                 {
                     continue;

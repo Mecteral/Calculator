@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.ConfigFile
 {
     public class SwitchesToConfigFileWriter
     {
+        readonly List<string> mNewConfig = new List<string>();
         ApplicationArguments mArgs;
-        List<string> mSwitchReceiver = new List<string>();
-        List<string> mSwitchValues = new List<string>();
         List<string> mConfigReceiver = new List<string>();
         List<string> mConfigValues = new List<string>();
-        readonly List<string> mNewConfig = new List<string>();
-        public void WriteToConfigFile(IEnumerable<string> switches, IEnumerable<string> userConfigFile, ApplicationArguments args, string pathToUserFile)
+        List<string> mSwitchReceiver = new List<string>();
+        List<string> mSwitchValues = new List<string>();
+
+        public void WriteToConfigFile(IEnumerable<string> switches, IEnumerable<string> userConfigFile,
+            ApplicationArguments args, string pathToUserFile)
         {
             mArgs = args;
             FillReceiversAndValues(switches, userConfigFile);
@@ -46,7 +45,8 @@ namespace Calculator.Logic.ConfigFile
                     if (mSwitchValues[i] == mConfigValues[j]) continue;
                     if (mArgs.SaveAllOrIgnoreAllDifferingSwitches == null)
                     {
-                        Console.WriteLine($"Do you want to replace \" {mConfigReceiver[j]}={mConfigValues[j]} \" with \" {mSwitchReceiver[i]}={mSwitchValues[i]} \" ? \n Type y or yes to overwrite Config with switch.");
+                        Console.WriteLine(
+                            $"Do you want to replace \" {mConfigReceiver[j]}={mConfigValues[j]} \" with \" {mSwitchReceiver[i]}={mSwitchValues[i]} \" ? \n Type y or yes to overwrite Config with switch.");
                         var answer = Console.ReadLine();
                         if (answer == "y" || answer == "yes")
                         {
@@ -72,7 +72,7 @@ namespace Calculator.Logic.ConfigFile
                 }
                 else
                 {
-                    temp +=$"-{mConfigValues[i]} = \"{mConfigValues[i]}\"";
+                    temp += $"-{mConfigValues[i]} = \"{mConfigValues[i]}\"";
                 }
                 mNewConfig.Add(temp);
                 temp = "";

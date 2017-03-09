@@ -5,7 +5,7 @@ using FluentAssertions;
 using NSubstitute;
 using NUnit.Framework;
 
-namespace Calculator.Logic.Tests.Simplification
+namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
     public class SimplifierTests
@@ -18,10 +18,12 @@ namespace Calculator.Logic.Tests.Simplification
             mSecondSimplifier = Substitute.For<ISimplifier>();
             mUnderTest = new Simplifier(new[] {mFirstSimplifier, mSecondSimplifier}, mChecker);
         }
+
         IExpressionEqualityChecker mChecker;
         ISimplifier mFirstSimplifier;
         ISimplifier mSecondSimplifier;
         Simplifier mUnderTest;
+
         [Test]
         public void Simplify_Calls_All_Passed_Simplifiers()
         {
@@ -33,6 +35,7 @@ namespace Calculator.Logic.Tests.Simplification
 
             mSecondSimplifier.Received().Simplify(afterFirst);
         }
+
         [Test]
         public void Simplify_Returns_Input_If_No_Simplifier_Has_Changed_Anything()
         {
@@ -46,6 +49,7 @@ namespace Calculator.Logic.Tests.Simplification
             var result = mUnderTest.Simplify(input);
             result.Should().BeSameAs(input);
         }
+
         [Test]
         public void Simplify_Returns_Output_Of_Last_Simplifier_If_Has_Changed()
         {

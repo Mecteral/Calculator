@@ -1,6 +1,5 @@
 ﻿using System;
 using Calculator.Logic.ArgumentParsing;
-using Calculator.Logic.Facades;
 using Mecteral.UnitConversion;
 
 namespace Calculator.Logic.Pipelines
@@ -9,10 +8,18 @@ namespace Calculator.Logic.Pipelines
     {
         readonly Func<IConversionFacade> mConversionFactory;
         readonly Func<ISimplificationPipeline> mSimplificationPipelineFactory;
+
+        public PipelineEvaluator(Func<IConversionFacade> conversionFactory,
+            Func<ISimplificationPipeline> simplificationPipelineFactory)
+        {
+            mConversionFactory = conversionFactory;
+            mSimplificationPipelineFactory = simplificationPipelineFactory;
+        }
+
         public string Evaluate(string input, IApplicationArguments args)
         {
             if (input == null) return null;
-            if (input.Contains("=?") || args.UseConversion == true)
+            if (input.Contains("=?") || args.UseConversion)
             {
                 Console.WriteLine("Do you want to convert to the metric system? \n y, or yes for yes.");
                 var metric = Console.ReadLine();
@@ -23,17 +30,8 @@ namespace Calculator.Logic.Pipelines
                 var conversion = mConversionFactory();
                 return conversion.ConvertUnits(input, args.UnitForConversion, args.ToMetric);
             }
-            else
-            {
-                var simplification = mSimplificationPipelineFactory();
-                return simplification.UseSimplificationPipeline(input, args);
-            }
-        }
-
-        public PipelineEvaluator(Func<IConversionFacade> conversionFactory, Func<ISimplificationPipeline> simplificationPipelineFactory)
-        {
-            mConversionFactory = conversionFactory;
-            mSimplificationPipelineFactory = simplificationPipelineFactory;
+            var simplification = mSimplificationPipelineFactory();
+            return simplification.UseSimplificationPipeline(input, args);
         }
     }
 }

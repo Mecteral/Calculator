@@ -7,7 +7,6 @@ using CalculatorWPFViewModels;
 using Caliburn.Micro;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.Core.Arguments;
 using NUnit.Framework;
 
 namespace ViewModelsTests
@@ -20,9 +19,11 @@ namespace ViewModelsTests
         {
             mExecutor = Substitute.For<IWpfCalculationExecutor>();
             mArguments = Substitute.For<IApplicationArguments>();
-            mUnderTest = new InputViewModel(mExecutor, mArguments);
+            mAggregator = Substitute.For<IEventAggregator>();
+            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator);
         }
 
+        IEventAggregator mAggregator;
         IApplicationArguments mArguments;
         IWpfCalculationExecutor mExecutor;
         InputViewModel mUnderTest;

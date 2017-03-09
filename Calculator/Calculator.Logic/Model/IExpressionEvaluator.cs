@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Model;
 

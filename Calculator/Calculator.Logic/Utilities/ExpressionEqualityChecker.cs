@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Calculator.Model;
 
@@ -8,16 +7,19 @@ namespace Calculator.Logic.Utilities
     {
         IList<IExpression> mFirstExpressions = new List<IExpression>();
         IList<IExpression> mSecondExpressions = new List<IExpression>();
+
         public void Visit(ParenthesedExpression parenthesed)
         {
             parenthesed.Wrapped.Accept(this);
             mSecondExpressions.Add(parenthesed);
         }
+
         public void Visit(Subtraction subtraction)
         {
             VisitOperands(subtraction);
             mSecondExpressions.Add(subtraction);
         }
+
         public void Visit(Multiplication multiplication)
         {
             VisitOperands(multiplication);
@@ -82,11 +84,13 @@ namespace Calculator.Logic.Utilities
             var result = CheckEqualityOfLists();
             return result;
         }
+
         void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
         }
+
         bool CheckEqualityOfLists()
         {
             if (mFirstExpressions.Count != mSecondExpressions.Count) return false;

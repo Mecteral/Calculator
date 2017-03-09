@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public class SquareRootToken : IToken
     {
-        public decimal Value { get; private set; }
-
         public SquareRootToken(string input)
         {
             input = input.Replace(',', '.');
@@ -18,14 +13,16 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             Value = (decimal) Math.Sqrt(number);
         }
 
-        static string ExtractNumber(string input)
-        {
-            return input.Where(c => char.IsNumber(c) || c == '.').Aggregate("", (current, c) => current + c);
-        }
+        public decimal Value { get; private set; }
 
         public void Accept(ITokenVisitor visitor)
         {
             visitor.Visit(this);
+        }
+
+        static string ExtractNumber(string input)
+        {
+            return input.Where(c => char.IsNumber(c) || c == '.').Aggregate("", (current, c) => current + c);
         }
     }
 }

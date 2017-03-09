@@ -6,7 +6,7 @@ using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
 
-namespace Calculator.Logic.Tests.Simplification
+namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
     public class SimplificationEvaluatorTests
@@ -18,6 +18,7 @@ namespace Calculator.Logic.Tests.Simplification
             var underTest = new SimplificationEvaluator();
             underTest.CountExpression(inputTree).Should().Be(expected);
         }
+
         static IEnumerable<IExpression> CreateIExpressionEnumerableFromStrings(IEnumerable<string> input)
         {
             var result = new List<IExpression>();
@@ -29,6 +30,7 @@ namespace Calculator.Logic.Tests.Simplification
             }
             return result;
         }
+
         static void CheckEnumerable(IEnumerable<IExpression> input, int expectedPosition)
         {
             var underTest = new SimplificationEvaluator();
@@ -36,6 +38,7 @@ namespace Calculator.Logic.Tests.Simplification
             var expected = frozen.ElementAt(expectedPosition);
             underTest.FindSmallesExpressionInEnumerable(frozen).Should().Be(expected);
         }
+
         static IEnumerable<IToken> Tokenize(string input)
         {
             var tokenizer = new Tokenizer();
@@ -43,38 +46,46 @@ namespace Calculator.Logic.Tests.Simplification
             var tokens = tokenizer.Tokens;
             return tokens;
         }
+
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
+
         [Test]
         public void BoundAdditionCountIsCorrect()
         {
             CheckCount("3+2+1", 5);
         }
+
         [Test]
         public void BoundAdditionIsBiggerThanBoundMultiplication()
         {
             var underTest = new List<string> {"3+2+1+0", "3*2+1"};
             CheckEnumerable(CreateIExpressionEnumerableFromStrings(underTest), 1);
         }
+
         [Test]
         public void CountWithVariableIsCorrect()
         {
             CheckCount("1+a", 5);
         }
+
         [Test]
         public void MixedArithmeticFunctionCountIsCorrect()
         {
             CheckCount("1+2*3-4/5", 9);
         }
+
         [Test]
         public void ParenthesedExpressionCountIsCorrect()
         {
             CheckCount("(1+2)", 4);
         }
+
         [Test]
         public void SimpleAdditionCuuntIsCorrect()
         {
             CheckCount("3+2", 3);
         }
+
         [Test]
         public void SimpleAdditionIsSmallerThanBoundAddition()
         {

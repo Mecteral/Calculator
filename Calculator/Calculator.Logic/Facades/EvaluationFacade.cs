@@ -1,15 +1,14 @@
-﻿using System;
-using Calculator.Logic.ArgumentParsing;
+﻿using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Model;
 
 namespace Calculator.Logic.Facades
 {
     public class EvaluationFacade : IEvaluationFacade
     {
-        readonly IModelBuilder mModelBuilder;
         readonly IExpressionEvaluator mExpressionEvaluator;
+        readonly IModelBuilder mModelBuilder;
+
         public EvaluationFacade(IModelBuilder modelBuilder, IExpressionEvaluator expressionEvaluator)
         {
             mModelBuilder = modelBuilder;

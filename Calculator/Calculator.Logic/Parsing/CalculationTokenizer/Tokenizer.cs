@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using Calculator.Logic.ArgumentParsing;
 
@@ -10,11 +9,11 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     /// </summary>
     public class Tokenizer : ITokenizer
     {
-        IApplicationArguments mArgs;
         readonly List<IToken> mTempTokens = new List<IToken>();
+        IApplicationArguments mArgs;
+        string mFunctionString;
         string mInput;
         string mNumber;
-        string mFunctionString;
         bool mWasNumber;
         public IEnumerable<IToken> Tokens { get; private set; }
 
@@ -33,24 +32,26 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             {
                 var c = mInput[i];
                 if (char.IsNumber(c) || c == '.' || c == ',' ||
-                    (mInput.Length >= i + 1 && c == 'E' && char.IsNumber(mInput[i + 1])) ||
-                    (mInput.Length >= i + 2 && c == 'E' && mInput[i + 1] == '-' && char.IsNumber(mInput[i + 2])) ||
-                    (i - 1 > 0 && c == '-' && mInput[i - 1] == 'E'))
+                    mInput.Length >= i + 1 && c == 'E' && char.IsNumber(mInput[i + 1]) ||
+                    mInput.Length >= i + 2 && c == 'E' && mInput[i + 1] == '-' && char.IsNumber(mInput[i + 2]) ||
+                    i - 1 > 0 && c == '-' && mInput[i - 1] == 'E')
                 {
                     mWasNumber = true;
                     mNumber += c;
                 }
-                else if (c == '+' || c == '-' || c == '*' || c == '/' || c== '^') AddOperatorToken(c);
+                else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') AddOperatorToken(c);
                 else if (c == '(' || c == ')') AddParenthesisToken(c);
-                else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' && mInput[i + 3] == '(' ||
-                         (c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
-                         (c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '(') ||
-                         (i+4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' && mInput[i + 3] == 't' && mInput[i + 4] == '('))
+                else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' &&
+                         mInput[i + 3] == '(' ||
+                         c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(' ||
+                         c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '(' ||
+                         i + 4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' &&
+                         mInput[i + 3] == 't' && mInput[i + 4] == '(')
                 {
                     i = CreateTokenStringForFunctionTokensAndSetCounterAnew(i);
                     AddFunctionTokens();
                 }
-                else if (mTempTokens.Count == 0 || (!(mTempTokens.Last() is VariableToken) && char.IsLetter(c)))
+                else if (mTempTokens.Count == 0 || !(mTempTokens.Last() is VariableToken) && char.IsLetter(c))
                     AddVariableToken(c);
             }
             if (mNumber != null) mTempTokens.Add(new NumberToken(mNumber));

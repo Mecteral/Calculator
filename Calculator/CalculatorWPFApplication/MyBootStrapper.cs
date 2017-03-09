@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Windows;
 using Autofac;
 using Calculator.Logic;
@@ -27,6 +26,7 @@ namespace CalculatorWPFApplication
                 .SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
+            builder.RegisterType<EventAggregator>().As<IEventAggregator>();
             return builder.Build();
         }
 

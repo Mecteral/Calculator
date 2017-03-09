@@ -1,16 +1,24 @@
-﻿using System;
-using System.Windows.Controls.Primitives;
-using Calculator.Logic;
+﻿using Calculator.Logic;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
 {
-    public class ShellViewModel : Conductor<object>
+    public class ShellViewModel : Conductor<object>, IHandle<string>
     {
-        bool mConversionButtonIsVisible;
         bool mCalculationButtonIsVisible;
+        bool mConversionButtonIsVisible;
         string mIsResizeable;
         string mWindowName = "Calculator";
+
+        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator aggregator)
+        {
+            aggregator.Subscribe(this);
+            Input = input;
+            Conversion = conversion;
+            ConversionButtonIsVisible = true;
+            CalculationButtonIsVisible = false;
+            IsResizeable = "CanMinimize";
+        }
 
         public bool CalculationButtonIsVisible
         {
@@ -55,17 +63,21 @@ namespace CalculatorWPFViewModels
                 NotifyOfPropertyChange(() => ConversionButtonIsVisible);
             }
         }
-        
-        public ShellViewModel(InputViewModel input, ConversionViewModel conversion)
-        {
-            Input = input;
-            Conversion = conversion;
-            ConversionButtonIsVisible = true;
-            CalculationButtonIsVisible = false;
-            IsResizeable = "CanMinimize";
-        }
+
         public InputViewModel Input { get; private set; }
         public ConversionViewModel Conversion { get; set; }
+
+        public void Handle(string message)
+        {
+            if (WpfApplicationStatics.StepExpander || WpfApplicationStatics.UnitExpander)
+            {
+                IsResizeable = "Resize";
+            }
+            else
+            {
+                IsResizeable = "CanMinimize";
+            }
+        }
 
         public void OnConversionButton()
         {
@@ -74,6 +86,7 @@ namespace CalculatorWPFViewModels
             WpfApplicationStatics.IsConversionActive = true;
             ShowConversionView();
         }
+
         public void OnCalculationButton()
         {
             ConversionButtonIsVisible = true;

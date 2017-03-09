@@ -2,24 +2,23 @@
 using System.Linq;
 using Calculator.Logic.CommandLineParser;
 using Mecteral.UnitConversion;
-using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.ConfigFile
 {
     public class ConfigFileValidator
     {
+        string mCustom;
+        string mImport;
+        List<string> mReceivers;
+        string mRevert;
+        string mSaveAll;
+        string mShowSteps;
+        string mUsedRad;
+        string mUsedUnit;
+        List<string> mValues;
+        string mWriter;
         public string FilePath { get; private set; }
         public List<string> Errors { get; private set; }
-        List<string> mReceivers;
-        List<string> mValues;
-        string mUsedUnit;
-        string mUsedRad;
-        string mShowSteps;
-        string mWriter;
-        string mRevert;
-        string mImport;
-        string mCustom;
-        string mSaveAll;
 
         public void CheckForValidation(IEnumerable<string> input, string path)
         {
@@ -44,6 +43,7 @@ namespace Calculator.Logic.ConfigFile
             mCustom = null;
             mSaveAll = null;
         }
+
         void ExtractReceiversAndValues(IEnumerable<string> input)
         {
             var extractor = new ReceiverAndValueExtractor();
@@ -54,7 +54,6 @@ namespace Calculator.Logic.ConfigFile
 
         void CheckForInvalidEntries()
         {
-            
             var abbreviation = new UnitAbbreviations();
             var fieldValues = abbreviation.GetType()
                 .GetFields()

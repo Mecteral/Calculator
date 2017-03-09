@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Calculator.Model;
 
 namespace Calculator.Logic.Model
@@ -7,10 +6,12 @@ namespace Calculator.Logic.Model
         where TSelf : AnExpressionVisitorWithResult<TSelf, TResult>, new()
     {
         TResult Result { get; set; }
+
         void IExpressionVisitor.Visit(ParenthesedExpression parenthesed)
         {
             Result = UseParenthesed(GetResultFor(parenthesed.Wrapped));
         }
+
         void IExpressionVisitor.Visit(Subtraction subtraction)
         {
             var left = GetResultFor(subtraction.Left);
@@ -18,6 +19,7 @@ namespace Calculator.Logic.Model
             Result = UseSubtraction(left, right);
             EvaluatingExpressionVisitor.Steps.Add($"{left}-{right}\n {Result}");
         }
+
         void IExpressionVisitor.Visit(Multiplication multiplication)
         {
             var left = GetResultFor(multiplication.Left);
@@ -25,6 +27,7 @@ namespace Calculator.Logic.Model
             Result = UseMultiplication(left, right);
             EvaluatingExpressionVisitor.Steps.Add($"{left}*{right}\n {Result}");
         }
+
         void IExpressionVisitor.Visit(Addition addition)
         {
             var left = GetResultFor(addition.Left);
@@ -78,12 +81,14 @@ namespace Calculator.Logic.Model
         {
             Result = UseConstant(constant.Value);
         }
+
         protected static TResult GetResultFor(IExpression expression)
         {
             var visitor = new TSelf();
             expression.Accept(visitor);
             return visitor.Result;
         }
+
         protected abstract TResult UseParenthesed(TResult wrapped);
         protected abstract TResult UseSubtraction(TResult left, TResult right);
         protected abstract TResult UseMultiplication(TResult left, TResult right);

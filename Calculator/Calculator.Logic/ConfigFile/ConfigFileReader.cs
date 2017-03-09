@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Calculator.Logic.CommandLineParser;
-using ModernRonin.PraeterArtem.Functional;
+﻿using System.IO;
 
 namespace Calculator.Logic.ConfigFile
 {

@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Mecteral.UnitConversion;
-using NUnit.Framework.Internal;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests.Model.ConversionModel
@@ -19,33 +13,6 @@ namespace Calculator.Logic.Tests.Model.ConversionModel
             tokenizer.Tokenize(input, null);
             var modelBuilder = new ConversionModelBuilder();
             return modelBuilder.BuildFrom(tokenizer.Tokens);
-        }
-
-        [Test]
-        public void SingleExpressionGetsReturnedCorrectly()
-        {
-            var underTest = BuildModel("20ft");
-            underTest.Parent.Should().Be(null);
-            underTest.HasParent.Should().BeFalse();
-            underTest.Should().BeOfType<ImperialLengthExpression>().Which.Value.Should().Be(20);
-        }
-
-        [Test]
-        public void SingleSubtractionBuildsCorrectly()
-        {
-            var underTest = BuildModel("20ft-20ft");
-            underTest.Should()
-                .BeOfType<ConversionSubtraction>()
-                .Subject.Left.Should()
-                .BeOfType<ImperialLengthExpression>()
-                .Which.Value.Should()
-                .Be(20);
-            underTest.Should()
-                .BeOfType<ConversionSubtraction>()
-                .Subject.Right.Should()
-                .BeOfType<ImperialLengthExpression>()
-                .Which.Value.Should()
-                .Be(20);
         }
 
         [Test]
@@ -80,6 +47,33 @@ namespace Calculator.Logic.Tests.Model.ConversionModel
                 .BeOfType<ConversionAddition>()
                 .Subject.Right.Should()
                 .BeOfType<ImperialMassExpression>()
+                .Which.Value.Should()
+                .Be(20);
+        }
+
+        [Test]
+        public void SingleExpressionGetsReturnedCorrectly()
+        {
+            var underTest = BuildModel("20ft");
+            underTest.Parent.Should().Be(null);
+            underTest.HasParent.Should().BeFalse();
+            underTest.Should().BeOfType<ImperialLengthExpression>().Which.Value.Should().Be(20);
+        }
+
+        [Test]
+        public void SingleSubtractionBuildsCorrectly()
+        {
+            var underTest = BuildModel("20ft-20ft");
+            underTest.Should()
+                .BeOfType<ConversionSubtraction>()
+                .Subject.Left.Should()
+                .BeOfType<ImperialLengthExpression>()
+                .Which.Value.Should()
+                .Be(20);
+            underTest.Should()
+                .BeOfType<ConversionSubtraction>()
+                .Subject.Right.Should()
+                .BeOfType<ImperialLengthExpression>()
                 .Which.Value.Should()
                 .Be(20);
         }

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Globalization;
-using Calculator.Logic.Parsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 
 namespace Calculator.Logic
@@ -11,6 +10,7 @@ namespace Calculator.Logic
     public class TokenFormatter : ITokenVisitor
     {
         string mResult = "";
+
         public void Visit(OperatorToken operatorToken)
         {
             switch (operatorToken.Operator)
@@ -29,14 +29,17 @@ namespace Calculator.Logic
                     break;
             }
         }
+
         public void Visit(NumberToken numberToken)
         {
             mResult += numberToken.Value.ToString(CultureInfo.InvariantCulture);
         }
+
         public void Visit(ParenthesesToken parenthesesToken)
         {
             mResult += parenthesesToken.IsOpening ? "(" : ")";
         }
+
         public void Visit(VariableToken variableToken)
         {
             mResult += variableToken.Variable;

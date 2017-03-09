@@ -1,5 +1,4 @@
-﻿using Calculator.Logic.Parsing;
-using Calculator.Logic.Parsing.CalculationTokenizer;
+﻿using Calculator.Logic.Parsing.CalculationTokenizer;
 using FluentAssertions;
 using NUnit.Framework;
 

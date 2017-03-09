@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:CalculatorWPFApplication.Views"
-             xmlns:cal="http://www.caliburnproject.org"
              xmlns:calculatorWpfViewModels="clr-namespace:CalculatorWPFViewModels;assembly=CalculatorWPFViewModels"
              mc:Ignorable="d">
     <Grid>
@@ -19,8 +17,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-            <RadioButton x:Name="ToMetric" Content="Convert to Metrical System"/>
-            <RadioButton x:Name="ToImperial" Content="Convert to Imperial System"/>
+            <RadioButton x:Name="ToMetric" Content="Convert to Metrical System" />
+            <RadioButton x:Name="ToImperial" Content="Convert to Imperial System" />
         </StackPanel>
         <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0" IsExpanded="{Binding UnitExpander}">
             <TreeView>
@@ -29,7 +27,8 @@
                         <ListView ItemsSource="{Binding MetricalVolumes}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -38,7 +37,8 @@
                         <ListView ItemsSource="{Binding MetricalMasses}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -47,7 +47,8 @@
                         <ListView ItemsSource="{Binding MetricalAreas}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -56,7 +57,8 @@
                         <ListView ItemsSource="{Binding MetricalLengths}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -67,7 +69,8 @@
                         <ListView ItemsSource="{Binding ImperialVolumes}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -76,7 +79,8 @@
                         <ListView ItemsSource="{Binding ImperialMasses}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -85,7 +89,8 @@
                         <ListView ItemsSource="{Binding ImperialAreas}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
@@ -94,7 +99,8 @@
                         <ListView ItemsSource="{Binding ImperialLengths}">
                             <ListView.ItemTemplate>
                                 <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
-                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName" IsChecked="{Binding IsSelected}"/>
+                                    <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
+                                                 IsChecked="{Binding IsSelected}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

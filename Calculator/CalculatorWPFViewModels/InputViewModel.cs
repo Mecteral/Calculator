@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
@@ -9,12 +8,21 @@ namespace CalculatorWPFViewModels
 {
     public class InputViewModel : PropertyChangedBase
     {
+        readonly IApplicationArguments mArguments;
+        readonly IEventAggregator mEventAggregator;
+        readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
-        readonly IWpfCalculationExecutor mExecutor;
-        readonly IApplicationArguments mArguments;
-        List<string> mSteps = new List<string>();
         bool mStepExpander;
+        List<string> mSteps = new List<string>();
+
+        public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
+            IEventAggregator eventAggregator)
+        {
+            mExecutor = executor;
+            mArguments = arguments;
+            mEventAggregator = eventAggregator;
+        }
 
         public List<string> Steps
         {
@@ -49,13 +57,8 @@ namespace CalculatorWPFViewModels
                 mStepExpander = value;
                 NotifyOfPropertyChange(() => StepExpander);
                 WpfApplicationStatics.StepExpander = value;
+                mEventAggregator.PublishOnUIThread("Resize");
             }
-        }
-
-        public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments)
-        {
-            mExecutor = executor;
-            mArguments = arguments;
         }
 
         public string InputString
@@ -110,9 +113,6 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public void OnExpansion()
-        {
-            
-        }
+        public void OnExpansion() {}
     }
 }
