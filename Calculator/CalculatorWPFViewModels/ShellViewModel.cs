@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Controls.Primitives;
 using Calculator.Logic;
 using Caliburn.Micro;
 
@@ -9,6 +10,7 @@ namespace CalculatorWPFViewModels
         bool mConversionButtonIsVisible;
         bool mCalculationButtonIsVisible;
         string mIsResizeable;
+        string mWindowName = "Calculator";
 
         public bool CalculationButtonIsVisible
         {
@@ -21,7 +23,16 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public static string WindowName { get; set; } = "Calculator";
+        public string WindowName
+        {
+            get { return mWindowName; }
+            set
+            {
+                if (value == mWindowName) return;
+                mWindowName = value;
+                NotifyOfPropertyChange(() => WindowName);
+            }
+        }
 
         public string IsResizeable
         {
@@ -44,14 +55,14 @@ namespace CalculatorWPFViewModels
                 NotifyOfPropertyChange(() => ConversionButtonIsVisible);
             }
         }
-
+        
         public ShellViewModel(InputViewModel input, ConversionViewModel conversion)
         {
             Input = input;
             Conversion = conversion;
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
-            IsResizeable = "noResize";
+            IsResizeable = "CanMinimize";
         }
         public InputViewModel Input { get; private set; }
         public ConversionViewModel Conversion { get; set; }

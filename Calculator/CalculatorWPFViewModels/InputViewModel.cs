@@ -48,6 +48,7 @@ namespace CalculatorWPFViewModels
                 if (value == mStepExpander) return;
                 mStepExpander = value;
                 NotifyOfPropertyChange(() => StepExpander);
+                WpfApplicationStatics.StepExpander = value;
             }
         }
 
@@ -107,6 +108,11 @@ namespace CalculatorWPFViewModels
             {
                 Calculate();
             }
+        }
+
+        public void OnExpansion()
+        {
+            
         }
     }
 }

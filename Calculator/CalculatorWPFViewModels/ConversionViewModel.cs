@@ -11,6 +11,19 @@ namespace CalculatorWPFViewModels
 
         bool mToMetric;
         bool mToImperial;
+        bool mUnitExpander;
+
+        public bool UnitExpander
+        {
+            get { return mUnitExpander; }
+            set
+            {
+                if (value == mUnitExpander) return;
+                mUnitExpander = value;
+                NotifyOfPropertyChange(() => UnitExpander);
+                WpfApplicationStatics.UnitExpander = value;
+            }
+        }
 
         public bool ToMetric
         {

@@ -22,7 +22,7 @@
             <RadioButton x:Name="ToMetric" Content="Convert to Metrical System"/>
             <RadioButton x:Name="ToImperial" Content="Convert to Imperial System"/>
         </StackPanel>
-        <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0">
+        <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0" IsExpanded="{Binding UnitExpander}">
             <TreeView>
                 <TreeViewItem Header="Metrical">
                     <TreeViewItem Header="Volume">
