@@ -11,6 +11,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,8 +25,41 @@
             <Button x:Name="OnConversionButton" Content="Conversion" Width="100"/>
         </Grid>
         <ContentControl Grid.Row="2" Grid.Column="0" x:Name="ActiveItem"/>
+        <Button Grid.Row="3" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton"/>
     </Grid>
 </Window>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

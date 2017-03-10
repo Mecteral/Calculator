@@ -3,6 +3,7 @@ using System.Windows;
 using Autofac;
 using Calculator.Logic;
 using CalculatorWPFViewModels;
+using CalculatorWPFViewModels.ChildWindowFactory;
 using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
@@ -27,6 +28,7 @@ namespace CalculatorWPFApplication
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+            builder.RegisterType<ConfigurationWindowFactory>().As<IWindowFactory>().SingleInstance();
             return builder.Build();
         }
 

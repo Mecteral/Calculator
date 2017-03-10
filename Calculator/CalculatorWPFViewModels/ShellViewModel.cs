@@ -1,4 +1,5 @@
 ﻿using Calculator.Logic;
+using CalculatorWPFViewModels.ChildWindowFactory;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
@@ -6,14 +7,16 @@ namespace CalculatorWPFViewModels
     public class ShellViewModel : Conductor<object>, IHandle<string>
     {
         readonly IEventAggregator mEvents;
+        readonly IWindowFactory mWindowFactory;
         bool mCalculationButtonIsVisible;
         bool mConversionButtonIsVisible;
         string mIsResizeable;
         string mWindowName = "Calculator";
 
-        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator)
+        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator, IWindowFactory windowFactory)
         {
             mEvents = eventAggregator;
+            mWindowFactory = windowFactory;
             mEvents.Subscribe(this);
             Input = input;
             Conversion = conversion;
@@ -79,6 +82,11 @@ namespace CalculatorWPFViewModels
             {
                 IsResizeable = "CanMinimize";
             }
+        }
+
+        public void OnConfigurationButton()
+        {
+            mWindowFactory.CreateNewWindow();
         }
 
         public void OnConversionButton()
