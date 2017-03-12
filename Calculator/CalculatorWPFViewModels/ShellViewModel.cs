@@ -1,29 +1,51 @@
 ﻿using Calculator.Logic;
-using CalculatorWPFViewModels.ChildWindowFactory;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
 {
     public class ShellViewModel : Conductor<object>, IHandle<string>
     {
-        readonly IEventAggregator mEvents;
-        readonly IWindowFactory mWindowFactory;
+        readonly ConfigurationWindowViewModel mConfigurationWindow;
+        readonly IWindowManager mWindowManager;
         bool mCalculationButtonIsVisible;
-        bool mConversionButtonIsVisible;
-        string mIsResizeable;
+        bool mConversionButtonIsVisible = true;
+        string mIsResizeable = "CanMinimize";
         string mWindowName = "Calculator";
+        int mWindowHeight = WpfApplicationStatics.ShellWindowHeight;
+        int mWindowWidth = WpfApplicationStatics.ShellWindowWidth;
 
-        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator, IWindowFactory windowFactory)
+        public int WindowHeight
         {
-            mEvents = eventAggregator;
-            mWindowFactory = windowFactory;
-            mEvents.Subscribe(this);
+            get { return mWindowHeight; }
+            set
+            {
+                if (value == mWindowHeight) return;
+                mWindowHeight = value;
+                NotifyOfPropertyChange(() => WindowHeight);
+            }
+        }
+
+        public int WindowWidth
+        {
+            get { return mWindowWidth; }
+            set
+            {
+                if (value == mWindowWidth) return;
+                mWindowWidth = value;
+                NotifyOfPropertyChange(() => WindowWidth);
+            }
+        }
+
+        public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator,
+            ConfigurationWindowViewModel configurationWindow, IWindowManager windowManager)
+        {
+            mConfigurationWindow = configurationWindow;
+            mWindowManager = windowManager;
             Input = input;
             Conversion = conversion;
-            ConversionButtonIsVisible = true;
-            CalculationButtonIsVisible = false;
-            IsResizeable = "CanMinimize";
+            eventAggregator.Subscribe(this);
         }
+
 
         public bool CalculationButtonIsVisible
         {
@@ -70,7 +92,7 @@ namespace CalculatorWPFViewModels
         }
 
         public InputViewModel Input { get; private set; }
-        public ConversionViewModel Conversion { get; set; }
+        public ConversionViewModel Conversion { get; private set; }
 
         public void Handle(string message)
         {
@@ -86,8 +108,9 @@ namespace CalculatorWPFViewModels
 
         public void OnConfigurationButton()
         {
-            mWindowFactory.CreateNewWindow();
+            mWindowManager.ShowDialog(mConfigurationWindow);
         }
+
 
         public void OnConversionButton()
         {

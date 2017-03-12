@@ -1,11 +1,12 @@
 ﻿<Window x:Class="CalculatorWPFApplication.Views.ShellView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             ResizeMode="{Binding IsResizeable}"
-             Title="{Binding WindowName}" MinHeight="200" MinWidth="500">
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        mc:Ignorable="d"
+        ResizeMode="{Binding IsResizeable}"
+        Title="{Binding WindowName}" MinHeight="200" MinWidth="500"
+        Height="{Binding WindowHeight}" Width="{Binding WindowWidth}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,80 +15,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <ContentControl Grid.Row="0" Grid.Column="0" x:Name="Input" />
         <Grid Grid.Row="1" Grid.Column="0" Name="CalculationButtonIsVisible">
-            <Button x:Name="OnCalculationButton" Content="Calculation" Width="100"/>
+            <Button x:Name="OnCalculationButton" Content="Calculation" Width="100" />
         </Grid>
         <Grid Grid.Row="1" Grid.Column="0" Name="ConversionButtonIsVisible">
-            <Button x:Name="OnConversionButton" Content="Conversion" Width="100"/>
+            <Button x:Name="OnConversionButton" Content="Conversion" Width="100" />
         </Grid>
-        <ContentControl Grid.Row="2" Grid.Column="0" x:Name="ActiveItem"/>
-        <Button Grid.Row="3" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton"/>
+        <ContentControl Grid.Row="2" Grid.Column="0" x:Name="ActiveItem" />
+        <Button Grid.Row="3" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton" />
     </Grid>
 </Window>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

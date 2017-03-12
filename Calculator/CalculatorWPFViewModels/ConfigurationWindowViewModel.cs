@@ -1,18 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
 {
-    public class ConfigurationWindowViewModel
+    public class ConfigurationWindowViewModel : Screen
     {
-        public ConfigurationViewModel Configuration { get; private set; }
-
         public ConfigurationWindowViewModel(ConfigurationViewModel configuration)
         {
             Configuration = configuration;
+        }
+
+        public ConfigurationViewModel Configuration { get; private set; }
+
+        public void ChangeData() {}
+
+        public void CloseWithOkay()
+        {
+            TryClose(true);
+        }
+
+        public void CloseWithCancel()
+
+        {
+            TryClose(false);
         }
     }
 }

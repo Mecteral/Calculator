@@ -3,11 +3,11 @@
 namespace CalculatorWPFApplication.Views
 {
     /// <summary>
-    /// Interaction logic for ConfigurationWindow.xaml
+    /// Interaction logic for ConfigurationWindowView.xaml
     /// </summary>
-    public partial class ConfigurationWindow : Window
+    public partial class ConfigurationWindowView : Window
     {
-        public ConfigurationWindow()
+        public ConfigurationWindowView()
         {
             InitializeComponent();
         }

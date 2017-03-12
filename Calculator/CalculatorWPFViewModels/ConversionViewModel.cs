@@ -12,10 +12,23 @@ namespace CalculatorWPFViewModels
         public ConversionViewModel(IEventAggregator eventAggregator)
         {
             mEventAggregator = eventAggregator;
+            SetListsForView();
+            AllUnitsAndAbbreviations = new List<List<UnitAbbreviationsAndNames>>
+            {
+                MetricalMasses,
+                MetricalAreas,
+                MetricalLengths,
+                MetricalVolumes,
+                ImperialMasses,
+                ImperialAreas,
+                ImperialLengths,
+                ImperialVolumes
+            };
+            SetUnitOnStartup();
         }
-        bool mToMetric;
+        bool mToMetric = WpfApplicationStatics.UseMetric;
         bool mToImperial;
-        bool mUnitExpander;
+        bool mUnitExpander = WpfApplicationStatics.UnitExpander;
         readonly IEventAggregator mEventAggregator;
 
         public bool UnitExpander
@@ -61,22 +74,6 @@ namespace CalculatorWPFViewModels
                 WpfApplicationStatics.UseMetric = true;
             else
                 WpfApplicationStatics.UseMetric = false;
-        }
-
-        public ConversionViewModel()
-        {
-            SetListsForView();
-            AllUnitsAndAbbreviations = new List<List<UnitAbbreviationsAndNames>>
-            {
-                MetricalMasses,
-                MetricalAreas,
-                MetricalLengths,
-                MetricalVolumes,
-                ImperialMasses,
-                ImperialAreas,
-                ImperialLengths,
-                ImperialVolumes
-            };
         }
 
         public static List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
@@ -140,6 +137,23 @@ namespace CalculatorWPFViewModels
                 else if (UnitAbbreviations.ImperialVolumes.Contains(value))
                 {
                     ImperialVolumes.Add(unitAbbreviationAndName);
+                }
+            }
+        }
+
+        void SetUnitOnStartup()
+        {
+            if (WpfApplicationStatics.LastPickedUnit != null)
+            {
+                foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+                {
+                    foreach (var units in abbreviationList)
+                    {
+                        if (units.Abbreviation == WpfApplicationStatics.LastPickedUnit)
+                        {
+                            units.IsSelected = true;
+                        }
+                    }
                 }
             }
         }

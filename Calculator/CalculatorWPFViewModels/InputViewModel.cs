@@ -13,7 +13,7 @@ namespace CalculatorWPFViewModels
         readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
-        bool mStepExpander;
+        bool mStepExpander = WpfApplicationStatics.StepExpander;
         List<string> mSteps = new List<string>();
 
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
@@ -98,6 +98,7 @@ namespace CalculatorWPFViewModels
                     if (units.IsSelected)
                     {
                         mArguments.UnitForConversion = units.Abbreviation;
+                        WpfApplicationStatics.LastPickedUnit = units.Abbreviation;
                     }
                 }
             }

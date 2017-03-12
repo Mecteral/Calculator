@@ -1,10 +1,30 @@
-﻿namespace Calculator.Logic
+﻿using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
+using Newtonsoft.Json;
+
+namespace Calculator.Logic
 {
-    public static class WpfApplicationStatics
+    [DataContract]
+    public class WpfApplicationStatics
     {
+        //All saved options for startup
+        [DataMember]
         public static bool StepExpander { get; set; }
+        [DataMember]
         public static bool UnitExpander { get; set; }
+        [DataMember]
         public static bool UseMetric { get; set; }
+        [DataMember]
         public static bool IsConversionActive { get; set; }
+        [DataMember]
+        public static int ShellWindowHeight { get; set; }
+        [DataMember]
+        public static int ShellWindowWidth { get; set; }
+        [DataMember]
+        public static int ShellWindowPositionX { get; set; }
+        [DataMember]
+        public static int ShellWindowPositionY { get; set; }
+        [DataMember]
+        public static string LastPickedUnit { get; set; }
     }
 }

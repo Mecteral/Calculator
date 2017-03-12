@@ -109,8 +109,8 @@
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ChildWindow\Views\ConfigurationWindow.xaml.cs">
-      <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
+    <Compile Include="Views\ConfigurationWindowView.xaml.cs">
+      <DependentUpon>ConfigurationWindowView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConversionView.xaml.cs">
       <DependentUpon>ConversionView.xaml</DependentUpon>
@@ -155,7 +155,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ChildWindow\Views\ConfigurationWindow.xaml">
+    <Page Include="Views\ConfigurationWindowView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,7 +194,9 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="ChildWindow\Views\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

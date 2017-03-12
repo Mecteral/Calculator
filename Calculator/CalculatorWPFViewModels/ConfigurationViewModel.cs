@@ -4,6 +4,5 @@ namespace CalculatorWPFViewModels
 {
     public class ConfigurationViewModel : PropertyChangedBase
     {
-
     }
 }

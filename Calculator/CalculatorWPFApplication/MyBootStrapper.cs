@@ -3,7 +3,6 @@ using System.Windows;
 using Autofac;
 using Calculator.Logic;
 using CalculatorWPFViewModels;
-using CalculatorWPFViewModels.ChildWindowFactory;
 using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
@@ -11,11 +10,13 @@ namespace CalculatorWPFApplication
     public class MyBootStrapper : BootstrapperBase
     {
         readonly IContainer mContainer;
+        IJSonSerializer mSerializer;
 
         public MyBootStrapper()
         {
             Initialize();
             mContainer = WireUpApplication();
+            mSerializer = new JSonSerializer(new WpfApplicationStatics());
         }
 
         static IContainer WireUpApplication()
@@ -25,21 +26,29 @@ namespace CalculatorWPFApplication
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .AsSelf()
                 .SingleInstance();
+            builder.RegisterType<WpfApplicationStatics>().SingleInstance();
+            builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
-            builder.RegisterType<ConfigurationWindowFactory>().As<IWindowFactory>().SingleInstance();
             return builder.Build();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
+            mSerializer.Read();
             DisplayRootViewFor<ShellViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)
         {
             return mContainer.Resolve(service);
+        }
+
+        protected override void OnExit(object sender, EventArgs e)
+        {
+            mSerializer.Write();
+            base.OnExit(sender, e);
         }
 
         protected override void Configure()
