@@ -143,17 +143,13 @@ namespace CalculatorWPFViewModels
 
         void SetUnitOnStartup()
         {
-            if (WpfApplicationStatics.LastPickedUnit != null)
+            if (WpfApplicationStatics.LastPickedUnit == null) return;
+            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
             {
-                foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+                foreach (var unit in abbreviationList)
                 {
-                    foreach (var units in abbreviationList)
-                    {
-                        if (units.Abbreviation == WpfApplicationStatics.LastPickedUnit)
-                        {
-                            units.IsSelected = true;
-                        }
-                    }
+                    if (unit.Abbreviation == WpfApplicationStatics.LastPickedUnit)
+                        unit.IsSelected = true;
                 }
             }
         }

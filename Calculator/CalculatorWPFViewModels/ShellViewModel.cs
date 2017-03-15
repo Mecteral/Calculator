@@ -3,36 +3,41 @@ using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
 {
-    public class ShellViewModel : Conductor<object>, IHandle<string>
+    public class ShellViewModel : Conductor<object>, IScreen, IHandle<string>
     {
         readonly ConfigurationWindowViewModel mConfigurationWindow;
         readonly IWindowManager mWindowManager;
         bool mCalculationButtonIsVisible;
         bool mConversionButtonIsVisible = true;
-        string mIsResizeable = "CanMinimize";
-        string mWindowName = "Calculator";
+        string mIsResizeable;
         int mWindowHeight = WpfApplicationStatics.ShellWindowHeight;
         int mWindowWidth = WpfApplicationStatics.ShellWindowWidth;
 
-        public int WindowHeight
+        public void OnCloseButton()
+        {
+            TryClose();
+        }
+        public int ShellWindowHeight
         {
             get { return mWindowHeight; }
             set
             {
                 if (value == mWindowHeight) return;
                 mWindowHeight = value;
-                NotifyOfPropertyChange(() => WindowHeight);
+                NotifyOfPropertyChange(() => ShellWindowHeight);
+                WpfApplicationStatics.ShellWindowHeight = value;
             }
         }
 
-        public int WindowWidth
+        public int ShellWindowWidth
         {
             get { return mWindowWidth; }
             set
             {
                 if (value == mWindowWidth) return;
                 mWindowWidth = value;
-                NotifyOfPropertyChange(() => WindowWidth);
+                NotifyOfPropertyChange(() => ShellWindowWidth);
+                WpfApplicationStatics.ShellWindowWidth = value;
             }
         }
 
@@ -44,9 +49,24 @@ namespace CalculatorWPFViewModels
             Input = input;
             Conversion = conversion;
             eventAggregator.Subscribe(this);
+            SetupWindowAttributesFromConfig();
         }
 
-
+        void SetupWindowAttributesFromConfig()
+        {
+            if (WpfApplicationStatics.StepExpander || WpfApplicationStatics.UnitExpander)
+                mIsResizeable = "CanResize";
+            else
+                mIsResizeable = "CanMinimize";
+            if (WpfApplicationStatics.IsConversionActive)
+                OnConversionButton();
+            else
+                OnCalculationButton();
+            if (WpfApplicationStatics.ShellWindowWidth < 500)
+                mWindowWidth = 500;
+            if (WpfApplicationStatics.ShellWindowHeight < 250)
+                mWindowHeight = 250;
+        }
         public bool CalculationButtonIsVisible
         {
             get { return mCalculationButtonIsVisible; }
@@ -55,17 +75,6 @@ namespace CalculatorWPFViewModels
                 if (value == mCalculationButtonIsVisible) return;
                 mCalculationButtonIsVisible = value;
                 NotifyOfPropertyChange(() => CalculationButtonIsVisible);
-            }
-        }
-
-        public string WindowName
-        {
-            get { return mWindowName; }
-            set
-            {
-                if (value == mWindowName) return;
-                mWindowName = value;
-                NotifyOfPropertyChange(() => WindowName);
             }
         }
 

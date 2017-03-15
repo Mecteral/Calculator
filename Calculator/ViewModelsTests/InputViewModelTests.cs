@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using CalculatorWPFViewModels;
 using Caliburn.Micro;
 using FluentAssertions;
@@ -20,13 +21,15 @@ namespace ViewModelsTests
             mExecutor = Substitute.For<IWpfCalculationExecutor>();
             mArguments = Substitute.For<IApplicationArguments>();
             mAggregator = Substitute.For<IEventAggregator>();
-            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator);
+            mInputStringValidator = Substitute.For<InputStringValidator>();
+            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator);
         }
 
         IEventAggregator mAggregator;
         IApplicationArguments mArguments;
         IWpfCalculationExecutor mExecutor;
         InputViewModel mUnderTest;
+        InputStringValidator mInputStringValidator;
 
         [Test]
         public void Calculate_Should_Call_Executor_With_InputString()

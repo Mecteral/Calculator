@@ -3,11 +3,11 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Calculator.Logic
-{
+{        
+    //All saved options for startup
     [DataContract]
     public class WpfApplicationStatics
     {
-        //All saved options for startup
         [DataMember]
         public static bool StepExpander { get; set; }
         [DataMember]

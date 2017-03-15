@@ -7,10 +7,10 @@
              xmlns:cal="http://www.caliburnproject.org"
              mc:Ignorable="d"
              >
-    <Grid>
+    <Grid MinWidth="200">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,17 +20,17 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=InputString}">
             <TextBox x:Name="InputString" MinWidth="400" Width="400"
-                     cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]">
+                     cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]" Background="AntiqueWhite" BorderBrush="AntiqueWhite" IsUndoEnabled="True" >
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding OnEnter}" Key="Enter" />
                     <KeyBinding Command="{Binding OnEnter}" Key="Return" />
                 </TextBox.InputBindings>
             </TextBox>
         </DockPanel>
-        <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" />
-        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
-        <Expander Grid.Column="0" Grid.Row="3" Header="Steps" IsExpanded="{Binding StepExpander}">
-            <ListView ItemsSource="{Binding Steps}">
+        <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" Foreground="{Binding CalculationButtonForeground}" IsEnabled="{Binding CalculationButtonToggle}" />
+        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" BorderThickness="0" Background="BurlyWood"/>
+        <Expander Grid.Column="0" Grid.Row="3" Header="Steps" IsExpanded="{Binding StepExpander}" BorderThickness="0">
+            <ListView ItemsSource="{Binding Steps}" BorderThickness="0" Background="BurlyWood" BorderBrush="SeaGreen">
                 <ListView.ItemTemplate>
                     <DataTemplate DataType="calculatorWpfViewModels:InputViewModel">
                         <TextBlock Text="{Binding .}" />

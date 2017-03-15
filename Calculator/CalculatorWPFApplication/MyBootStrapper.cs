@@ -2,6 +2,7 @@
 using System.Windows;
 using Autofac;
 using Calculator.Logic;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using CalculatorWPFViewModels;
 using Caliburn.Micro;
 
@@ -10,7 +11,7 @@ namespace CalculatorWPFApplication
     public class MyBootStrapper : BootstrapperBase
     {
         readonly IContainer mContainer;
-        IJSonSerializer mSerializer;
+        readonly IJSonSerializer mSerializer;
 
         public MyBootStrapper()
         {
@@ -27,6 +28,7 @@ namespace CalculatorWPFApplication
                 .AsSelf()
                 .SingleInstance();
             builder.RegisterType<WpfApplicationStatics>().SingleInstance();
+            builder.RegisterType<InputStringValidator>().SingleInstance();
             builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);

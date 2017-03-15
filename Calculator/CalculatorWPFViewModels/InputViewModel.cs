@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.Parsing.CalculationTokenizer;
 using Caliburn.Micro;
 
 namespace CalculatorWPFViewModels
@@ -10,18 +11,22 @@ namespace CalculatorWPFViewModels
     {
         readonly IApplicationArguments mArguments;
         readonly IEventAggregator mEventAggregator;
+        readonly InputStringValidator mValidator;
         readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
         bool mStepExpander = WpfApplicationStatics.StepExpander;
         List<string> mSteps = new List<string>();
+        bool mCalculationButtonToggle;
+        string mCalculationButtonForeground = "grey";
 
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
-            IEventAggregator eventAggregator)
+            IEventAggregator eventAggregator, InputStringValidator validator)
         {
             mExecutor = executor;
             mArguments = arguments;
             mEventAggregator = eventAggregator;
+            mValidator = validator;
         }
 
         public List<string> Steps
@@ -48,6 +53,17 @@ namespace CalculatorWPFViewModels
             }
         }
 
+        public string CalculationButtonForeground
+        {
+            get { return mCalculationButtonForeground; }
+            set
+            {
+                if (value == mCalculationButtonForeground) return;
+                mCalculationButtonForeground = value;
+                NotifyOfPropertyChange(() => CalculationButtonForeground);
+            }
+        }
+
         public bool StepExpander
         {
             get { return mStepExpander; }
@@ -61,11 +77,37 @@ namespace CalculatorWPFViewModels
             }
         }
 
+        public bool CalculationButtonToggle
+        {
+            get { return mCalculationButtonToggle; }
+            set
+            {
+                if (value == mCalculationButtonToggle) return;
+                mCalculationButtonToggle = value;
+                NotifyOfPropertyChange(() => CalculationButtonToggle);
+            }
+        }
+
+        void InputValidation(string input)
+        {
+            try
+            {
+                mValidator.Validate(input);
+                CalculationButtonToggle = true;
+                CalculationButtonForeground = "Black";
+            }
+            catch (CalculationException x)
+            {
+                CalculationButtonToggle = false;
+                CalculationButtonForeground = "Grey";
+            }
+        }
         public string InputString
         {
             get { return mInputString; }
             set
             {
+                InputValidation(value);
                 if (value == mInputString) return;
                 mInputString = value;
                 NotifyOfPropertyChange(() => InputString);

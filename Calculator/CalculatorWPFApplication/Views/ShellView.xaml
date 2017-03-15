@@ -5,10 +5,24 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
         ResizeMode="{Binding IsResizeable}"
-        Title="{Binding WindowName}" MinHeight="200" MinWidth="500"
-        Height="{Binding WindowHeight}" Width="{Binding WindowWidth}">
-    <Grid>
+        Title="Calculator"
+        MinHeight="250" MinWidth="500"
+        MaxHeight="800" MaxWidth="500"
+        Height="{Binding ShellWindowHeight}" Width="{Binding ShellWindowWidth}"
+        Background="SeaGreen"
+        BorderThickness="0" BorderBrush="SeaGreen"
+        WindowStyle="None">
+    <WindowChrome.WindowChrome>
+        <WindowChrome     
+        CaptionHeight="1"  
+        CornerRadius ="0"
+        ResizeBorderThickness="4"         
+        GlassFrameThickness="0">
+        </WindowChrome>
+    </WindowChrome.WindowChrome>
+    <Grid MinWidth="200">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="30" />
             <RowDefinition Height="Auto" />
@@ -18,14 +32,27 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <ContentControl Grid.Row="0" Grid.Column="0" x:Name="Input" />
-        <Grid Grid.Row="1" Grid.Column="0" Name="CalculationButtonIsVisible">
-            <Button x:Name="OnCalculationButton" Content="Calculation" Width="100" />
+        <DockPanel x:Name="RootWindow" Background="SeaGreen" DragEnter="TitleBar_OnDragEnter">
+            <DockPanel x:Name="TitleBar" Dock="Top" >
+                <Button x:Name="OnCloseButton" Content="X" DockPanel.Dock="Right"/>
+                <Button x:Name="MinButton" Content="Minimize" DockPanel.Dock="Right" Click="MinButton_OnClick"/>
+
+                <TextBox HorizontalAlignment="Center" Background="SeaGreen" BorderThickness="0" Focusable="False">Calculator</TextBox>
+            </DockPanel>
+
+            <ContentControl Content="{Binding CurrentPage}" />
+        </DockPanel>
+        <ContentControl Grid.Row="1" Grid.Column="0" x:Name="Input" />
+        <Grid Grid.Row="2" Grid.Column="0" Name="CalculationButtonIsVisible">
+            <Button x:Name="OnCalculationButton" Content="Calculation" Width="100" HorizontalAlignment="Center" />
         </Grid>
-        <Grid Grid.Row="1" Grid.Column="0" Name="ConversionButtonIsVisible">
-            <Button x:Name="OnConversionButton" Content="Conversion" Width="100" />
+        <Grid Grid.Row="2" Grid.Column="0" Name="ConversionButtonIsVisible">
+            <Button x:Name="OnConversionButton" Content="Conversion" Width="100" HorizontalAlignment="Center"/>
         </Grid>
-        <ContentControl Grid.Row="2" Grid.Column="0" x:Name="ActiveItem" />
-        <Button Grid.Row="3" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton" />
+        <ContentControl Grid.Row="3" Grid.Column="0" x:Name="ActiveItem" />
+        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton" Width="250"
+                Height="30" />
+
     </Grid>
+
 </Window>
