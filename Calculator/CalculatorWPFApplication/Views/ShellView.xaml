@@ -11,7 +11,8 @@
         Height="{Binding ShellWindowHeight}" Width="{Binding ShellWindowWidth}"
         Background="SeaGreen"
         BorderThickness="0" BorderBrush="SeaGreen"
-        WindowStyle="None">
+        WindowStyle="None"
+        MouseDown="ShellView_OnMouseDown">
     <WindowChrome.WindowChrome>
         <WindowChrome     
         CaptionHeight="1"  
@@ -32,7 +33,7 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <DockPanel x:Name="RootWindow" Background="SeaGreen" DragEnter="TitleBar_OnDragEnter">
+        <DockPanel x:Name="RootWindow" Background="SeaGreen">
             <DockPanel x:Name="TitleBar" Dock="Top" >
                 <Button x:Name="OnCloseButton" Content="X" DockPanel.Dock="Right"/>
                 <Button x:Name="MinButton" Content="Minimize" DockPanel.Dock="Right" Click="MinButton_OnClick"/>

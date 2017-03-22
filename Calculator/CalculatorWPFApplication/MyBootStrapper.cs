@@ -17,6 +17,7 @@ namespace CalculatorWPFApplication
         {
             Initialize();
             mContainer = WireUpApplication();
+            
             mSerializer = new JSonSerializer(new WpfApplicationStatics());
         }
 

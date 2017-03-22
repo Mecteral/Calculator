@@ -18,7 +18,7 @@ namespace CalculatorWPFApplication.Views
             WindowState = WindowState.Minimized;
         }
 
-        void TitleBar_OnDragEnter(object sender, DragEventArgs e)
+        void ShellView_OnMouseDown(object sender, MouseButtonEventArgs e)
         {
             DragMove();
         }

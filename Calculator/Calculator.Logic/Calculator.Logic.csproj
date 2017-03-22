@@ -75,6 +75,7 @@
     <Compile Include="Facades\IEvaluationFasade.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
+    <Compile Include="IJSonSerializer.cs" />
     <Compile Include="IWpfCalculationExecutor.cs" />
     <Compile Include="JSonSerializer.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
