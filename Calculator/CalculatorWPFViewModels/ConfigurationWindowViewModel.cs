@@ -6,10 +6,10 @@ namespace CalculatorWPFViewModels
     {
         public ConfigurationWindowViewModel(ConfigurationViewModel configuration)
         {
-            Configuration = configuration;
+            ConfigurationTabs = configuration;
         }
 
-        public ConfigurationViewModel Configuration { get; private set; }
+        public ConfigurationViewModel ConfigurationTabs { get; private set; }
 
         public void ChangeData() {}
 

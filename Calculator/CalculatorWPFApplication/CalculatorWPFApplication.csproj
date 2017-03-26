@@ -95,6 +95,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WPFToolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -106,6 +107,12 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="MyBootStrapper.cs" />
+    <Compile Include="Views\ConfigurationOptionTabView.xaml.cs">
+      <DependentUpon>ConfigurationOptionTabView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConfigurationThemeTabView.xaml.cs">
+      <DependentUpon>ConfigurationThemeTabView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ConfigurationView.xaml.cs">
       <DependentUpon>ConfigurationView.xaml</DependentUpon>
     </Compile>
@@ -151,6 +158,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\ConfigurationOptionTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConfigurationThemeTabView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConfigurationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

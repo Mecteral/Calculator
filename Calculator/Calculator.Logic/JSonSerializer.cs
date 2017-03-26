@@ -18,11 +18,10 @@ namespace Calculator.Logic
         {
             if (File.Exists(FilePath))
                 mStatics = JsonConvert.DeserializeObject<WpfApplicationStatics>(File.ReadAllText(FilePath));
+            else
+                File.WriteAllText(FilePath, JsonConfigStart);
         }
 
-        public void Write()
-        {
-            File.WriteAllText(FilePath, File.Exists(FilePath) ? JsonConvert.SerializeObject(mStatics) : JsonConfigStart);
-        }
+        public void Write() => File.WriteAllText(FilePath, JsonConvert.SerializeObject(mStatics));
     }
 }
