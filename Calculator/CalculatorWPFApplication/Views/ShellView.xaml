@@ -7,7 +7,6 @@
         ResizeMode="{Binding IsResizeable}"
         Title="Calculator"
         MinHeight="250" MinWidth="500"
-        MaxHeight="800" MaxWidth="500"
         Height="{Binding ShellWindowHeight}" Width="{Binding ShellWindowWidth}"
         Background="#26FFFFFF"
         WindowStyle="None"
