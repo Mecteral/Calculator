@@ -9,8 +9,7 @@
         MinHeight="250" MinWidth="500"
         MaxHeight="800" MaxWidth="500"
         Height="{Binding ShellWindowHeight}" Width="{Binding ShellWindowWidth}"
-        Background="SeaGreen"
-        BorderThickness="0" BorderBrush="SeaGreen"
+        Background="#26FFFFFF"
         WindowStyle="None"
         MouseDown="ShellView_OnMouseDown">
     <WindowChrome.WindowChrome>
@@ -33,12 +32,12 @@
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="100" />
         </Grid.ColumnDefinitions>
-        <DockPanel x:Name="RootWindow" Background="SeaGreen">
+        <DockPanel x:Name="RootWindow">
             <DockPanel x:Name="TitleBar" Dock="Top" >
                 <Button x:Name="OnCloseButton" Content="X" DockPanel.Dock="Right"/>
                 <Button x:Name="MinButton" Content="Minimize" DockPanel.Dock="Right" Click="MinButton_OnClick"/>
 
-                <TextBox HorizontalAlignment="Center" Background="SeaGreen" BorderThickness="0" Focusable="False">Calculator</TextBox>
+                <TextBox HorizontalAlignment="Center" BorderThickness="0" Focusable="False">Calculator</TextBox>
             </DockPanel>
 
             <ContentControl Content="{Binding CurrentPage}" />

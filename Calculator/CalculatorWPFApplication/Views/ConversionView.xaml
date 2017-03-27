@@ -17,15 +17,15 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-            <RadioButton x:Name="ToMetric" Content="Convert to Metrical System" />
+            <RadioButton x:Name="ToMetric" >Convert to Metrical System</RadioButton>
             <RadioButton x:Name="ToImperial" Content="Convert to Imperial System" />
         </StackPanel>
-        <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0" IsExpanded="{Binding UnitExpander}" Background="BurlyWood">
+        <Expander Header="Conversion Units" Grid.Row="2" Grid.Column="0" IsExpanded="{Binding UnitExpander}">
             <StackPanel Orientation="Horizontal" >
-                <TreeView BorderThickness="0" MinWidth="200" Background="BurlyWood">
+                <TreeView  MinWidth="200">
                     <TreeViewItem  Header="Metrical" >
                         <TreeViewItem Header="Volume">
-                            <ListView ItemsSource="{Binding MetricalVolumes}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding MetricalVolumes}" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -35,7 +35,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Mass">
-                            <ListView ItemsSource="{Binding MetricalMasses}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding MetricalMasses}" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -45,7 +45,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Area">
-                            <ListView ItemsSource="{Binding MetricalAreas}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding MetricalAreas}" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -55,7 +55,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Length" >
-                            <ListView ItemsSource="{Binding MetricalLengths}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding MetricalLengths}" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -66,10 +66,10 @@
                         </TreeViewItem>
                     </TreeViewItem>
                 </TreeView>
-                <TreeView BorderThickness="0" MinWidth="200" Background="BurlyWood">
+                <TreeView BorderThickness="0" MinWidth="200">
                     <TreeViewItem Header="Imperial">
                         <TreeViewItem Header="Volume" >
-                            <ListView ItemsSource="{Binding ImperialVolumes}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding ImperialVolumes}" >
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -79,7 +79,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Mass">
-                            <ListView ItemsSource="{Binding ImperialMasses}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding ImperialMasses}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -89,7 +89,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Area">
-                            <ListView ItemsSource="{Binding ImperialAreas}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding ImperialAreas}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"
@@ -99,7 +99,7 @@
                             </ListView>
                         </TreeViewItem>
                         <TreeViewItem Header="Length">
-                            <ListView ItemsSource="{Binding ImperialLengths}" BorderThickness="0">
+                            <ListView ItemsSource="{Binding ImperialLengths}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate DataType="calculatorWpfViewModels:ConversionViewModel">
                                         <RadioButton Content="{Binding .Name}" GroupName="RadioButtonGroupName"

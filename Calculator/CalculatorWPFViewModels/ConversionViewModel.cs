@@ -70,10 +70,7 @@ namespace CalculatorWPFViewModels
 
         void SetUseMetric()
         {
-            if (ToMetric)
-                WpfApplicationStatics.UseMetric = true;
-            else
-                WpfApplicationStatics.UseMetric = false;
+            WpfApplicationStatics.UseMetric = ToMetric;
         }
 
         public static List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }

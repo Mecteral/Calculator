@@ -156,6 +156,5 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public void OnExpansion() {}
     }
 }

@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Column="0" Grid.Row="0" FocusManager.FocusedElement="{Binding ElementName=InputString}">
             <TextBox x:Name="InputString" MinWidth="400" Width="400"
-                     cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]" Background="AntiqueWhite" BorderBrush="AntiqueWhite" IsUndoEnabled="True" >
+                     cal:Message.Attach="[Event KeyDown] = [Action OnEnter ($executionContext)]" IsUndoEnabled="True" >
                 <TextBox.InputBindings>
                     <KeyBinding Command="{Binding OnEnter}" Key="Enter" />
                     <KeyBinding Command="{Binding OnEnter}" Key="Return" />
@@ -28,14 +28,16 @@
             </TextBox>
         </DockPanel>
         <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" Content="Calculate" Foreground="{Binding CalculationButtonForeground}" IsEnabled="{Binding CalculationButtonToggle}" />
-        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto" BorderThickness="0" Background="BurlyWood"/>
-        <Expander Grid.Column="0" Grid.Row="3" Header="Steps" IsExpanded="{Binding StepExpander}" BorderThickness="0">
-            <ListView ItemsSource="{Binding Steps}" BorderThickness="0" Background="BurlyWood" BorderBrush="SeaGreen">
-                <ListView.ItemTemplate>
-                    <DataTemplate DataType="calculatorWpfViewModels:InputViewModel">
-                        <TextBlock Text="{Binding .}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+        <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" MinWidth="350" MaxWidth="400" x:Name="Result" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
+        <Expander Grid.Column="0" Grid.Row="3" Header="Steps" IsExpanded="{Binding StepExpander}">
+            <ListView ItemsSource="{Binding Steps}" BorderThickness="0" >
+                <ListView.View>
+                    <GridView >
+                        <GridView.Columns>
+                            <GridViewColumn DisplayMemberBinding="{Binding .}"/>
+                        </GridView.Columns>
+                    </GridView>
+                </ListView.View>
             </ListView>
         </Expander>
     </Grid>
