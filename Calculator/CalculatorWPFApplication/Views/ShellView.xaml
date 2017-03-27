@@ -4,6 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         mc:Ignorable="d"
+        SizeToContent="WidthAndHeight"
         ResizeMode="{Binding IsResizeable}"
         Title="Calculator"
         MinHeight="250" MinWidth="500"
@@ -28,8 +29,8 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="Auto" MinWidth="492" />
+            <ColumnDefinition Width="0" />
         </Grid.ColumnDefinitions>
         <DockPanel x:Name="RootWindow">
             <DockPanel x:Name="TitleBar" Dock="Top" >
@@ -49,8 +50,7 @@
             <Button x:Name="OnConversionButton" Content="Conversion" Width="100" HorizontalAlignment="Center"/>
         </Grid>
         <ContentControl Grid.Row="3" Grid.Column="0" x:Name="ActiveItem" />
-        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" x:Name="OnConfigurationButton" Width="250"
-                Height="30" />
+        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" Width="100" x:Name="OnConfigurationButton" Margin="4,0,3,1" />
 
     </Grid>
 
