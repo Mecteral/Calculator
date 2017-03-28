@@ -62,17 +62,7 @@ namespace Calculator.Logic
         public void Visit(VariableToken variableToken)
         {
             mCurrent = new Variable {Variables = variableToken.Variable};
-            BindVariableInMultiplication();
             HandleNonParenthesesAndOperation();
-        }
-
-        void BindVariableInMultiplication()
-        {
-            if (mCurrentOperation?.Right != null)
-            {
-                var temp = mCurrentOperation.Right;
-                mCurrentOperation.Right = new Multiplication() {Left = temp, Right = mCurrent};
-            }
         }
 
         public void Visit(CosineToken cosineToken)

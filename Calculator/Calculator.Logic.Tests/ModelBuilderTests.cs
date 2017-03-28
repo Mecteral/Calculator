@@ -3,6 +3,7 @@ using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 using FluentAssertions;
+using Mecteral.UnitConversion;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests
@@ -26,6 +27,7 @@ namespace Calculator.Logic.Tests
         static SinusToken Sinus(string input) => new SinusToken($"sin({input})", null);
         static CosineToken Cosine(string input) => new CosineToken($"cos({input})", null);
         static SquareRootToken Root(string input) => new SquareRootToken($"sqrt({input})");
+        static OperatorToken Square => new OperatorToken('^');
         //(1+2)+(3+4)
         [Test]
         public void AdditionWithDoubleParenthesed()
@@ -342,9 +344,14 @@ namespace Calculator.Logic.Tests
         }
 
         [Test]
-        public void ModelBuilder_Builds_Variables_In_Multiplications_With_Variable_On_The_Right_Hand_Side()
+        public void Simple_Square()
         {
-            //var addition = TestExpecting<Addition>()
+            var input = new IToken[]
+            {
+                Number(13), Square, Number(17)
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("13 ^ 17");
         }
     }
 }

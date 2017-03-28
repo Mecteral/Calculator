@@ -47,5 +47,28 @@ namespace Calculator.Logic.Tests.Model
         {
             Check(TestExpressions.Nested, "((1 - 2) + (3/4))");
         }
+        [Test]
+        public void Format_Square()
+        {
+            Check(TestExpressions.SquarewithRoot, "9 ^ 2");
+        }
+
+        [Test]
+        public void Format_CosineAddition()
+        {
+            Check(TestExpressions.CosineAddition, "cos(23) + cos(17)");
+        }
+
+        [Test]
+        public void Format_SinusAddition()
+        {
+            Check(TestExpressions.SinusAddition, "sin(23) + sin(17)");
+        }
+
+        [Test]
+        public void Format_TangentAddition()
+        {
+            Check(TestExpressions.TangentAddition, "tan(23) + tan(17)");
+        }
     }
 }
