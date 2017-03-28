@@ -54,10 +54,6 @@
         string ExtractFuntionConditionsFromString(int start)
         {
             var result = "";
-            if (mInput.Length < start + 1)
-            {
-                throw new CalculationException("The Function has no Value and is not closed", start);
-            }
             if (mInput[start + 1] == ')')
             {
                 throw new CalculationException("The Function has no Value", start);
