@@ -3,39 +3,36 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:componentModel="clr-namespace:System.ComponentModel;assembly=WindowsBase"
         mc:Ignorable="d"
         SizeToContent="WidthAndHeight"
         ResizeMode="{Binding IsResizeable}"
         Title="Calculator"
         MinHeight="250" MinWidth="500"
-        Height="{Binding ShellWindowHeight}" Width="{Binding ShellWindowWidth}"
+        Height="Auto" Width="Auto"
         Background="{DynamicResource WindowBackgroundBrush}"
         WindowStyle="None"
         MouseDown="ShellView_OnMouseDown">
+
     <WindowChrome.WindowChrome>
-        <WindowChrome     
-        CaptionHeight="1"  
-        CornerRadius ="0"
-        ResizeBorderThickness="4"         
-        GlassFrameThickness="0">
-        </WindowChrome>
+        <WindowChrome
+            CaptionHeight="1"
+            CornerRadius="0"
+            ResizeBorderThickness="4"
+            GlassFrameThickness="0" />
     </WindowChrome.WindowChrome>
     <Grid MinWidth="200">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="30" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" MinWidth="492" />
-            <ColumnDefinition Width="0" />
-        </Grid.ColumnDefinitions>
         <DockPanel x:Name="RootWindow">
-            <DockPanel x:Name="TitleBar" Dock="Top" >
-                <Button x:Name="OnCloseButton" Content="X" DockPanel.Dock="Right"/>
-                <Button x:Name="MinButton" Content="Minimize" DockPanel.Dock="Right" Click="MinButton_OnClick"/>
+            <DockPanel x:Name="TitleBar" Dock="Top">
+                <Button x:Name="OnCloseButton" Content="X" DockPanel.Dock="Right" />
+                <Button x:Name="MinButton" Content="Minimize" DockPanel.Dock="Right" Click="MinButton_OnClick" />
 
                 <TextBox HorizontalAlignment="Center" BorderThickness="0" Focusable="False">Calculator</TextBox>
             </DockPanel>
@@ -44,13 +41,15 @@
         </DockPanel>
         <ContentControl Grid.Row="1" Grid.Column="0" x:Name="Input" />
         <Grid Grid.Row="2" Grid.Column="0" Name="CalculationButtonIsVisible">
-            <Button x:Name="OnCalculationButton" Content="Calculation" Width="100" HorizontalAlignment="Center" />
+            <Button x:Name="OnCalculationButton" Content="Calculation" MinWidth="100" HorizontalAlignment="Center"
+                    Margin="4,4,4,4" />
         </Grid>
         <Grid Grid.Row="2" Grid.Column="0" Name="ConversionButtonIsVisible">
-            <Button x:Name="OnConversionButton" Content="Conversion" Width="100" HorizontalAlignment="Center"/>
+            <Button x:Name="OnConversionButton" Content="Conversion" MinWidth="100" HorizontalAlignment="Center" />
         </Grid>
         <ContentControl Grid.Row="3" Grid.Column="0" x:Name="ActiveItem" />
-        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" Width="100" x:Name="OnConfigurationButton" Margin="4,0,3,1" />
+        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" MinWidth="100" x:Name="OnConfigurationButton"
+                Margin="4,0,3,1" />
 
     </Grid>
 

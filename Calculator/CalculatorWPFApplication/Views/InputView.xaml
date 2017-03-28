@@ -28,7 +28,7 @@
                 </TextBox.InputBindings>
             </TextBox>
         </DockPanel>
-        <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" MinWidth="100" MaxWidth="100" Content="Calculate" Foreground="{Binding CalculationButtonForeground}" IsEnabled="{Binding CalculationButtonToggle}" />
+        <Button x:Name="Calculate" Grid.Row="0" Grid.Column="1" MinWidth="100" Content="Calculate" Foreground="{Binding CalculationButtonForeground}" IsEnabled="{Binding CalculationButtonToggle}" />
         <TextBox Grid.Column="0" Grid.Row="2" IsReadOnly="True" x:Name="Result" MinWidth="400" VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Auto"/>
         <Expander Grid.Column="0" Grid.Row="3" Header="Steps" MinWidth="400" IsExpanded="{Binding StepExpander}">
             <ListView ItemsSource="{Binding Steps}" BorderThickness="0" >

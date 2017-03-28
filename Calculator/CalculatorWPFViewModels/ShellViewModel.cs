@@ -17,29 +17,6 @@ namespace CalculatorWPFViewModels
         {
             TryClose();
         }
-        public int ShellWindowHeight
-        {
-            get { return mWindowHeight; }
-            set
-            {
-                if (value == mWindowHeight) return;
-                mWindowHeight = value;
-                NotifyOfPropertyChange(() => ShellWindowHeight);
-                WpfApplicationStatics.ShellWindowHeight = value;
-            }
-        }
-
-        public int ShellWindowWidth
-        {
-            get { return mWindowWidth; }
-            set
-            {
-                if (value == mWindowWidth) return;
-                mWindowWidth = value;
-                NotifyOfPropertyChange(() => ShellWindowWidth);
-                WpfApplicationStatics.ShellWindowWidth = value;
-            }
-        }
 
         public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator,
             ConfigurationWindowViewModel configurationWindow, IWindowManager windowManager)
