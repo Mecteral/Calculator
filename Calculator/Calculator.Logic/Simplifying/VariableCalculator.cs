@@ -24,6 +24,7 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Multiplication multiplication)
         {
+            CheckOperation(multiplication);
             VisitOperands(multiplication);
         }
 
@@ -37,6 +38,7 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Division division)
         {
+            CheckOperation(division);
             VisitOperands(division);
         }
 
@@ -91,6 +93,85 @@ namespace Calculator.Logic.Simplifying
                 {
                     HandleDoubleMultiplicationInSubtraction(operation);
                 }
+            }
+            else if (operation.Right is Constant && operation.Left is Multiplication)
+            {
+                var boundVariable = (IArithmeticOperation)operation.Left;
+                if (boundVariable.Right is Variable)
+                {
+                    HandleRightHandedVariableMultiplicationAndDivision(operation, boundVariable);
+                }
+            }
+            else if (operation.Right is Multiplication && operation.Left is Constant)
+            {
+                var boundVariable = (IArithmeticOperation)operation.Right;
+                if (boundVariable.Right is Variable)
+                {
+                    HandleLeftHandedVariableMultiplicationAndDivision(operation,boundVariable);
+                }
+            }
+        }
+
+        void HandleLeftHandedVariableMultiplicationAndDivision(IArithmeticOperation operation, IArithmeticOperation boundVariable)
+        {
+            var left = (IExpressionWithValue)boundVariable.Left;
+            var right = (IExpressionWithValue)operation.Left;
+            if (operation is Multiplication)
+            {
+                operation.Left = new Constant() { Value = left.Value * right.Value };
+            }
+            else
+            {
+                if (operation.HasParent)
+                {
+                    operation = HandleDivisionOfVariablesInChain(operation);
+                }
+                else
+                {
+                    mCalculatedExpression = new Multiplication();
+                    operation = (IArithmeticOperation)mCalculatedExpression;
+                }
+                operation.Left = new Constant() { Value = right.Value / left.Value };
+            }
+            operation.Right = boundVariable.Right;
+        }
+
+        void HandleRightHandedVariableMultiplicationAndDivision(IArithmeticOperation operation, IArithmeticOperation boundVariable)
+        {
+            var left = (IExpressionWithValue)boundVariable.Left;
+            var right = (IExpressionWithValue)operation.Right;
+            if (operation is Multiplication)
+            {
+                operation.Left = new Constant() { Value = right.Value * left.Value };
+            }
+            else
+            {
+                if (operation.HasParent)
+                {
+                    operation = HandleDivisionOfVariablesInChain(operation);
+                }
+                else
+                {
+                    mCalculatedExpression = new Multiplication();
+                    operation = (IArithmeticOperation)mCalculatedExpression;
+                }
+                operation.Left = new Constant() { Value = left.Value / right.Value };
+            }
+            operation.Right = boundVariable.Right;
+        }
+
+        IArithmeticOperation HandleDivisionOfVariablesInChain(IArithmeticOperation operation)
+        {
+            var parent = (IArithmeticOperation) operation.Parent;
+            if (parent.Left == operation)
+            {
+                parent.Left = new Multiplication();
+                return (IArithmeticOperation)parent.Left;
+            }
+            else
+            {
+                parent.Right = new Multiplication();
+                return (IArithmeticOperation)parent.Right;
             }
         }
 

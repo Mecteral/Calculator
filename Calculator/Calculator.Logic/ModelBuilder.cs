@@ -62,7 +62,17 @@ namespace Calculator.Logic
         public void Visit(VariableToken variableToken)
         {
             mCurrent = new Variable {Variables = variableToken.Variable};
+            BindVariableInMultiplication();
             HandleNonParenthesesAndOperation();
+        }
+
+        void BindVariableInMultiplication()
+        {
+            if (mCurrentOperation?.Right != null)
+            {
+                var temp = mCurrentOperation.Right;
+                mCurrentOperation.Right = new Multiplication() {Left = temp, Right = mCurrent};
+            }
         }
 
         public void Visit(CosineToken cosineToken)
@@ -189,7 +199,12 @@ namespace Calculator.Logic
 
         void HandleMultiplicationOrDivisionBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
         {
-            if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
+            if (mCurrentOperation?.Right is Variable)
+            {
+                var temp = mCurrentOperation;
+                mCurrentOperation = new TSelf {Left = temp};
+            }
+            else if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
             {
                 var temp = mCurrentOperation.Right;
                 var multiplicationOrDivision = new TSelf {Left = temp};

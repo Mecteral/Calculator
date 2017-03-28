@@ -126,5 +126,56 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             Check("1a-1a", "0*a");
         }
+
+        [Test]
+        public void SimpleMultiplicationWithLeftConstant()
+        {
+            Check("1*2a", "2*a");
+        }
+        [Test]
+        public void SimpleMultiplicationWithRightConstant()
+        {
+            Check("2a*1", "2*a");
+        }
+
+        [Test]
+        public void MultiplicationAfterAddition()
+        {
+            Check("1+2*3a", "1 + 6*a");
+        }
+
+        [Test]
+        public void MultiplicationBeforeAddition()
+        {
+            Check("1*2a+3", "2*a + 3");
+        }
+
+        [Test]
+        public void DoubleMultiplicationInAddition()
+        {
+            Check("1*2a+3*4a", "2*a + 12*a");
+        }
+
+        [Test]
+        public void SimpleLeftHandedDivisonWithVariable()
+        {
+            Check("26a/13", "2*a");
+        }
+        [Test]
+        public void SimpleRightHandedDivisonWithVariable()
+        {
+            Check("26/13a", "2*a");
+        }
+
+        [Test]
+        public void BoundRightHandedDivisonWithVariable()
+        {
+            Check("1+26/13a", "1 + 2*a");
+        }
+        [Test]
+        public void BoundLeftHandedDivisonWithVariable()
+        {
+            Check("26a/13+1", "2*a + 1");
+        }
     }
 }

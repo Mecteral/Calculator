@@ -340,5 +340,11 @@ namespace Calculator.Logic.Tests
             subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
+
+        [Test]
+        public void ModelBuilder_Builds_Variables_In_Multiplications_With_Variable_On_The_Right_Hand_Side()
+        {
+            //var addition = TestExpecting<Addition>()
+        }
     }
 }
