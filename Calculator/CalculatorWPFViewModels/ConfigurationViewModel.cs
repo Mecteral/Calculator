@@ -15,18 +15,4 @@ namespace CalculatorWPFViewModels
             Items.AddRange(tabs);
         }
     }
-    public sealed class ConfigurationThemeTabViewModel : Screen, IMainScreenTabItem
-    {
-        public ConfigurationThemeTabViewModel()
-        {
-            DisplayName = "Colors and Themes";
-        }
-    }
-    public sealed class ConfigurationOptionTabViewModel : Screen, IMainScreenTabItem
-    {
-        public ConfigurationOptionTabViewModel()
-        {
-            DisplayName = "Options";
-        }
-    }
 }

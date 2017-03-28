@@ -6,7 +6,7 @@ namespace Calculator.Logic
     public class JSonSerializer : IJSonSerializer
     {
         const string FilePath = "C:\\Users\\Public\\config.json";
-        const string JsonConfigStart = "{}";
+        const string JsonConfigStart = "{\"UsedWpfTheme\":\"Themes\\\\BureauBlack.xaml\"}";
         WpfApplicationStatics mStatics;
 
         public JSonSerializer(WpfApplicationStatics statics)

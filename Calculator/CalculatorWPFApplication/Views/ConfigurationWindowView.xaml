@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         MinWidth="200" MinHeight="200" MaxHeight="300" MaxWidth="300" ResizeMode="CanMinimize"
-        WindowStyle="None">
+        WindowStyle="None"
+        Background="{DynamicResource WindowBackgroundBrush}"
+        >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

@@ -59,6 +59,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationOptionTabViewModel.cs" />
+    <Compile Include="ConfigurationThemeTabViewModel.cs" />
     <Compile Include="ConfigurationViewModel.cs" />
     <Compile Include="ConfigurationWindowViewModel.cs" />
     <Compile Include="ConversionViewModel.cs" />

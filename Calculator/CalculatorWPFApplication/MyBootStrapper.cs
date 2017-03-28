@@ -44,6 +44,7 @@ namespace CalculatorWPFApplication
         {
             mSerializer.Read();
             DisplayRootViewFor<ShellViewModel>();
+            Application.Current.Resources.Source = new Uri(WpfApplicationStatics.UsedWpfTheme, UriKind.RelativeOrAbsolute);
         }
 
         protected override object GetInstance(Type service, string key)

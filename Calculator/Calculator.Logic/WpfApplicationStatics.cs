@@ -32,5 +32,7 @@ namespace Calculator.Logic
 
         [DataMember]
         public static string LastPickedUnit { get; set; }
+        [DataMember]
+        public static string UsedWpfTheme { get; set; }
     }
 }
