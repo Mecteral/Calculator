@@ -6,6 +6,7 @@ using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Pipelines;
 using Calculator.Logic.Utilities;
 using FluentAssertions;
+using JetBrains.Annotations;
 using Mecteral.Calculator.IntegrationTests.Properties;
 using NSubstitute;
 using NUnit.Framework;
@@ -16,6 +17,7 @@ namespace Mecteral.Calculator.IntegrationTests
     // ReSharper disable once TestFileNameWarning
     public class IntegrationTests
     {
+        [UsedImplicitly]
         static IEnumerable<string[]> TestCases
         {
             get
@@ -26,19 +28,16 @@ namespace Mecteral.Calculator.IntegrationTests
                         .Select(l => l.Split('='));
             }
         }
-        //[TestCase("1+1", "2")]
         [TestCaseSource(nameof(TestCases))]
-        public void Run_Integration_Case(string input, string expected)
+        public void IntegrationTest(string input, string expected)
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             var container = builder.Build();
             var simplificationPipeline = container.Resolve<ISimplificationPipeline>();
-            var output = simplificationPipeline.UseSimplificationPipeline(input.WithoutAnyWhitespace(), Substitute.For<IApplicationArguments>());
-            output.WithoutAnyWhitespace()
-                .Should()
-                .Be(expected.WithoutAnyWhitespace());
+            var output = simplificationPipeline.UseSimplificationPipeline(input.WithoutAnyWhitespace(),
+                Substitute.For<IApplicationArguments>());
+            output.WithoutAnyWhitespace().Should().Be(expected.WithoutAnyWhitespace());
         }
-        
     }
 }
