@@ -67,7 +67,7 @@ namespace CalculatorConsoleApplication
             }
 
 
-            sBuilder.RegisterAssemblyModules(typeof(Calculator.Logic.ContainerModule).Assembly);
+            sBuilder.RegisterAssemblyModules(typeof(Calculator.Logic.LogicModule).Assembly);
             var container = sBuilder.Build();
             var pipelineEvaluator = container.Resolve<IPipelineEvaluator>();
 
