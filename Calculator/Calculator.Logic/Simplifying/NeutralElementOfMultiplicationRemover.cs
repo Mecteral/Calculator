@@ -6,6 +6,6 @@ namespace Calculator.Logic.Simplifying
         ANeutralElementOfSymmetricalArithmeticOperatorRemover<Multiplication>
     {
         public NeutralElementOfMultiplicationRemover(Multiplication multiplication) : base(multiplication) {}
-        protected override decimal NeutralElement => 1;
+        protected override decimal NeutralElement => 1M;
     }
 }
