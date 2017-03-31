@@ -216,9 +216,9 @@ namespace Calculator.Logic.Tests.Simplifying
             Check("sqrt(16) + 2a", "4 + 2*a");
         }
         [Test]
-        public void Regression_0001()
+        public void Simple_Variable_Addition()
         {
-            Check("x+1", "1*x+1");
+            Check("x+1", "1*x + 1");
         }
     }
 }

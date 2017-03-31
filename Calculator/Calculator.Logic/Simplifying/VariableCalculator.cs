@@ -94,7 +94,7 @@ namespace Calculator.Logic.Simplifying
                     HandleDoubleMultiplicationInSubtraction(operation);
                 }
             }
-            else if (operation.Right is Constant && operation.Left is Multiplication)
+            else if (operation.Right is Constant && operation.Left is Multiplication && (operation is Multiplication || operation is Division))
             {
                 var boundVariable = (IArithmeticOperation) operation.Left;
                 if (boundVariable.Right is Variable)
@@ -102,7 +102,7 @@ namespace Calculator.Logic.Simplifying
                     HandleLeftHandedVariableMultiplicationAndDivision(operation, boundVariable);
                 }
             }
-            else if (operation.Right is Multiplication && operation.Left is Constant)
+            else if (operation.Right is Multiplication && operation.Left is Constant && (operation is Multiplication || operation is Division))
             {
                 var boundVariable = (IArithmeticOperation) operation.Right;
                 if (boundVariable.Right is Variable)
