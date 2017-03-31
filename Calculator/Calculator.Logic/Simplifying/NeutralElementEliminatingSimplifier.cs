@@ -2,13 +2,11 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class NeutralElementEliminatingSimplifier : ATraversingReplacer
+    public class NeutralElementEliminatingSimplifier : AVisitingTraversingReplacer
     {
-        protected override IExpression Replace(IExpression input)
+        // TODO: do the same for division, and for addition/subtraction with zero
+        protected override IExpression ReplaceMultiplication(Multiplication multiplication)
         {
-            var multiplication = input as Multiplication;
-            if (null == multiplication) return input;
-            // TODO: do the same for division, and for addition/subtraction with zero
             return new NeutralElementOfMultiplicationRemover(multiplication).Transform();
         }
     }
