@@ -177,5 +177,10 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             Check("26a/13+1", "2*a + 1");
         }
+        [Test]
+        public void Regression_0001()
+        {
+            Check("x+1", "1*x+1");
+        }
     }
 }
