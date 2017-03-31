@@ -243,5 +243,17 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             Check("x+1", "1*x + 1");
         }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Add_Squared_Variables_with_Non_Squared_Variables()
+        {
+            Check("3a+2a^2", "3*a + 2*a ^ 2");
+        }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Subtract_Squared_Variables_with_Non_Squared_Variables()
+        {
+            Check("3a-2a^2", "3*a - 2*a ^ 2");
+        }
     }
 }
