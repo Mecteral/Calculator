@@ -4,18 +4,28 @@ using November.MultiDispatch;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class NeutralElementOfMultiplicationRemover : ANeutralElementOfArithemethicOperatorRemover<Multiplication>
+    public class AOneBasedNeutralElementOfArithmeticOperationRemover<T> :
+        ANeutralElementOfArithmeticOperatorRemover<T> where T : IArithmeticOperation
     {
-        public NeutralElementOfMultiplicationRemover(Multiplication multiplication) : base(multiplication) {}
+        protected AOneBasedNeutralElementOfArithmeticOperationRemover(T operation) : base(operation) {}
         protected override decimal NeutralElement => 1;
     }
 
-    public abstract class ANeutralElementOfArithemethicOperatorRemover<T> where T : IArithmeticOperation
+    public class NeutralElementOfMultiplicationRemover : AOneBasedNeutralElementOfArithmeticOperationRemover<Multiplication>
+    {
+        public NeutralElementOfMultiplicationRemover(Multiplication multiplication) : base(multiplication) {}
+    }
+    public class NeutralElementOfDivisionRemover : AOneBasedNeutralElementOfArithmeticOperationRemover<Division>
+    {
+        public NeutralElementOfDivisionRemover(Division operation) : base(operation) {}
+    }
+
+    public abstract class ANeutralElementOfArithmeticOperatorRemover<T> where T : IArithmeticOperation
     {
         readonly DoubleDispatcher<IExpression> mDispatcher = new DoubleDispatcher<IExpression>();
         readonly T mOperation;
         IExpression mResult;
-        protected ANeutralElementOfArithemethicOperatorRemover(T operation)
+        protected ANeutralElementOfArithmeticOperatorRemover(T operation)
         {
             mOperation = operation;
             mDispatcher.OnLeft<Constant>(IsNeutralElement).Do((_, rhs) => UseAsResult(rhs));
