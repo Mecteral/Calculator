@@ -97,6 +97,7 @@
     <Compile Include="Simplifying\StringSimplifierTests.cs" />
     <Compile Include="TokenFormatterTests.cs" />
     <Compile Include="Simplifying\VariableCalculatorTests.cs" />
+    <Compile Include="Utilities\StringExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
