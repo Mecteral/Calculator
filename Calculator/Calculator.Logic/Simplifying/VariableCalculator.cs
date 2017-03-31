@@ -170,7 +170,7 @@ namespace Calculator.Logic.Simplifying
                 parent.Left = new Multiplication();
                 return (IArithmeticOperation)parent.Left;
             }
-            parent.Right = new Division();
+            parent.Right = new Multiplication();
 
             return (IArithmeticOperation)parent.Right;
         }

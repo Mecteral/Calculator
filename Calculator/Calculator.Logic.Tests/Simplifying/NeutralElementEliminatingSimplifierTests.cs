@@ -18,6 +18,7 @@ namespace Calculator.Logic.Tests.Simplifying
             output.Should().BeOfType<Variable>().Which.Variables.Should().Be("x");
             output.Should().NotBeSameAs(input.Right);
         }
+
         [Test]
         public void Multiplication_By_One_With_One_As_Right_Side_Returns_Copy_Of_Left_Side()
         {

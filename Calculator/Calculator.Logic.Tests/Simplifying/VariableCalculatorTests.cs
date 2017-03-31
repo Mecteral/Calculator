@@ -177,13 +177,19 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void SimpleRightHandedDivisonWithVariable()
         {
-            Check("26/13a", "2/1*a");
+            Check("26/13a", "2/a");
         }
 
         [Test]
         public void BoundRightHandedDivisonWithVariable()
         {
-            Check("1+26/13a", "1 + 2/1*a");
+            Check("1+26/13a", "1 + 2/a");
+        }
+
+        [Test]
+        public void SimpleAddition()
+        {
+            Check("1+1+x", "1 + 1 + 1*x");
         }
 
         [Test]
