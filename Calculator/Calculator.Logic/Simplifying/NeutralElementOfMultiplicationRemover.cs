@@ -4,25 +4,31 @@ using November.MultiDispatch;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class NeutralElementOfMultiplicationRemover
+    public class NeutralElementOfMultiplicationRemover : ANeutralElementOfArithemethicOperatorRemover<Multiplication>
+    {
+        public NeutralElementOfMultiplicationRemover(Multiplication multiplication) : base(multiplication) {}
+        protected override bool IsNeutralElement(Constant c) => 1 == c.Value;
+    }
+
+    public abstract class ANeutralElementOfArithemethicOperatorRemover<T> where T : IArithmeticOperation
     {
         readonly DoubleDispatcher<IExpression> mDispatcher = new DoubleDispatcher<IExpression>();
-        readonly Multiplication mMultiplication;
+        readonly T mOperation;
         IExpression mResult;
-        public NeutralElementOfMultiplicationRemover(Multiplication multiplication)
+        protected ANeutralElementOfArithemethicOperatorRemover(T operation)
         {
-            mMultiplication = multiplication;
+            mOperation = operation;
             mDispatcher.OnLeft<Constant>(IsNeutralElement).Do((_, rhs) => UseAsResult(rhs));
             mDispatcher.OnRight<Constant>(IsNeutralElement).Do((lhs, _) => UseAsResult(lhs));
             mDispatcher.FallbackHandler = DoNothing;
         }
         static void DoNothing(IExpression lhs, IExpression rhs) {}
-        static bool IsNeutralElement(Constant c) => 1 == c.Value;
+        protected abstract bool IsNeutralElement(Constant c);
         void UseAsResult(IExpression expression) => mResult = ExpressionCloner.Clone(expression);
         public IExpression Transform()
         {
-            mDispatcher.Dispatch(mMultiplication.Left, mMultiplication.Right);
-            return mResult ?? mMultiplication;
+            mDispatcher.Dispatch(mOperation.Left, mOperation.Right);
+            return mResult ?? mOperation;
         }
     }
 }
