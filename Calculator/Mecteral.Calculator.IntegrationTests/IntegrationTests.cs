@@ -23,7 +23,7 @@ namespace Mecteral.Calculator.IntegrationTests
                 return
                     Resources.TestCases.Split('\r', '\n')
                         .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Select(l => l.Split('=')));
+                        .Select(l => l.Split('='));
             }
         }
         //[TestCase("1+1", "2")]
