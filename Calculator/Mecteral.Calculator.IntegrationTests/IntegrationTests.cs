@@ -4,6 +4,7 @@ using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Pipelines;
+using Calculator.Logic.Utilities;
 using FluentAssertions;
 using Mecteral.Calculator.IntegrationTests.Properties;
 using NSubstitute;
@@ -22,7 +23,7 @@ namespace Mecteral.Calculator.IntegrationTests
                 return
                     Resources.TestCases.Split('\r', '\n')
                         .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Select(l => l.Split('='));
+                        .Select(l => l.Split('=')));
             }
         }
         //[TestCase("1+1", "2")]
@@ -33,9 +34,11 @@ namespace Mecteral.Calculator.IntegrationTests
             builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             var container = builder.Build();
             var simplificationPipeline = container.Resolve<ISimplificationPipeline>();
-            simplificationPipeline.UseSimplificationPipeline(input, Substitute.For<IApplicationArguments>())
+            var output = simplificationPipeline.UseSimplificationPipeline(input.WithoutAnyWhitespace(), Substitute.For<IApplicationArguments>());
+            output.WithoutAnyWhitespace()
                 .Should()
-                .Be(expected);
+                .Be(expected.WithoutAnyWhitespace());
         }
+        
     }
 }
