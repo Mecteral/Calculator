@@ -89,7 +89,7 @@ namespace Calculator.Logic.Simplifying
                 {
                     HandleDoubleMultiplicationInAddition(operation);
                 }
-                else
+                else if (operation is Subtraction)
                 {
                     HandleDoubleMultiplicationInSubtraction(operation);
                 }
@@ -125,7 +125,7 @@ namespace Calculator.Logic.Simplifying
             {
                 if (operation.HasParent)
                 {
-                    operation = HandleParentedLeftHandedVariableDivisionInChain(operation);
+                    operation = HandleParentedRightHandedVariableDivisionInChain(operation);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Calculator.Logic.Simplifying
             {
                 if (operation.HasParent)
                 {
-                    operation = HandleParentedRightHandedVariableDivisonInChain(operation);
+                    operation = HandleParentedLeftHandedVariableDivisonInChain(operation);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace Calculator.Logic.Simplifying
             operation.Right = boundVariable.Right;
         }
 
-        IArithmeticOperation HandleParentedRightHandedVariableDivisonInChain(IArithmeticOperation operation)
+        IArithmeticOperation HandleParentedLeftHandedVariableDivisonInChain(IArithmeticOperation operation)
         {
             var parent = (IArithmeticOperation)operation.Parent;
             if (parent.Left == operation)
@@ -175,12 +175,12 @@ namespace Calculator.Logic.Simplifying
             return (IArithmeticOperation)parent.Right;
         }
 
-        IArithmeticOperation HandleParentedLeftHandedVariableDivisionInChain(IArithmeticOperation operation)
+        IArithmeticOperation HandleParentedRightHandedVariableDivisionInChain(IArithmeticOperation operation)
         {
             var parent = (IArithmeticOperation) operation.Parent;
             if (parent.Left == operation)
             {
-                parent.Left = new Multiplication();
+                parent.Left = new Division();
                 return (IArithmeticOperation) parent.Left;
             }
             parent.Right = new Division();

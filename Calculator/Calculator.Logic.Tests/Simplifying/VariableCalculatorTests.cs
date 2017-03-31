@@ -32,9 +32,26 @@ namespace Calculator.Logic.Tests.Simplifying
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
 
         [Test]
+        public void VariableDivion_With_Variable_Multiplication()
+        {
+            Check("1/a*a", "1/1*a*1*a");
+        }
+        [Test]
         public void AdditionOfVariables()
         {
             Check("1a+2a", "3*a");
+        }
+
+        [Test]
+        public void Right_Handed_Division_In_Chain()
+        {
+            Check("1+1+2/2a+13", "1 + 1 + 1/a + 13");
+        }
+
+        [Test]
+        public void Multiple_Divisions_In_Chain()
+        {
+            Check("13/13a + 13a/13", "1/a + 1*a");
         }
 
         [Test]
