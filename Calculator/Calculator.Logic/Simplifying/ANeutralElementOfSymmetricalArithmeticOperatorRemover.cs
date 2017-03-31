@@ -4,12 +4,12 @@ using November.MultiDispatch;
 
 namespace Calculator.Logic.Simplifying
 {
-    public abstract class ANeutralElementOfArithmeticOperatorRemover<T> where T : IArithmeticOperation
+    public abstract class ANeutralElementOfSymmetricalArithmeticOperatorRemover<T> where T : IArithmeticOperation
     {
         readonly DoubleDispatcher<IExpression> mDispatcher = new DoubleDispatcher<IExpression>();
         readonly T mOperation;
         IExpression mResult;
-        protected ANeutralElementOfArithmeticOperatorRemover(T operation)
+        protected ANeutralElementOfSymmetricalArithmeticOperatorRemover(T operation)
         {
             mOperation = operation;
             mDispatcher.OnLeft<Constant>(IsNeutralElement).Do((_, rhs) => UseAsResult(rhs));

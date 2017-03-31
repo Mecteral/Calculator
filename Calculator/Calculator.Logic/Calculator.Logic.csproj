@@ -92,11 +92,9 @@
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
-    <Compile Include="Simplifying\ANeutralElementOfArithmeticOperatorRemover.cs" />
-    <Compile Include="Simplifying\AOneBasedNeutralElementOfArithmeticOperationRemover.cs" />
+    <Compile Include="Simplifying\ANeutralElementOfSymmetricalArithmeticOperatorRemover.cs" />
     <Compile Include="Simplifying\ATraversingReplacer.cs" />
     <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
-    <Compile Include="Simplifying\AZeroBasedNeutralElementOfArithmeticOperationRemover.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
