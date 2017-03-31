@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -21,6 +22,7 @@ namespace Calculator.Model.Tests
             {
                 Parent = new ParenthesedExpression();
             }
+            public override IEnumerable<IExpression> Children { get; } 
         }
 
         [Test]

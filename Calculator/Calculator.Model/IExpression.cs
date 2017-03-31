@@ -1,4 +1,6 @@
-﻿namespace Calculator.Model
+﻿using System.Collections.Generic;
+
+namespace Calculator.Model
 {
     public interface IExpression
     {
@@ -6,5 +8,6 @@
         bool HasParent { get; }
         void Accept(IExpressionVisitor visitor);
         void ReplaceChild(IExpression oldChild, IExpression newChild);
+        IEnumerable<IExpression> Children { get; }
     }
 }
