@@ -30,7 +30,7 @@ namespace Mecteral.Calculator.IntegrationTests
         public void Run_Integration_Case(string input, string expected)
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
+            builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             var container = builder.Build();
             var simplificationPipeline = container.Resolve<ISimplificationPipeline>();
             simplificationPipeline.UseSimplificationPipeline(input, Substitute.For<IApplicationArguments>())

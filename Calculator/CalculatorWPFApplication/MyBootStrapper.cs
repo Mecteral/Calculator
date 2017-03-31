@@ -32,7 +32,7 @@ namespace CalculatorWPFApplication
             builder.RegisterType<InputStringValidator>().SingleInstance();
             builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
-            builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
+            builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
             builder.RegisterType<ConfigurationOptionTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
             builder.RegisterType<ConfigurationThemeTabViewModel>().As<IMainScreenTabItem>().SingleInstance();

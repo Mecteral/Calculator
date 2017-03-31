@@ -48,11 +48,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.2.0\lib\net35\MoreLinq.dll</HintPath>
+      <HintPath>..\packages\morelinq.2.3.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="November.MultiDispatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\November.MultiDispatch.1.0.0\lib\November.MultiDispatch.dll</HintPath>
+    <Reference Include="November.MultiDispatch, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\November.MultiDispatch.1.1.1\lib\November.MultiDispatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NSubstitute, Version=2.0.2.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
@@ -78,6 +78,7 @@
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
+    <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
@@ -111,7 +112,6 @@
     <None Include="November.MultiDispatch.deps.json" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

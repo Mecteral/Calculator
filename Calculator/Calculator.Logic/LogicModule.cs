@@ -11,7 +11,7 @@ using Mecteral.UnitConversion;
 
 namespace Calculator.Logic
 {
-    public class ContainerModule : Module
+    public class LogicModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
