@@ -11,7 +11,7 @@ using Mecteral.UnitConversion;
 
 namespace Calculator.Logic
 {
-    public class ContainerModule : Module
+    public class LogicModule : Module
     {
         protected override void Load(ContainerBuilder builder)
         {
@@ -45,6 +45,7 @@ namespace Calculator.Logic
             builder.RegisterType<ParenthesesSimplifier>().As<IParenthesesSimplifier>().As<ISimplifier>();
             builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>();
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
+            builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
