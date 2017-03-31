@@ -92,6 +92,7 @@
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
+    <Compile Include="Simplifying\ANeutralElementOfAsymmetricalArithmeticOperatorRemover.cs" />
     <Compile Include="Simplifying\ANeutralElementOfSymmetricalArithmeticOperatorRemover.cs" />
     <Compile Include="Simplifying\ATraversingReplacer.cs" />
     <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
