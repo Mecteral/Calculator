@@ -161,21 +161,59 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             Check("26a/13", "2*a");
         }
+
+        [Test]
+        public void BoundLeftHandedDivisonWithVariable()
+        {
+            Check("26a/13+1", "2*a + 1");
+        }
+
+        [Test]
+        public void ComplexBoundLeftHandedDivisionWithVariable()
+        {
+            Check("1+1+26a/13+1", "1 + 1 + 2*a + 1");
+        }
+
         [Test]
         public void SimpleRightHandedDivisonWithVariable()
         {
-            Check("26/13a", "2*a");
+            Check("26/13a", "2/1*a");
         }
 
         [Test]
         public void BoundRightHandedDivisonWithVariable()
         {
-            Check("1+26/13a", "1 + 2*a");
+            Check("1+26/13a", "1 + 2/1*a");
         }
+
         [Test]
-        public void BoundLeftHandedDivisonWithVariable()
+        public void VariableCalculator_Doesnt_Change_Cosine()
         {
-            Check("26a/13+1", "2*a + 1");
+            Check("cos(0) + 2a", "cos(1) + 2*a");
+        }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Change_Sinus()
+        {
+            Check("sin(0)+2a", "sin(0) + 2*a");
+        }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Change_Tangent()
+        {
+            Check("tan(0) + 2a", "tan(0) + 2*a");
+        }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Change_Square()
+        {
+            Check("2^2a", "2 ^ 2*a");
+        }
+
+        [Test]
+        public void VariableCalculator_Doesnt_Change_SquareRoot()
+        {
+            Check("sqrt(16) + 2a", "4 + 2*a");
         }
     }
 }

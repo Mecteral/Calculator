@@ -27,6 +27,9 @@ namespace Calculator.Logic
                 case Operator.Divide:
                     mResult += "/";
                     break;
+                case Operator.Square:
+                    mResult += "^";
+                    break;
             }
         }
 

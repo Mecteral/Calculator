@@ -30,7 +30,6 @@ namespace CalculatorWPFViewModels
         public void ExpressionLight()
         {
             Application.Current.Resources.Source = new Uri("Themes\\ExpressionLight.xaml", UriKind.RelativeOrAbsolute);
-            Application.Current.MainWindow.FontSize = 50;
             WpfApplicationStatics.UsedWpfTheme = "Themes\\ExpressionLight.xaml";
         }
     }

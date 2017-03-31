@@ -67,25 +67,25 @@ namespace Calculator.Logic
 
         public void Visit(CosineToken cosineToken)
         {
-            mCurrent = new CosineExpression { Value = cosineToken.Value};
+            mCurrent = new CosineExpression {Value = cosineToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(TangentToken tangentToken)
         {
-            mCurrent = new TangentExpression { Value = tangentToken.Value};
+            mCurrent = new TangentExpression {Value = tangentToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SinusToken sinusToken)
         {
-            mCurrent = new SinusExpression { Value = sinusToken.Value};
+            mCurrent = new SinusExpression {Value = sinusToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SquareRootToken sqaureRootToken)
         {
-            mCurrent = new SquareRootExpression { Value = sqaureRootToken.Value };
+            mCurrent = new SquareRootExpression {Value = sqaureRootToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
@@ -191,8 +191,19 @@ namespace Calculator.Logic
         {
             if (mCurrentOperation?.Right is Variable)
             {
-                var temp = mCurrentOperation;
-                mCurrentOperation = new TSelf {Left = temp};
+                if (mCurrentOperation.HasParent)
+                {
+                    var parent = (IArithmeticOperation) mCurrentOperation.Parent;
+                    var temp = parent.Right;
+                    parent.Right = new TSelf() {Left = temp};
+                    mCurrentOperation = (IArithmeticOperation) parent.Right;
+                    mWasMultiplication = true;
+                }
+                else
+                {
+                    var temp = mCurrentOperation;
+                    mCurrentOperation = new TSelf { Left = temp };
+                }
             }
             else if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
             {
