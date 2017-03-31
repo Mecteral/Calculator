@@ -92,8 +92,11 @@
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
+    <Compile Include="Simplifying\ANeutralElementOfArithmeticOperatorRemover.cs" />
+    <Compile Include="Simplifying\AOneBasedNeutralElementOfArithmeticOperationRemover.cs" />
     <Compile Include="Simplifying\ATraversingReplacer.cs" />
     <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
+    <Compile Include="Simplifying\AZeroBasedNeutralElementOfArithmeticOperationRemover.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
@@ -101,7 +104,10 @@
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifier.cs" />
+    <Compile Include="Simplifying\NeutralElementOfAdditionRemover.cs" />
+    <Compile Include="Simplifying\NeutralElementOfDivisionRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfMultiplicationRemover.cs" />
+    <Compile Include="Simplifying\NeutralElementOfSubtractionRemover.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="Simplifying\ISimplifier.cs" />
