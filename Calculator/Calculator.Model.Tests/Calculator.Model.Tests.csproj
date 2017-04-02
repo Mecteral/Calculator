@@ -67,6 +67,7 @@
     <Compile Include="AnArithmeticOperationTests.cs" />
     <Compile Include="AnExpressionTests.cs" />
     <Compile Include="ConstantTests.cs" />
+    <Compile Include="ExpressionExtensionsTests.cs" />
     <Compile Include="ParenthesedExpressionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VariableTests.cs" />

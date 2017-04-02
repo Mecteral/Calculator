@@ -6,32 +6,32 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class ZeroBasedMultiplicationRemoverTests
+    public class MultiplicationByZeroRemoverTests
     {
         [SetUp]
         public void SetUp()
         {
-            mZeroRemover = new ZeroBasedMultiplicationRemover();
+            mZeroRemover = new MultiplicationByZeroRemover();
         }
 
         readonly Multiplication mMultiplicationWithLeftZero = new Multiplication
         {
-            Left = new Constant {Value = 0M},
-            Right = new SinusExpression {Value = 13}
+            Left = new Constant { Value = 0M },
+            Right = new SinusExpression { Value = 13 }
         };
 
         readonly Multiplication mMultiplicationWithRightZero = new Multiplication
         {
-            Left = new TangentExpression {Value = 13M},
-            Right = new Constant {Value = 0M}
+            Left = new TangentExpression { Value = 13M },
+            Right = new Constant { Value = 0M }
         };
 
-        ZeroBasedMultiplicationRemover mZeroRemover;
+        MultiplicationByZeroRemover mZeroRemover;
 
         [Test]
         public void DoubleSidedZeroMultiplicationInSubtraction()
         {
-            var expression = new Addition {Left = mMultiplicationWithLeftZero, Right = mMultiplicationWithRightZero};
+            var expression = new Addition { Left = mMultiplicationWithLeftZero, Right = mMultiplicationWithRightZero };
             var result = mZeroRemover.Simplify(expression);
             result.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
             result.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
@@ -40,7 +40,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void LeftHandedZeroMultiplication()
         {
-            var expression = new Addition {Left = mMultiplicationWithRightZero, Right = new Constant {Value = 13}};
+            var expression = new Addition { Left = mMultiplicationWithRightZero, Right = new Constant { Value = 13 } };
             var result = mZeroRemover.Simplify(expression);
             result.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
             result.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13M);
@@ -49,7 +49,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ParenthesedZeroBasedMultiplication()
         {
-            var expression = new ParenthesedExpression {Wrapped = mMultiplicationWithLeftZero};
+            var expression = new ParenthesedExpression { Wrapped = mMultiplicationWithLeftZero };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<ParenthesedExpression>()
@@ -78,7 +78,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ZeroBasedMultiplicationRemover_Doesnt_Change_CosineAddition()
         {
-            var expression = new Addition {Left = new CosineExpression {Value = 0}, Right = new Constant {Value = 0}};
+            var expression = new Addition { Left = new CosineExpression { Value = 0 }, Right = new Constant { Value = 0 } };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<Addition>()
@@ -97,7 +97,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ZeroBasedMultiplicationRemover_Doesnt_Change_SinusAddition()
         {
-            var expression = new Addition {Left = new SinusExpression {Value = 0}, Right = new Constant {Value = 0}};
+            var expression = new Addition { Left = new SinusExpression { Value = 0 }, Right = new Constant { Value = 0 } };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<Addition>()
@@ -116,7 +116,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ZeroBasedMultiplicationRemover_Doesnt_Change_Square()
         {
-            var expression = new Square {Left = new Constant {Value = 13}, Right = new Constant {Value = 0}};
+            var expression = new Square { Left = new Constant { Value = 13 }, Right = new Constant { Value = 0 } };
             var result = mZeroRemover.Simplify(expression);
             result.Should().BeOfType<Square>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
             result.Should().BeOfType<Square>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(0);
@@ -127,8 +127,8 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Subtraction
             {
-                Left = new TangentExpression {Value = 0},
-                Right = new Constant {Value = 0}
+                Left = new TangentExpression { Value = 0 },
+                Right = new Constant { Value = 0 }
             };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
@@ -150,8 +150,8 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Addition
             {
-                Left = new Variable {Variables = "a"},
-                Right = new SquareRootExpression {Value = 0}
+                Left = new Variable { Variables = "a" },
+                Right = new SquareRootExpression { Value = 0 }
             };
             var result = mZeroRemover.Simplify(expression);
             result.Should()

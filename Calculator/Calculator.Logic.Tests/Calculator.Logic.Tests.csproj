@@ -80,15 +80,14 @@
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Pipelines\PipelineEvaluatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
+    <Compile Include="Simplifying\MultiplicationByZeroRemoverTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
-    <Compile Include="Simplifying\ZeroBasedMultiplicationRemoverTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
     <Compile Include="Model\ConversionModel\ConversionModelBuilderTests.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitorTests.cs" />
     <Compile Include="Model\ExpressionClonerTests.cs" />
-    <Compile Include="Model\ExpressionExtensionsTests.cs" />
     <Compile Include="Model\FormattingExpressionVisitorTests.cs" />
     <Compile Include="Model\TestExpressions.cs" />
     <Compile Include="Simplifying\ParenthesesSimplifierTests.cs" />
