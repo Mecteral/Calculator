@@ -45,11 +45,6 @@ namespace Calculator.Logic.Model
             return new Sinus { Value = value };
         }
 
-        protected override IExpression UseSquareRoot(decimal value)
-        {
-            return new SquareRoot {Value = value};
-        }
-
         protected override IExpression UseVariable(string variable)
         {
             return new Variable {Variables = variable};

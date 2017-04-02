@@ -15,7 +15,7 @@ namespace Calculator.Logic.Tests
             tokenizer.Tokenize(input, null);
             var underTest = new TokenFormatter();
             var result = underTest.Format(tokenizer.Tokens);
-            result.Should().Be("(2+3)*4/5-6.7+0.5+0.5+1.0+2*a^2+4");
+            result.Should().Be("(2+3)*4/5-6.7+0.5+0.5+1.0+2*a^2+16^0.5");
         }
     }
 }

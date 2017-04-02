@@ -23,7 +23,6 @@ namespace Calculator.Logic.Model
             return Result;
         }
         protected override decimal UseSinus(decimal value) => value;
-        protected override decimal UseSquareRoot(decimal value) => value;
 
         protected override decimal UseVariable(string variable)
         {

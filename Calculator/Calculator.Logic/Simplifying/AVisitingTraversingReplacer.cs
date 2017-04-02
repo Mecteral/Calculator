@@ -16,8 +16,6 @@ namespace Calculator.Logic.Simplifying
         void IExpressionVisitor.Visit(Tangent tangentExpression)
             => mResult = ReplaceTangent(tangentExpression);
         void IExpressionVisitor.Visit(Sinus sinus) => mResult = ReplaceSinus(sinus);
-        void IExpressionVisitor.Visit(SquareRoot squareRootExpression)
-            => mResult = ReplaceSquareRoot(squareRootExpression);
         void IExpressionVisitor.Visit(Power square) => mResult = ReplaceSquare(square);
         protected virtual IExpression ReplaceParenthesed(ParenthesedExpression parenthesed) => parenthesed;
         protected virtual IExpression ReplaceSubtraction(Subtraction subtraction) => subtraction;
@@ -28,7 +26,6 @@ namespace Calculator.Logic.Simplifying
         protected virtual IExpression ReplaceCosine(Cosine cosine) => cosine;
         protected virtual IExpression ReplaceTangent(Tangent tangent) => tangent;
         protected virtual IExpression ReplaceSinus(Sinus sinus) => sinus;
-        protected virtual IExpression ReplaceSquareRoot(SquareRoot squareRoot) => squareRoot;
         protected virtual IExpression ReplaceVariable(Variable variable) => variable;
         protected virtual IExpression ReplaceSquare(Power square) => square;
         protected override IExpression Replace(IExpression expression)

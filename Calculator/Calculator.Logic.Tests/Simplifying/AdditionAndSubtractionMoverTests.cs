@@ -70,7 +70,7 @@ namespace Calculator.Logic.Tests
         [Test]
         public void Test_With_Trigonometric_Functions()
         {
-            Check("sqrt(16) + cos(0) + tan(0) + sin(0) +2^2", "4 + cos(1) + tan(0) + sin(0) + 2 ^ 2");
+            Check("sqrt(16) + cos(0) + tan(0) + sin(0) +2^2", "16 ^ 0.5 + cos(1) + tan(0) + sin(0) + 2 ^ 2");
         }
 
         [Test]

@@ -83,12 +83,6 @@ namespace Calculator.Logic
             HandleNonParenthesesAndOperation();
         }
 
-        public void Visit(SquareRootToken sqaureRootToken)
-        {
-            mCurrent = new SquareRoot {Value = sqaureRootToken.Value};
-            HandleNonParenthesesAndOperation();
-        }
-
         void HandleNonParenthesesAndOperation()
         {
             if (!mWasOpening)

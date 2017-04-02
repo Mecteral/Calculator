@@ -47,7 +47,6 @@ namespace Calculator.Logic.Simplifying
         public void Visit(Tangent tangentExpression) {}
 
         public void Visit(Sinus sinusExpression) {}
-        public void Visit(SquareRoot squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {

@@ -57,11 +57,6 @@ namespace Calculator.Logic.Simplifying
             mExpressionCount++;
         }
 
-        public void Visit(SquareRoot squareRootExpression)
-        {
-            mExpressionCount++;
-        }
-
         public void Visit(Power square)
         {
             VisitOperands(square);

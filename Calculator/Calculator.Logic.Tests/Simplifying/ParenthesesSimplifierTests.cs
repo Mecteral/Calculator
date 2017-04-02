@@ -87,10 +87,10 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void SimpleSquareTest()
         {
-            var expression = new ParenthesedExpression() {Wrapped = new Addition() {Left = new Power() { Left = new Constant() { Value = 2 }, Right = new Constant() { Value = 2 } } , Right = new SquareRoot() {Value = 16} }  };
+            var expression = new ParenthesedExpression() {Wrapped = new Addition() {Left = new Power() { Left = new Constant() { Value = 2 }, Right = new Constant() { Value = 2 } } , Right = new Constant() {Value = 16} }  };
             mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
             mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
-            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<SquareRoot>().Which.Value.Should().Be(16);
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(16);
         }
 
         [Test]

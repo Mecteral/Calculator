@@ -236,7 +236,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void VariableCalculator_Doesnt_Change_SquareRoot()
         {
-            Check("sqrt(16) + 2a", "4 + 2*a");
+            Check("sqrt(16) + 2a", "16 ^ 0.5 + 2*a");
         }
         [Test]
         public void Simple_Variable_Addition()

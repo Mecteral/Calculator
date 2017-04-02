@@ -63,11 +63,6 @@ namespace Calculator.Logic
             mResult += sinusToken.Value.ToString(CultureInfo.InvariantCulture);
         }
 
-        public void Visit(SquareRootToken sqaureRootToken)
-        {
-            mResult += sqaureRootToken.Value.ToString(CultureInfo.InvariantCulture);
-        }
-
         public string Format(IEnumerable<IToken> tokens)
         {
             foreach (var token in tokens) token.Accept(this);

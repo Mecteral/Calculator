@@ -11,6 +11,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     {
         readonly List<IToken> mTempTokens = new List<IToken>();
         IApplicationArguments mArgs;
+        string mSqurtNumber;
         string mFunctionString;
         string mInput;
         string mNumber;
@@ -44,12 +45,18 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
                 else if (i + 3 < mInput.Length && c == 'c' && mInput[i + 1] == 'o' && mInput[i + 2] == 's' &&
                          mInput[i + 3] == '(' ||
                          c == 's' && mInput[i + 1] == 'i' && mInput[i + 2] == 'n' && mInput[i + 3] == '(' ||
-                         c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '(' ||
-                         i + 4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' &&
-                         mInput[i + 3] == 't' && mInput[i + 4] == '(')
+                         c == 't' && mInput[i + 1] == 'a' && mInput[i + 2] == 'n' && mInput[i + 3] == '('
+                         )
                 {
                     i = CreateTokenStringForFunctionTokensAndSetCounterAnew(i);
                     AddFunctionTokens();
+                }
+                else if (i + 4 < mInput.Length && c == 's' && mInput[i + 1] == 'q' && mInput[i + 2] == 'r' &&
+                         mInput[i + 3] == 't' && mInput[i + 4] == '(')
+                {
+                    i = ExtractSqrtNumber(i);
+
+                    AddSqrtAsPower();
                 }
                 else if (mTempTokens.Count == 0 || !(mTempTokens.Last() is VariableToken) && char.IsLetter(c))
                     AddVariableToken(c);
@@ -58,11 +65,29 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             return mTempTokens;
         }
 
+        void AddSqrtAsPower()
+        {
+            mTempTokens.Add(new NumberToken(mSqurtNumber));
+            mTempTokens.Add(new OperatorToken('^'));
+            mTempTokens.Add(new NumberToken("0.5"));
+            mSqurtNumber = "";
+        }
+
         static string RemoveWhitespaces(string input)
         {
             return input.Where(c => !char.IsWhiteSpace(c)).Aggregate("", (current, c) => current + c);
         }
 
+        int ExtractSqrtNumber(int i)
+        {
+            do
+            {
+                if (char.IsNumber(mInput[i]))
+                    mSqurtNumber += mInput[i];
+                i++;
+            } while (mInput[i] != ')');
+            return i;
+        }
         int CreateTokenStringForFunctionTokensAndSetCounterAnew(int i)
         {
             do
@@ -87,10 +112,6 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             else if (mFunctionString.Contains("tan"))
             {
                 mTempTokens.Add(new TangentToken(mFunctionString, mArgs));
-            }
-            else if (mFunctionString.Contains("sqrt"))
-            {
-                mTempTokens.Add(new SquareRootToken(mFunctionString));
             }
             mFunctionString = null;
         }

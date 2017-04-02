@@ -151,7 +151,7 @@ namespace Calculator.Logic.Tests.Simplifying
             var expression = new Addition
             {
                 Left = new Variable {Variables = "a"},
-                Right = new SquareRoot {Value = 0}
+                Right = new Constant(){Value = 0}
             };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
@@ -163,7 +163,7 @@ namespace Calculator.Logic.Tests.Simplifying
             result.Should()
                 .BeOfType<Addition>()
                 .Which.Right.Should()
-                .BeOfType<SquareRoot>()
+                .BeOfType<Constant>()
                 .Which.Value.Should()
                 .Be(0);
         }

@@ -15,7 +15,6 @@ namespace Calculator.Logic.Model
         protected override string UseMultiplication(string left, string right) => $"{left}*{right}";
         protected override string UseAddition(string left, string right) => $"{left} + {right}";
         protected override string UseDivision(string left, string right) => $"{left}/{right}";
-        protected override string UseSquareRoot(decimal value) => value.ToString(CultureInfo.InvariantCulture);
         protected override string UseConstant(decimal value) => value.ToString(CultureInfo.InvariantCulture);
         protected override string UseCosine(decimal value) => $"cos({value.ToString(CultureInfo.InvariantCulture)})";
         protected override string UseTangent(decimal value) => $"tan({value.ToString(CultureInfo.InvariantCulture)})";

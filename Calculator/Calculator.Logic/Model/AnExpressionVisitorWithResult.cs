@@ -72,11 +72,6 @@ namespace Calculator.Logic.Model
             Result = UseSinus(sinusExpression.Value);
         }
 
-        public void Visit(SquareRoot squareRootExpression)
-        {
-            Result = UseSquareRoot(squareRootExpression.Value);
-        }
-
         void IExpressionVisitor.Visit(Constant constant)
         {
             Result = UseConstant(constant.Value);
@@ -98,7 +93,6 @@ namespace Calculator.Logic.Model
         protected abstract TResult UseCosine(decimal value);
         protected abstract TResult UseTangent(decimal value);
         protected abstract TResult UseSinus(decimal value);
-        protected abstract TResult UseSquareRoot(decimal value);
         protected abstract TResult UseVariable(string variable);
         protected abstract TResult UseSquare(TResult left, TResult right);
     }

@@ -69,7 +69,9 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
             var underTest = "sqrt(9)";
             var result = new Tokenizer();
             result.Tokenize(underTest, null);
-            result.Tokens.ElementAt(0).Should().BeOfType<SquareRootToken>();
+            result.Tokens.ElementAt(0).Should().BeOfType<NumberToken>();
+            result.Tokens.ElementAt(1).Should().BeOfType<OperatorToken>();
+            result.Tokens.ElementAt(2).Should().BeOfType<NumberToken>().Which.Value.Should().Be(0.5M);
         }
 
         [Test]

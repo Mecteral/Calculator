@@ -69,11 +69,6 @@ namespace Calculator.Logic.Utilities
             mSecondExpressions.Add(sinusExpression);
         }
 
-        public void Visit(SquareRoot squareRootExpression)
-        {
-            mSecondExpressions.Add(squareRootExpression);
-        }
-
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
         {
             mSecondExpressions.Clear();

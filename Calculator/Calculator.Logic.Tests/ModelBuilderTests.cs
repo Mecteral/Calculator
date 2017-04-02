@@ -26,7 +26,6 @@ namespace Calculator.Logic.Tests
         static TangentToken Tangent(string input) => new TangentToken($"tan({input})", null);
         static SinusToken Sinus(string input) => new SinusToken($"sin({input})", null);
         static CosineToken Cosine(string input) => new CosineToken($"cos({input})", null);
-        static SquareRootToken Root(string input) => new SquareRootToken($"sqrt({input})");
         static OperatorToken Square => new OperatorToken('^');
         //(1+2)+(3+4)
         [Test]
@@ -302,14 +301,6 @@ namespace Calculator.Logic.Tests
         {
             var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
             subtraction.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(0.5M);
-            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-
-        [Test]
-        public void SquareRootMinusConstant()
-        {
-            var subtraction = TestExpecting<Addition>(Root("9"), Plus, Number(4));
-            subtraction.Left.Should().BeOfType<SquareRoot>().Which.Value.Should().Be(3M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 

@@ -82,7 +82,6 @@
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
-    <Compile Include="Parsing\CalculationTokenizer\SquareRootToken.cs" />
     <Compile Include="Pipelines\IPipelineEvaluator.cs" />
     <Compile Include="Pipelines\ISimplificationPipeline.cs" />
     <Compile Include="Pipelines\PipelineEvaluator.cs" />
