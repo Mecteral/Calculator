@@ -44,7 +44,7 @@ namespace Calculator.Logic.Model
             EvaluatingExpressionVisitor.Steps.Add($"{left}/{right}\n {Result}");
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             var left = GetResultFor(square.Left);
             var right = GetResultFor(square.Right);
@@ -57,22 +57,22 @@ namespace Calculator.Logic.Model
             Result = UseVariable(variable.Variables);
         }
 
-        public void Visit(CosineExpression cosineExpression)
+        public void Visit(Cosine cosineExpression)
         {
             Result = UseCosine(cosineExpression.Value);
         }
 
-        public void Visit(TangentExpression tangentExpression)
+        public void Visit(Tangent tangentExpression)
         {
             Result = UseTangent(tangentExpression.Value);
         }
 
-        public void Visit(SinusExpression sinusExpression)
+        public void Visit(Sinus sinusExpression)
         {
             Result = UseSinus(sinusExpression.Value);
         }
 
-        public void Visit(SquareRootExpression squareRootExpression)
+        public void Visit(SquareRoot squareRootExpression)
         {
             Result = UseSquareRoot(squareRootExpression.Value);
         }

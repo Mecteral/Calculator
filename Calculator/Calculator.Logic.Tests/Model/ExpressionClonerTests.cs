@@ -74,8 +74,8 @@ namespace Calculator.Logic.Tests.Model
         {
             var underTest = new Addition
             {
-                Left = new CosineExpression {Value = 1},
-                Right = new CosineExpression {Value = 2}
+                Left = new Cosine {Value = 1},
+                Right = new Cosine {Value = 2}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();
@@ -86,8 +86,8 @@ namespace Calculator.Logic.Tests.Model
         {
             var underTest = new Addition
             {
-                Left = new SinusExpression {Value = 1},
-                Right = new SinusExpression {Value = 2}
+                Left = new Sinus {Value = 1},
+                Right = new Sinus {Value = 2}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();
@@ -98,8 +98,8 @@ namespace Calculator.Logic.Tests.Model
         {
             var underTest = new Addition
             {
-                Left = new SquareRootExpression {Value = 1},
-                Right = new Square {Left = new Constant {Value = 13}, Right = new Constant {Value = 2}}
+                Left = new SquareRoot {Value = 1},
+                Right = new Power {Left = new Constant {Value = 13}, Right = new Constant {Value = 2}}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();
@@ -110,8 +110,8 @@ namespace Calculator.Logic.Tests.Model
         {
             var underTest = new Addition
             {
-                Left = new TangentExpression {Value = 1},
-                Right = new TangentExpression {Value = 2}
+                Left = new Tangent {Value = 1},
+                Right = new Tangent {Value = 2}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();

@@ -165,7 +165,7 @@ namespace Calculator.Logic.Tests
         public void CosineMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Cosine("60deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<CosineExpression>().Which.Value.Should().Be(0.5M);
+            subtraction.Left.Should().BeOfType<Cosine>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -301,7 +301,7 @@ namespace Calculator.Logic.Tests
         public void SinusMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<SinusExpression>().Which.Value.Should().Be(0.5M);
+            subtraction.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -309,7 +309,7 @@ namespace Calculator.Logic.Tests
         public void SquareRootMinusConstant()
         {
             var subtraction = TestExpecting<Addition>(Root("9"), Plus, Number(4));
-            subtraction.Left.Should().BeOfType<SquareRootExpression>().Which.Value.Should().Be(3M);
+            subtraction.Left.Should().BeOfType<SquareRoot>().Which.Value.Should().Be(3M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -317,7 +317,7 @@ namespace Calculator.Logic.Tests
         public void TangentMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Tangent("45deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<TangentExpression>().Which.Value.Should().Be(1.0M);
+            subtraction.Left.Should().BeOfType<Tangent>().Which.Value.Should().Be(1.0M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 

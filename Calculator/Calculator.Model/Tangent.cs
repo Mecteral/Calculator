@@ -2,7 +2,7 @@
 
 namespace Calculator.Model
 {
-    public class SinusExpression : ATrigonometricFunction
+    public class Tangent : ATrigonometricFunction
     {
         public override void Accept(IExpressionVisitor visitor)
         {

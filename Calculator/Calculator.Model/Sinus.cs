@@ -2,7 +2,7 @@
 
 namespace Calculator.Model
 {
-    public class CosineExpression : ATrigonometricFunction
+    public class Sinus : ATrigonometricFunction
     {
         public override void Accept(IExpressionVisitor visitor)
         {

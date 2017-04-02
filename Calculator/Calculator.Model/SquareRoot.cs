@@ -2,7 +2,7 @@
 
 namespace Calculator.Model
 {
-    public class SquareRootExpression : AnExpressionWithValue
+    public class SquareRoot : AnExpressionWithValue
     {
         public override void Accept(IExpressionVisitor visitor)
         {
