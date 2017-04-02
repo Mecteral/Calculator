@@ -54,22 +54,22 @@ namespace Calculator.Logic.Utilities
             mSecondExpressions.Add(variable);
         }
 
-        public void Visit(CosineExpression cosineExpression)
+        public void Visit(Cosine cosineExpression)
         {
             mSecondExpressions.Add(cosineExpression);
         }
 
-        public void Visit(TangentExpression tangentExpression)
+        public void Visit(Tangent tangentExpression)
         {
             mSecondExpressions.Add(tangentExpression);
         }
 
-        public void Visit(SinusExpression sinusExpression)
+        public void Visit(Sinus sinusExpression)
         {
             mSecondExpressions.Add(sinusExpression);
         }
 
-        public void Visit(SquareRootExpression squareRootExpression)
+        public void Visit(SquareRoot squareRootExpression)
         {
             mSecondExpressions.Add(squareRootExpression);
         }

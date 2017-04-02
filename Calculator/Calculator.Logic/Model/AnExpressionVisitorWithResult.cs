@@ -57,22 +57,22 @@ namespace Calculator.Logic.Model
             Result = UseVariable(variable.Variables);
         }
 
-        public void Visit(CosineExpression cosineExpression)
+        public void Visit(Cosine cosineExpression)
         {
             Result = UseCosine(cosineExpression.Value);
         }
 
-        public void Visit(TangentExpression tangentExpression)
+        public void Visit(Tangent tangentExpression)
         {
             Result = UseTangent(tangentExpression.Value);
         }
 
-        public void Visit(SinusExpression sinusExpression)
+        public void Visit(Sinus sinusExpression)
         {
             Result = UseSinus(sinusExpression.Value);
         }
 
-        public void Visit(SquareRootExpression squareRootExpression)
+        public void Visit(SquareRoot squareRootExpression)
         {
             Result = UseSquareRoot(squareRootExpression.Value);
         }

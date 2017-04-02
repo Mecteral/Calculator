@@ -31,10 +31,10 @@ namespace Calculator.Logic.Tests.Model
                 return new ParenthesedExpression {Wrapped = new Addition {Left = sub, Right = divide}};
             }
         }
-        public static Addition CosineAddition => new Addition {Left = new CosineExpression{Value = 23}, Right = new CosineExpression {Value = 17} };
-        public static Addition TangentAddition => new Addition {Left = new TangentExpression{Value = 23}, Right = new TangentExpression { Value = 17} };
-        public static Addition SinusAddition => new Addition {Left = new SinusExpression{Value = 23}, Right = new SinusExpression { Value = 17} };
-        public static Square SquarewithRoot=> new Square() {Left = new SquareRootExpression{Value = 9}, Right = new Constant() { Value = 2} };
+        public static Addition CosineAddition => new Addition {Left = new Cosine{Value = 23}, Right = new Cosine {Value = 17} };
+        public static Addition TangentAddition => new Addition {Left = new Tangent{Value = 23}, Right = new Tangent { Value = 17} };
+        public static Addition SinusAddition => new Addition {Left = new Sinus{Value = 23}, Right = new Sinus { Value = 17} };
+        public static Square SquarewithRoot=> new Square() {Left = new SquareRoot{Value = 9}, Right = new Constant() { Value = 2} };
 
     }
 }

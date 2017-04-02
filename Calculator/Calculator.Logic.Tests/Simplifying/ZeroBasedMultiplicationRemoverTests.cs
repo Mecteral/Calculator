@@ -17,12 +17,12 @@ namespace Calculator.Logic.Tests.Simplifying
         readonly Multiplication mMultiplicationWithLeftZero = new Multiplication
         {
             Left = new Constant {Value = 0M},
-            Right = new SinusExpression {Value = 13}
+            Right = new Sinus {Value = 13}
         };
 
         readonly Multiplication mMultiplicationWithRightZero = new Multiplication
         {
-            Left = new TangentExpression {Value = 13M},
+            Left = new Tangent {Value = 13M},
             Right = new Constant {Value = 0M}
         };
 
@@ -78,12 +78,12 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ZeroBasedMultiplicationRemover_Doesnt_Change_CosineAddition()
         {
-            var expression = new Addition {Left = new CosineExpression {Value = 0}, Right = new Constant {Value = 0}};
+            var expression = new Addition {Left = new Cosine {Value = 0}, Right = new Constant {Value = 0}};
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<Addition>()
                 .Which.Left.Should()
-                .BeOfType<CosineExpression>()
+                .BeOfType<Cosine>()
                 .Which.Value.Should()
                 .Be(0);
             result.Should()
@@ -97,12 +97,12 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ZeroBasedMultiplicationRemover_Doesnt_Change_SinusAddition()
         {
-            var expression = new Addition {Left = new SinusExpression {Value = 0}, Right = new Constant {Value = 0}};
+            var expression = new Addition {Left = new Sinus {Value = 0}, Right = new Constant {Value = 0}};
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<Addition>()
                 .Which.Left.Should()
-                .BeOfType<SinusExpression>()
+                .BeOfType<Sinus>()
                 .Which.Value.Should()
                 .Be(0);
             result.Should()
@@ -127,14 +127,14 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Subtraction
             {
-                Left = new TangentExpression {Value = 0},
+                Left = new Tangent {Value = 0},
                 Right = new Constant {Value = 0}
             };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<Subtraction>()
                 .Which.Left.Should()
-                .BeOfType<TangentExpression>()
+                .BeOfType<Tangent>()
                 .Which.Value.Should()
                 .Be(0);
             result.Should()
@@ -151,7 +151,7 @@ namespace Calculator.Logic.Tests.Simplifying
             var expression = new Addition
             {
                 Left = new Variable {Variables = "a"},
-                Right = new SquareRootExpression {Value = 0}
+                Right = new SquareRoot {Value = 0}
             };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
@@ -163,7 +163,7 @@ namespace Calculator.Logic.Tests.Simplifying
             result.Should()
                 .BeOfType<Addition>()
                 .Which.Right.Should()
-                .BeOfType<SquareRootExpression>()
+                .BeOfType<SquareRoot>()
                 .Which.Value.Should()
                 .Be(0);
         }

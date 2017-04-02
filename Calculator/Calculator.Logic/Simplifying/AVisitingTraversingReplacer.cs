@@ -12,11 +12,11 @@ namespace Calculator.Logic.Simplifying
         void IExpressionVisitor.Visit(Constant constant) => mResult = ReplaceConstant(constant);
         void IExpressionVisitor.Visit(Division division) => mResult = ReplaceDivision(division);
         void IExpressionVisitor.Visit(Variable variable) => mResult = ReplaceVariable(variable);
-        void IExpressionVisitor.Visit(CosineExpression cosineExpression) => mResult = ReplaceCosine(cosineExpression);
-        void IExpressionVisitor.Visit(TangentExpression tangentExpression)
+        void IExpressionVisitor.Visit(Cosine cosineExpression) => mResult = ReplaceCosine(cosineExpression);
+        void IExpressionVisitor.Visit(Tangent tangentExpression)
             => mResult = ReplaceTangent(tangentExpression);
-        void IExpressionVisitor.Visit(SinusExpression sinus) => mResult = ReplaceSinus(sinus);
-        void IExpressionVisitor.Visit(SquareRootExpression squareRootExpression)
+        void IExpressionVisitor.Visit(Sinus sinus) => mResult = ReplaceSinus(sinus);
+        void IExpressionVisitor.Visit(SquareRoot squareRootExpression)
             => mResult = ReplaceSquareRoot(squareRootExpression);
         void IExpressionVisitor.Visit(Square square) => mResult = ReplaceSquare(square);
         protected virtual IExpression ReplaceParenthesed(ParenthesedExpression parenthesed) => parenthesed;
@@ -25,10 +25,10 @@ namespace Calculator.Logic.Simplifying
         protected virtual IExpression ReplaceAddition(Addition addition) => addition;
         protected virtual IExpression ReplaceDivision(Division division) => division;
         protected virtual IExpression ReplaceConstant(Constant constant) => constant;
-        protected virtual IExpression ReplaceCosine(CosineExpression cosine) => cosine;
-        protected virtual IExpression ReplaceTangent(TangentExpression tangent) => tangent;
-        protected virtual IExpression ReplaceSinus(SinusExpression sinus) => sinus;
-        protected virtual IExpression ReplaceSquareRoot(SquareRootExpression squareRoot) => squareRoot;
+        protected virtual IExpression ReplaceCosine(Cosine cosine) => cosine;
+        protected virtual IExpression ReplaceTangent(Tangent tangent) => tangent;
+        protected virtual IExpression ReplaceSinus(Sinus sinus) => sinus;
+        protected virtual IExpression ReplaceSquareRoot(SquareRoot squareRoot) => squareRoot;
         protected virtual IExpression ReplaceVariable(Variable variable) => variable;
         protected virtual IExpression ReplaceSquare(Square square) => square;
         protected override IExpression Replace(IExpression expression)
