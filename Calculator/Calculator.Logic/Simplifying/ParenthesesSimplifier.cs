@@ -48,7 +48,7 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Sinus sinusExpression) {}
         public void Visit(SquareRoot squareRootExpression){}
-        public void Visit(Power square)
+        public void Visit(Square square)
         {
             RemoveParenthesesIfPossible(square);
         }
