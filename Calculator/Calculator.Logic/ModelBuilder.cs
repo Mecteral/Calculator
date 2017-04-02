@@ -191,7 +191,7 @@ namespace Calculator.Logic
         {
             if (mCurrentOperation?.Right is Variable)
             {
-                if (mCurrentOperation.HasParent)
+                if (mCurrentOperation.HasParent && !(mCurrentOperation.Parent is ParenthesedExpression))
                 {
                     var parent = (IArithmeticOperation) mCurrentOperation.Parent;
                     var temp = parent.Right;

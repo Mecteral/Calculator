@@ -80,6 +80,7 @@
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
+    <Compile Include="Simplifying\ZeroBasedMultiplicationRemoverTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />

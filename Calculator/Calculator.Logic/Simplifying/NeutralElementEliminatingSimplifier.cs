@@ -12,5 +12,6 @@ namespace Calculator.Logic.Simplifying
             => new NeutralElementOfAdditionRemover(addition).Transform();
         protected override IExpression ReplaceDivision(Division division)
             => new NeutralElementOfDivisionRemover(division).Transform();
+        
     }
 }

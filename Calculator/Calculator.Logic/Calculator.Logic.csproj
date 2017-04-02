@@ -107,6 +107,7 @@
     <Compile Include="Simplifying\NeutralElementOfDivisionRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfMultiplicationRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfSubtractionRemover.cs" />
+    <Compile Include="Simplifying\ZeroBasedMultiplicationRemover.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="Simplifying\ISimplifier.cs" />

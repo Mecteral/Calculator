@@ -46,6 +46,7 @@ namespace Calculator.Logic
             builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>();
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<ZeroBasedMultiplicationRemover>().As<ISimplifier>();
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
