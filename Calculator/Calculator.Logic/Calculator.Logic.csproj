@@ -102,12 +102,12 @@
     <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
+    <Compile Include="Simplifying\MultiplicationByZeroRemover.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifier.cs" />
     <Compile Include="Simplifying\NeutralElementOfAdditionRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfDivisionRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfMultiplicationRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfSubtractionRemover.cs" />
-    <Compile Include="Simplifying\ZeroBasedMultiplicationRemover.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="Simplifying\ISimplifier.cs" />
@@ -115,7 +115,6 @@
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
     <Compile Include="Model\ExpressionCloner.cs" />
-    <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
     <Compile Include="Simplifying\ParenthesesSimplifier.cs" />

@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class ZeroBasedMultiplicationRemoverTests
+    public class MultiplicationByZeroRemoverTests
     {
         [SetUp]
         public void SetUp()
         {
-            mZeroRemover = new ZeroBasedMultiplicationRemover();
+            mZeroRemover = new MultiplicationByZeroRemover();
         }
 
         readonly Multiplication mMultiplicationWithLeftZero = new Multiplication
@@ -26,12 +26,12 @@ namespace Calculator.Logic.Tests.Simplifying
             Right = new Constant {Value = 0M}
         };
 
-        ZeroBasedMultiplicationRemover mZeroRemover;
+        MultiplicationByZeroRemover mZeroRemover;
 
         [Test]
         public void DoubleSidedZeroMultiplicationInSubtraction()
         {
-            var expression = new Addition {Left = mMultiplicationWithLeftZero, Right = mMultiplicationWithRightZero};
+            var expression = new Addition { Left = mMultiplicationWithLeftZero, Right = mMultiplicationWithRightZero };
             var result = mZeroRemover.Simplify(expression);
             result.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
             result.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
@@ -40,7 +40,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void LeftHandedZeroMultiplication()
         {
-            var expression = new Addition {Left = mMultiplicationWithRightZero, Right = new Constant {Value = 13}};
+            var expression = new Addition { Left = mMultiplicationWithRightZero, Right = new Constant { Value = 13 } };
             var result = mZeroRemover.Simplify(expression);
             result.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(0M);
             result.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13M);
@@ -49,7 +49,7 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void ParenthesedZeroBasedMultiplication()
         {
-            var expression = new ParenthesedExpression {Wrapped = mMultiplicationWithLeftZero};
+            var expression = new ParenthesedExpression { Wrapped = mMultiplicationWithLeftZero };
             var result = mZeroRemover.Simplify(expression);
             result.Should()
                 .BeOfType<ParenthesedExpression>()
