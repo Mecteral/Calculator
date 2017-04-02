@@ -8,12 +8,14 @@ namespace Calculator.Logic.Pipelines
     {
         readonly Func<IConversionFacade> mConversionFactory;
         readonly Func<ISimplificationPipeline> mSimplificationPipelineFactory;
+        readonly IConsoleToMetricDecider mDecider;
 
         public PipelineEvaluator(Func<IConversionFacade> conversionFactory,
-            Func<ISimplificationPipeline> simplificationPipelineFactory)
+            Func<ISimplificationPipeline> simplificationPipelineFactory, IConsoleToMetricDecider decider)
         {
             mConversionFactory = conversionFactory;
             mSimplificationPipelineFactory = simplificationPipelineFactory;
+            mDecider = decider;
         }
 
         public string Evaluate(string input, IApplicationArguments args)
@@ -21,12 +23,7 @@ namespace Calculator.Logic.Pipelines
             if (input == null) return null;
             if (input.Contains("=?") || args.UseConversion)
             {
-                Console.WriteLine("Do you want to convert to the metric system? \n y, or yes for yes.");
-                var metric = Console.ReadLine();
-                if (metric == "y" || metric == "yes")
-                {
-                    args.ToMetric = true;
-                }
+                mDecider.Decide();
                 var conversion = mConversionFactory();
                 return conversion.ConvertUnits(input, args.UnitForConversion, args.ToMetric);
             }

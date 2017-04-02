@@ -14,24 +14,38 @@ namespace Calculator.Logic.Tests.Pipelines
         [SetUp]
         public void SetUp()
         {
-            mConversionFacade = Substitute.For<IConversionFacade>();
-            mSimplificationPipeline = Substitute.For<ISimplificationPipeline>();
             mApplicationArguments = Substitute.For<ApplicationArguments>();
+            mConversionFactory = () => Substitute.For<IConversionFacade>();
+            mSimplificationPipelineFactory = () => Substitute.For<ISimplificationPipeline>();
+            mDecider = Substitute.For<IConsoleToMetricDecider>();
+            mPipelineEvaluator = new PipelineEvaluator(mConversionFactory, mSimplificationPipelineFactory, mDecider);
         }
 
+        IConsoleToMetricDecider mDecider;
         Func<IConversionFacade> mConversionFactory;
         Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         ApplicationArguments mApplicationArguments;
         PipelineEvaluator mPipelineEvaluator;
-        IConversionFacade mConversionFacade;
-        ISimplificationPipeline mSimplificationPipeline;
 
         [Test]
         public void If_Input_Is_Null_Pipeline_Returns_Null()
         {
-            var input = "";
+            string input = null;
             var result = mPipelineEvaluator.Evaluate(input, mApplicationArguments);
             result.Should().Be(null);
+        }
+
+        [Test]
+        public void If_Input_Contains_ConversionSign_ConversionPipeline_Is_Called()
+        {
+            string input = "2+3=?";
+            mPipelineEvaluator.Evaluate(input, mApplicationArguments);
+        }
+        [Test]
+        public void If_Input_Contains_No_ConversionSign_SimpificationPipeline_Is_Called()
+        {
+            string input = "2+3";
+            mPipelineEvaluator.Evaluate(input, mApplicationArguments);
         }
     }
 }

@@ -51,7 +51,8 @@ namespace Calculator.Logic
             builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
             builder.RegisterType<WpfCalculationExecutor>().As<IWpfCalculationExecutor>();
-            builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>();
+            builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>().SingleInstance();
+            builder.RegisterType<ConsoleToMetricDecider>().As<IConsoleToMetricDecider>();
         }
     }
 }

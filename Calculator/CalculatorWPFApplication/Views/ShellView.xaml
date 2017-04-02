@@ -48,8 +48,7 @@
             <Button x:Name="OnConversionButton" Content="Conversion" MinWidth="100" HorizontalAlignment="Center" />
         </Grid>
         <ContentControl Grid.Row="3" Grid.Column="0" x:Name="ActiveItem" />
-        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" MinWidth="100" x:Name="OnConfigurationButton"
-                Margin="4,0,3,1" />
+        <Button Grid.Row="4" Grid.Column="0" Content="Configuration" HorizontalAlignment="Center" MinWidth="100" x:Name="OnConfigurationButton" />
 
     </Grid>
 
