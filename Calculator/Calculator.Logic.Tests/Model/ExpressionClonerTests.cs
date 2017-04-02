@@ -99,7 +99,7 @@ namespace Calculator.Logic.Tests.Model
             var underTest = new Addition
             {
                 Left = new SquareRoot {Value = 1},
-                Right = new Square {Left = new Constant {Value = 13}, Right = new Constant {Value = 2}}
+                Right = new Power() {Left = new Constant {Value = 13}, Right = new Constant {Value = 2}}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();

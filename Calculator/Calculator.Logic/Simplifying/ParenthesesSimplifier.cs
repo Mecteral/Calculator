@@ -48,10 +48,6 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Sinus sinusExpression) {}
         public void Visit(SquareRoot squareRootExpression){}
-        public void Visit(Square square)
-        {
-            RemoveParenthesesIfPossible(square);
-        }
 
         public IExpression Simplify(IExpression input)
         {
@@ -88,6 +84,11 @@ namespace Calculator.Logic.Simplifying
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
+        }
+
+        public void Visit(Power power)
+        {
+            RemoveParenthesesIfPossible(power);
         }
     }
 }

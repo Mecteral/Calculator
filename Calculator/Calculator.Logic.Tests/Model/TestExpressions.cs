@@ -34,7 +34,7 @@ namespace Calculator.Logic.Tests.Model
         public static Addition CosineAddition => new Addition {Left = new Cosine{Value = 23}, Right = new Cosine {Value = 17} };
         public static Addition TangentAddition => new Addition {Left = new Tangent{Value = 23}, Right = new Tangent { Value = 17} };
         public static Addition SinusAddition => new Addition {Left = new Sinus{Value = 23}, Right = new Sinus { Value = 17} };
-        public static Square SquarewithRoot=> new Square() {Left = new SquareRoot{Value = 9}, Right = new Constant() { Value = 2} };
+        public static Power SquarewithRoot=> new Power() {Left = new SquareRoot{Value = 9}, Right = new Constant() { Value = 2} };
 
     }
 }
