@@ -85,6 +85,35 @@ namespace Calculator.Logic.Tests.Simplifying
         }
 
         [Test]
+        public void SimpleSquareTest()
+        {
+            var expression = new ParenthesedExpression() {Wrapped = new Addition() {Left = new Square() { Left = new Constant() { Value = 2 }, Right = new Constant() { Value = 2 } } , Right = new SquareRootExpression() {Value = 16} }  };
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Square>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Square>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<SquareRootExpression>().Which.Value.Should().Be(16);
+        }
+
+        [Test]
+        public void RightHandedParentheses()
+        {
+            var expression = new Addition() {Left = new Constant() {Value = 1}, Right = new ParenthesedExpression() {Wrapped = new Constant() {Value = 2} } };
+            mUnderTest.Simplify(expression)
+                .Should()
+                .BeOfType<Addition>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(1);
+            mUnderTest.Simplify(expression)
+                .Should()
+                .BeOfType<Addition>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(2);
+        }
+
+        [Test]
         public void ParenthesesSimplifier_Doesnt_Remove_Paretheses_From_Nested_Expressions_With_Operations()
         {
             var expression = new ParenthesedExpression

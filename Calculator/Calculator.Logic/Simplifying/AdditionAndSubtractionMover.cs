@@ -80,14 +80,6 @@ namespace Calculator.Logic.Simplifying
             while (!mWasChanged)
             {
                 var current = operation;
-                if (operation.Right is Multiplication && operation.Left is Constant)
-                {
-                    var constant = (Constant) operation.Left;
-                    if (constant.Value == 0)
-                    {
-                        break;
-                    }
-                }
                 if (operation.Right is Constant && !(operation.Left is Constant))
                 {
                     mIsRight = true;
@@ -210,26 +202,6 @@ namespace Calculator.Logic.Simplifying
         static void CheckForParent(IArithmeticOperation operation, IExpression replacement)
         {
             if (!operation.HasParent) sMovedExpression = replacement;
-            else
-            {
-                HandleParent(operation, replacement);
-            }
-        }
-
-        static void HandleParent(IExpression operation, IExpression replacement)
-        {
-            if (operation.Parent is IArithmeticOperation)
-            {
-                var operationParent = (IArithmeticOperation) operation.Parent;
-                if (operationParent.Left.Equals(operation))
-                {
-                    operationParent.Left = replacement;
-                }
-                else
-                {
-                    operationParent.Right = replacement;
-                }
-            }
         }
 
         void VisitOperands(IArithmeticOperation operation)

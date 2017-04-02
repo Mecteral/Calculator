@@ -73,11 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AdditionAndSubtractionMoverTests.cs" />
+    <Compile Include="Simplifying\AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
     <Compile Include="JSonSerializerTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
+    <Compile Include="Pipelines\PipelineEvaluatorTests.cs" />
     <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
     <Compile Include="Simplifying\ZeroBasedMultiplicationRemoverTests.cs" />

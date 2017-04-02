@@ -62,6 +62,18 @@ namespace Calculator.Logic.Tests
         }
 
         [Test]
+        public void AdditionWithParent()
+        {
+            Check("(2+3a+2)+(3a+2+4a+3)", "(3*a + 2 + 2) + (3*a + 4*a + 2 + 3)");
+        }
+
+        [Test]
+        public void Test_With_Trigonometric_Functions()
+        {
+            Check("sqrt(16) + cos(0) + tan(0) + sin(0) +2^2", "4 + cos(1) + tan(0) + sin(0) + 2 ^ 2");
+        }
+
+        [Test]
         public void ComplexChainGetsTransformedCorrectly()
         {
             Check("a+1+2a+3+4a+5", "1*a + 1 + 2*a + 4*a + 3 + 5");

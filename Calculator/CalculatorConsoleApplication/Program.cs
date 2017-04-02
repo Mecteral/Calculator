@@ -79,7 +79,7 @@ namespace CalculatorConsoleApplication
 
         static void OnStringError(CalculationException x, string input)
         {
-            Console.WriteLine($"{x.Error} \n{input}");
+            Console.WriteLine($"{x.Message} \n{input}");
             for (var i = 0; i < x.Index; i++)
             {
                 Console.Write(".");
