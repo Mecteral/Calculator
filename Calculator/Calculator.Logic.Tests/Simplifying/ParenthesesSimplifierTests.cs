@@ -22,7 +22,7 @@ namespace Calculator.Logic.Tests.Simplifying
             var expression = new Addition
             {
                 Left = new ParenthesedExpression {Wrapped = new Constant {Value = 3M}},
-                Right = new SinusExpression {Value = 13M}
+                Right = new Sinus {Value = 13M}
             };
             mUnderTest.Simplify(expression)
                 .Should()
@@ -87,10 +87,10 @@ namespace Calculator.Logic.Tests.Simplifying
         [Test]
         public void SimpleSquareTest()
         {
-            var expression = new ParenthesedExpression() {Wrapped = new Addition() {Left = new Square() { Left = new Constant() { Value = 2 }, Right = new Constant() { Value = 2 } } , Right = new SquareRootExpression() {Value = 16} }  };
-            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Square>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
-            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Square>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
-            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<SquareRootExpression>().Which.Value.Should().Be(16);
+            var expression = new ParenthesedExpression() {Wrapped = new Addition() {Left = new Power() { Left = new Constant() { Value = 2 }, Right = new Constant() { Value = 2 } } , Right = new SquareRoot() {Value = 16} }  };
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+            mUnderTest.Simplify(expression).Should().BeOfType<ParenthesedExpression>().Which.Wrapped.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<SquareRoot>().Which.Value.Should().Be(16);
         }
 
         [Test]
@@ -121,8 +121,8 @@ namespace Calculator.Logic.Tests.Simplifying
                 Wrapped =
                     new Addition
                     {
-                        Left = new CosineExpression {Value = 12},
-                        Right = new TangentExpression {Value = 12}
+                        Left = new Cosine {Value = 12},
+                        Right = new Tangent {Value = 12}
                     }
             };
             mUnderTest.Simplify(expression)

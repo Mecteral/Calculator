@@ -67,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
+    <Compile Include="CommandLineParser\ICommandLineParserCreator.cs" />
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />

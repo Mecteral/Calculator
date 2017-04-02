@@ -34,7 +34,7 @@ namespace Calculator.Logic.Simplifying
             CalculateResultIfPossible(division);
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             CalculateResultIfPossible(square);
         }
@@ -48,13 +48,13 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Variable variable) {}
 
-        public void Visit(CosineExpression cosineExpression) {}
+        public void Visit(Cosine cosineExpression) {}
 
-        public void Visit(TangentExpression tangentExpression) {}
+        public void Visit(Tangent tangentExpression) {}
 
-        public void Visit(SinusExpression sinusExpression) {}
+        public void Visit(Sinus sinusExpression) {}
 
-        public void Visit(SquareRootExpression squareRootExpression){}
+        public void Visit(SquareRoot squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {

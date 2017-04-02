@@ -106,5 +106,11 @@ namespace Calculator.Logic.Tests.Simplifying
                 BeOfType<Addition>
                 ();
         }
+
+        [Test]
+        public void TESTMETHODNAME()
+        {
+            
+        }
     }
 }

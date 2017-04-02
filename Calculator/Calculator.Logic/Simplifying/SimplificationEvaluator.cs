@@ -42,27 +42,27 @@ namespace Calculator.Logic.Simplifying
             mExpressionCount++;
         }
 
-        public void Visit(CosineExpression cosineExpression)
+        public void Visit(Cosine cosineExpression)
         {
             mExpressionCount++;
         }
 
-        public void Visit(TangentExpression tangentExpression)
+        public void Visit(Tangent tangentExpression)
         {
             mExpressionCount++;
         }
 
-        public void Visit(SinusExpression sinusExpression)
+        public void Visit(Sinus sinusExpression)
         {
             mExpressionCount++;
         }
 
-        public void Visit(SquareRootExpression squareRootExpression)
+        public void Visit(SquareRoot squareRootExpression)
         {
             mExpressionCount++;
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             VisitOperands(square);
             mExpressionCount++;

@@ -42,16 +42,12 @@ namespace Calculator.Logic.Simplifying
         public void Visit(Constant constant) {}
         public void Visit(Variable variable) {}
 
-        public void Visit(CosineExpression cosineExpression) {}
+        public void Visit(Cosine cosineExpression) {}
 
-        public void Visit(TangentExpression tangentExpression) {}
+        public void Visit(Tangent tangentExpression) {}
 
-        public void Visit(SinusExpression sinusExpression) {}
-        public void Visit(SquareRootExpression squareRootExpression){}
-        public void Visit(Square square)
-        {
-            RemoveParenthesesIfPossible(square);
-        }
+        public void Visit(Sinus sinusExpression) {}
+        public void Visit(SquareRoot squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {
@@ -88,6 +84,11 @@ namespace Calculator.Logic.Simplifying
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
+        }
+
+        public void Visit(Power power)
+        {
+            RemoveParenthesesIfPossible(power);
         }
     }
 }

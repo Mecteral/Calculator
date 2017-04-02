@@ -67,25 +67,25 @@ namespace Calculator.Logic
 
         public void Visit(CosineToken cosineToken)
         {
-            mCurrent = new CosineExpression {Value = cosineToken.Value};
+            mCurrent = new Cosine {Value = cosineToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(TangentToken tangentToken)
         {
-            mCurrent = new TangentExpression {Value = tangentToken.Value};
+            mCurrent = new Tangent {Value = tangentToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SinusToken sinusToken)
         {
-            mCurrent = new SinusExpression {Value = sinusToken.Value};
+            mCurrent = new Sinus {Value = sinusToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SquareRootToken sqaureRootToken)
         {
-            mCurrent = new SquareRootExpression {Value = sqaureRootToken.Value};
+            mCurrent = new SquareRoot {Value = sqaureRootToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
@@ -165,7 +165,7 @@ namespace Calculator.Logic
                     HandleMultiplicationOrDivisionBeforeAdditiveOperation<Division>();
                     break;
                 case Operator.Square:
-                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Square>();
+                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Power>();
                     break;
             }
         }

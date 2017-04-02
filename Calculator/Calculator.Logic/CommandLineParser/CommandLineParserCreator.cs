@@ -32,9 +32,4 @@ namespace Calculator.Logic.CommandLineParser
             return parser;
         }
     }
-
-    public interface ICommandLineParserCreator
-    {
-        FluentCommandLineParser ArgumentsSetup(ApplicationArguments args);
-    }
 }
