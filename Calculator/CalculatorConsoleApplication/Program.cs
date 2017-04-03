@@ -27,6 +27,7 @@ namespace CalculatorConsoleApplication
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
         static readonly CommandLineParserCreator sCreator = new CommandLineParserCreator();
         static readonly InputStringValidator sStringValidator = new InputStringValidator();
+        static readonly IConfigFileWriter sWriter = new ConfigFileWriter();
 
         static void Main(string[] args)
         {
@@ -90,7 +91,7 @@ namespace CalculatorConsoleApplication
         }
         static void WriteSwitchesToDefault(IEnumerable<string> args, IEnumerable<string> userConfig)
         {
-            var writer = new SwitchesToConfigFileWriter();
+            var writer = new SwitchesToConfigFileWriter(sWriter);
             writer.WriteToConfigFile(args, userConfig, sArguments, sPathToUserFile);
         }
         static void RunCustomParser(string[] args)

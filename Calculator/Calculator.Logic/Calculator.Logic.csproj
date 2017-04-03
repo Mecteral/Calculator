@@ -69,6 +69,8 @@
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
     <Compile Include="CommandLineParser\ICommandLineParserCreator.cs" />
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
+    <Compile Include="ConfigFile\ConfigFileWriter.cs" />
+    <Compile Include="ConfigFile\IConfigFileWriter.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
     <Compile Include="LogicModule.cs" />

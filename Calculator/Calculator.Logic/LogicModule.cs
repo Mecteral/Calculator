@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using Calculator.Logic.ArgumentParsing;
+using Calculator.Logic.ConfigFile;
 using Calculator.Logic.Facades;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
@@ -53,6 +54,7 @@ namespace Calculator.Logic
             builder.RegisterType<WpfCalculationExecutor>().As<IWpfCalculationExecutor>();
             builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>().SingleInstance();
             builder.RegisterType<ConsoleToMetricDecider>().As<IConsoleToMetricDecider>();
+            builder.RegisterType<ConfigFileWriter>().As<IConfigFileWriter>();
         }
     }
 }
