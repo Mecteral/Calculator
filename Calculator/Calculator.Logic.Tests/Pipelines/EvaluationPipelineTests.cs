@@ -57,7 +57,15 @@ namespace Calculator.Logic.Tests.Pipelines
         [Test]
         public void Evaluate_For_Conversions_Calls_Decider()
         {
-            
+            var input = "2+3";
+            mApplicationArguments.UseConversion.Returns(true);
+            mApplicationArguments.UnitForConversion.Returns("alpha");
+            mApplicationArguments.ToMetric.Returns(true);
+            mConversionFacade.ConvertUnits(input, "alpha", true).Returns("bravo");
+
+            mUnderTest.Evaluate(input, mApplicationArguments).Should().Be("bravo");
+
+            mDecider.Received().Decide();
         }
     }
 }
