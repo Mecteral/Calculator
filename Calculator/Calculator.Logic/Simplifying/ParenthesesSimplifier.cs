@@ -60,15 +60,15 @@ namespace Calculator.Logic.Simplifying
             VisitOperands(operation);
             if (operation.Left is ParenthesedExpression)
             {
-                HandleParenthesis(operation, o => o.Left);
+                ReplaceParenthesedConstantWithConstantIn(operation, o => o.Left);
             }
             else if (operation.Right is ParenthesedExpression)
             {
-                HandleParenthesis(operation, o => o.Right);
+                ReplaceParenthesedConstantWithConstantIn(operation, o => o.Right);
             }
         }
 
-        static void HandleParenthesis(
+        static void ReplaceParenthesedConstantWithConstantIn(
             IArithmeticOperation operation,
             Expression<Func<IArithmeticOperation, IExpression>> propertySelector)
         {
