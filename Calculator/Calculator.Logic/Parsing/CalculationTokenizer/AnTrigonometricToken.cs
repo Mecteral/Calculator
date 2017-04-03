@@ -8,10 +8,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public abstract class AnTrigonometricToken
     {
+        readonly IApplicationArguments mArgs;
         double mNumber;
         bool mToDegree;
-        readonly IApplicationArguments mArgs;
-
         protected AnTrigonometricToken(string input, IApplicationArguments args)
         {
             mArgs = args;
@@ -21,22 +20,18 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             ConvertToDegreeIfNeeded();
             Value = CalculateValueOf(input);
         }
-
         public decimal Value { get; private set; }
-
         void ConvertToDegreeIfNeeded()
         {
-            if (mToDegree)
-                mNumber = mNumber * (Math.PI / 180);
+            if (mToDegree) mNumber = mNumber * (Math.PI / 180);
         }
-
         decimal CalculateValueOf(string input)
         {
             var functionNameToFunction = new Dictionary<string, Func<double, double>>
             {
-                {"cos", Math.Cos },
-                {"sin", Math.Sin },
-                {"tan", Math.Tan },
+                {"cos", Math.Cos},
+                {"sin", Math.Sin},
+                {"tan", Math.Tan}
             };
             return
                 functionNameToFunction.Where(mapping => input.Contains(mapping.Key))
@@ -45,14 +40,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         }
         void SetConversionIfSpecified(string input)
         {
-            if (mArgs != null)
-            {
-                mToDegree = mArgs.ToDegree;
-            }
-            if (input.Contains("rad"))
-                mToDegree = false;
-            else if (input.Contains("deg"))
-                mToDegree = true;
+            if (mArgs != null) { mToDegree = mArgs.ToDegree; }
+            if (input.Contains("rad")) mToDegree = false;
+            else if (input.Contains("deg")) mToDegree = true;
         }
         static string ExtractNumber(string input)
         {
