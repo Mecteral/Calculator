@@ -122,7 +122,7 @@
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="Simplifying\ParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\ParenthesisAroundConstantsRemover.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />

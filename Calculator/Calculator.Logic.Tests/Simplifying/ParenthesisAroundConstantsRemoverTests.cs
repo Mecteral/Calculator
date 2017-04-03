@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class ParenthesesSimplifierTests
+    public class ParenthesisAroundConstantsRemoverTests
     {
         [SetUp]
         public void SetUp()
