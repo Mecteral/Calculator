@@ -19,15 +19,42 @@
             {
                 var c = mInput[i];
                 if (
-                    !(char.IsLetter(c) || c == '-' || c == '+' || c == '*' || c == '/' || c == '^' ||
-                      char.IsWhiteSpace(c) || char.IsNumber(c) || c == '.' || c == ',' || c == '(' || c == ')' ||
-                      c == '=' || c == '?'))
+                    !(IsVariable(c) || IsOperator(c) ||
+                      IsWhiteSpace(c) || IsDigit(c) || IsDecimal(c) || IsParenthesis(c) ||
+                      IsConversionMarker(c)))
                 {
                     throw new CalculationException("Unknown character in input", i);
                 }
             }
         }
-
+        static bool IsConversionMarker(char c)
+        {
+            return c == '=' || c == '?';
+        }
+        static bool IsParenthesis(char c)
+        {
+            return c == '(' || c == ')';
+        }
+        static bool IsDecimal(char c)
+        {
+            return c == '.' || c == ',';
+        }
+        static bool IsDigit(char c)
+        {
+            return char.IsNumber(c);
+        }
+        static bool IsWhiteSpace(char c)
+        {
+            return char.IsWhiteSpace(c);
+        }
+        static bool IsOperator(char c)
+        {
+            return c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
+        }
+        static bool IsVariable(char c)
+        {
+            return char.IsLetter(c);
+        }
         void CheckParanthesesCount()
         {
             var count = 0;
