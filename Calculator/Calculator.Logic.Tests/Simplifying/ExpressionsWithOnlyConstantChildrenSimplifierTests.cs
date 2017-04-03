@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
-using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Logic.Simplifying;
 using Calculator.Model;
 using FluentAssertions;
-using NSubstitute;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests.Simplifying
@@ -12,14 +10,6 @@ namespace Calculator.Logic.Tests.Simplifying
     [TestFixture]
     public class ExpressionsWithOnlyConstantChildrenSimplifierTests
     {
-        [SetUp]
-        public void Setup()
-        {
-            mSimplifier= new ExpressionsWithOnlyConstantChildrenSimplifier();
-        }
-
-        ExpressionsWithOnlyConstantChildrenSimplifier mSimplifier;
-
         static IEnumerable<IToken> Tokenize(string input)
         {
             var tokenizer = new Tokenizer();
@@ -27,56 +17,32 @@ namespace Calculator.Logic.Tests.Simplifying
             var tokens = tokenizer.Tokens;
             return tokens;
         }
-
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
-
-
+        [Test]
+        public void Negative_With_Single_Subtraction()
+        {
+            var expression = new Subtraction {Left = new Constant {Value = 1}, Right = new Constant {Value = -2}};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(expression).Should().BeOfType<Constant>();
+        }
         [Test]
         public void Simplification_Of_Nested_Additions()
         {
             var expression = new Addition {Left = new Constant {Value = 3}, Right = new Constant {Value = 3}};
-            mSimplifier.Simplify(expression).Should().BeOfType<Constant>();
-        }
-
-        [Test]
-        public void Subtraction_Changes_With_Negative_Righthandside()
-        {
-            var expression = new Division() {Left = new Constant() {Value = 1}, Right = new Subtraction() {Left = new Constant() {Value = 2}, Right = new Constant() {Value = -2} } };
-            mSimplifier.Simplify(expression).Should().BeOfType<Division>().Which.Right.Should().BeOfType<Constant>();
-        }
-
-        [Test]
-        public void Negative_With_Single_Subtraction()
-        {
-            var expression =  new Subtraction() {Left = new Constant() {Value = 1}, Right = new Constant() {Value = -2} };
-            mSimplifier.Simplify(expression).Should().BeOfType<Constant>();
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(expression).Should().BeOfType<Constant>();
         }
         [Test]
         public void Simplification_Of_ParenthesedExpression()
         {
             var expression = new Addition
             {
-                Left =
-                    new Multiplication
-                    {
-                        Left = new Constant {Value = 3},
-                        Right = new Variable {Variables = "a"}
-                    },
+                Left = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Variables = "a"}},
                 Right =
                     new ParenthesedExpression
                     {
-                        Wrapped =
-                            new Multiplication
-                            {
-                                Left = new Constant
-                                {
-                                    Value = 1
-                                },
-                                Right = new Constant {Value = 2}
-                            }
+                        Wrapped = new Multiplication {Left = new Constant {Value = 1}, Right = new Constant {Value = 2}}
                     }
             };
-            mSimplifier.Simplify(expression)
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(expression)
                 .Should()
                 .BeOfType<Addition>()
                 .Which.Right.Should()
@@ -84,25 +50,26 @@ namespace Calculator.Logic.Tests.Simplifying
                 .Which.Wrapped.Should()
                 .BeOfType<Constant>();
         }
-
         [Test]
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
-            var underTest = mSimplifier;
-            underTest.Simplify
-            (
-                input
-            );
-            ((
-                    Addition
-                    )
-                    input
-                ).
-                Left.Should
-                ().
-                BeOfType<Addition>
-                ();
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input);
+            ((Addition) input).Left.Should().BeOfType<Addition>();
+        }
+        [Test]
+        public void Subtraction_Changes_With_Negative_Righthandside()
+        {
+            var expression = new Division
+            {
+                Left = new Constant {Value = 1},
+                Right = new Subtraction {Left = new Constant {Value = 2}, Right = new Constant {Value = -2}}
+            };
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(expression)
+                .Should()
+                .BeOfType<Division>()
+                .Which.Right.Should()
+                .BeOfType<Constant>();
         }
     }
 }
