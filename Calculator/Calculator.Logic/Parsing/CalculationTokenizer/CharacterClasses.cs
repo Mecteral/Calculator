@@ -6,7 +6,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
     public static class CharacterClasses
     {
         static readonly Func<char, bool>[] sCharacterClassValidators =
-        {IsConversionMarker, IsVariable, IsOperator, IsWhiteSpace, IsDigit, IsDecimal, IsParenthesis
+        {
+            IsConversionMarker, IsVariable, IsOperator,
+            IsWhiteSpace, IsDigit, IsDecimal, IsParenthesis
         };
         public static void ValidateCharacter(char c, int index)
         {
@@ -16,9 +18,9 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
         static bool IsConversionMarker(char c) => c == '=' || c == '?';
         static bool IsParenthesis(char c) => c == '(' || c == ')';
         static bool IsDecimal(char c) => c == '.' || c == ',';
-        static bool IsDigit(char c) => Char.IsNumber(c);
-        static bool IsWhiteSpace(char c) => Char.IsWhiteSpace(c);
+        static bool IsDigit(char c) => char.IsNumber(c);
+        static bool IsWhiteSpace(char c) => char.IsWhiteSpace(c);
         static bool IsOperator(char c) => c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
-        static bool IsVariable(char c) => Char.IsLetter(c);
+        static bool IsVariable(char c) => char.IsLetter(c);
     }
 }
