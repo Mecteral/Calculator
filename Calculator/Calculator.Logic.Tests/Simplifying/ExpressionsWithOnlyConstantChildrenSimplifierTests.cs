@@ -19,10 +19,40 @@ namespace Calculator.Logic.Tests.Simplifying
         }
         static IExpression CreateInMemoryModel(IEnumerable<IToken> tokens) => new ModelBuilder().BuildFrom(tokens);
         [Test]
+        public void Cosine_Is_Replaced_By_Result()
+        {
+            var input = new Cosine {Value = 9};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input)
+                .Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(9);
+        }
+        [Test]
+        public void Division_Is_Replaced_By_Result()
+        {
+            var input = new Division {Left = new Constant {Value = 18}, Right = new Constant {Value = 9}};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input)
+                .Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(2);
+        }
+        [Test]
         public void Negative_With_Single_Subtraction()
         {
             var expression = new Subtraction {Left = new Constant {Value = 1}, Right = new Constant {Value = -2}};
             new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(expression).Should().BeOfType<Constant>();
+        }
+        [Test]
+        public void Power_Is_Replaced_By_Result()
+        {
+            var input = new Power {Left = new Constant {Value = 2}, Right = new Constant {Value = 7}};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input)
+                .Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(128);
         }
         [Test]
         public void Simplification_Of_Nested_Additions()
@@ -58,6 +88,16 @@ namespace Calculator.Logic.Tests.Simplifying
             ((Addition) input).Left.Should().BeOfType<Addition>();
         }
         [Test]
+        public void Sinus_Is_Replaced_By_Result()
+        {
+            var input = new Sinus {Value = 9};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input)
+                .Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(9);
+        }
+        [Test]
         public void Subtraction_Changes_With_Negative_Righthandside()
         {
             var expression = new Division
@@ -71,5 +111,15 @@ namespace Calculator.Logic.Tests.Simplifying
                 .Which.Right.Should()
                 .BeOfType<Constant>();
         }
+        [Test]
+        public void Tangent_Is_Replaced_By_Result()
+        {
+            var input = new Tangent {Value = 9};
+            new ExpressionsWithOnlyConstantChildrenSimplifier().Simplify(input)
+                .Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(9);
+        }
     }
-}
+}S
