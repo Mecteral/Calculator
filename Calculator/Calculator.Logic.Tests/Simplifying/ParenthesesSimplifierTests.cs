@@ -11,11 +11,9 @@ namespace Calculator.Logic.Tests.Simplifying
         [SetUp]
         public void SetUp()
         {
-            //mUnderTest = new ParenthesesSimplifier();
             mUnderTest= new ParenthesisAroundConstantsRemover();
         }
         ParenthesisAroundConstantsRemover mUnderTest;
-        //ParenthesesSimplifier mUnderTest;
 
         [Test]
         public void Parentheses_Deletion_Before_Addition()

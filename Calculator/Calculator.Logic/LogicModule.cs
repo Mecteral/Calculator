@@ -43,7 +43,6 @@ namespace Calculator.Logic
             builder.RegisterType<EvaluationFacade>().As<IEvaluationFacade>();
             builder.RegisterType<SymbolicSimplificationFacade>().As<ISymbolicSimplificationFacade>();
             builder.RegisterType<DirectCalculationSimplifier>().As<IDirectCalculationSimplifier>().As<ISimplifier>();
-            //builder.RegisterType<ParenthesesSimplifier>().As<IParenthesesSimplifier>().As<ISimplifier>();
             builder.RegisterType<ParenthesisAroundConstantsRemover>().As<ISimplifier>();
             builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>();
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
