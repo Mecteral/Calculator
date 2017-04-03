@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Pipelines
 {
     [TestFixture]
-    public class PipelineEvaluatorTests
+    public class EvaluationPipelineTests
     {
         [SetUp]
         public void SetUp()
