@@ -10,17 +10,14 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class DirectCalculationSimplifierTests
+    public class ExpressionsWithOnlyConstantChildrenSimplifierTests
     {
         [SetUp]
         public void Setup()
         {
-            //mEvaluator = Substitute.For<IExpressionEvaluator>();
-            //mSimplifier = new DirectCalculationSimplifier(mEvaluator);
             mSimplifier= new ExpressionsWithOnlyConstantChildrenSimplifier();
         }
 
-        //IExpressionEvaluator mEvaluator;
         ExpressionsWithOnlyConstantChildrenSimplifier mSimplifier;
 
         static IEnumerable<IToken> Tokenize(string input)

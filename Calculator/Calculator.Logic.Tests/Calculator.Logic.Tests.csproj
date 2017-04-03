@@ -81,7 +81,7 @@
     <Compile Include="JSonSerializerTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Pipelines\EvaluationPipelineTests.cs" />
-    <Compile Include="Simplifying\DirectCalculationSimplifierTests.cs" />
+    <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifierTests.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemoverTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
