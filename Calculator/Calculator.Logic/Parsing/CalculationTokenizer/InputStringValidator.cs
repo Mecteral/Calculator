@@ -1,4 +1,6 @@
-﻿using ModernRonin.PraeterArtem.Functional;
+﻿using System.Linq;
+using ModernRonin.PraeterArtem.Functional;
+using MoreLinq;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
@@ -13,7 +15,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             CheckParanthesesCount();
             CheckForDoubleVariableAndFunction();
         }
-        void CheckForUnknownCharacters() => mInput.UseIn(CharacterClasses.ValidateCharacter);
+        void CheckForUnknownCharacters() => mInput.ForEach(CharacterClasses.ValidateCharacter);
         void CheckParanthesesCount()
         {
             var count = 0;
