@@ -4,13 +4,13 @@ using Mecteral.UnitConversion;
 
 namespace Calculator.Logic.Pipelines
 {
-    public class PipelineEvaluator : IPipelineEvaluator
+    public class EvaluationPipeline : IEvaluationPipeline
     {
         readonly Func<IConversionFacade> mConversionFactory;
         readonly Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         readonly IConsoleToMetricDecider mDecider;
 
-        public PipelineEvaluator(Func<IConversionFacade> conversionFactory,
+        public EvaluationPipeline(Func<IConversionFacade> conversionFactory,
             Func<ISimplificationPipeline> simplificationPipelineFactory, IConsoleToMetricDecider decider)
         {
             mConversionFactory = conversionFactory;

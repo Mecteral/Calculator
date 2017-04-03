@@ -20,7 +20,7 @@ namespace Calculator.Logic
             builder.RegisterType<ConversionTokenizer>().As<IConversionTokenizer>();
             builder.RegisterType<ConversionModelBuilder>().As<IConversionModelBuilder>();
             builder.RegisterType<FormattingExpressionVisitor>().As<IExpressionFormatter>();
-            builder.RegisterType<PipelineEvaluator>().As<IPipelineEvaluator>();
+            builder.RegisterType<EvaluationPipeline>().As<IEvaluationPipeline>();
             builder.RegisterType<ReadableOutputCreator>().As<IReadableOutputCreator>();
             builder.RegisterType<ConversionFacade>().As<IConversionFacade>();
             builder.RegisterType<UnitConverter>()

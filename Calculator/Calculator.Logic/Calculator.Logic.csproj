@@ -84,9 +84,9 @@
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
     <Compile Include="Pipelines\ConsoleToMetricDecider.cs" />
     <Compile Include="Pipelines\IConsoleToMetricDecider.cs" />
-    <Compile Include="Pipelines\IPipelineEvaluator.cs" />
+    <Compile Include="Pipelines\IEvaluationPipeline.cs" />
     <Compile Include="Pipelines\ISimplificationPipeline.cs" />
-    <Compile Include="Pipelines\PipelineEvaluator.cs" />
+    <Compile Include="Pipelines\EvaluationPipeline.cs" />
     <Compile Include="Pipelines\SimplificationPipeline.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\AdditionSubtractionDispatcher.cs" />

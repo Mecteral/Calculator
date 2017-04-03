@@ -18,14 +18,14 @@ namespace Calculator.Logic.Tests.Pipelines
             mConversionFactory = () => Substitute.For<IConversionFacade>();
             mSimplificationPipelineFactory = () => Substitute.For<ISimplificationPipeline>();
             mDecider = Substitute.For<IConsoleToMetricDecider>();
-            mPipelineEvaluator = new PipelineEvaluator(mConversionFactory, mSimplificationPipelineFactory, mDecider);
+            mPipelineEvaluator = new EvaluationPipeline(mConversionFactory, mSimplificationPipelineFactory, mDecider);
         }
 
         IConsoleToMetricDecider mDecider;
         Func<IConversionFacade> mConversionFactory;
         Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         ApplicationArguments mApplicationArguments;
-        PipelineEvaluator mPipelineEvaluator;
+        EvaluationPipeline mPipelineEvaluator;
 
         [Test]
         public void If_Input_Is_Null_Pipeline_Returns_Null()

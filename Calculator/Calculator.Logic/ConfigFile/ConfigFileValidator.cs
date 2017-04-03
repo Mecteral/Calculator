@@ -20,7 +20,7 @@ namespace Calculator.Logic.ConfigFile
         public string FilePath { get; private set; }
         public List<string> Errors { get; private set; }
 
-        public void CheckForValidation(IEnumerable<string> input, string path)
+        public void Validate(IEnumerable<string> input, string path)
         {
             SetDefault();
             FilePath = path;
@@ -68,7 +68,7 @@ namespace Calculator.Logic.ConfigFile
                         mUsedUnit = mValues[i];
                     else if (mUsedUnit != null && mValues[i] != mUsedUnit)
                         Errors.Add($"Conflicting entries with {mReceivers[i]}");
-                    else if (!fieldValues.Contains(mUsedUnit) && mUsedUnit != "")
+                    if (!fieldValues.Contains(mUsedUnit) && mUsedUnit != "")
                         Errors.Add("Wrong abbreviation in config file");
                 }
                 else if (mReceivers[i] == "d" || mReceivers[i] == "degree")

@@ -35,10 +35,10 @@ namespace CalculatorConsoleApplication
             defaultParser.Parse(defaultConfig);
 
             var userConfig = sReader.ReadFile(sPathToUserFile);
-            sValidator.CheckForValidation(userConfig, sPathToUserFile);
+            sValidator.Validate(userConfig, sPathToUserFile);
             OutputErrorsIfExistent();
 
-            sValidator.CheckForValidation(args, CommandLineError);
+            sValidator.Validate(args, CommandLineError);
             OutputErrorsIfExistent();
 
             var fileParser = sCreator.ArgumentsSetup(sArguments);
@@ -69,7 +69,7 @@ namespace CalculatorConsoleApplication
 
             sBuilder.RegisterAssemblyModules(typeof(Calculator.Logic.LogicModule).Assembly);
             var container = sBuilder.Build();
-            var pipelineEvaluator = container.Resolve<IPipelineEvaluator>();
+            var pipelineEvaluator = container.Resolve<IEvaluationPipeline>();
 
             Console.WriteLine(pipelineEvaluator.Evaluate(input, sArguments));
             Console.ReadKey();
@@ -96,7 +96,7 @@ namespace CalculatorConsoleApplication
         static void RunCustomParser(string[] args)
         {
             var customConfig = sReader.ReadFile(sArguments.UseCustomConfigFile);
-            sValidator.CheckForValidation(customConfig, sArguments.UseCustomConfigFile);
+            sValidator.Validate(customConfig, sArguments.UseCustomConfigFile);
             OutputErrorsIfExistent();
 
             var specificFileParser = sCreator.ArgumentsSetup(sArguments);
@@ -111,7 +111,7 @@ namespace CalculatorConsoleApplication
             if (File.Exists(sArguments.ImportFromSpecificConfigFile))
             {
                 var specific = sReader.ReadFile(sArguments.ImportFromSpecificConfigFile);
-                sValidator.CheckForValidation(specific,sArguments.ImportFromSpecificConfigFile);
+                sValidator.Validate(specific,sArguments.ImportFromSpecificConfigFile);
                 OutputErrorsIfExistent();
                 File.Copy(sArguments.ImportFromSpecificConfigFile, sPathToUserFile, true);
             }

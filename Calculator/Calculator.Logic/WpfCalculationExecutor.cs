@@ -9,9 +9,9 @@ namespace Calculator.Logic
     {
         public string CalculationResult { get; set; }
         public List<string> CalculationSteps { get; set; }
-        readonly IPipelineEvaluator mPipelineEvaluator;
+        readonly IEvaluationPipeline mPipelineEvaluator;
 
-        public WpfCalculationExecutor(IPipelineEvaluator pipelineEvaluator)
+        public WpfCalculationExecutor(IEvaluationPipeline pipelineEvaluator)
         {
             mPipelineEvaluator = pipelineEvaluator;
         }

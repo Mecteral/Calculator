@@ -73,6 +73,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigFile\ConfigFileValidatorTests.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
