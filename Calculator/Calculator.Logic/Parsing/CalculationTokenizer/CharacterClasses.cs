@@ -1,0 +1,24 @@
+﻿using System;
+using System.Linq;
+
+namespace Calculator.Logic.Parsing.CalculationTokenizer
+{
+    public static class CharacterClasses
+    {
+        static readonly Func<char, bool>[] sCharacterClassValidators =
+        {IsConversionMarker, IsVariable, IsOperator, IsWhiteSpace, IsDigit, IsDecimal, IsParenthesis
+        };
+        public static void ValidateCharacter(char c)
+        {
+            if (!IsValidCharacter(c)) throw new CalculationException("Unknown character in input", c);
+        }
+        static bool IsValidCharacter(char c) => sCharacterClassValidators.Any(v => v(c));
+        static bool IsConversionMarker(char c) => c == '=' || c == '?';
+        static bool IsParenthesis(char c) => c == '(' || c == ')';
+        static bool IsDecimal(char c) => c == '.' || c == ',';
+        static bool IsDigit(char c) => Char.IsNumber(c);
+        static bool IsWhiteSpace(char c) => Char.IsWhiteSpace(c);
+        static bool IsOperator(char c) => c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
+        static bool IsVariable(char c) => Char.IsLetter(c);
+    }
+}

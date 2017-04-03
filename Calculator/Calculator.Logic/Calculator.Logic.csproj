@@ -83,6 +83,7 @@
     <Compile Include="JSonSerializer.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\CharacterClasses.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
     <Compile Include="Pipelines\ConsoleToMetricDecider.cs" />
     <Compile Include="Pipelines\IConsoleToMetricDecider.cs" />

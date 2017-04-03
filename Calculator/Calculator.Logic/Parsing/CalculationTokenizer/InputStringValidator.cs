@@ -1,16 +1,9 @@
-﻿using System;
-using System.Linq;
-using ModernRonin.PraeterArtem.Functional;
+﻿using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public class InputStringValidator
     {
-        static readonly Func<char, bool>[] sCharacterClassValidators =
-        {
-            IsConversionMarker, IsVariable, IsOperator,
-            IsWhiteSpace, IsDigit, IsDecimal, IsParenthesis
-        };
         int mFunctionEnd;
         string mInput;
         public void Validate(string input)
@@ -20,19 +13,7 @@ namespace Calculator.Logic.Parsing.CalculationTokenizer
             CheckParanthesesCount();
             CheckForDoubleVariableAndFunction();
         }
-        void CheckForUnknownCharacters() => mInput.UseIn(ValidateCharacter);
-        static void ValidateCharacter(char c)
-        {
-            if (!IsValidCharacter(c)) throw new CalculationException("Unknown character in input", c);
-        }
-        static bool IsValidCharacter(char c) => sCharacterClassValidators.Any(v => v(c));
-        static bool IsConversionMarker(char c) => c == '=' || c == '?';
-        static bool IsParenthesis(char c) => c == '(' || c == ')';
-        static bool IsDecimal(char c) => c == '.' || c == ',';
-        static bool IsDigit(char c) => char.IsNumber(c);
-        static bool IsWhiteSpace(char c) => char.IsWhiteSpace(c);
-        static bool IsOperator(char c) => c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
-        static bool IsVariable(char c) => char.IsLetter(c);
+        void CheckForUnknownCharacters() => mInput.UseIn(CharacterClasses.ValidateCharacter);
         void CheckParanthesesCount()
         {
             var count = 0;
