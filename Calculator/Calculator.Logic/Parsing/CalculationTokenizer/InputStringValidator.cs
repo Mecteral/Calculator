@@ -1,7 +1,13 @@
-﻿namespace Calculator.Logic.Parsing.CalculationTokenizer
+﻿using System;
+using System.Linq;
+
+namespace Calculator.Logic.Parsing.CalculationTokenizer
 {
     public class InputStringValidator
     {
+        static readonly Func<char, bool>[] sCharacterClassValidators = {
+            IsConversionMarker, IsVariable, IsOperator, IsWhiteSpace, IsDigit, IsDecimal, IsParenthesis
+        };
         int mFunctionEnd;
         string mInput;
 
@@ -19,42 +25,20 @@
             {
                 var c = mInput[i];
                 if (
-                    !(IsVariable(c) || IsOperator(c) ||
-                      IsWhiteSpace(c) || IsDigit(c) || IsDecimal(c) || IsParenthesis(c) ||
-                      IsConversionMarker(c)))
+                    !IsValidCharacter(c))
                 {
                     throw new CalculationException("Unknown character in input", i);
                 }
             }
         }
-        static bool IsConversionMarker(char c)
-        {
-            return c == '=' || c == '?';
-        }
-        static bool IsParenthesis(char c)
-        {
-            return c == '(' || c == ')';
-        }
-        static bool IsDecimal(char c)
-        {
-            return c == '.' || c == ',';
-        }
-        static bool IsDigit(char c)
-        {
-            return char.IsNumber(c);
-        }
-        static bool IsWhiteSpace(char c)
-        {
-            return char.IsWhiteSpace(c);
-        }
-        static bool IsOperator(char c)
-        {
-            return c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
-        }
-        static bool IsVariable(char c)
-        {
-            return char.IsLetter(c);
-        }
+        static bool IsValidCharacter(char c) => sCharacterClassValidators.Any(v => v(c));
+        static bool IsConversionMarker(char c) => c == '=' || c == '?';
+        static bool IsParenthesis(char c) => c == '(' || c == ')';
+        static bool IsDecimal(char c) => c == '.' || c == ',';
+        static bool IsDigit(char c) => char.IsNumber(c);
+        static bool IsWhiteSpace(char c) => char.IsWhiteSpace(c);
+        static bool IsOperator(char c) => c == '-' || c == '+' || c == '*' || c == '/' || c == '^';
+        static bool IsVariable(char c) => char.IsLetter(c);
         void CheckParanthesesCount()
         {
             var count = 0;
