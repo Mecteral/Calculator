@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class ConfigurationViewModel : Conductor<IMainScreenTabItem>.Collection.OneActive
     {

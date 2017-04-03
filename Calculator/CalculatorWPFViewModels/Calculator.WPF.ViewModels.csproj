@@ -7,8 +7,8 @@
     <ProjectGuid>{1E244B36-69CA-48D9-BE7A-AD21CCED7443}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CalculatorWPFViewModels</RootNamespace>
-    <AssemblyName>CalculatorWPFViewModels</AssemblyName>
+    <RootNamespace>Calculator.WPF.ViewModels</RootNamespace>
+    <AssemblyName>Calculator.WPF.ViewModels</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

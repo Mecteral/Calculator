@@ -3,7 +3,7 @@ using System.Windows;
 using Calculator.Logic;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public sealed class ConfigurationThemeTabViewModel : Screen, IMainScreenTabItem
     {

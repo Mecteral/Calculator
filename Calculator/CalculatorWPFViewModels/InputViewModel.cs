@@ -5,7 +5,7 @@ using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class InputViewModel : PropertyChangedBase
     {

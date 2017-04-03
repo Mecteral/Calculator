@@ -1,7 +1,7 @@
 ﻿using Calculator.Logic;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class ShellViewModel : Conductor<object>, IScreen, IHandle<string>
     {

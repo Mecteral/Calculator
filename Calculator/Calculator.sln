@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWPFApplication", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModelsTests", "ViewModelsTests\ViewModelsTests.csproj", "{81DEC03A-7787-43A2-8333-69EB5434E6E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorWPFViewModels", "CalculatorWPFViewModels\CalculatorWPFViewModels.csproj", "{1E244B36-69CA-48D9-BE7A-AD21CCED7443}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Calculator.WPF.ViewModels", "CalculatorWPFViewModels\Calculator.WPF.ViewModels.csproj", "{1E244B36-69CA-48D9-BE7A-AD21CCED7443}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mecteral.Calculator.IntegrationTests", "Mecteral.Calculator.IntegrationTests\Mecteral.Calculator.IntegrationTests.csproj", "{850A33D6-8BD5-47B1-A707-0ACA5D079162}"
 EndProject

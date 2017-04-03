@@ -1,8 +1,7 @@
-﻿using System.Net.Mime;
-using System.Windows;
+﻿using System.Windows;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public sealed class ConfigurationOptionTabViewModel : Screen, IMainScreenTabItem
     {

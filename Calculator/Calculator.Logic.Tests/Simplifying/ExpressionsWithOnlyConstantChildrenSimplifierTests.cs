@@ -122,4 +122,4 @@ namespace Calculator.Logic.Tests.Simplifying
                 .Be(9);
         }
     }
-}S
+}

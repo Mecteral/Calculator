@@ -3,8 +3,7 @@ using System.Windows;
 using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using Calculator.Logic.Pipelines;
-using CalculatorWPFViewModels;
+using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
@@ -18,7 +17,7 @@ namespace CalculatorWPFApplication
         {
             Initialize();
             mContainer = WireUpApplication();
-            
+
             mSerializer = new JSonSerializer(new WpfApplicationStatics());
         }
 
@@ -45,7 +44,8 @@ namespace CalculatorWPFApplication
         {
             mSerializer.Read();
             DisplayRootViewFor<ShellViewModel>();
-            Application.Current.Resources.Source = new Uri(WpfApplicationStatics.UsedWpfTheme, UriKind.RelativeOrAbsolute);
+            Application.Current.Resources.Source = new Uri(WpfApplicationStatics.UsedWpfTheme,
+                UriKind.RelativeOrAbsolute);
         }
 
         protected override object GetInstance(Type service, string key)
@@ -64,7 +64,7 @@ namespace CalculatorWPFApplication
             LogManager.GetLog = t => new DebugLog(t);
             var cfg = new TypeMappingConfiguration
             {
-                DefaultSubNamespaceForViewModels = "CalculatorWPFViewModels",
+                DefaultSubNamespaceForViewModels = "Calculator.WPF.ViewModels",
                 DefaultSubNamespaceForViews = "CalculatorWPFApplication.Views",
                 IncludeViewSuffixInViewModelNames = false
             };

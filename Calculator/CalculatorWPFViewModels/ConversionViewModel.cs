@@ -4,7 +4,7 @@ using Calculator.Logic;
 using Caliburn.Micro;
 using Mecteral.UnitConversion;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class ConversionViewModel : PropertyChangedBase
     {
