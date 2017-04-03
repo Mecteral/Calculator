@@ -19,6 +19,7 @@ namespace Calculator.Logic.Tests.Pipelines
             mConversionFactory = () => mConversionFacade;
             mSimplificationPipelineFactory = () => Substitute.For<ISimplificationPipeline>();
             mDecider = Substitute.For<IConsoleToMetricDecider>();
+            mSimplificationPipeline = Substitute.For<ISimplificationPipeline>();
             mUnderTest = new EvaluationPipeline(mConversionFactory, mSimplificationPipelineFactory, mDecider);
         }
 
@@ -28,11 +29,11 @@ namespace Calculator.Logic.Tests.Pipelines
         IApplicationArguments mApplicationArguments;
         EvaluationPipeline mUnderTest;
         IConversionFacade mConversionFacade;
+        ISimplificationPipeline mSimplificationPipeline;
         [Test]
         public void If_Input_Is_Null_Pipeline_Returns_Null()
         {
-            string input = null;
-            var result = mUnderTest.Evaluate(input, mApplicationArguments);
+            var result = mUnderTest.Evaluate(null, mApplicationArguments);
             result.Should().Be(null);
         }
 
@@ -51,8 +52,16 @@ namespace Calculator.Logic.Tests.Pipelines
         [Test]
         public void If_Input_Contains_No_ConversionSign_SimpificationPipeline_Is_Called()
         {
-            string input = "2+3";
-            mUnderTest.Evaluate(input, mApplicationArguments);
+            var input = "2+3";
+            mSimplificationPipeline.UseSimplificationPipeline(input, mApplicationArguments).Returns("bravo");
+
+            mUnderTest.Evaluate(input, mApplicationArguments).Should().Be("bravo");
+        }
+
+        [Test]
+        public void Evaluate_For_Conversions_Calls_Decider()
+        {
+            
         }
     }
 }

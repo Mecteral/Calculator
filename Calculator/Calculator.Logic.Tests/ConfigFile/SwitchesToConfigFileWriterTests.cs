@@ -36,7 +36,6 @@ namespace Calculator.Logic.Tests.ConfigFile
             var config = new[] {"-u = km", "-s=true"};
             var args = new ApplicationArguments();
             var path = "";
-
             mUnderTest.WriteToConfigFile(switches, config, args, path);
         }
 
