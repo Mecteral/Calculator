@@ -104,7 +104,6 @@
     <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
-    <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemover.cs" />
