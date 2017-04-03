@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Calculator.Model
 {
     public static class ExpressionExtensions
@@ -16,5 +18,7 @@ namespace Calculator.Model
             var constant = self as Constant;
             return 0M == constant?.Value;
         }
+        public static bool HasOnlyConstantChildren(this IExpression self) => self.Children.All(c => c is Constant);
+        public static decimal GetConstantValue(this IExpression self) => ((Constant) self).Value;
     }
 }
