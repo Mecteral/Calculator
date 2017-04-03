@@ -83,6 +83,7 @@
     <Compile Include="JSonSerializer.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\CharacterClasses.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
     <Compile Include="Pipelines\ConsoleToMetricDecider.cs" />
     <Compile Include="Pipelines\IConsoleToMetricDecider.cs" />
@@ -103,7 +104,6 @@
     <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
-    <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemover.cs" />
@@ -121,7 +121,7 @@
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="Simplifying\ParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\ParenthesisAroundConstantsRemover.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />

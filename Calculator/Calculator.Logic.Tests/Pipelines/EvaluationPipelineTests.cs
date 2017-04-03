@@ -16,16 +16,12 @@ namespace Calculator.Logic.Tests.Pipelines
         {
             mConversionFacade = Substitute.For<IConversionFacade>();
             mApplicationArguments = Substitute.For<IApplicationArguments>();
-            mConversionFactory = () => mConversionFacade;
-            mSimplificationPipelineFactory = () => mSimplificationPipeline;
-            mDecider = Substitute.For<IConsoleToMetricDecider>();
             mSimplificationPipeline = Substitute.For<ISimplificationPipeline>();
-            mUnderTest = new EvaluationPipeline(mConversionFactory, mSimplificationPipelineFactory, mDecider);
+            mDecider = Substitute.For<IConsoleToMetricDecider>();
+            mUnderTest = new EvaluationPipeline(() => mConversionFacade, () => mSimplificationPipeline, mDecider);
         }
 
         IConsoleToMetricDecider mDecider;
-        Func<IConversionFacade> mConversionFactory;
-        Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         IApplicationArguments mApplicationArguments;
         EvaluationPipeline mUnderTest;
         IConversionFacade mConversionFacade;
@@ -61,15 +57,7 @@ namespace Calculator.Logic.Tests.Pipelines
         [Test]
         public void Evaluate_For_Conversions_Calls_Decider()
         {
-            var input = "2+3";
-            mApplicationArguments.UseConversion.Returns(true);
-            mApplicationArguments.UnitForConversion.Returns("alpha");
-            mApplicationArguments.ToMetric.Returns(true);
-            mConversionFacade.ConvertUnits(input, "alpha", true).Returns("bravo");
-
-            mUnderTest.Evaluate(input, mApplicationArguments).Should().Be("bravo");
-
-            mDecider.Received().Decide();
+            
         }
     }
 }
