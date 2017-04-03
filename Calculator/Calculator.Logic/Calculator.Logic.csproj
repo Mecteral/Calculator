@@ -101,10 +101,8 @@
     <Compile Include="Simplifying\ANeutralElementOfSymmetricalArithmeticOperatorRemover.cs" />
     <Compile Include="Simplifying\ATraversingReplacer.cs" />
     <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
-    <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
-    <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemover.cs" />
