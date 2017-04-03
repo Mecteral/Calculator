@@ -16,16 +16,12 @@ namespace Calculator.Logic.Tests.Pipelines
         {
             mConversionFacade = Substitute.For<IConversionFacade>();
             mApplicationArguments = Substitute.For<IApplicationArguments>();
-            mConversionFactory = () => mConversionFacade;
-            mSimplificationPipelineFactory = () => Substitute.For<ISimplificationPipeline>();
-            mDecider = Substitute.For<IConsoleToMetricDecider>();
             mSimplificationPipeline = Substitute.For<ISimplificationPipeline>();
-            mUnderTest = new EvaluationPipeline(mConversionFactory, mSimplificationPipelineFactory, mDecider);
+            mDecider = Substitute.For<IConsoleToMetricDecider>();
+            mUnderTest = new EvaluationPipeline(() => mConversionFacade, () => mSimplificationPipeline, mDecider);
         }
 
         IConsoleToMetricDecider mDecider;
-        Func<IConversionFacade> mConversionFactory;
-        Func<ISimplificationPipeline> mSimplificationPipelineFactory;
         IApplicationArguments mApplicationArguments;
         EvaluationPipeline mUnderTest;
         IConversionFacade mConversionFacade;
