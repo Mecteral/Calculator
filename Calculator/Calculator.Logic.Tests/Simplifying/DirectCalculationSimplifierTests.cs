@@ -15,12 +15,13 @@ namespace Calculator.Logic.Tests.Simplifying
         [SetUp]
         public void Setup()
         {
-            mEvaluator = Substitute.For<IExpressionEvaluator>();
-            mSimplifier = new DirectCalculationSimplifier(mEvaluator);
+            //mEvaluator = Substitute.For<IExpressionEvaluator>();
+            //mSimplifier = new DirectCalculationSimplifier(mEvaluator);
+            mSimplifier= new ExpressionsWithOnlyConstantChildrenSimplifier();
         }
 
-        IExpressionEvaluator mEvaluator;
-        DirectCalculationSimplifier mSimplifier;
+        //IExpressionEvaluator mEvaluator;
+        ExpressionsWithOnlyConstantChildrenSimplifier mSimplifier;
 
         static IEnumerable<IToken> Tokenize(string input)
         {
@@ -91,7 +92,7 @@ namespace Calculator.Logic.Tests.Simplifying
         public void Simplify_Does_Not_Change_Input_Expression_Tree()
         {
             var input = CreateInMemoryModel(Tokenize("2+2+2+2a"));
-            var underTest = new DirectCalculationSimplifier(mEvaluator);
+            var underTest = mSimplifier;
             underTest.Simplify
             (
                 input
@@ -105,12 +106,6 @@ namespace Calculator.Logic.Tests.Simplifying
                 ().
                 BeOfType<Addition>
                 ();
-        }
-
-        [Test]
-        public void TESTMETHODNAME()
-        {
-            
         }
     }
 }
