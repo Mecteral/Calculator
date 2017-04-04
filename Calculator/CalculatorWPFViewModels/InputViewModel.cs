@@ -12,21 +12,27 @@ namespace Calculator.WPF.ViewModels
         readonly IApplicationArguments mArguments;
         readonly IEventAggregator mEventAggregator;
         readonly InputStringValidator mValidator;
+        readonly IConversionProperties mConversionProperties;
+        readonly IWindowProperties mWindowProperties;
         readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
-        bool mStepExpander = WpfApplicationStatics.StepExpander;
+        bool mStepExpander;
         List<string> mSteps = new List<string>();
         bool mCalculationButtonToggle;
         string mCalculationButtonForeground = "grey";
 
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
-            IEventAggregator eventAggregator, InputStringValidator validator)
+            IEventAggregator eventAggregator, InputStringValidator validator, IConversionProperties conversionProperties, IWindowProperties windowProperties)
         {
             mExecutor = executor;
             mArguments = arguments;
             mEventAggregator = eventAggregator;
             mValidator = validator;
+            mConversionProperties = conversionProperties;
+            mWindowProperties = windowProperties;
+
+            mStepExpander = mWindowProperties.AreStepsExpanded;
         }
 
         public List<string> Steps
@@ -72,7 +78,7 @@ namespace Calculator.WPF.ViewModels
                 if (value == mStepExpander) return;
                 mStepExpander = value;
                 NotifyOfPropertyChange(() => StepExpander);
-                WpfApplicationStatics.StepExpander = value;
+                mWindowProperties.AreStepsExpanded = value;
                 mEventAggregator.PublishOnUIThread("Resize");
             }
         }
@@ -116,10 +122,10 @@ namespace Calculator.WPF.ViewModels
 
         public void Calculate()
         {
-            if (WpfApplicationStatics.IsConversionActive)
+            if (mConversionProperties.IsConversionActive)
             {
                 mArguments.UseConversion = true;
-                mArguments.ToMetric = WpfApplicationStatics.UseMetric;
+                mArguments.ToMetric = mConversionProperties.DoUseMetricSystem;
                 GetUnitAbbreviation();
             }
             else
@@ -140,7 +146,7 @@ namespace Calculator.WPF.ViewModels
                     if (units.IsSelected)
                     {
                         mArguments.UnitForConversion = units.Abbreviation;
-                        WpfApplicationStatics.LastPickedUnit = units.Abbreviation;
+                        mConversionProperties.LastPickedUnit = units.Abbreviation;
                     }
                 }
             }

@@ -21,10 +21,14 @@ namespace Calculator.WPF.ViewModelsTests
             mExecutor = Substitute.For<IWpfCalculationExecutor>();
             mArguments = Substitute.For<IApplicationArguments>();
             mAggregator = Substitute.For<IEventAggregator>();
+            mWindowProperties = Substitute.For<IWindowProperties>();
+            mConversionProperties = Substitute.For<IConversionProperties>();
             mInputStringValidator = Substitute.For<InputStringValidator>();
-            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator);
+            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator,mConversionProperties, mWindowProperties);
         }
 
+        IConversionProperties mConversionProperties;
+        IWindowProperties mWindowProperties;
         IEventAggregator mAggregator;
         IApplicationArguments mArguments;
         IWpfCalculationExecutor mExecutor;
@@ -99,7 +103,7 @@ namespace Calculator.WPF.ViewModelsTests
         public void Setting_StepExpander_Notifies()
         {
             mUnderTest.MonitorEvents();
-            mUnderTest.StepExpander = false;
+            mUnderTest.StepExpander = true;
             mUnderTest.ShouldRaisePropertyChangeFor(i => i.StepExpander);
         }
 

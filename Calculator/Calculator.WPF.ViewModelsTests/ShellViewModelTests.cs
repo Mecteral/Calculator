@@ -23,9 +23,13 @@ namespace Calculator.WPF.ViewModelsTests
             //mConfigurationWindowViewModel = Substitute.For<ConfigurationWindowViewModel>();
             mEventAggregator = Substitute.For<IEventAggregator>();
             mWindowManager = Substitute.For<IWindowManager>();
-            mUnderTest = new ShellViewModel(mInputViewModel,mConversionViewModel,mEventAggregator,mConfigurationWindowViewModel,mWindowManager);
+            mWindowProperties = Substitute.For<IWindowProperties>();
+            mConversionProperties = Substitute.For<IConversionProperties>();
+            mUnderTest = new ShellViewModel(mInputViewModel,mConversionViewModel,mEventAggregator,mConfigurationWindowViewModel,mWindowManager, mWindowProperties,mConversionProperties);
         }
 
+        IConversionProperties mConversionProperties;
+        IWindowProperties mWindowProperties;
         InputViewModel mInputViewModel;
         ConversionViewModel mConversionViewModel;
         IEventAggregator mEventAggregator;
@@ -58,14 +62,14 @@ namespace Calculator.WPF.ViewModelsTests
         [Test]
         public void If_StaticsStepExpander_Is_True_IsResizeAble_Is_Changed()
         {
-            WpfApplicationStatics.StepExpander = true;
+            mWindowProperties.AreStepsExpanded = true;
             mUnderTest.Handle("");
             mUnderTest.IsResizeable.Should().Be("Resize");
         }
         [Test]
         public void If_StaticsStepExpander_Is_False_IsResizeAble_Is_Changed()
         {
-            WpfApplicationStatics.StepExpander = false;
+            mWindowProperties.AreStepsExpanded = false;
             mUnderTest.Handle("");
             mUnderTest.IsResizeable.Should().Be("CanMinimize");
         }
@@ -81,8 +85,8 @@ namespace Calculator.WPF.ViewModelsTests
         public void OnConversionButton_Changes_ButtonVisibility()
         {
             mUnderTest.OnConversionButton();
-            mUnderTest.ConversionButtonIsVisible.Should().Be(true);
-            mUnderTest.CalculationButtonIsVisible.Should().Be(false);
+            mUnderTest.ConversionButtonIsVisible.Should().Be(false);
+            mUnderTest.CalculationButtonIsVisible.Should().Be(true);
         }
     }
 }

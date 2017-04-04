@@ -2,37 +2,58 @@
 
 namespace Calculator.Logic
 {
-    //All saved options for startup
-    [DataContract]
-    public class WpfApplicationStatics
+    public interface IAllSerializableSettings : IWindowProperties, IConversionProperties {}
+
+    public class AllSerializableSettings : IAllSerializableSettings
     {
-        [DataMember]
-        public static bool StepExpander { get; set; }
+        public bool AreStepsExpanded { get; set; }
+        public bool AreUnitsExpanded { get; set; }
+        public int ShellWindowHeight { get; set; }
+        public int ShellWindowWidth { get; set; }
+        public int ShellWindowPositionX { get; set; }
+        public int ShellWindowPositionY { get; set; }
+        public string UsedWpfTheme { get; set; }
+        public string LastPickedUnit { get; set; }
+        public bool IsConversionActive { get; set; }
+        public bool DoUseMetricSystem { get; set; }
+    }
 
-        [DataMember]
-        public static bool UnitExpander { get; set; }
+    public interface IWindowProperties
+    {
+        bool AreStepsExpanded { get; set; }
+        bool AreUnitsExpanded { get; set; }
 
-        [DataMember]
-        public static bool UseMetric { get; set; }
+        int ShellWindowHeight { get; set; }
+        int ShellWindowWidth { get; set; }
 
-        [DataMember]
-        public static bool IsConversionActive { get; set; }
+        int ShellWindowPositionX { get; set; }
+        int ShellWindowPositionY { get; set; }
 
-        [DataMember]
-        public static int ShellWindowHeight { get; set; }
+        string UsedWpfTheme { get; set; }
+    }
 
-        [DataMember]
-        public static int ShellWindowWidth { get; set; }
+    public class WindowProperties : IWindowProperties
+    {
+        public bool AreStepsExpanded { get; set; }
+        public bool AreUnitsExpanded { get; set; }
+        public int ShellWindowHeight { get; set; }
+        public int ShellWindowWidth { get; set; }
+        public int ShellWindowPositionX { get; set; }
+        public int ShellWindowPositionY { get; set; }
+        public string UsedWpfTheme { get; set; }
+    }
 
-        [DataMember]
-        public static int ShellWindowPositionX { get; set; }
+    public interface IConversionProperties
+    {
+        string LastPickedUnit { get; set; }
+        bool IsConversionActive { get; set; }
+        bool DoUseMetricSystem { get; set; }
+    }
 
-        [DataMember]
-        public static int ShellWindowPositionY { get; set; }
-
-        [DataMember]
-        public static string LastPickedUnit { get; set; }
-        [DataMember]
-        public static string UsedWpfTheme { get; set; }
+    public class ConversionProperties : IConversionProperties
+    {
+        public string LastPickedUnit { get; set; }
+        public bool IsConversionActive { get; set; }
+        public bool DoUseMetricSystem { get; set; }
     }
 }

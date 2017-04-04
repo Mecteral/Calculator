@@ -7,21 +7,24 @@ namespace Calculator.Logic
     {
         const string FilePath = "C:\\Users\\Public\\config.json";
         const string JsonConfigStart = "{\"UsedWpfTheme\":\"Themes\\\\BureauBlack.xaml\"}";
-        WpfApplicationStatics mStatics;
+        IAllSerializableSettings mSettings;
 
-        public JSonSerializer(WpfApplicationStatics statics)
+        public JSonSerializer(IAllSerializableSettings settings)
         {
-            mStatics = statics;
+            mSettings = settings;
         }
 
         public void Read()
         {
             if (File.Exists(FilePath))
-                mStatics = JsonConvert.DeserializeObject<WpfApplicationStatics>(File.ReadAllText(FilePath));
+                mSettings = JsonConvert.DeserializeObject<AllSerializableSettings>(File.ReadAllText(FilePath));
             else
+            {
                 File.WriteAllText(FilePath, JsonConfigStart);
+                mSettings = JsonConvert.DeserializeObject<AllSerializableSettings>(File.ReadAllText(FilePath));
+            }
         }
 
-        public void Write() => File.WriteAllText(FilePath, JsonConvert.SerializeObject(mStatics));
+        public void Write() => File.WriteAllText(FilePath, JsonConvert.SerializeObject(mSettings));
     }
 }

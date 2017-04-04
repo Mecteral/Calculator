@@ -12,23 +12,26 @@ namespace CalculatorWPFApplication
     {
         readonly IContainer mContainer;
         readonly IJSonSerializer mSerializer;
+        readonly IAllSerializableSettings mSettings = new AllSerializableSettings();
 
         public MyBootStrapper()
         {
             Initialize();
             mContainer = WireUpApplication();
-
-            mSerializer = new JSonSerializer(new WpfApplicationStatics());
+            
+            mSerializer = new JSonSerializer(mSettings);
         }
 
-        static IContainer WireUpApplication()
+        IContainer WireUpApplication()
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(typeof(ShellViewModel).Assembly)
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .AsSelf()
                 .SingleInstance();
-            builder.RegisterType<WpfApplicationStatics>().SingleInstance();
+            builder.RegisterInstance(mSettings).AsImplementedInterfaces();
+            builder.RegisterType<WindowProperties>().As<IWindowProperties>().SingleInstance();
+            builder.RegisterType<ConversionProperties>().As<IConversionProperties>().SingleInstance();
             builder.RegisterType<InputStringValidator>().SingleInstance();
             builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
@@ -43,9 +46,9 @@ namespace CalculatorWPFApplication
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
             mSerializer.Read();
-            DisplayRootViewFor<ShellViewModel>();
-            Application.Current.Resources.Source = new Uri(WpfApplicationStatics.UsedWpfTheme,
+            Application.Current.Resources.Source = new Uri(mSettings.UsedWpfTheme,
                 UriKind.RelativeOrAbsolute);
+            DisplayRootViewFor<ShellViewModel>();
         }
 
         protected override object GetInstance(Type service, string key)
