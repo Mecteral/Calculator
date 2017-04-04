@@ -54,7 +54,7 @@ namespace Calculator.Logic.Model
 
         public void Visit(Variable variable)
         {
-            Result = UseVariable(variable.Variables);
+            Result = UseVariable(variable.Name);
         }
 
         public void Visit(Cosine cosineExpression)

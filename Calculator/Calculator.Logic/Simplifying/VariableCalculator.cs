@@ -78,7 +78,7 @@ namespace Calculator.Logic.Simplifying
                 if (multiplication.Right is Variable)
                 {
                     var variable = (Variable) multiplication.Right;
-                    mCurrentVariable = variable.Variables;
+                    mCurrentVariable = variable.Name;
                 }
                 MakeMove(operation, FindSuitableAdditionOrSubtraction((IArithmeticOperation) operation.Left));
             }
@@ -207,7 +207,7 @@ namespace Calculator.Logic.Simplifying
             {
                 var variableOne = (Variable) operationLeft.Right;
                 var variableTwo = (Variable) operationRight.Right;
-                if (variableOne.Variables == variableTwo.Variables)
+                if (variableOne.Name == variableTwo.Name)
                 {
                     var constantOne = (Constant) operationLeft.Left;
                     var constantTwo = (Constant) operationRight.Left;
@@ -317,7 +317,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -335,7 +335,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -353,7 +353,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -366,7 +366,7 @@ namespace Calculator.Logic.Simplifying
                         new Multiplication
                         {
                             Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                            Right = new Variable {Variables = mCurrentVariable}
+                            Right = new Variable {Name = mCurrentVariable}
                         }
                 };
             }
@@ -384,7 +384,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -406,12 +406,12 @@ namespace Calculator.Logic.Simplifying
                 {
                     variableRight = multiplicationRight.Right as Variable;
                 }
-                if (multiplicationRight != null && variableRight != null && variableRight.Variables == mCurrentVariable)
+                if (multiplicationRight != null && variableRight != null && variableRight.Name == mCurrentVariable)
                 {
                     mIsRight = true;
                     return operation;
                 }
-                if (multiplicationLeft != null && variableLeft != null && variableLeft.Variables == mCurrentVariable)
+                if (multiplicationLeft != null && variableLeft != null && variableLeft.Name == mCurrentVariable)
                 {
                     mIsRight = false;
                     return operation;

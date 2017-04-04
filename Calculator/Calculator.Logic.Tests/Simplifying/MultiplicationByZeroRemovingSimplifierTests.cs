@@ -150,7 +150,7 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Addition
             {
-                Left = new Variable {Variables = "a"},
+                Left = new Variable {Name = "a"},
                 Right = new Constant(){Value = 0}
             };
             var result = mZeroRemover.Simplify(expression);
@@ -158,7 +158,7 @@ namespace Calculator.Logic.Tests.Simplifying
                 .BeOfType<Addition>()
                 .Which.Left.Should()
                 .BeOfType<Variable>()
-                .Which.Variables.Should()
+                .Which.Name.Should()
                 .Be("a");
             result.Should()
                 .BeOfType<Addition>()
