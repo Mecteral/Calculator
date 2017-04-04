@@ -105,5 +105,11 @@ namespace Calculator.WPF.ViewModelsTests
             underTest.ConversionButtonIsVisible.Should().Be(false);
             underTest.CalculationButtonIsVisible.Should().Be(true);
         }
+
+        [Test]
+        public void OnCloseButton_Reaches_TryClose()
+        {
+            mUnderTest.OnCloseButton();
+        }
     }
 }

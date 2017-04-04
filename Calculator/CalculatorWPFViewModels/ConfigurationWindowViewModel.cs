@@ -1,20 +1,33 @@
-﻿using Caliburn.Micro;
+﻿using System;
+using System.Windows;
+using Calculator.Logic.WpfApplicationProperties;
+using Caliburn.Micro;
+using FontStyle = System.Drawing.FontStyle;
 
 namespace Calculator.WPF.ViewModels
 {
     public class ConfigurationWindowViewModel : Screen
     {
-        public ConfigurationWindowViewModel(ConfigurationViewModel configuration)
+        readonly IWindowProperties mWindowProperties;
+
+        public ConfigurationWindowViewModel(ConfigurationViewModel configuration, IWindowProperties windowProperties)
         {
+            mWindowProperties = windowProperties;
             ConfigurationTabs = configuration;
         }
 
         public ConfigurationViewModel ConfigurationTabs { get; private set; }
 
-        public void ChangeData() {}
 
         public void CloseWithOkay()
         {
+            var themeUri = mWindowProperties.UsedWpfTheme;
+            var fontSize = mWindowProperties.FontSize;
+            var font = mWindowProperties.Font;
+
+
+            Application.Current.MainWindow.FontSize = fontSize;
+            Application.Current.Resources.Source = new Uri(themeUri, UriKind.RelativeOrAbsolute);
             TryClose(true);
         }
 

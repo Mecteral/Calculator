@@ -37,6 +37,7 @@ namespace CalculatorWPFApplication
             builder.RegisterType<ConfigurationOptionTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
             builder.RegisterType<ConfigurationThemeTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
             builder.RegisterType<ConfigurationViewModel>().SingleInstance();
+            builder.RegisterType<ConversionViewModel>().As<IUnitsAndAbbreviationsSource>().SingleInstance();
             return builder.Build();
         }
 

@@ -35,6 +35,7 @@ namespace Calculator.WPF.ViewModels
             };
             SetUnitOnStartup();
             mToMetric = mConversionProperties.DoUseMetricSystem;
+            mToImperial = !mConversionProperties.DoUseMetricSystem;
             mUnitExpander = mWindowProperties.AreUnitsExpanded;
         }
 
@@ -59,6 +60,8 @@ namespace Calculator.WPF.ViewModels
                 if (value == mToMetric) return;
                 mToMetric = value;
                 NotifyOfPropertyChange(() => ToMetric);
+
+                ToImperial = !value;
                 SetUseMetric();
             }
         }
@@ -71,6 +74,8 @@ namespace Calculator.WPF.ViewModels
                 if (value == mToImperial) return;
                 mToImperial = value;
                 NotifyOfPropertyChange(() => ToImperial);
+
+                ToMetric = !value;
                 SetUseMetric();
             }
         }
@@ -86,7 +91,7 @@ namespace Calculator.WPF.ViewModels
 
         protected string RadioButtonGroupName { get; set; }
 
-        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
+        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; private set; }
 
         void SetUseMetric()
         {
@@ -107,9 +112,11 @@ namespace Calculator.WPF.ViewModels
                 .ToList();
             for (var i = 0; i < fieldValues.Count; i++)
             {
-                var unitAbbreviationAndName = new UnitAbbreviationsAndNames();
-                unitAbbreviationAndName.Name = fieldNames.ElementAt(i);
-                unitAbbreviationAndName.Abbreviation = fieldValues.ElementAt(i).ToString();
+                var unitAbbreviationAndName = new UnitAbbreviationsAndNames
+                {
+                    Name = fieldNames.ElementAt(i),
+                    Abbreviation = fieldValues.ElementAt(i).ToString()
+                };
                 var value = fieldValues[i];
                 if (UnitAbbreviations.MetricAreas.Contains(value))
                 {
@@ -148,7 +155,7 @@ namespace Calculator.WPF.ViewModels
 
         void SetUnitOnStartup()
         {
-            if (mConversionProperties.LastPickedUnit == null) return;
+            if (string.IsNullOrEmpty(mConversionProperties.LastPickedUnit)) return;
             AllUnitsAndAbbreviations
                 .SelectMany(l => l)
                 .First(u => u.Abbreviation == mConversionProperties.LastPickedUnit)

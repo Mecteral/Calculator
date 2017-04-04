@@ -18,22 +18,18 @@ namespace Calculator.WPF.ViewModels
 
         public void BureauBlack()
         {
-            Application.Current.Resources.Source = new Uri("Themes\\BureauBlack.xaml", UriKind.RelativeOrAbsolute);
             mWindowProperties.UsedWpfTheme = "Themes\\BureauBlack.xaml";
         }
         public void BureauBlue()
         {
-            Application.Current.Resources.Source = new Uri("Themes\\BureauBlue.xaml", UriKind.RelativeOrAbsolute);
             mWindowProperties.UsedWpfTheme = "Themes\\BureauBlue.xaml";
         }
         public void ExpressionDark()
         {
-            Application.Current.Resources.Source = new Uri("Themes\\ExpressionDark.xaml", UriKind.RelativeOrAbsolute);
             mWindowProperties.UsedWpfTheme = "Themes\\ExpressionDark.xaml";
         }
         public void ExpressionLight()
         {
-            Application.Current.Resources.Source = new Uri("Themes\\ExpressionLight.xaml", UriKind.RelativeOrAbsolute);
             mWindowProperties.UsedWpfTheme = "Themes\\ExpressionLight.xaml";
         }
     }

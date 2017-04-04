@@ -1,3 +1,4 @@
+
 namespace Calculator.Logic.WpfApplicationProperties
 {
     public interface IWindowProperties
@@ -12,5 +13,8 @@ namespace Calculator.Logic.WpfApplicationProperties
         int ShellWindowPositionY { get; set; }
 
         string UsedWpfTheme { get; set; }
+
+        double FontSize { get; set; }
+        string Font { get; set; }
     }
 }

@@ -12,5 +12,7 @@ namespace Calculator.Logic.WpfApplicationProperties
         public string LastPickedUnit { get; set; }
         public bool IsConversionActive { get; set; }
         public bool DoUseMetricSystem { get; set; }
+        public double FontSize { get; set; }
+        public string Font { get; set; }
     }
 }

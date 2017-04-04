@@ -1,19 +1,23 @@
 ﻿using System.Windows;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 
 namespace Calculator.WPF.ViewModels
 {
     public sealed class ConfigurationOptionTabViewModel : Screen, IMainScreenTabItem
     {
-        FontStyle mSource;
+        readonly IWindowProperties mWindowProperties;
+        string mSource;
         double mFontsize;
 
-        public ConfigurationOptionTabViewModel()
+        public ConfigurationOptionTabViewModel(IWindowProperties windowProperties)
         {
+            mWindowProperties = windowProperties;
             DisplayName = "Options";
+            mFontsize = mWindowProperties.FontSize;
         }
 
-        public FontStyle FontSelection
+        public string FontSelection
         {
             get { return mSource; }
             set
@@ -21,24 +25,22 @@ namespace Calculator.WPF.ViewModels
                 if (value == mSource) return;
                 mSource = value;
                 NotifyOfPropertyChange();
-                Application.Current.MainWindow.FontStyle = value;
+                mWindowProperties.Font = value;
             }
         }
 
         public void IncreaseFontSize()
         {
-            mFontsize = Application.Current.MainWindow.FontSize;
             mFontsize++;
-            Application.Current.MainWindow.FontSize = mFontsize;
+            mWindowProperties.FontSize = mFontsize;
         }
 
         public void DecreaseFontSize()
         {
-            mFontsize = Application.Current.MainWindow.FontSize;
             if (mFontsize-1 > 0)
             {
                 mFontsize--;
-                Application.Current.MainWindow.FontSize = mFontsize;
+                mWindowProperties.FontSize = mFontsize;
             }
         }
     }
