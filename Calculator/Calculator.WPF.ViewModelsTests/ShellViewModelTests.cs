@@ -89,5 +89,21 @@ namespace Calculator.WPF.ViewModelsTests
             mUnderTest.ConversionButtonIsVisible.Should().Be(false);
             mUnderTest.CalculationButtonIsVisible.Should().Be(true);
         }
+
+        [Test]
+        public void IsResizeable_Is_Set_If_StepExpander_Is_Open()
+        {
+            mWindowProperties.AreStepsExpanded.Returns(true);
+            var underTest = new ShellViewModel(mInputViewModel,mConversionViewModel,mEventAggregator,mConfigurationWindowViewModel,mWindowManager,mWindowProperties,mConversionProperties);
+            underTest.IsResizeable.Should().Be("CanResize");
+        }
+        [Test]
+        public void OnConversionButtonIsCalled_If_Conversion_Is_Active()
+        {
+            mConversionProperties.IsConversionActive.Returns(true);
+            var underTest = new ShellViewModel(mInputViewModel, mConversionViewModel, mEventAggregator, mConfigurationWindowViewModel, mWindowManager, mWindowProperties, mConversionProperties);
+            underTest.ConversionButtonIsVisible.Should().Be(false);
+            underTest.CalculationButtonIsVisible.Should().Be(true);
+        }
     }
 }

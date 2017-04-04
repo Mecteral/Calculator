@@ -25,12 +25,12 @@ namespace Calculator.WPF.ViewModelsTests
             mWindowProperties = Substitute.For<IWindowProperties>();
             mConversionProperties = Substitute.For<IConversionProperties>();
             mInputStringValidator = Substitute.For<InputStringValidator>();
-            mConversionViewModel = Substitute.For<ConversionViewModel>(mAggregator,mWindowProperties,mConversionProperties);
-            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator,mConversionProperties, mWindowProperties, mConversionViewModel);
+            mUnitsAndAbbreviationsSource = Substitute.For<IUnitsAndAbbreviationsSource>();
+            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator,mConversionProperties, mWindowProperties, mUnitsAndAbbreviationsSource);
         }
 
 
-        ConversionViewModel mConversionViewModel;
+        IUnitsAndAbbreviationsSource mUnitsAndAbbreviationsSource;
         IConversionProperties mConversionProperties;
         IWindowProperties mWindowProperties;
         IEventAggregator mAggregator;
@@ -142,12 +142,28 @@ namespace Calculator.WPF.ViewModelsTests
         }
 
         [Test]
-        public void Calculate_Uses_UseMetric_If_Conversion_Is_Active()
+        public void Calculate_Updates_LastPickedUnit_If_Conversion_Is_Active()
         {
+            mUnitsAndAbbreviationsSource.AllUnitsAndAbbreviations.Returns(new List<List<UnitAbbreviationsAndNames>>() {new List<UnitAbbreviationsAndNames>() {new UnitAbbreviationsAndNames() {Abbreviation = "m", IsSelected = true} } });
             mConversionProperties.IsConversionActive.Returns(true);
             mConversionProperties.DoUseMetricSystem.Returns(true);
             mArguments.UnitForConversion.Returns("m");
+
             mUnderTest.Calculate();
+
+            mConversionProperties.LastPickedUnit.Should().Be("m");
+        }
+        [Test]
+        public void Calculate_Uses_UseMetric_If_Conversion_Is_Active()
+        {
+            mUnitsAndAbbreviationsSource.AllUnitsAndAbbreviations.Returns(new List<List<UnitAbbreviationsAndNames>>() { new List<UnitAbbreviationsAndNames>() { new UnitAbbreviationsAndNames() { Abbreviation = "m", IsSelected = true } } });
+            mConversionProperties.IsConversionActive.Returns(true);
+            mConversionProperties.DoUseMetricSystem.Returns(true);
+            mArguments.UnitForConversion.Returns("m");
+
+            mUnderTest.Calculate();
+
+            mArguments.ToMetric.Should().Be(true);
         }
     }
 }
