@@ -80,7 +80,7 @@ namespace Calculator.WPF.ViewModels
             mConversionProperties.DoUseMetricSystem = ToMetric;
         }
 
-        public static List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
+        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
         public List<UnitAbbreviationsAndNames> MetricalMasses { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalAreas { get; set; } = new List<UnitAbbreviationsAndNames>();
@@ -148,7 +148,7 @@ namespace Calculator.WPF.ViewModels
         void SetUnitOnStartup()
         {
             if (mConversionProperties.LastPickedUnit == null) return;
-            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+            foreach (var abbreviationList in AllUnitsAndAbbreviations)
             {
                 foreach (var unit in abbreviationList)
                 {

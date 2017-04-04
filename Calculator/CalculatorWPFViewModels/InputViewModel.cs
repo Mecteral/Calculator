@@ -15,6 +15,7 @@ namespace Calculator.WPF.ViewModels
         readonly InputStringValidator mValidator;
         readonly IConversionProperties mConversionProperties;
         readonly IWindowProperties mWindowProperties;
+        readonly ConversionViewModel mConversionViewModel;
         readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
@@ -24,7 +25,7 @@ namespace Calculator.WPF.ViewModels
         string mCalculationButtonForeground = "grey";
 
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
-            IEventAggregator eventAggregator, InputStringValidator validator, IConversionProperties conversionProperties, IWindowProperties windowProperties)
+            IEventAggregator eventAggregator, InputStringValidator validator, IConversionProperties conversionProperties, IWindowProperties windowProperties, ConversionViewModel conversionViewModel)
         {
             mExecutor = executor;
             mArguments = arguments;
@@ -32,6 +33,7 @@ namespace Calculator.WPF.ViewModels
             mValidator = validator;
             mConversionProperties = conversionProperties;
             mWindowProperties = windowProperties;
+            mConversionViewModel = conversionViewModel;
 
             mStepExpander = mWindowProperties.AreStepsExpanded;
         }
@@ -140,7 +142,7 @@ namespace Calculator.WPF.ViewModels
 
         void GetUnitAbbreviation()
         {
-            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+            foreach (var abbreviationList in mConversionViewModel.AllUnitsAndAbbreviations)
             {
                 foreach (var units in abbreviationList)
                 {

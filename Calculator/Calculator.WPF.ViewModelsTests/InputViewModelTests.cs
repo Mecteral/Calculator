@@ -25,9 +25,12 @@ namespace Calculator.WPF.ViewModelsTests
             mWindowProperties = Substitute.For<IWindowProperties>();
             mConversionProperties = Substitute.For<IConversionProperties>();
             mInputStringValidator = Substitute.For<InputStringValidator>();
-            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator,mConversionProperties, mWindowProperties);
+            mConversionViewModel = Substitute.For<ConversionViewModel>(mAggregator,mWindowProperties,mConversionProperties);
+            mUnderTest = new InputViewModel(mExecutor, mArguments, mAggregator, mInputStringValidator,mConversionProperties, mWindowProperties, mConversionViewModel);
         }
 
+
+        ConversionViewModel mConversionViewModel;
         IConversionProperties mConversionProperties;
         IWindowProperties mWindowProperties;
         IEventAggregator mAggregator;
@@ -141,7 +144,10 @@ namespace Calculator.WPF.ViewModelsTests
         [Test]
         public void Calculate_Uses_UseMetric_If_Conversion_Is_Active()
         {
+            mConversionProperties.IsConversionActive.Returns(true);
             mConversionProperties.DoUseMetricSystem.Returns(true);
+            mArguments.UnitForConversion.Returns("m");
+            mUnderTest.Calculate();
         }
     }
 }

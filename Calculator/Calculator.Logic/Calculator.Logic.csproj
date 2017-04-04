@@ -148,8 +148,6 @@
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
-    <Compile Include="WpfApplicationProperties\WindowProperties.cs" />
-    <Compile Include="WpfApplicationProperties\ConversionProperties.cs" />
     <Compile Include="WpfCalculationExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
