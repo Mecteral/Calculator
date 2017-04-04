@@ -78,7 +78,7 @@
     <Compile Include="Simplifying\AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />
-    <Compile Include="JSonSerializerTests.cs" />
+    <Compile Include="SettingsSerializerTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Pipelines\EvaluationPipelineTests.cs" />
     <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifierTests.cs" />
