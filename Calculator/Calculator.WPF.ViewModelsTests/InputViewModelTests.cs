@@ -141,6 +141,7 @@ namespace Calculator.WPF.ViewModelsTests
         [Test]
         public void Calculate_Uses_UseMetric_If_Conversion_Is_Active()
         {
+            mConversionProperties.DoUseMetricSystem.Returns(true);
         }
     }
 }
