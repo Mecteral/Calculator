@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 
 namespace Calculator.WPF.ViewModels

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Calculator.Logic;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 using Mecteral.UnitConversion;
 

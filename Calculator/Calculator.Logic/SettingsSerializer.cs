@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Calculator.Logic.WpfApplicationProperties;
 using Newtonsoft.Json;
 
 namespace Calculator.Logic

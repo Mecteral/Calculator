@@ -66,6 +66,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WpfApplicationProperties\AllSerializableSettings.cs" />
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
     <Compile Include="CommandLineParser\ICommandLineParserCreator.cs" />
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
@@ -73,6 +74,9 @@
     <Compile Include="ConfigFile\IConfigFileWriter.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
+    <Compile Include="WpfApplicationProperties\IAllSerializableSettings.cs" />
+    <Compile Include="WpfApplicationProperties\IConversionProperties.cs" />
+    <Compile Include="WpfApplicationProperties\IWindowProperties.cs" />
     <Compile Include="LogicModule.cs" />
     <Compile Include="Facades\EvaluationFacade.cs" />
     <Compile Include="Facades\IEvaluationFasade.cs" />
@@ -144,7 +148,8 @@
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
-    <Compile Include="WpfApplicationStatics.cs" />
+    <Compile Include="WpfApplicationProperties\WindowProperties.cs" />
+    <Compile Include="WpfApplicationProperties\ConversionProperties.cs" />
     <Compile Include="WpfCalculationExecutor.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +163,7 @@
       <Name>Calculator.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

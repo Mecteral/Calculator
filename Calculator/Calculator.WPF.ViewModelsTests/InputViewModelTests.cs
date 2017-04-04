@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.WpfApplicationProperties;
 using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 using FluentAssertions;

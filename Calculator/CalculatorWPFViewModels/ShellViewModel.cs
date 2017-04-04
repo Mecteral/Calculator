@@ -1,4 +1,5 @@
 ﻿using Calculator.Logic;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 
 namespace Calculator.WPF.ViewModels

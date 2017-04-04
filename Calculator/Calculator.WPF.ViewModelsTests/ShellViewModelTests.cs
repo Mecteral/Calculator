@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Calculator.Logic;
+using Calculator.Logic.WpfApplicationProperties;
 using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 using FluentAssertions;
