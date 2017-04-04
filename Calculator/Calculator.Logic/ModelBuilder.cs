@@ -61,7 +61,7 @@ namespace Calculator.Logic
 
         public void Visit(VariableToken variableToken)
         {
-            mCurrent = new Variable {Variables = variableToken.Variable};
+            mCurrent = new Variable {Name = variableToken.Variable};
             HandleNonParenthesesAndOperation();
         }
 

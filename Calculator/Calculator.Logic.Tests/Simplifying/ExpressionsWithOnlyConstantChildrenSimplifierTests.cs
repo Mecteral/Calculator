@@ -65,7 +65,7 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Addition
             {
-                Left = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Variables = "a"}},
+                Left = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Name = "a"}},
                 Right =
                     new ParenthesedExpression
                     {

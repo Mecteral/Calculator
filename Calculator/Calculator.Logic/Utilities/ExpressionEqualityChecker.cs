@@ -112,7 +112,7 @@ namespace Calculator.Logic.Utilities
             {
                 var lhs = (Variable) first;
                 var rhs = (Variable) second;
-                if (lhs.Variables != rhs.Variables) return false;
+                if (lhs.Name != rhs.Name) return false;
             }
             return true;
         }

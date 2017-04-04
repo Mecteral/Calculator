@@ -27,7 +27,7 @@ namespace Calculator.Logic.Tests.Model
             var underTest = new Addition
             {
                 Left = new Addition {Left = new Constant {Value = 1}, Right = new Constant {Value = 2}},
-                Right = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Variables = "a"}}
+                Right = new Multiplication {Left = new Constant {Value = 3}, Right = new Variable {Name = "a"}}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();
@@ -44,7 +44,7 @@ namespace Calculator.Logic.Tests.Model
                         Left = new Addition {Left = new Constant {Value = 1}, Right = new Constant {Value = 2}},
                         Right = new Constant {Value = 3}
                     },
-                Right = new Multiplication {Left = new Constant {Value = 4}, Right = new Variable {Variables = "a"}}
+                Right = new Multiplication {Left = new Constant {Value = 4}, Right = new Variable {Name = "a"}}
             };
             var result = ExpressionCloner.Clone(underTest);
             var equalityChecker = new ExpressionEqualityChecker();

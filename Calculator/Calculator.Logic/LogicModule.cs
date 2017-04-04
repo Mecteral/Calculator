@@ -44,11 +44,11 @@ namespace Calculator.Logic
             builder.RegisterType<SymbolicSimplificationFacade>().As<ISymbolicSimplificationFacade>();
 
             builder.RegisterType<ExpressionsWithOnlyConstantChildrenSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<ParenthesisAroundConstantsRemover>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<ParenthesisAroundConstantsRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>();
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<MultiplicationByZeroRemover>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<MultiplicationByZeroRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
 
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<Simplifier>().As<ISimplify>();

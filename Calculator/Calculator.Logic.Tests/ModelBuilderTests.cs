@@ -330,7 +330,7 @@ namespace Calculator.Logic.Tests
         {
             //a-4
             var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
+            subtraction.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
         [Test]
@@ -338,7 +338,7 @@ namespace Calculator.Logic.Tests
         {
             // x+1
             var addition = TestExpecting<Addition>(Variable('x'), Plus, Number(1));
-            addition.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("x");
+            addition.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
             addition.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
         }
         [Test]

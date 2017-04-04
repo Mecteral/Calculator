@@ -105,7 +105,7 @@
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
-    <Compile Include="Simplifying\MultiplicationByZeroRemover.cs" />
+    <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifier.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifier.cs" />
     <Compile Include="Simplifying\NeutralElementOfAdditionRemover.cs" />
     <Compile Include="Simplifying\NeutralElementOfDivisionRemover.cs" />
@@ -120,7 +120,7 @@
     <Compile Include="Model\ExpressionCloner.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="Simplifying\ParenthesisAroundConstantsRemover.cs" />
+    <Compile Include="Simplifying\ParenthesisAroundConstantsRemovingSimplifier.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />

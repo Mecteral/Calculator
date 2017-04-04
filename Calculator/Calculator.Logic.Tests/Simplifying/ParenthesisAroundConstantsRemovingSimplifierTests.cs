@@ -6,14 +6,14 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class ParenthesisAroundConstantsRemoverTests
+    public class ParenthesisAroundConstantsRemovingSimplifierTests
     {
         [SetUp]
         public void SetUp()
         {
-            mUnderTest= new ParenthesisAroundConstantsRemover();
+            mUnderTest= new ParenthesisAroundConstantsRemovingSimplifier();
         }
-        ParenthesisAroundConstantsRemover mUnderTest;
+        ParenthesisAroundConstantsRemovingSimplifier mUnderTest;
 
         [Test]
         public void Parentheses_Deletion_Before_Addition()

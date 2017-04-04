@@ -2,7 +2,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class MultiplicationByZeroRemover : AVisitingTraversingReplacer
+    public class MultiplicationByZeroRemovingSimplifier : AVisitingTraversingReplacer
     {
         protected override IExpression ReplaceMultiplication(Multiplication multiplication)
         {

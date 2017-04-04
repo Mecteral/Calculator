@@ -17,7 +17,7 @@ namespace Calculator.Model.Tests
         [Test]
         public void ToString_Is_HumanReadble()
         {
-            new Variable {Variables = "alpha"}.ToString().Should().Be("alpha");
+            new Variable {Name = "alpha"}.ToString().Should().Be("alpha");
         }
     }
 }

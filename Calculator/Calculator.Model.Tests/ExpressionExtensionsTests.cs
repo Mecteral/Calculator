@@ -41,7 +41,7 @@ namespace Calculator.Model.Tests
         [Test]
         public void HasOnlyConstantChildren_Returns_False_If_One_Child_IsNot_A_Constant()
         {
-            new Addition {Left = new Constant {Value = 1M}, Right = new Variable {Variables = "x"}}
+            new Addition {Left = new Constant {Value = 1M}, Right = new Variable {Name = "x"}}
                 .HasOnlyConstantChildren().Should().BeFalse();
         }
         [Test]

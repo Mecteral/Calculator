@@ -84,7 +84,7 @@ namespace Calculator.Logic.Tests.Model
         [Test]
         public void Evaluation_Throws_Exception_On_Variable_Encounter()
         {
-            var variableExpression = new Variable() {Variables = "a"};
+            var variableExpression = new Variable() {Name = "a"};
             var visitor = new EvaluatingExpressionVisitor();
             Action a = () => visitor.Evaluate(variableExpression, null);
             a.ShouldThrow<InvalidOperationException>();

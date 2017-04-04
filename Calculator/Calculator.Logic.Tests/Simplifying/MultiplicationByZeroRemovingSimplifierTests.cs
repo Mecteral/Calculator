@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class MultiplicationByZeroRemoverTests
+    public class MultiplicationByZeroRemovingSimplifierTests
     {
         [SetUp]
         public void SetUp()
         {
-            mZeroRemover = new MultiplicationByZeroRemover();
+            mZeroRemover = new MultiplicationByZeroRemovingSimplifier();
         }
 
         readonly Multiplication mMultiplicationWithLeftZero = new Multiplication
@@ -26,7 +26,7 @@ namespace Calculator.Logic.Tests.Simplifying
             Right = new Constant {Value = 0M}
         };
 
-        MultiplicationByZeroRemover mZeroRemover;
+        MultiplicationByZeroRemovingSimplifier mZeroRemover;
 
         [Test]
         public void DoubleSidedZeroMultiplicationInSubtraction()
@@ -150,7 +150,7 @@ namespace Calculator.Logic.Tests.Simplifying
         {
             var expression = new Addition
             {
-                Left = new Variable {Variables = "a"},
+                Left = new Variable {Name = "a"},
                 Right = new Constant(){Value = 0}
             };
             var result = mZeroRemover.Simplify(expression);
@@ -158,7 +158,7 @@ namespace Calculator.Logic.Tests.Simplifying
                 .BeOfType<Addition>()
                 .Which.Left.Should()
                 .BeOfType<Variable>()
-                .Which.Variables.Should()
+                .Which.Name.Should()
                 .Be("a");
             result.Should()
                 .BeOfType<Addition>()
