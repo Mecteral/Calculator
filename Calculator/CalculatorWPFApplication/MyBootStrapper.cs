@@ -3,6 +3,7 @@ using System.Windows;
 using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.WpfApplicationProperties;
 using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 
