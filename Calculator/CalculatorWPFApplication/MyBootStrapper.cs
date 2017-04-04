@@ -30,8 +30,6 @@ namespace CalculatorWPFApplication
                 .SingleInstance();
             
             builder.RegisterInstance(mSettings).AsImplementedInterfaces();
-            builder.RegisterType<WindowProperties>().As<IWindowProperties>().SingleInstance();
-            builder.RegisterType<ConversionProperties>().As<IConversionProperties>().SingleInstance();
             builder.RegisterType<InputStringValidator>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
