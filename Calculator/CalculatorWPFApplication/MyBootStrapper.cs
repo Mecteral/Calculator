@@ -9,18 +9,16 @@ using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
 {
+    
     public class MyBootStrapper : BootstrapperBase
     {
         readonly IContainer mContainer;
-        readonly IJSonSerializer mSerializer;
-        readonly IAllSerializableSettings mSettings = new AllSerializableSettings();
-
+        readonly IAllSerializableSettings mSettings;
         public MyBootStrapper()
         {
             Initialize();
+            mSettings = SettingsSerializer.Read();
             mContainer = WireUpApplication();
-            
-            mSerializer = new JSonSerializer(mSettings);
         }
 
         IContainer WireUpApplication()
@@ -30,11 +28,11 @@ namespace CalculatorWPFApplication
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .AsSelf()
                 .SingleInstance();
+            
             builder.RegisterInstance(mSettings).AsImplementedInterfaces();
             builder.RegisterType<WindowProperties>().As<IWindowProperties>().SingleInstance();
             builder.RegisterType<ConversionProperties>().As<IConversionProperties>().SingleInstance();
             builder.RegisterType<InputStringValidator>().SingleInstance();
-            builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
@@ -46,7 +44,6 @@ namespace CalculatorWPFApplication
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            mSerializer.Read();
             Application.Current.Resources.Source = new Uri(mSettings.UsedWpfTheme,
                 UriKind.RelativeOrAbsolute);
             DisplayRootViewFor<ShellViewModel>();
@@ -59,7 +56,7 @@ namespace CalculatorWPFApplication
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            mSerializer.Write();
+            SettingsSerializer.Write(mSettings);
             base.OnExit(sender, e);
         }
 
