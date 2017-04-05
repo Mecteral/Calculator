@@ -24,20 +24,19 @@ namespace CalculatorWPFApplication
         IContainer WireUpApplication()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(typeof(ShellViewModel).Assembly)
-                .Where(t => t.Name.EndsWith("ViewModel"))
-                .AsSelf()
-                .SingleInstance();
             
             builder.RegisterInstance(mSettings).AsImplementedInterfaces();
             builder.RegisterType<InputStringValidator>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
             builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
-            builder.RegisterType<ConfigurationOptionTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
-            builder.RegisterType<ConfigurationThemeTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
-            builder.RegisterType<ConfigurationViewModel>().SingleInstance();
-            builder.RegisterType<ConversionViewModel>().As<IUnitsAndAbbreviationsSource>().SingleInstance();
+            builder.RegisterType<ConfigurationOptionTabViewModel>().AsSelf().As<IMainScreenTabItem>().SingleInstance();
+            builder.RegisterType<ConfigurationThemeTabViewModel>().AsSelf().As<IMainScreenTabItem>().SingleInstance();
+            builder.RegisterType<ConfigurationViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ConfigurationWindowViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<InputViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ShellViewModel>().AsSelf().SingleInstance();
+            builder.RegisterType<ConversionViewModel>().AsSelf().As<IUnitsAndAbbreviationsSource>().SingleInstance();
             return builder.Build();
         }
 
