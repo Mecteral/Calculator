@@ -13,6 +13,7 @@ namespace CalculatorConsoleApplication
     // ReSharper disable once ClassNeverInstantiated.Global
     class Program
     {
+
         const string DefaultConfig =
             "E:\\Programmieren\\ExercisesFromMax\\koans\\Calculator\\Calculator\\CalculatorConsoleApplication\\DefaultConfig.txt";
 
