@@ -21,6 +21,5 @@ namespace Calculator.Logic
             CalculationResult = mPipelineEvaluator.Evaluate(input, arguments);
             CalculationSteps = EvaluatingExpressionVisitor.Steps;
         }
-
     }
 }

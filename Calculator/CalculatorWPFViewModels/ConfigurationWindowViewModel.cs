@@ -25,8 +25,8 @@ namespace Calculator.WPF.ViewModels
             var fontSize = mWindowProperties.FontSize;
             var font = mWindowProperties.Font;
 
-
-            Application.Current.MainWindow.FontSize = fontSize;
+            if (fontSize >0)
+                Application.Current.MainWindow.FontSize = fontSize;
             Application.Current.Resources.Source = new Uri(themeUri, UriKind.RelativeOrAbsolute);
             TryClose(true);
         }

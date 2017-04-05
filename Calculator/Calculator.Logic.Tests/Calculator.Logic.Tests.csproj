@@ -101,6 +101,7 @@
     <Compile Include="TokenFormatterTests.cs" />
     <Compile Include="Simplifying\VariableCalculatorTests.cs" />
     <Compile Include="Utilities\StringExtensionsTests.cs" />
+    <Compile Include="WpfCalculationExecutorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Calculator.Logic\Calculator.Logic.csproj">
