@@ -13,7 +13,7 @@ namespace Calculator.Logic.Tests.Facades
     public class SymbolicSimplificationFacadeTests
     {
         IExpressionFormatter mExpressionFormatter;
-        ISimplifier mSimplifier;
+        IAggregateSimplifier mSimplifier;
         IModelBuilder mModelBuilder;
         SymbolicSimplificationFacade mUnderTest;
 
@@ -21,7 +21,7 @@ namespace Calculator.Logic.Tests.Facades
         public void Setup()
         {
             mModelBuilder = Substitute.For<IModelBuilder>();
-            mSimplifier = Substitute.For<ISimplifier>();
+            mSimplifier = Substitute.For<IAggregateSimplifier>();
             mExpressionFormatter = Substitute.For<IExpressionFormatter>();
             mUnderTest = new SymbolicSimplificationFacade(mExpressionFormatter, mSimplifier, mModelBuilder);
         }

@@ -67,6 +67,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Simplifying\IAggregateSimplifier.cs" />
     <Compile Include="Simplifying\PowerSimplifier.cs" />
     <Compile Include="WpfApplicationProperties\AllSerializableSettings.cs" />
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
@@ -141,7 +142,7 @@
     <Compile Include="Parsing\CalculationTokenizer\VariableToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Simplifying\SimplificationEvaluator.cs" />
-    <Compile Include="Simplifying\Simplifier.cs" />
+    <Compile Include="Simplifying\AggregateSimplifier.cs" />
     <Compile Include="TokenFormatter.cs" />
     <Compile Include="Simplifying\StringSimplifier.cs" />
     <Compile Include="ConfigFile\ConfigFileReader.cs" />

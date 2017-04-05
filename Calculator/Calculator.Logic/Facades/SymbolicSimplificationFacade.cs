@@ -10,10 +10,10 @@ namespace Calculator.Logic.Facades
         readonly IExpressionFormatter mExpressionFormatter;
         readonly ISimplifier mSimplifier;
         readonly IModelBuilder mModelBuilder;
-        public SymbolicSimplificationFacade(IExpressionFormatter expressionFormatter, ISimplifier simplify, IModelBuilder modelBuilder)
+        public SymbolicSimplificationFacade(IExpressionFormatter expressionFormatter, IAggregateSimplifier simplifier, IModelBuilder modelBuilder)
         {
             mExpressionFormatter = expressionFormatter;
-            mSimplifier = simplify;
+            mSimplifier = simplifier;
             mModelBuilder = modelBuilder;
         }
 

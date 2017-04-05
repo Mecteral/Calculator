@@ -49,7 +49,7 @@ namespace Calculator.Logic
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<MultiplicationByZeroRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<Simplifier>().As<ISimplifier>().AsSelf();
+            builder.RegisterType<AggregateSimplifier>().As<IAggregateSimplifier>();
 
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();

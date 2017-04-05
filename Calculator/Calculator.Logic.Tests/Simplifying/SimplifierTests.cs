@@ -16,13 +16,13 @@ namespace Calculator.Logic.Tests.Simplifying
             mChecker = Substitute.For<IExpressionEqualityChecker>();
             mFirstSimplifier = Substitute.For<ISimplifier>();
             mSecondSimplifier = Substitute.For<ISimplifier>();
-            mUnderTest = new Simplifier(new[] {mFirstSimplifier, mSecondSimplifier}, mChecker);
+            mUnderTest = new AggregateSimplifier(new[] {mFirstSimplifier, mSecondSimplifier}, mChecker);
         }
 
         IExpressionEqualityChecker mChecker;
         ISimplifier mFirstSimplifier;
         ISimplifier mSecondSimplifier;
-        Simplifier mUnderTest;
+        AggregateSimplifier mUnderTest;
 
         [Test]
         public void Simplify_Calls_All_Passed_Simplifiers()

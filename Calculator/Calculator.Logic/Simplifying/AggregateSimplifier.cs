@@ -2,15 +2,16 @@
 using System.Linq;
 using Calculator.Logic.Utilities;
 using Calculator.Model;
+using ModernRonin.PraeterArtem.Functional;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class Simplifier : ISimplifier
+    public class AggregateSimplifier : IAggregateSimplifier
     {
         readonly IEnumerable<ISimplifier> mSimplifiers;
         readonly IExpressionEqualityChecker mChecker;
 
-        public Simplifier(IEnumerable<ISimplifier> simplifiers, IExpressionEqualityChecker checker)
+        public AggregateSimplifier(IEnumerable<ISimplifier> simplifiers, IExpressionEqualityChecker checker)
         {
             mSimplifiers = simplifiers;
             mChecker = checker;
