@@ -108,7 +108,6 @@
     <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
     <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
-    <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifier.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifier.cs" />

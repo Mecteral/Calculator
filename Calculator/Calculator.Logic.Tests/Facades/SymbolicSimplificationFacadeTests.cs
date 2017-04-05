@@ -13,7 +13,7 @@ namespace Calculator.Logic.Tests.Facades
     public class SymbolicSimplificationFacadeTests
     {
         IExpressionFormatter mExpressionFormatter;
-        ISimplify mSimplify;
+        ISimplifier mSimplifier;
         IModelBuilder mModelBuilder;
         SymbolicSimplificationFacade mUnderTest;
 
@@ -21,9 +21,9 @@ namespace Calculator.Logic.Tests.Facades
         public void Setup()
         {
             mModelBuilder = Substitute.For<IModelBuilder>();
-            mSimplify = Substitute.For<ISimplify>();
+            mSimplifier = Substitute.For<ISimplifier>();
             mExpressionFormatter = Substitute.For<IExpressionFormatter>();
-            mUnderTest = new SymbolicSimplificationFacade(mExpressionFormatter, mSimplify, mModelBuilder);
+            mUnderTest = new SymbolicSimplificationFacade(mExpressionFormatter, mSimplifier, mModelBuilder);
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Calculator.Logic.Tests.Facades
             mModelBuilder.BuildFrom(tokenizer.Tokens).Returns(modelBuilderResult);
             mUnderTest.Simplify(tokenizer);
 
-            mSimplify.Received().Simplify(modelBuilderResult);
+            mSimplifier.Received().Simplify(modelBuilderResult);
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Calculator.Logic.Tests.Facades
         {
             var tokenizer = Substitute.For<ITokenizer>();
             var simplifierResult = new Constant();
-            mSimplify.Simplify(Arg.Any<IExpression>()).Returns(simplifierResult);
+            mSimplifier.Simplify(Arg.Any<IExpression>()).Returns(simplifierResult);
 
             mUnderTest.Simplify(tokenizer);
 
@@ -64,7 +64,7 @@ namespace Calculator.Logic.Tests.Facades
             var tokenizer = Substitute.For<ITokenizer>();
             var expression = Substitute.For<IExpression>();
             mModelBuilder.BuildFrom(tokenizer.Tokens).Returns(expression);
-            mSimplify.Simplify(expression).Returns(expression);
+            mSimplifier.Simplify(expression).Returns(expression);
             const string simplifyResult = "2a";
             mExpressionFormatter.Format(expression).Returns(simplifyResult);
 

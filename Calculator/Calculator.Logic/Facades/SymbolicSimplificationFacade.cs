@@ -8,12 +8,12 @@ namespace Calculator.Logic.Facades
     public class SymbolicSimplificationFacade : ISymbolicSimplificationFacade
     {
         readonly IExpressionFormatter mExpressionFormatter;
-        readonly ISimplify mSimplify;
+        readonly ISimplifier mSimplifier;
         readonly IModelBuilder mModelBuilder;
-        public SymbolicSimplificationFacade(IExpressionFormatter expressionFormatter, ISimplify simplify, IModelBuilder modelBuilder)
+        public SymbolicSimplificationFacade(IExpressionFormatter expressionFormatter, ISimplifier simplify, IModelBuilder modelBuilder)
         {
             mExpressionFormatter = expressionFormatter;
-            mSimplify = simplify;
+            mSimplifier = simplify;
             mModelBuilder = modelBuilder;
         }
 
@@ -23,7 +23,7 @@ namespace Calculator.Logic.Facades
         }
 
         IExpression CreateInMemoryModel(ITokenizer token) => mModelBuilder.BuildFrom(token.Tokens);
-        IExpression UseSimplifier(ITokenizer token) => mSimplify.Simplify(CreateInMemoryModel(token));
+        IExpression UseSimplifier(ITokenizer token) => mSimplifier.Simplify(CreateInMemoryModel(token));
 
         string UseFormattingExpressionVisitor(IExpression expression)
             => mExpressionFormatter.Format(expression);

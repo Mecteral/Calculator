@@ -45,13 +45,13 @@ namespace Calculator.Logic
 
             builder.RegisterType<ExpressionsWithOnlyConstantChildrenSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<ParenthesisAroundConstantsRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>();
-            builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>();
+            builder.RegisterType<AdditionAndSubtractionMover>().As<IAdditionAndSubtractionMover>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<MultiplicationByZeroRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<Simplifier>().As<ISimplifier>().AsSelf();
 
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
-            builder.RegisterType<Simplifier>().As<ISimplify>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
             builder.RegisterType<WpfCalculationExecutor>().As<IWpfCalculationExecutor>();
             builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>().SingleInstance();

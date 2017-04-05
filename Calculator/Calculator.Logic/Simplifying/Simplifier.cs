@@ -5,7 +5,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class Simplifier : ISimplify
+    public class Simplifier : ISimplifier
     {
         readonly IEnumerable<ISimplifier> mSimplifiers;
         readonly IExpressionEqualityChecker mChecker;
