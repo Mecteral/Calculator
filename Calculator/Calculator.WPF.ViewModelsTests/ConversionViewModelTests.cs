@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Calculator.Logic.WpfApplicationProperties;
+﻿using Calculator.Logic.WpfApplicationProperties;
 using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 using FluentAssertions;
@@ -30,30 +25,14 @@ namespace Calculator.WPF.ViewModelsTests
         ConversionViewModel mUnderTest;
 
         [Test]
-        public void ToMetric_Is_Set_On_StartUp()
-        {
-            mUnderTest.ToMetric.Should().Be(false);
-        }
-        [Test]
-        public void ToImperial_Is_Set_On_StartUp()
-        {
-            mUnderTest.ToImperial.Should().Be(true);
-        }
-
-        [Test]
-        public void UnitExpander_Calls_EventAggregator()
-        {
-            mUnderTest.UnitExpander = true;
-            mEventAggregator.Received().PublishOnUIThread("Resize");
-        }
-        [Test]
-        public void Setting_UnitExpander_Notifies()
+        public void Setting_ToImperial_Notifies()
         {
             mUnderTest.MonitorEvents();
-            mUnderTest.UnitExpander = true;
-            mUnderTest.ShouldRaisePropertyChangeFor(i => i.UnitExpander);
-            mUnderTest.UnitExpander.Should().Be(true);
+            mUnderTest.ToImperial = false;
+            mUnderTest.ShouldRaisePropertyChangeFor(i => i.ToImperial);
+            mUnderTest.ToImperial.Should().Be(false);
         }
+
         [Test]
         public void Setting_ToMetric_Notifies()
         {
@@ -62,13 +41,26 @@ namespace Calculator.WPF.ViewModelsTests
             mUnderTest.ShouldRaisePropertyChangeFor(i => i.ToMetric);
             mUnderTest.ToMetric.Should().Be(true);
         }
+
         [Test]
-        public void Setting_ToImperial_Notifies()
+        public void Setting_UnitExpander_Notifies()
         {
             mUnderTest.MonitorEvents();
-            mUnderTest.ToImperial = false;
-            mUnderTest.ShouldRaisePropertyChangeFor(i => i.ToImperial);
-            mUnderTest.ToImperial.Should().Be(false);
+            mUnderTest.UnitExpander = true;
+            mUnderTest.ShouldRaisePropertyChangeFor(i => i.UnitExpander);
+            mUnderTest.UnitExpander.Should().Be(true);
+        }
+
+        [Test]
+        public void ToImperial_Is_Set_On_StartUp()
+        {
+            mUnderTest.ToImperial.Should().Be(true);
+        }
+
+        [Test]
+        public void ToMetric_Is_Set_On_StartUp()
+        {
+            mUnderTest.ToMetric.Should().Be(false);
         }
 
         [Test]
@@ -86,6 +78,13 @@ namespace Calculator.WPF.ViewModelsTests
                     }
                 }
             }
+        }
+
+        [Test]
+        public void UnitExpander_Calls_EventAggregator()
+        {
+            mUnderTest.UnitExpander = true;
+            mEventAggregator.Received().PublishOnUIThread("Resize");
         }
     }
 }
