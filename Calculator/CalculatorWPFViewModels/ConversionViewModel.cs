@@ -1,17 +1,26 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Calculator.Logic;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 using Mecteral.UnitConversion;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
-    public class ConversionViewModel : PropertyChangedBase
+    public class ConversionViewModel : PropertyChangedBase, IUnitsAndAbbreviationsSource
     {
+        readonly IConversionProperties mConversionProperties;
+        readonly IEventAggregator mEventAggregator;
+        readonly IWindowProperties mWindowProperties;
+        bool mToImperial;
+        bool mToMetric;
+        bool mUnitExpander;
 
-        public ConversionViewModel(IEventAggregator eventAggregator)
+        public ConversionViewModel(IEventAggregator eventAggregator, IWindowProperties windowProperties,
+            IConversionProperties conversionProperties)
         {
             mEventAggregator = eventAggregator;
+            mWindowProperties = windowProperties;
+            mConversionProperties = conversionProperties;
             SetListsForView();
             AllUnitsAndAbbreviations = new List<List<UnitAbbreviationsAndNames>>
             {
@@ -25,11 +34,10 @@ namespace CalculatorWPFViewModels
                 ImperialVolumes
             };
             SetUnitOnStartup();
+            mToMetric = mConversionProperties.DoUseMetricSystem;
+            mToImperial = !mConversionProperties.DoUseMetricSystem;
+            mUnitExpander = mWindowProperties.AreUnitsExpanded;
         }
-        bool mToMetric = WpfApplicationStatics.UseMetric;
-        bool mToImperial;
-        bool mUnitExpander = WpfApplicationStatics.UnitExpander;
-        readonly IEventAggregator mEventAggregator;
 
         public bool UnitExpander
         {
@@ -39,7 +47,7 @@ namespace CalculatorWPFViewModels
                 if (value == mUnitExpander) return;
                 mUnitExpander = value;
                 NotifyOfPropertyChange(() => UnitExpander);
-                WpfApplicationStatics.UnitExpander = value;
+                mWindowProperties.AreUnitsExpanded = value;
                 mEventAggregator.PublishOnUIThread("Resize");
             }
         }
@@ -52,6 +60,8 @@ namespace CalculatorWPFViewModels
                 if (value == mToMetric) return;
                 mToMetric = value;
                 NotifyOfPropertyChange(() => ToMetric);
+
+                ToImperial = !value;
                 SetUseMetric();
             }
         }
@@ -64,19 +74,12 @@ namespace CalculatorWPFViewModels
                 if (value == mToImperial) return;
                 mToImperial = value;
                 NotifyOfPropertyChange(() => ToImperial);
+
+                ToMetric = !value;
                 SetUseMetric();
             }
         }
 
-        void SetUseMetric()
-        {
-            if (ToMetric)
-                WpfApplicationStatics.UseMetric = true;
-            else
-                WpfApplicationStatics.UseMetric = false;
-        }
-
-        public static List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; set; }
         public List<UnitAbbreviationsAndNames> MetricalMasses { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalVolumes { get; set; } = new List<UnitAbbreviationsAndNames>();
         public List<UnitAbbreviationsAndNames> MetricalAreas { get; set; } = new List<UnitAbbreviationsAndNames>();
@@ -87,6 +90,13 @@ namespace CalculatorWPFViewModels
         public List<UnitAbbreviationsAndNames> ImperialLengths { get; set; } = new List<UnitAbbreviationsAndNames>();
 
         protected string RadioButtonGroupName { get; set; }
+
+        public List<List<UnitAbbreviationsAndNames>> AllUnitsAndAbbreviations { get; private set; }
+
+        void SetUseMetric()
+        {
+            mConversionProperties.DoUseMetricSystem = ToMetric;
+        }
 
         void SetListsForView()
         {
@@ -102,9 +112,11 @@ namespace CalculatorWPFViewModels
                 .ToList();
             for (var i = 0; i < fieldValues.Count; i++)
             {
-                var unitAbbreviationAndName = new UnitAbbreviationsAndNames();
-                unitAbbreviationAndName.Name = fieldNames.ElementAt(i);
-                unitAbbreviationAndName.Abbreviation = fieldValues.ElementAt(i).ToString();
+                var unitAbbreviationAndName = new UnitAbbreviationsAndNames
+                {
+                    Name = fieldNames.ElementAt(i),
+                    Abbreviation = fieldValues.ElementAt(i).ToString()
+                };
                 var value = fieldValues[i];
                 if (UnitAbbreviations.MetricAreas.Contains(value))
                 {
@@ -143,15 +155,11 @@ namespace CalculatorWPFViewModels
 
         void SetUnitOnStartup()
         {
-            if (WpfApplicationStatics.LastPickedUnit == null) return;
-            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
-            {
-                foreach (var unit in abbreviationList)
-                {
-                    if (unit.Abbreviation == WpfApplicationStatics.LastPickedUnit)
-                        unit.IsSelected = true;
-                }
-            }
+            if (string.IsNullOrEmpty(mConversionProperties.LastPickedUnit)) return;
+            AllUnitsAndAbbreviations
+                .SelectMany(l => l)
+                .First(u => u.Abbreviation == mConversionProperties.LastPickedUnit)
+                .IsSelected = true;
         }
     }
 }

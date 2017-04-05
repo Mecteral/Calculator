@@ -12,10 +12,9 @@
         void Visit(Constant constant);
         void Visit(Division division);
         void Visit(Variable variable);
-        void Visit(CosineExpression cosineExpression);
-        void Visit(TangentExpression tangentExpression);
-        void Visit(SinusExpression sinusExpression);
-        void Visit(SquareRootExpression squareRootExpression);
-        void Visit(Square square);
+        void Visit(Cosine cosineExpression);
+        void Visit(Tangent tangentExpression);
+        void Visit(Sinus sinusExpression);
+        void Visit(Power power);
     }
 }

@@ -38,20 +38,19 @@ namespace Calculator.Logic.Simplifying
             VisitOperands(division);
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             VisitOperands(square);
         }
 
         public void Visit(Variable variable) {}
 
-        public void Visit(CosineExpression cosineExpression) {}
+        public void Visit(Cosine cosineExpression) {}
 
-        public void Visit(TangentExpression tangentExpression) {}
+        public void Visit(Tangent tangentExpression) {}
 
-        public void Visit(SinusExpression sinusExpression) {}
+        public void Visit(Sinus sinusExpression) {}
 
-        public void Visit(SquareRootExpression squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {
@@ -80,14 +79,6 @@ namespace Calculator.Logic.Simplifying
             while (!mWasChanged)
             {
                 var current = operation;
-                if (operation.Right is Multiplication && operation.Left is Constant)
-                {
-                    var constant = (Constant) operation.Left;
-                    if (constant.Value == 0)
-                    {
-                        break;
-                    }
-                }
                 if (operation.Right is Constant && !(operation.Left is Constant))
                 {
                     mIsRight = true;
@@ -210,26 +201,6 @@ namespace Calculator.Logic.Simplifying
         static void CheckForParent(IArithmeticOperation operation, IExpression replacement)
         {
             if (!operation.HasParent) sMovedExpression = replacement;
-            else
-            {
-                HandleParent(operation, replacement);
-            }
-        }
-
-        static void HandleParent(IExpression operation, IExpression replacement)
-        {
-            if (operation.Parent is IArithmeticOperation)
-            {
-                var operationParent = (IArithmeticOperation) operation.Parent;
-                if (operationParent.Left.Equals(operation))
-                {
-                    operationParent.Left = replacement;
-                }
-                else
-                {
-                    operationParent.Right = replacement;
-                }
-            }
         }
 
         void VisitOperands(IArithmeticOperation operation)

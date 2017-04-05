@@ -87,6 +87,11 @@ namespace Calculator.Logic.Tests.Simplifying
         }
 
         [Test]
+        public void ComplexCaseCountIsCorrect()
+        {
+            CheckCount("1+2a+sqrt(16)+cos(0)+sin(0)+tan(0)+2^2+2*2-3/3", 27);
+        }
+        [Test]
         public void SimpleAdditionIsSmallerThanBoundAddition()
         {
             var underTest = new List<string> {"3+2", "3+2+1"};

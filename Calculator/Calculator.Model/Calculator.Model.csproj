@@ -30,8 +30,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ModernRonin.PraeterArtem.1.3.1\lib\ModernRonin.PraeterArtem.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
+      <HintPath>..\packages\morelinq.2.3.0\lib\net35\MoreLinq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Addition.cs" />
@@ -40,21 +51,25 @@
     <Compile Include="AnExpressionWithValue.cs" />
     <Compile Include="ATrigonometricFunction.cs" />
     <Compile Include="Constant.cs" />
-    <Compile Include="CosineExpression.cs" />
+    <Compile Include="Cosine.cs" />
     <Compile Include="Division.cs" />
-    <Compile Include="ExpressionExtension.cs" />
+    <Compile Include="ExpressionExtensions.cs" />
     <Compile Include="IArithmeticOperation.cs" />
     <Compile Include="IExpression.cs" />
     <Compile Include="IExpressionVisitor.cs" />
     <Compile Include="IExpressionWithValue.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="ParenthesedExpression.cs" />
+    <Compile Include="Power.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SinusExpression.cs" />
-    <Compile Include="SquareRootExpression.cs" />
+    <Compile Include="Sinus.cs" />
     <Compile Include="Subtraction.cs" />
-    <Compile Include="TangentExpression.cs" />
+    <Compile Include="Tangent.cs" />
     <Compile Include="Variable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

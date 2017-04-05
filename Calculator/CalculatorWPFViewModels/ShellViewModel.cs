@@ -1,70 +1,54 @@
 ﻿using Calculator.Logic;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
-    public class ShellViewModel : Conductor<object>, IScreen, IHandle<string>
+    public class ShellViewModel : Conductor<object>, IHandle<string>
     {
         readonly ConfigurationWindowViewModel mConfigurationWindow;
         readonly IWindowManager mWindowManager;
+        readonly IWindowProperties mWindowProperties;
+        readonly IConversionProperties mConversionProperties;
         bool mCalculationButtonIsVisible;
         bool mConversionButtonIsVisible = true;
         string mIsResizeable;
-        int mWindowHeight = WpfApplicationStatics.ShellWindowHeight;
-        int mWindowWidth = WpfApplicationStatics.ShellWindowWidth;
+        int mWindowHeight;
+        int mWindowWidth;
 
         public void OnCloseButton()
         {
             TryClose();
         }
-        public int ShellWindowHeight
-        {
-            get { return mWindowHeight; }
-            set
-            {
-                if (value == mWindowHeight) return;
-                mWindowHeight = value;
-                NotifyOfPropertyChange(() => ShellWindowHeight);
-                WpfApplicationStatics.ShellWindowHeight = value;
-            }
-        }
-
-        public int ShellWindowWidth
-        {
-            get { return mWindowWidth; }
-            set
-            {
-                if (value == mWindowWidth) return;
-                mWindowWidth = value;
-                NotifyOfPropertyChange(() => ShellWindowWidth);
-                WpfApplicationStatics.ShellWindowWidth = value;
-            }
-        }
 
         public ShellViewModel(InputViewModel input, ConversionViewModel conversion, IEventAggregator eventAggregator,
-            ConfigurationWindowViewModel configurationWindow, IWindowManager windowManager)
+            ConfigurationWindowViewModel configurationWindow, IWindowManager windowManager, IWindowProperties windowProperties, IConversionProperties conversionProperties)
         {
             mConfigurationWindow = configurationWindow;
             mWindowManager = windowManager;
+            mWindowProperties = windowProperties;
+            mConversionProperties = conversionProperties;
             Input = input;
             Conversion = conversion;
             eventAggregator.Subscribe(this);
             SetupWindowAttributesFromConfig();
+            mWindowHeight = mWindowProperties.ShellWindowHeight;
+            mWindowWidth = mWindowProperties.ShellWindowWidth;
         }
 
         void SetupWindowAttributesFromConfig()
         {
-            if (WpfApplicationStatics.StepExpander || WpfApplicationStatics.UnitExpander)
+            if (mWindowProperties.AreStepsExpanded || mWindowProperties.AreUnitsExpanded)
                 mIsResizeable = "CanResize";
             else
                 mIsResizeable = "CanMinimize";
-            if (WpfApplicationStatics.IsConversionActive)
+            if (mConversionProperties.IsConversionActive)
                 OnConversionButton();
             else
                 OnCalculationButton();
-            if (WpfApplicationStatics.ShellWindowWidth < 500)
+            if (mWindowProperties.ShellWindowWidth < 500)
                 mWindowWidth = 500;
-            if (WpfApplicationStatics.ShellWindowHeight < 250)
+            if (mWindowProperties.ShellWindowHeight < 250)
                 mWindowHeight = 250;
         }
         public bool CalculationButtonIsVisible
@@ -105,7 +89,7 @@ namespace CalculatorWPFViewModels
 
         public void Handle(string message)
         {
-            if (WpfApplicationStatics.StepExpander || WpfApplicationStatics.UnitExpander)
+            if (mWindowProperties.AreStepsExpanded || mWindowProperties.AreUnitsExpanded)
             {
                 IsResizeable = "Resize";
             }
@@ -125,7 +109,7 @@ namespace CalculatorWPFViewModels
         {
             ConversionButtonIsVisible = false;
             CalculationButtonIsVisible = true;
-            WpfApplicationStatics.IsConversionActive = true;
+            mConversionProperties.IsConversionActive = true;
             ShowConversionView();
         }
 
@@ -133,7 +117,7 @@ namespace CalculatorWPFViewModels
         {
             ConversionButtonIsVisible = true;
             CalculationButtonIsVisible = false;
-            WpfApplicationStatics.IsConversionActive = false;
+            mConversionProperties.IsConversionActive = false;
             DeactivateConversionView();
         }
 
@@ -147,4 +131,6 @@ namespace CalculatorWPFViewModels
             DeactivateItem(Conversion, false);
         }
     }
+
+
 }

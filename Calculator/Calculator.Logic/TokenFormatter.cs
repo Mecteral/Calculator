@@ -27,6 +27,9 @@ namespace Calculator.Logic
                 case Operator.Divide:
                     mResult += "/";
                     break;
+                case Operator.Square:
+                    mResult += "^";
+                    break;
             }
         }
 
@@ -58,11 +61,6 @@ namespace Calculator.Logic
         public void Visit(SinusToken sinusToken)
         {
             mResult += sinusToken.Value.ToString(CultureInfo.InvariantCulture);
-        }
-
-        public void Visit(SquareRootToken sqaureRootToken)
-        {
-            mResult += sqaureRootToken.Value.ToString(CultureInfo.InvariantCulture);
         }
 
         public string Format(IEnumerable<IToken> tokens)

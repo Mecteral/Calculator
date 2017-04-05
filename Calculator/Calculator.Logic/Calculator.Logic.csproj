@@ -31,15 +31,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Autofac, Version=4.2.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
-      <HintPath>..\packages\Autofac.4.2.0\lib\net45\Autofac.dll</HintPath>
+    <Reference Include="Autofac, Version=4.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\packages\Autofac.4.4.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FluentCommandLineParser">
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
     </Reference>
     <Reference Include="Mecteral.UnitConversion, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mecteral.UnitConversion.1.0.16\lib\Mecteral.UnitConversion.dll</HintPath>
+      <HintPath>..\packages\Mecteral.UnitConversion.1.0.17\lib\Mecteral.UnitConversion.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ModernRonin.PraeterArtem, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -47,44 +47,53 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="MoreLinq, Version=2.0.20029.0, Culture=neutral, PublicKeyToken=384d532d7e88985d, processorArchitecture=MSIL">
-      <HintPath>..\packages\morelinq.2.0.0\lib\net35\MoreLinq.dll</HintPath>
+      <HintPath>..\packages\morelinq.2.3.0\lib\net35\MoreLinq.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="November.MultiDispatch, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\November.MultiDispatch.1.0.0\lib\November.MultiDispatch.dll</HintPath>
+    <Reference Include="November.MultiDispatch, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\November.MultiDispatch.1.1.1\lib\November.MultiDispatch.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="WpfApplicationProperties\AllSerializableSettings.cs" />
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
+    <Compile Include="CommandLineParser\ICommandLineParserCreator.cs" />
     <Compile Include="ConfigFile\ConfigFileValidator.cs" />
+    <Compile Include="ConfigFile\ConfigFileWriter.cs" />
+    <Compile Include="ConfigFile\IConfigFileWriter.cs" />
     <Compile Include="ConfigFile\ReceiverAndValueExtractor.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriter.cs" />
-    <Compile Include="ContainerModule.cs" />
+    <Compile Include="WpfApplicationProperties\IAllSerializableSettings.cs" />
+    <Compile Include="WpfApplicationProperties\IConversionProperties.cs" />
+    <Compile Include="WpfApplicationProperties\IWindowProperties.cs" />
+    <Compile Include="LogicModule.cs" />
     <Compile Include="Facades\EvaluationFacade.cs" />
     <Compile Include="Facades\IEvaluationFasade.cs" />
     <Compile Include="Facades\ISymbolicSimplificationFacade.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacade.cs" />
-    <Compile Include="IJSonSerializer.cs" />
     <Compile Include="IWpfCalculationExecutor.cs" />
-    <Compile Include="JSonSerializer.cs" />
+    <Compile Include="SettingsSerializer.cs" />
     <Compile Include="Model\IExpressionEvaluator.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CalculationException.cs" />
+    <Compile Include="Parsing\CalculationTokenizer\CharacterClasses.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidator.cs" />
-    <Compile Include="Parsing\CalculationTokenizer\SquareRootToken.cs" />
-    <Compile Include="Pipelines\IPipelineEvaluator.cs" />
+    <Compile Include="Pipelines\ConsoleToMetricDecider.cs" />
+    <Compile Include="Pipelines\IConsoleToMetricDecider.cs" />
+    <Compile Include="Pipelines\IEvaluationPipeline.cs" />
     <Compile Include="Pipelines\ISimplificationPipeline.cs" />
-    <Compile Include="Pipelines\PipelineEvaluator.cs" />
+    <Compile Include="Pipelines\EvaluationPipeline.cs" />
     <Compile Include="Pipelines\SimplificationPipeline.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMover.cs" />
     <Compile Include="Simplifying\AdditionSubtractionDispatcher.cs" />
@@ -92,12 +101,20 @@
     <Compile Include="CommandLineParser\CommandLineParserCreator.cs" />
     <Compile Include="CommandLineParser\HelpText.cs" />
     <Compile Include="CommandLineParser\ParserShortAndLongNames.cs" />
-    <Compile Include="Simplifying\DirectCalculationSimplifier.cs" />
+    <Compile Include="Simplifying\ANeutralElementOfAsymmetricalArithmeticOperatorRemover.cs" />
+    <Compile Include="Simplifying\ANeutralElementOfSymmetricalArithmeticOperatorRemover.cs" />
+    <Compile Include="Simplifying\ATraversingReplacer.cs" />
+    <Compile Include="Simplifying\AVisitingTraversingReplacer.cs" />
+    <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifier.cs" />
     <Compile Include="Simplifying\IAdditionAndSubtractionMover.cs" />
-    <Compile Include="Simplifying\IDirectCalculationSimplifier.cs" />
-    <Compile Include="Simplifying\IParenthesesSimplifier.cs" />
     <Compile Include="Simplifying\ISimplify.cs" />
     <Compile Include="Simplifying\IVariableCalculator.cs" />
+    <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifier.cs" />
+    <Compile Include="Simplifying\NeutralElementEliminatingSimplifier.cs" />
+    <Compile Include="Simplifying\NeutralElementOfAdditionRemover.cs" />
+    <Compile Include="Simplifying\NeutralElementOfDivisionRemover.cs" />
+    <Compile Include="Simplifying\NeutralElementOfMultiplicationRemover.cs" />
+    <Compile Include="Simplifying\NeutralElementOfSubtractionRemover.cs" />
     <Compile Include="Utilities\ExpressionEqualityChecker.cs" />
     <Compile Include="IModelBuilder.cs" />
     <Compile Include="Simplifying\ISimplifier.cs" />
@@ -105,10 +122,9 @@
     <Compile Include="Model\AnExpressionVisitorWithResult.cs" />
     <Compile Include="Model\EvaluatingExpressionVisitor.cs" />
     <Compile Include="Model\ExpressionCloner.cs" />
-    <Compile Include="Model\ExpressionExtensions.cs" />
     <Compile Include="Model\FormattingExpressionVisitor.cs" />
     <Compile Include="Model\IExpressionFormatter.cs" />
-    <Compile Include="Simplifying\ParenthesesSimplifier.cs" />
+    <Compile Include="Simplifying\ParenthesisAroundConstantsRemovingSimplifier.cs" />
     <Compile Include="Parsing\CalculationTokenizer\AnTrigonometricToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\CosineToken.cs" />
     <Compile Include="Parsing\CalculationTokenizer\SinusToken.cs" />
@@ -132,7 +148,7 @@
     <Compile Include="Utilities\IExpressionEqualityChecker.cs" />
     <Compile Include="Utilities\LambdaExtensions.cs" />
     <Compile Include="Simplifying\VariableCalculator.cs" />
-    <Compile Include="WpfApplicationStatics.cs" />
+    <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="WpfCalculationExecutor.cs" />
   </ItemGroup>
   <ItemGroup>

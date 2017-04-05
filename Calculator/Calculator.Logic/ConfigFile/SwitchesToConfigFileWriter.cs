@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using Calculator.Logic.ArgumentParsing;
 
 namespace Calculator.Logic.ConfigFile
@@ -8,11 +6,17 @@ namespace Calculator.Logic.ConfigFile
     public class SwitchesToConfigFileWriter
     {
         readonly List<string> mNewConfig = new List<string>();
+        readonly IConfigFileWriter mWriter;
         ApplicationArguments mArgs;
         List<string> mConfigReceiver = new List<string>();
         List<string> mConfigValues = new List<string>();
         List<string> mSwitchReceiver = new List<string>();
         List<string> mSwitchValues = new List<string>();
+
+        public SwitchesToConfigFileWriter(IConfigFileWriter writer)
+        {
+            mWriter = writer;
+        }
 
         public void WriteToConfigFile(IEnumerable<string> switches, IEnumerable<string> userConfigFile,
             ApplicationArguments args, string pathToUserFile)
@@ -21,7 +25,7 @@ namespace Calculator.Logic.ConfigFile
             FillReceiversAndValues(switches, userConfigFile);
             FindDifferingArgumentsAndReplaceThemInValues();
             CreateNewConfig();
-            File.WriteAllLines(pathToUserFile, mNewConfig);
+            mWriter.Write(pathToUserFile, mNewConfig);
         }
 
         void FillReceiversAndValues(IEnumerable<string> switches, IEnumerable<string> configFile)
@@ -45,13 +49,10 @@ namespace Calculator.Logic.ConfigFile
                     if (mSwitchValues[i] == mConfigValues[j]) continue;
                     if (mArgs.SaveAllOrIgnoreAllDifferingSwitches == null)
                     {
-                        Console.WriteLine(
-                            $"Do you want to replace \" {mConfigReceiver[j]}={mConfigValues[j]} \" with \" {mSwitchReceiver[i]}={mSwitchValues[i]} \" ? \n Type y or yes to overwrite Config with switch.");
-                        var answer = Console.ReadLine();
-                        if (answer == "y" || answer == "yes")
-                        {
+                        var isToWrite = mWriter.IsSwitchToWrite(mConfigReceiver[j], mConfigValues[j], mSwitchReceiver[i],
+                            mSwitchValues[i]);
+                        if (isToWrite)
                             mConfigValues[j] = mSwitchValues[i];
-                        }
                     }
                     else if (mArgs.SaveAllOrIgnoreAllDifferingSwitches == true)
                     {

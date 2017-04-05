@@ -1,4 +1,4 @@
-﻿namespace CalculatorWPFViewModels
+﻿namespace Calculator.WPF.ViewModels
 {
     public class UnitAbbreviationsAndNames
     {

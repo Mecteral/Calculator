@@ -1,6 +1,6 @@
 ﻿using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public interface IMainScreenTabItem : IScreen
     { }

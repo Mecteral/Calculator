@@ -78,7 +78,7 @@ namespace Calculator.Logic.Tests.Parsing.CalculationTokenizer
         public void Validator_Throws_Exception_If_Number_Is_Defined_After_Deg_Or_Rad_In_Trigonometric_Function()
         {
             Action a = () => mValidator.Validate("tan(deg90)");
-            a.ShouldThrow<CalculationException>();
+            a.ShouldThrow<CalculationException>().WithMessage("The Function was not properly defined");
         }
 
         [Test]

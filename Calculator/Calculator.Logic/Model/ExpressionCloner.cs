@@ -32,32 +32,27 @@ namespace Calculator.Logic.Model
 
         protected override IExpression UseCosine(decimal value)
         {
-            return new CosineExpression {Value = value};
+            return new Cosine {Value = value};
         }
 
         protected override IExpression UseTangent(decimal value)
         {
-            return new TangentExpression { Value = value };
+            return new Tangent { Value = value };
         }
 
         protected override IExpression UseSinus(decimal value)
         {
-            return new SinusExpression { Value = value };
-        }
-
-        protected override IExpression UseSquareRoot(decimal value)
-        {
-            return new SquareRootExpression {Value = value};
+            return new Sinus { Value = value };
         }
 
         protected override IExpression UseVariable(string variable)
         {
-            return new Variable {Variables = variable};
+            return new Variable {Name = variable};
         }
 
         protected override IExpression UseSquare(IExpression left, IExpression right)
         {
-            return new Square { Left = left, Right = right };
+            return new Power { Left = left, Right = right };
         }
     }
 }

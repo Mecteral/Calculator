@@ -61,31 +61,25 @@ namespace Calculator.Logic
 
         public void Visit(VariableToken variableToken)
         {
-            mCurrent = new Variable {Variables = variableToken.Variable};
+            mCurrent = new Variable {Name = variableToken.Variable};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(CosineToken cosineToken)
         {
-            mCurrent = new CosineExpression { Value = cosineToken.Value};
+            mCurrent = new Cosine {Value = cosineToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(TangentToken tangentToken)
         {
-            mCurrent = new TangentExpression { Value = tangentToken.Value};
+            mCurrent = new Tangent {Value = tangentToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
         public void Visit(SinusToken sinusToken)
         {
-            mCurrent = new SinusExpression { Value = sinusToken.Value};
-            HandleNonParenthesesAndOperation();
-        }
-
-        public void Visit(SquareRootToken sqaureRootToken)
-        {
-            mCurrent = new SquareRootExpression { Value = sqaureRootToken.Value };
+            mCurrent = new Sinus {Value = sinusToken.Value};
             HandleNonParenthesesAndOperation();
         }
 
@@ -165,7 +159,7 @@ namespace Calculator.Logic
                     HandleMultiplicationOrDivisionBeforeAdditiveOperation<Division>();
                     break;
                 case Operator.Square:
-                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Square>();
+                    HandleMultiplicationOrDivisionBeforeAdditiveOperation<Power>();
                     break;
             }
         }
@@ -189,7 +183,23 @@ namespace Calculator.Logic
 
         void HandleMultiplicationOrDivisionBeforeAdditiveOperation<TSelf>() where TSelf : IArithmeticOperation, new()
         {
-            if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
+            if (mCurrentOperation?.Right is Variable)
+            {
+                if (mCurrentOperation.HasParent && !(mCurrentOperation.Parent is ParenthesedExpression))
+                {
+                    var parent = (IArithmeticOperation) mCurrentOperation.Parent;
+                    var temp = parent.Right;
+                    parent.Right = new TSelf() {Left = temp};
+                    mCurrentOperation = (IArithmeticOperation) parent.Right;
+                    mWasMultiplication = true;
+                }
+                else
+                {
+                    var temp = mCurrentOperation;
+                    mCurrentOperation = new TSelf { Left = temp };
+                }
+            }
+            else if (mCurrentOperation != null && !(mCurrent is ParenthesedExpression))
             {
                 var temp = mCurrentOperation.Right;
                 var multiplicationOrDivision = new TSelf {Left = temp};

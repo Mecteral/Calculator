@@ -24,6 +24,7 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Multiplication multiplication)
         {
+            CheckOperation(multiplication);
             VisitOperands(multiplication);
         }
 
@@ -37,23 +38,23 @@ namespace Calculator.Logic.Simplifying
 
         public void Visit(Division division)
         {
+            CheckOperation(division);
             VisitOperands(division);
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             VisitOperands(square);
         }
 
         public void Visit(Variable variable) {}
 
-        public void Visit(CosineExpression cosineExpression) {}
+        public void Visit(Cosine cosineExpression) {}
 
-        public void Visit(TangentExpression tangentExpression) {}
+        public void Visit(Tangent tangentExpression) {}
 
-        public void Visit(SinusExpression sinusExpression) {}
+        public void Visit(Sinus sinusExpression) {}
 
-        public void Visit(SquareRootExpression squareRootExpression){}
 
         public IExpression Simplify(IExpression input)
         {
@@ -77,7 +78,7 @@ namespace Calculator.Logic.Simplifying
                 if (multiplication.Right is Variable)
                 {
                     var variable = (Variable) multiplication.Right;
-                    mCurrentVariable = variable.Variables;
+                    mCurrentVariable = variable.Name;
                 }
                 MakeMove(operation, FindSuitableAdditionOrSubtraction((IArithmeticOperation) operation.Left));
             }
@@ -87,11 +88,103 @@ namespace Calculator.Logic.Simplifying
                 {
                     HandleDoubleMultiplicationInAddition(operation);
                 }
-                else
+                else if (operation is Subtraction)
                 {
                     HandleDoubleMultiplicationInSubtraction(operation);
                 }
             }
+            else if (operation.Right is Constant && operation.Left is Multiplication && (operation is Multiplication || operation is Division))
+            {
+                var boundVariable = (IArithmeticOperation) operation.Left;
+                if (boundVariable.Right is Variable)
+                {
+                    HandleLeftHandedVariableMultiplicationAndDivision(operation, boundVariable);
+                }
+            }
+            else if (operation.Right is Multiplication && operation.Left is Constant && (operation is Multiplication || operation is Division))
+            {
+                var boundVariable = (IArithmeticOperation) operation.Right;
+                if (boundVariable.Right is Variable)
+                {
+                    HandleRightHandedVariableMultiplicationAndDivision(operation, boundVariable);
+                }
+            }
+        }
+
+        void HandleRightHandedVariableMultiplicationAndDivision(IArithmeticOperation operation,
+            IArithmeticOperation boundVariable)
+        {
+            var left = (IExpressionWithValue) boundVariable.Left;
+            var right = (IExpressionWithValue) operation.Left;
+            if (operation is Multiplication)
+            {
+                operation.Left = new Constant {Value = left.Value * right.Value};
+            }
+            else
+            {
+                if (operation.HasParent)
+                {
+                    operation = HandleParentedRightHandedVariableDivisionInChain(operation);
+                }
+                else
+                {
+                    mCalculatedExpression = new Division();
+                    operation = (IArithmeticOperation) mCalculatedExpression;
+                }
+                operation.Left = new Constant {Value = right.Value / left.Value};
+            }
+            operation.Right = boundVariable.Right;
+        }
+
+        void HandleLeftHandedVariableMultiplicationAndDivision(IArithmeticOperation operation,
+            IArithmeticOperation boundVariable)
+        {
+            var left = (IExpressionWithValue) boundVariable.Left;
+            var right = (IExpressionWithValue) operation.Right;
+            if (operation is Multiplication)
+            {
+                operation.Left = new Constant {Value = right.Value * left.Value};
+            }
+            else
+            {
+                if (operation.HasParent)
+                {
+                    operation = HandleParentedLeftHandedVariableDivisonInChain(operation);
+                }
+                else
+                {
+                    mCalculatedExpression = new Multiplication();
+                    operation = (IArithmeticOperation) mCalculatedExpression;
+                }
+                operation.Left = new Constant {Value = left.Value / right.Value};
+            }
+            operation.Right = boundVariable.Right;
+        }
+
+        IArithmeticOperation HandleParentedLeftHandedVariableDivisonInChain(IArithmeticOperation operation)
+        {
+            var parent = (IArithmeticOperation)operation.Parent;
+            if (parent.Left == operation)
+            {
+                parent.Left = new Multiplication();
+                return (IArithmeticOperation)parent.Left;
+            }
+            parent.Right = new Multiplication();
+
+            return (IArithmeticOperation)parent.Right;
+        }
+
+        IArithmeticOperation HandleParentedRightHandedVariableDivisionInChain(IArithmeticOperation operation)
+        {
+            var parent = (IArithmeticOperation) operation.Parent;
+            if (parent.Left == operation)
+            {
+                parent.Left = new Division();
+                return (IArithmeticOperation) parent.Left;
+            }
+            parent.Right = new Division();
+
+            return (IArithmeticOperation) parent.Right;
         }
 
         /// <summary>
@@ -114,7 +207,7 @@ namespace Calculator.Logic.Simplifying
             {
                 var variableOne = (Variable) operationLeft.Right;
                 var variableTwo = (Variable) operationRight.Right;
-                if (variableOne.Variables == variableTwo.Variables)
+                if (variableOne.Name == variableTwo.Name)
                 {
                     var constantOne = (Constant) operationLeft.Left;
                     var constantTwo = (Constant) operationRight.Left;
@@ -199,7 +292,7 @@ namespace Calculator.Logic.Simplifying
                 ForSubSub = (op, chained) => ModifySubtraction(op, chained, HandleSubtractionToSubtraction),
                 ForAddSub =
                     (op, chained) =>
-                            ModifySubtraction(op, chained, HandleSubtractionToAddition, HandleAdditionOfVariables)
+                        ModifySubtraction(op, chained, HandleSubtractionToAddition, HandleAdditionOfVariables)
             }.Execute();
         }
 
@@ -224,7 +317,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -242,7 +335,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -260,7 +353,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value + constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -273,7 +366,7 @@ namespace Calculator.Logic.Simplifying
                         new Multiplication
                         {
                             Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                            Right = new Variable {Variables = mCurrentVariable}
+                            Right = new Variable {Name = mCurrentVariable}
                         }
                 };
             }
@@ -291,7 +384,7 @@ namespace Calculator.Logic.Simplifying
                     new Multiplication
                     {
                         Left = new Constant {Value = constantOne.Value - constantTwo.Value},
-                        Right = new Variable {Variables = mCurrentVariable}
+                        Right = new Variable {Name = mCurrentVariable}
                     }
             };
             HandleReplacement(operation, replacement);
@@ -313,12 +406,12 @@ namespace Calculator.Logic.Simplifying
                 {
                     variableRight = multiplicationRight.Right as Variable;
                 }
-                if (multiplicationRight != null && variableRight != null && variableRight.Variables == mCurrentVariable)
+                if (multiplicationRight != null && variableRight != null && variableRight.Name == mCurrentVariable)
                 {
                     mIsRight = true;
                     return operation;
                 }
-                if (multiplicationLeft != null && variableLeft != null && variableLeft.Variables == mCurrentVariable)
+                if (multiplicationLeft != null && variableLeft != null && variableLeft.Name == mCurrentVariable)
                 {
                     mIsRight = false;
                     return operation;
@@ -326,11 +419,6 @@ namespace Calculator.Logic.Simplifying
                 if (operation.Left is Addition || operation.Left is Subtraction)
                 {
                     operation = (IArithmeticOperation) operation.Left;
-                    continue;
-                }
-                if (operation.Right is Addition || operation.Right is Subtraction)
-                {
-                    operation = (IArithmeticOperation) operation.Right;
                     continue;
                 }
                 break;

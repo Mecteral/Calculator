@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Calculator.Model
 {
@@ -41,5 +42,6 @@ namespace Calculator.Model
             }
             else throw new ArgumentException();
         }
+        public override IEnumerable<IExpression> Children => new[] {mLeft, Right};
     }
 }

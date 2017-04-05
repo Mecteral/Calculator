@@ -3,30 +3,39 @@ using System.Windows.Input;
 using Calculator.Logic;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Parsing.CalculationTokenizer;
+using Calculator.Logic.WpfApplicationProperties;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class InputViewModel : PropertyChangedBase
     {
         readonly IApplicationArguments mArguments;
         readonly IEventAggregator mEventAggregator;
         readonly InputStringValidator mValidator;
+        readonly IConversionProperties mConversionProperties;
+        readonly IWindowProperties mWindowProperties;
+        readonly IUnitsAndAbbreviationsSource mUnitsAndAbbreviationsSource;
         readonly IWpfCalculationExecutor mExecutor;
         string mInputString;
         string mResult;
-        bool mStepExpander = WpfApplicationStatics.StepExpander;
+        bool mStepExpander;
         List<string> mSteps = new List<string>();
         bool mCalculationButtonToggle;
         string mCalculationButtonForeground = "grey";
 
         public InputViewModel(IWpfCalculationExecutor executor, IApplicationArguments arguments,
-            IEventAggregator eventAggregator, InputStringValidator validator)
+            IEventAggregator eventAggregator, InputStringValidator validator, IConversionProperties conversionProperties, IWindowProperties windowProperties, IUnitsAndAbbreviationsSource unitsAndAbbreviationsSource)
         {
             mExecutor = executor;
             mArguments = arguments;
             mEventAggregator = eventAggregator;
             mValidator = validator;
+            mConversionProperties = conversionProperties;
+            mWindowProperties = windowProperties;
+            mUnitsAndAbbreviationsSource = unitsAndAbbreviationsSource;
+
+            mStepExpander = mWindowProperties.AreStepsExpanded;
         }
 
         public List<string> Steps
@@ -72,7 +81,7 @@ namespace CalculatorWPFViewModels
                 if (value == mStepExpander) return;
                 mStepExpander = value;
                 NotifyOfPropertyChange(() => StepExpander);
-                WpfApplicationStatics.StepExpander = value;
+                mWindowProperties.AreStepsExpanded = value;
                 mEventAggregator.PublishOnUIThread("Resize");
             }
         }
@@ -116,10 +125,10 @@ namespace CalculatorWPFViewModels
 
         public void Calculate()
         {
-            if (WpfApplicationStatics.IsConversionActive)
+            if (mConversionProperties.IsConversionActive)
             {
                 mArguments.UseConversion = true;
-                mArguments.ToMetric = WpfApplicationStatics.UseMetric;
+                mArguments.ToMetric = mConversionProperties.DoUseMetricSystem;
                 GetUnitAbbreviation();
             }
             else
@@ -133,14 +142,14 @@ namespace CalculatorWPFViewModels
 
         void GetUnitAbbreviation()
         {
-            foreach (var abbreviationList in ConversionViewModel.AllUnitsAndAbbreviations)
+            foreach (var abbreviationList in mUnitsAndAbbreviationsSource.AllUnitsAndAbbreviations)
             {
                 foreach (var units in abbreviationList)
                 {
                     if (units.IsSelected)
                     {
                         mArguments.UnitForConversion = units.Abbreviation;
-                        WpfApplicationStatics.LastPickedUnit = units.Abbreviation;
+                        mConversionProperties.LastPickedUnit = units.Abbreviation;
                     }
                 }
             }
@@ -156,6 +165,5 @@ namespace CalculatorWPFViewModels
             }
         }
 
-        public void OnExpansion() {}
     }
 }

@@ -27,6 +27,7 @@ namespace CalculatorConsoleApplication
         static readonly ContainerBuilder sBuilder = new ContainerBuilder();
         static readonly CommandLineParserCreator sCreator = new CommandLineParserCreator();
         static readonly InputStringValidator sStringValidator = new InputStringValidator();
+        static readonly IConfigFileWriter sWriter = new ConfigFileWriter();
 
         static void Main(string[] args)
         {
@@ -35,10 +36,10 @@ namespace CalculatorConsoleApplication
             defaultParser.Parse(defaultConfig);
 
             var userConfig = sReader.ReadFile(sPathToUserFile);
-            sValidator.CheckForValidation(userConfig, sPathToUserFile);
+            sValidator.Validate(userConfig, sPathToUserFile);
             OutputErrorsIfExistent();
 
-            sValidator.CheckForValidation(args, CommandLineError);
+            sValidator.Validate(args, CommandLineError);
             OutputErrorsIfExistent();
 
             var fileParser = sCreator.ArgumentsSetup(sArguments);
@@ -67,9 +68,9 @@ namespace CalculatorConsoleApplication
             }
 
 
-            sBuilder.RegisterAssemblyModules(typeof(Calculator.Logic.ContainerModule).Assembly);
+            sBuilder.RegisterAssemblyModules(typeof(Calculator.Logic.LogicModule).Assembly);
             var container = sBuilder.Build();
-            var pipelineEvaluator = container.Resolve<IPipelineEvaluator>();
+            var pipelineEvaluator = container.Resolve<IEvaluationPipeline>();
 
             Console.WriteLine(pipelineEvaluator.Evaluate(input, sArguments));
             Console.ReadKey();
@@ -79,7 +80,7 @@ namespace CalculatorConsoleApplication
 
         static void OnStringError(CalculationException x, string input)
         {
-            Console.WriteLine($"{x.Error} \n{input}");
+            Console.WriteLine($"{x.Message} \n{input}");
             for (var i = 0; i < x.Index; i++)
             {
                 Console.Write(".");
@@ -90,13 +91,13 @@ namespace CalculatorConsoleApplication
         }
         static void WriteSwitchesToDefault(IEnumerable<string> args, IEnumerable<string> userConfig)
         {
-            var writer = new SwitchesToConfigFileWriter();
+            var writer = new SwitchesToConfigFileWriter(sWriter);
             writer.WriteToConfigFile(args, userConfig, sArguments, sPathToUserFile);
         }
         static void RunCustomParser(string[] args)
         {
             var customConfig = sReader.ReadFile(sArguments.UseCustomConfigFile);
-            sValidator.CheckForValidation(customConfig, sArguments.UseCustomConfigFile);
+            sValidator.Validate(customConfig, sArguments.UseCustomConfigFile);
             OutputErrorsIfExistent();
 
             var specificFileParser = sCreator.ArgumentsSetup(sArguments);
@@ -111,7 +112,7 @@ namespace CalculatorConsoleApplication
             if (File.Exists(sArguments.ImportFromSpecificConfigFile))
             {
                 var specific = sReader.ReadFile(sArguments.ImportFromSpecificConfigFile);
-                sValidator.CheckForValidation(specific,sArguments.ImportFromSpecificConfigFile);
+                sValidator.Validate(specific,sArguments.ImportFromSpecificConfigFile);
                 OutputErrorsIfExistent();
                 File.Copy(sArguments.ImportFromSpecificConfigFile, sPathToUserFile, true);
             }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Calculator.Model
 {
@@ -17,6 +18,7 @@ namespace Calculator.Model
                 mWrapped.Parent(this);
             }
         }
+        public override IEnumerable<IExpression> Children => new[] {mWrapped};
         public override void Accept(IExpressionVisitor visitor) => visitor.Visit(this);
         public override string ToString() => $"({Wrapped})";
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)

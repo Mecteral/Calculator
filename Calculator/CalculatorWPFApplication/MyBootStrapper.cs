@@ -3,46 +3,48 @@ using System.Windows;
 using Autofac;
 using Calculator.Logic;
 using Calculator.Logic.Parsing.CalculationTokenizer;
-using CalculatorWPFViewModels;
+using Calculator.Logic.WpfApplicationProperties;
+using Calculator.WPF.ViewModels;
 using Caliburn.Micro;
 
 namespace CalculatorWPFApplication
 {
+    
     public class MyBootStrapper : BootstrapperBase
     {
         readonly IContainer mContainer;
-        readonly IJSonSerializer mSerializer;
-
+        readonly IAllSerializableSettings mSettings;
         public MyBootStrapper()
         {
             Initialize();
+            mSettings = SettingsSerializer.Read();
             mContainer = WireUpApplication();
-            
-            mSerializer = new JSonSerializer(new WpfApplicationStatics());
         }
 
-        static IContainer WireUpApplication()
+        IContainer WireUpApplication()
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(typeof(ShellViewModel).Assembly)
                 .Where(t => t.Name.EndsWith("ViewModel"))
                 .AsSelf()
                 .SingleInstance();
-            builder.RegisterType<WpfApplicationStatics>().SingleInstance();
+            
+            builder.RegisterInstance(mSettings).AsImplementedInterfaces();
             builder.RegisterType<InputStringValidator>().SingleInstance();
-            builder.RegisterType<JSonSerializer>().As<IJSonSerializer>().SingleInstance();
             builder.RegisterType<WindowManager>().AsImplementedInterfaces().AsSelf().SingleInstance();
-            builder.RegisterAssemblyModules(typeof(ContainerModule).Assembly);
+            builder.RegisterAssemblyModules(typeof(LogicModule).Assembly);
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
             builder.RegisterType<ConfigurationOptionTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
             builder.RegisterType<ConfigurationThemeTabViewModel>().As<IMainScreenTabItem>().SingleInstance();
             builder.RegisterType<ConfigurationViewModel>().SingleInstance();
+            builder.RegisterType<ConversionViewModel>().As<IUnitsAndAbbreviationsSource>().SingleInstance();
             return builder.Build();
         }
 
         protected override void OnStartup(object sender, StartupEventArgs e)
         {
-            mSerializer.Read();
+            Application.Current.Resources.Source = new Uri(mSettings.UsedWpfTheme,
+                UriKind.RelativeOrAbsolute);
             DisplayRootViewFor<ShellViewModel>();
         }
 
@@ -53,7 +55,7 @@ namespace CalculatorWPFApplication
 
         protected override void OnExit(object sender, EventArgs e)
         {
-            mSerializer.Write();
+            SettingsSerializer.Write(mSettings);
             base.OnExit(sender, e);
         }
 
@@ -62,7 +64,7 @@ namespace CalculatorWPFApplication
             LogManager.GetLog = t => new DebugLog(t);
             var cfg = new TypeMappingConfiguration
             {
-                DefaultSubNamespaceForViewModels = "CalculatorWPFViewModels",
+                DefaultSubNamespaceForViewModels = "Calculator.WPF.ViewModels",
                 DefaultSubNamespaceForViews = "CalculatorWPFApplication.Views",
                 IncludeViewSuffixInViewModelNames = false
             };

@@ -1,7 +1,9 @@
-﻿using Calculator.Logic.ArgumentParsing;
+﻿using System;
+using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.Model;
 using Calculator.Model;
 using FluentAssertions;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests.Model
@@ -77,6 +79,15 @@ namespace Calculator.Logic.Tests.Model
             var args = new ApplicationArguments {ShowSteps = true};
             new EvaluatingExpressionVisitor().Evaluate(new Addition() { Left = new Constant() {Value = 13},Right = new Constant() {Value = 17} }, args);
             EvaluatingExpressionVisitor.Steps.Should().Contain("13+17\n 30");
+        }
+
+        [Test]
+        public void Evaluation_Throws_Exception_On_Variable_Encounter()
+        {
+            var variableExpression = new Variable() {Name = "a"};
+            var visitor = new EvaluatingExpressionVisitor();
+            Action a = () => visitor.Evaluate(variableExpression, null);
+            a.ShouldThrow<InvalidOperationException>();
         }
     }
 }

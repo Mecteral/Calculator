@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Caliburn.Micro;
 
-namespace CalculatorWPFViewModels
+namespace Calculator.WPF.ViewModels
 {
     public class ConfigurationViewModel : Conductor<IMainScreenTabItem>.Collection.OneActive
     {
@@ -13,20 +13,6 @@ namespace CalculatorWPFViewModels
             ConfigurationOptionTab = configurationOptionTab;
             ConfigurationThemeTab = configurationThemeTab;
             Items.AddRange(tabs);
-        }
-    }
-    public sealed class ConfigurationThemeTabViewModel : Screen, IMainScreenTabItem
-    {
-        public ConfigurationThemeTabViewModel()
-        {
-            DisplayName = "Colors and Themes";
-        }
-    }
-    public sealed class ConfigurationOptionTabViewModel : Screen, IMainScreenTabItem
-    {
-        public ConfigurationOptionTabViewModel()
-        {
-            DisplayName = "Options";
         }
     }
 }

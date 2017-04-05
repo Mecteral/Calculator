@@ -3,6 +3,7 @@ using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
 using Calculator.Model;
 using FluentAssertions;
+using Mecteral.UnitConversion;
 using NUnit.Framework;
 
 namespace Calculator.Logic.Tests
@@ -25,7 +26,7 @@ namespace Calculator.Logic.Tests
         static TangentToken Tangent(string input) => new TangentToken($"tan({input})", null);
         static SinusToken Sinus(string input) => new SinusToken($"sin({input})", null);
         static CosineToken Cosine(string input) => new CosineToken($"cos({input})", null);
-        static SquareRootToken Root(string input) => new SquareRootToken($"sqrt({input})");
+        static OperatorToken Square => new OperatorToken('^');
         //(1+2)+(3+4)
         [Test]
         public void AdditionWithDoubleParenthesed()
@@ -163,7 +164,7 @@ namespace Calculator.Logic.Tests
         public void CosineMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Cosine("60deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<CosineExpression>().Which.Value.Should().Be(0.5M);
+            subtraction.Left.Should().BeOfType<Cosine>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -299,15 +300,7 @@ namespace Calculator.Logic.Tests
         public void SinusMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Sinus("30deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<SinusExpression>().Which.Value.Should().Be(0.5M);
-            subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
-        }
-
-        [Test]
-        public void SquareRootMinusConstant()
-        {
-            var subtraction = TestExpecting<Addition>(Root("9"), Plus, Number(4));
-            subtraction.Left.Should().BeOfType<SquareRootExpression>().Which.Value.Should().Be(3M);
+            subtraction.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(0.5M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -315,7 +308,7 @@ namespace Calculator.Logic.Tests
         public void TangentMinusConstant()
         {
             var subtraction = TestExpecting<Subtraction>(Tangent("45deg"), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<TangentExpression>().Which.Value.Should().Be(1.0M);
+            subtraction.Left.Should().BeOfType<Tangent>().Which.Value.Should().Be(1.0M);
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
         }
 
@@ -337,8 +330,26 @@ namespace Calculator.Logic.Tests
         {
             //a-4
             var subtraction = TestExpecting<Subtraction>(Variable('a'), Minus, Number(4));
-            subtraction.Left.Should().BeOfType<Variable>().Which.Variables.Should().Be("a");
+            subtraction.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("a");
             subtraction.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(4);
+        }
+        [Test]
+        public void Variable_Plus_Number_Builds_Addition()
+        {
+            // x+1
+            var addition = TestExpecting<Addition>(Variable('x'), Plus, Number(1));
+            addition.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            addition.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(1);
+        }
+        [Test]
+        public void Simple_Square()
+        {
+            var input = new IToken[]
+            {
+                Number(13), Square, Number(17)
+            };
+            var exp = Test(input);
+            new FormattingExpressionVisitor().Format(exp).Should().Be("13 ^ 17");
         }
     }
 }

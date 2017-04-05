@@ -43,7 +43,7 @@ namespace Calculator.Logic.Utilities
             mSecondExpressions.Add(division);
         }
 
-        public void Visit(Square square)
+        public void Visit(Power square)
         {
             VisitOperands(square);
             mSecondExpressions.Add(square);
@@ -54,24 +54,19 @@ namespace Calculator.Logic.Utilities
             mSecondExpressions.Add(variable);
         }
 
-        public void Visit(CosineExpression cosineExpression)
+        public void Visit(Cosine cosineExpression)
         {
             mSecondExpressions.Add(cosineExpression);
         }
 
-        public void Visit(TangentExpression tangentExpression)
+        public void Visit(Tangent tangentExpression)
         {
             mSecondExpressions.Add(tangentExpression);
         }
 
-        public void Visit(SinusExpression sinusExpression)
+        public void Visit(Sinus sinusExpression)
         {
             mSecondExpressions.Add(sinusExpression);
-        }
-
-        public void Visit(SquareRootExpression squareRootExpression)
-        {
-            mSecondExpressions.Add(squareRootExpression);
         }
 
         public bool IsEqual(IExpression firstExpression, IExpression secondExpression)
@@ -117,7 +112,7 @@ namespace Calculator.Logic.Utilities
             {
                 var lhs = (Variable) first;
                 var rhs = (Variable) second;
-                if (lhs.Variables != rhs.Variables) return false;
+                if (lhs.Name != rhs.Name) return false;
             }
             return true;
         }
