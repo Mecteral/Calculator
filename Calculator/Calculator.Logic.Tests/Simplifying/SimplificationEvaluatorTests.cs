@@ -19,17 +19,7 @@ namespace Calculator.Logic.Tests.Simplifying
             underTest.CountExpression(inputTree).Should().Be(expected);
         }
 
-        static IEnumerable<IExpression> CreateIExpressionEnumerableFromStrings(IEnumerable<string> input)
-        {
-            var result = new List<IExpression>();
-            foreach (var str in input)
-            {
-                var tokens = Tokenize(str);
-                var inputTree = CreateInMemoryModel(tokens);
-                result.Add(inputTree);
-            }
-            return result;
-        }
+        static IEnumerable<IExpression> CreateIExpressionEnumerableFromStrings(IEnumerable<string> input) => input.Select(Tokenize).Select(CreateInMemoryModel).ToList();
 
         static void CheckEnumerable(IEnumerable<IExpression> input, int expectedPosition)
         {

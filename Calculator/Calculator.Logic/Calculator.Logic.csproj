@@ -67,7 +67,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Evaluation\AVisitingEvaluator.cs" />
+    <Compile Include="Evaluation\ExpressionCounter.cs" />
     <Compile Include="Simplifying\IAggregateSimplifier.cs" />
+    <Compile Include="Evaluation\IEvaluator.cs" />
     <Compile Include="Simplifying\PowerSimplifier.cs" />
     <Compile Include="WpfApplicationProperties\AllSerializableSettings.cs" />
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
