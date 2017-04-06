@@ -58,29 +58,29 @@ namespace Calculator.Logic.Evaluation
             VisitOperands(power);
         }
 
-        protected abstract void EvaluateMultiplication(Multiplication multiplication);
+        protected virtual void EvaluateMultiplication(Multiplication multiplication) { }
 
-        protected abstract void EvaluateAddition(Addition addition);
+        protected virtual void EvaluateAddition(Addition addition) { }
 
-        protected abstract void EvaluateConstant(Constant constant);
+        protected virtual void EvaluateConstant(Constant constant) { }
 
-        protected abstract void EvaluateDivision(Division division);
+        protected virtual void EvaluateDivision(Division division) { }
 
-        protected abstract void EvaluateVariable(Variable variable);
+        protected virtual void EvaluateVariable(Variable variable) { }
 
-        protected abstract void EvaluateCosine(Cosine cosineExpression);
+        protected virtual void EvaluateCosine(Cosine cosineExpression) { }
 
-        protected abstract void EvaluateTangent(Tangent tangentExpression);
+        protected virtual void EvaluateTangent(Tangent tangentExpression) { }
 
-        protected abstract void EvaluateSinus(Sinus sinusExpression);
+        protected virtual void EvaluateSinus(Sinus sinusExpression) { }
 
-        protected abstract void EvaluatePower(Power power);
+        protected virtual void EvaluatePower(Power power) { }
 
-        protected abstract void EvaluateParenthesed(ParenthesedExpression parenthesed);
+        protected virtual void EvaluateParenthesed(ParenthesedExpression parenthesed) { }
 
-        protected abstract void EvaluateSubtraction(Subtraction subtraction);
-
-        void VisitOperands(IArithmeticOperation operation)
+        protected virtual void EvaluateSubtraction(Subtraction subtraction) { }
+        
+                void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
