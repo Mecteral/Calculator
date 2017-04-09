@@ -69,5 +69,62 @@ namespace Calculator.Logic.Tests.Simplifying
             result.Should().BeOfType<Addition>().Which.Left.Should().BeOfType<Power>();
             result.Should().BeOfType<Addition>().Which.Right.Should().BeOfType<Power>();
         }
+
+        [Test]
+        public void Multiplication_Of_Same_Variables_Is_Replaced_With_Square()
+        {
+            var input = new Multiplication() {Left = new Variable() {Name = "x"}, Right = new Variable() {Name = "x"} };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+        }
+
+        [Test]
+        public void Multiplication_Of_Different_Variables_Is_Not_Replaced_With_Square()
+        {
+            var input = new Multiplication() { Left = new Variable() { Name = "x" }, Right = new Variable() { Name = "y" } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Multiplication>().Which.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            result.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<Variable>().Which.Name.Should().Be("y");
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Left_And_Same_Variable_Increases_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Variable() {Name = "x"}, Right = new Constant() {Value = 13} }, Right = new Variable() { Name = "x" } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Right_And_Same_Variable_Increases_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Variable() { Name = "x" }, Right =  new Power() { Left = new Variable() { Name = "x" }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Right_And_Different_Variable_Doesnt_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Variable() { Name = "y" }, Right = new Power() { Left = new Variable() { Name = "x" }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Variable>()
+                .Which.Name.Should()
+                .Be("y");
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should().BeOfType<Variable>().Which.Name.Should().Be("x");
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
+        }
     }
 }
