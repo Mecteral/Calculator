@@ -22,7 +22,7 @@ namespace Calculator.Logic.Tests.Simplifying
             var input = new Multiplication {Left = new Constant {Value = 13}, Right = new Constant {Value = 13}};
             var result = mUnderTest.Simplify(input);
             result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
-            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
         }
 
         [Test]
@@ -125,6 +125,40 @@ namespace Calculator.Logic.Tests.Simplifying
                 .Which.Right.Should()
                 .BeOfType<Power>()
                 .Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
+        }
+
+        [Test]
+        public void Multiplication_With_Sinus_And_Cosine_Doesnt_Change_To_Power_Even_Though_The_Value_Is_The_Same()
+        {
+            var input = new Multiplication() {Left = new Sinus() {Value = 0}, Right = new Cosine() {Value = 0} };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Multiplication>().Which.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(0);
+            result.Should().BeOfType<Multiplication>().Which.Right.Should().BeOfType<Cosine>().Which.Value.Should().Be(0);
+        }
+
+        [Test]
+        public void Multiplication_With_Cosine_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        {
+            var input = new Multiplication() { Left = new Cosine() { Value = 13 }, Right = new Cosine() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Cosine>().Which.Value.Should().Be(13);
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+        }
+        [Test]
+        public void Multiplication_With_Sinus_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        {
+            var input = new Multiplication() { Left = new Sinus() { Value = 13 }, Right = new Sinus() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(13);
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+        }
+        [Test]
+        public void Multiplication_With_Tangent_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        {
+            var input = new Multiplication() { Left = new Tangent() { Value = 13 }, Right = new Tangent() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Tangent>().Which.Value.Should().Be(13);
+            result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
         }
     }
 }
