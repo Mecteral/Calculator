@@ -137,7 +137,7 @@ namespace Calculator.Logic.Tests.Simplifying
         }
 
         [Test]
-        public void Multiplication_With_Cosine_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        public void Multiplication_With_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
         {
             var input = new Multiplication() { Left = new Cosine() { Value = 13 }, Right = new Cosine() { Value = 13 } };
             var result = mUnderTest.Simplify(input);
@@ -145,7 +145,7 @@ namespace Calculator.Logic.Tests.Simplifying
             result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
         }
         [Test]
-        public void Multiplication_With_Sinus_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        public void Multiplication_With_Sinus_Changes_To_Power_If_The_Value_Is_The_Same()
         {
             var input = new Multiplication() { Left = new Sinus() { Value = 13 }, Right = new Sinus() { Value = 13 } };
             var result = mUnderTest.Simplify(input);
@@ -153,12 +153,192 @@ namespace Calculator.Logic.Tests.Simplifying
             result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
         }
         [Test]
-        public void Multiplication_With_Tangent_And_Cosine_Changes_To_Power_If_The_Value_Is_The_Same()
+        public void Multiplication_With_Tangents_Changes_To_Power_If_The_Value_Is_The_Same()
         {
             var input = new Multiplication() { Left = new Tangent() { Value = 13 }, Right = new Tangent() { Value = 13 } };
             var result = mUnderTest.Simplify(input);
             result.Should().BeOfType<Power>().Which.Left.Should().BeOfType<Tangent>().Which.Value.Should().Be(13);
             result.Should().BeOfType<Power>().Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(2);
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Right_And_Different_ValueExpressions_Doesnt_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Constant() { Value = 13 }, Right = new Power() { Left = new Sinus() { Value= 13 }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should().BeOfType<Sinus>().Which.Value.Should().Be(13);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should().BeOfType<Constant>().Which.Value.Should().Be(13);
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Right_And_Same_ValueExpressions_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Constant() { Value = 13 }, Right = new Power() { Left = new Constant() { Value = 13 }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Right_And_Same_SinusValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Sinus() { Value = 13 }, Right = new Power() { Left = new Sinus() { Value = 13 }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Sinus>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Right_And_Same_TangentValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Tangent() { Value = 13 }, Right = new Power() { Left = new Tangent() { Value = 13 }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Tangent>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Right_And_Same_CosineValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Cosine() { Value = 13 }, Right = new Power() { Left = new Cosine() { Value = 13 }, Right = new Constant() { Value = 13 } } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Cosine>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Left_And_Same_CosineValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Cosine() { Value = 13 }, Right = new Constant() { Value = 13 } }, Right = new Cosine() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Cosine>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Left_And_Same_TangentValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Tangent() { Value = 13 }, Right = new Constant() { Value = 13 } }, Right = new Tangent() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Tangent>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Left_And_Same_SinusValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Sinus() { Value = 13 }, Right = new Constant() { Value = 13 } }, Right = new Sinus() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Sinus>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+
+        [Test]
+        public void Multiplication_With_Square_Left_And_Same_ConstantValues_Does_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Constant() { Value = 13 }, Right = new Constant() { Value = 13 } }, Right = new Constant() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should()
+                .Be(13);
+            result.Should()
+                .BeOfType<Power>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(14);
+        }
+        [Test]
+        public void Multiplication_With_Square_Left_And_Different_ConstantValues_Doesnt_Increase_Power_Constant()
+        {
+            var input = new Multiplication() { Left = new Power() { Left = new Constant() { Value = 17 }, Right = new Constant() { Value = 13 } }, Right = new Constant() { Value = 13 } };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Power>()
+                .Which.Left.Should().BeOfType<Constant>().Which.Value.Should()
+                .Be(17);
+            result.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Constant>()
+                .Which.Value.Should().Be(13);
         }
     }
 }

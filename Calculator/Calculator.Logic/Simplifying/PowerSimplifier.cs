@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading;
-using Calculator.Model;
+﻿using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
@@ -13,67 +11,116 @@ namespace Calculator.Logic.Simplifying
             var variableLeft = multiplication.Left as Variable;
             var variableRight = multiplication.Right as Variable;
 
-
             if (null != multiplicationConstantLeft && null != multiplicationConstantRight &&
                 multiplicationConstantLeft.Value == multiplicationConstantRight.Value)
-                return HandleExpressionsWithSameValues(multiplicationConstantLeft, multiplicationConstantRight,
+                return HandleExpressionsWithSameValuesInMultiplication(multiplicationConstantLeft,
+                    multiplicationConstantRight,
                     multiplication);
 
             if (null != variableLeft && null != variableRight && variableLeft.Name == variableRight.Name)
-                return new Power {Left = variableLeft, Right = new Constant {Value = 2}};
+                return CreatePowerFromMultiplicativeExpressions<Variable>(variableLeft, variableRight, multiplication);
 
-            if (null != variableLeft && multiplication.Right is Power)
+
+            if (multiplication.Right is Power)
             {
-                var powerRight = (Power) multiplication.Right;
-                var powerVariable = powerRight.Left as Variable;
-                var powerConstant = (Constant) powerRight.Right;
-                if (null != powerVariable && powerVariable.Name == variableLeft.Name)
-                    return new Power
-                    {
-                        Left = new Variable {Name = powerVariable.Name},
-                        Right = new Constant {Value = powerConstant.Value + 1}
-                    };
-                return multiplication;
-            }
+                var power = (Power) multiplication.Right;
+                var multiplicator = multiplication.Left;
 
-            if (null != variableRight && multiplication.Left is Power)
+                var powerExponent = (Constant) power.Right;
+
+                var powerBaseAsVariable = power.Left as Variable;
+                var multiplicatorVariable = multiplication.Left as Variable;
+
+                var powerBaseWithValue = power.Left as IExpressionWithValue;
+                var multiplicatorWithValue = multiplication.Left as IExpressionWithValue;
+
+                if (null != powerBaseAsVariable && null != multiplicatorVariable &&
+                    powerBaseAsVariable.Name == multiplicatorVariable.Name)
+                    return CreatePowerFromMultiplicationWithPowerAndIExpression<Variable>(powerBaseAsVariable,
+                        powerExponent, multiplicator, multiplication);
+
+                if (null != powerBaseWithValue && null != multiplicatorWithValue &&
+                    powerBaseWithValue.Value == multiplicatorWithValue.Value)
+                    return HandleExpressionsWithSameValuesInMultiplicationWithPower(powerBaseWithValue, powerExponent,
+                        multiplicatorWithValue, multiplication);
+            }
+            if (multiplication.Left is Power)
             {
-                var powerRight = (Power) multiplication.Left;
-                var powerVariable = powerRight.Left as Variable;
-                var powerConstant = (Constant) powerRight.Right;
-                if (null != powerVariable && powerVariable.Name == variableRight.Name)
-                    return new Power
-                    {
-                        Left = new Variable {Name = powerVariable.Name},
-                        Right = new Constant {Value = powerConstant.Value + 1}
-                    };
-                return multiplication;
-            }
+                var power = (Power) multiplication.Left;
+                var multiplicator = multiplication.Right;
 
+                var powerExponent = (Constant) power.Right;
+
+                var powerBaseAsVariable = power.Left as Variable;
+                var multiplicatorVariable = multiplication.Right as Variable;
+
+                var powerBaseWithValue = power.Left as IExpressionWithValue;
+                var multiplicatorWithValue = multiplication.Right as IExpressionWithValue;
+
+                if (null != powerBaseAsVariable && null != multiplicatorVariable &&
+                    powerBaseAsVariable.Name == multiplicatorVariable.Name)
+                    return CreatePowerFromMultiplicationWithPowerAndIExpression<Variable>(powerBaseAsVariable,
+                        powerExponent, multiplicator, multiplication);
+
+                if (null != powerBaseWithValue && null != multiplicatorWithValue &&
+                    powerBaseWithValue.Value == multiplicatorWithValue.Value)
+                    return HandleExpressionsWithSameValuesInMultiplicationWithPower(powerBaseWithValue, powerExponent,
+                        multiplicatorWithValue, multiplication);
+            }
             return multiplication;
         }
 
-        IExpression HandleExpressionsWithSameValues(IExpression left, IExpression right, IExpression multiplication)
+        static IExpression HandleExpressionsWithSameValuesInMultiplication(IExpression left, IExpression right,
+            IExpression multiplication)
         {
-            var result = CreatePowerFromValueExpressions<Constant>(left, right, multiplication);
+            var result = CreatePowerFromMultiplicativeExpressions<Constant>(left, right, multiplication);
             if (result != multiplication)
                 return result;
-            result = CreatePowerFromValueExpressions<Sinus>(left, right, multiplication);
+            result = CreatePowerFromMultiplicativeExpressions<Sinus>(left, right, multiplication);
             if (result != multiplication)
                 return result;
-            result = CreatePowerFromValueExpressions<Cosine>(left, right, multiplication);
+            result = CreatePowerFromMultiplicativeExpressions<Cosine>(left, right, multiplication);
             if (result != multiplication)
                 return result;
-            result = CreatePowerFromValueExpressions<Tangent>(left, right, multiplication);
-            if (result != multiplication)
-                return result;
+            result = CreatePowerFromMultiplicativeExpressions<Tangent>(left, right, multiplication);
             return result;
         }
 
-        IExpression CreatePowerFromValueExpressions<TSelf>(IExpression left, IExpression right, IExpression multiplication) where TSelf : IExpressionWithValue
+        static IExpression CreatePowerFromMultiplicativeExpressions<TSelf>(IExpression left, IExpression right,
+            IExpression multiplication) where TSelf : IExpression
         {
             if (left is TSelf && right is TSelf)
-                return new Power { Left = left, Right = new Constant() {Value = 2} };
+                return new Power {Left = left, Right = new Constant {Value = 2}};
+            return multiplication;
+        }
+
+        static IExpression HandleExpressionsWithSameValuesInMultiplicationWithPower(IExpression powerBase, IExpression exponent,
+            IExpression multiplicator,
+            IExpression multiplication)
+        {
+            var result = CreatePowerFromMultiplicationWithPowerAndIExpression<Constant>(powerBase,
+                exponent, multiplicator, multiplication);
+            if (result != multiplication)
+                return result;
+            result = CreatePowerFromMultiplicationWithPowerAndIExpression<Sinus>(powerBase,
+                exponent, multiplicator, multiplication);
+            if (result != multiplication)
+                return result;
+            result = CreatePowerFromMultiplicationWithPowerAndIExpression<Cosine>(powerBase,
+                exponent, multiplicator, multiplication);
+            if (result != multiplication)
+                return result;
+            result = CreatePowerFromMultiplicationWithPowerAndIExpression<Tangent>(powerBase,
+                exponent, multiplicator, multiplication);
+            return result;
+        }
+
+        static IExpression CreatePowerFromMultiplicationWithPowerAndIExpression<TSelf>(IExpression powerBase,
+            IExpression exponent, IExpression multiplicator,
+            IExpression multiplication) where TSelf : IExpression
+        {
+            if (powerBase is TSelf && multiplicator is TSelf)
+                return new Power {Left = powerBase, Right = new Constant {Value = exponent.GetConstantValue() + 1}};
             return multiplication;
         }
     }
