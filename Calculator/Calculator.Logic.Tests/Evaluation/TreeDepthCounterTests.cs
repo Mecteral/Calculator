@@ -36,5 +36,14 @@ namespace Calculator.Logic.Tests.Evaluation
             var result = mUnderTest.Evaluate(input);
             result.Should().Be(3);
         }
+
+        [Test]
+        public void Complex_Case()
+        {
+            var input = new ParenthesedExpression() {Wrapped = new Power() {Left = new Multiplication() {Left = new Constant(), Right = new Constant()}, Right = new Constant()} };
+            mSetter.SetTreeDepth(input);
+            var result = mUnderTest.Evaluate(input);
+            result.Should().Be(3);
+        }
     }
 }
