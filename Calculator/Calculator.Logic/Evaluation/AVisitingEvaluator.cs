@@ -5,7 +5,7 @@ namespace Calculator.Logic.Evaluation
 {
     public abstract class AVisitingEvaluator : IEvaluator, IExpressionVisitor
     {
-        public int Result;
+        protected int Result;
 
         public int Evaluate(IExpression expression)
         {
@@ -80,8 +80,8 @@ namespace Calculator.Logic.Evaluation
         protected virtual void EvaluateParenthesed(ParenthesedExpression parenthesed) { }
 
         protected virtual void EvaluateSubtraction(Subtraction subtraction) { }
-        
-        protected virtual void VisitOperands(IArithmeticOperation operation)
+
+        void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);

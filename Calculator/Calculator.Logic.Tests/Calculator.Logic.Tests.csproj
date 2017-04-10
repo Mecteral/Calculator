@@ -76,6 +76,7 @@
     <Compile Include="ConfigFile\ConfigFileValidatorTests.cs" />
     <Compile Include="ConfigFile\SwitchesToConfigFileWriterTests.cs" />
     <Compile Include="Evaluation\AdditiveCounterTests.cs" />
+    <Compile Include="Evaluation\AggregateEvaluatorTests.cs" />
     <Compile Include="Evaluation\ExpressionCounterTests.cs" />
     <Compile Include="Evaluation\ParenthesesCounterTests.cs" />
     <Compile Include="Evaluation\TreeDepthCounterTests.cs" />

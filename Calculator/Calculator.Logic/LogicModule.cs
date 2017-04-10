@@ -59,10 +59,11 @@ namespace Calculator.Logic
             builder.RegisterType<ConsoleToMetricDecider>().As<IConsoleToMetricDecider>();
             builder.RegisterType<ConfigFileWriter>().As<IConfigFileWriter>();
             builder.RegisterType<TreeDepthSetter>().As<ITreeDepthSetter>();
-            builder.RegisterType<AdditiveCounter>().As<IEvaluator>();
-            builder.RegisterType<ExpressionCounter>().As<IEvaluator>();
             builder.RegisterType<ParenthesesCounter>().As<IEvaluator>();
+            builder.RegisterType<AdditiveCounter>().As<IEvaluator>();
             builder.RegisterType<TreeDepthCounter>().As<IEvaluator>();
+            builder.RegisterType<ExpressionCounter>().As<IEvaluator>();
+            builder.RegisterType<AggregateEvaluator>().As<IAggregateEvaluator>();
         }
     }
 }
