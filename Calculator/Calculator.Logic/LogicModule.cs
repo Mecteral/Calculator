@@ -2,6 +2,7 @@
 using Autofac;
 using Calculator.Logic.ArgumentParsing;
 using Calculator.Logic.ConfigFile;
+using Calculator.Logic.Evaluation;
 using Calculator.Logic.Facades;
 using Calculator.Logic.Model;
 using Calculator.Logic.Parsing.CalculationTokenizer;
@@ -57,6 +58,11 @@ namespace Calculator.Logic
             builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>().SingleInstance();
             builder.RegisterType<ConsoleToMetricDecider>().As<IConsoleToMetricDecider>();
             builder.RegisterType<ConfigFileWriter>().As<IConfigFileWriter>();
+            builder.RegisterType<TreeDepthSetter>().As<ITreeDepthSetter>();
+            builder.RegisterType<AdditiveCounter>().As<IEvaluator>();
+            builder.RegisterType<ExpressionCounter>().As<IEvaluator>();
+            builder.RegisterType<ParenthesesCounter>().As<IEvaluator>();
+            builder.RegisterType<TreeDepthCounter>().As<IEvaluator>();
         }
     }
 }

@@ -6,7 +6,8 @@ namespace Calculator.Logic.Evaluation
     {
         void ChangeResultIfTreeDepthIsHigher(IExpression expression)
         {
-            
+            if (expression.TreeDepth > Result)
+                Result = expression.TreeDepth;
         }
 
         protected override void EvaluateAddition(Addition addition)
