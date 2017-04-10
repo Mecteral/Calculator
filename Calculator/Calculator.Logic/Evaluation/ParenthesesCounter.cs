@@ -2,11 +2,8 @@
 
 namespace Calculator.Logic.Evaluation
 {
-    public class ParenthesesCounter : AVisitingEvaluator
+    public class ParenthesesCounter : AVisitingEvaluator, IParenthesesCounter
     {
-        protected override void EvaluateParenthesed(ParenthesedExpression parenthesed)
-        {
-            IncreaseCount();
-        }
+        protected override void EvaluateParenthesed(ParenthesedExpression parenthesed) => IncreaseCount();
     }
 }

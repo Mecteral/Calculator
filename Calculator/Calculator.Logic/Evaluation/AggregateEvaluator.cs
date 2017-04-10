@@ -1,28 +1,30 @@
-﻿using System;
-using System.ComponentModel;
-using Calculator.Model;
+﻿using Calculator.Model;
 
 namespace Calculator.Logic.Evaluation
 {
     public class AggregateEvaluator : IAggregateEvaluator
     {
-        readonly IEvaluator mParenthesesCounter;
-        readonly IEvaluator mAdditiveCounter;
-        readonly IEvaluator mTreeDepthCounter;
-        readonly IEvaluator mExpressionCounter;
+        readonly IAdditiveCounter mAdditiveCounter;
+        readonly IExpressionCounter mExpressionCounter;
+        readonly ITreeDepthSetter mTreeDepthSetter;
+        readonly IParenthesesCounter mParenthesesCounter;
+        readonly ITreeDepthCounter mTreeDepthCounter;
         int mResult;
 
-        public AggregateEvaluator(IEvaluator parenthesesCounter, IEvaluator additiveCounter,
-            IEvaluator treeDepthCounter, IEvaluator expressionCounter)
+        public AggregateEvaluator(IParenthesesCounter parenthesesCounter, IAdditiveCounter additiveCounter,
+            ITreeDepthCounter treeDepthCounter, IExpressionCounter expressionCounter, ITreeDepthSetter treeDepthSetter)
         {
             mResult = 0;
             mParenthesesCounter = parenthesesCounter;
             mAdditiveCounter = additiveCounter;
             mTreeDepthCounter = treeDepthCounter;
             mExpressionCounter = expressionCounter;
+            mTreeDepthSetter = treeDepthSetter;
         }
+
         public int Evaluate(IExpression expression)
         {
+            mTreeDepthSetter.SetTreeDepth(expression);
             mResult += mParenthesesCounter.Evaluate(expression) * 10;
             mResult += mAdditiveCounter.Evaluate(expression) * 5;
             mResult += mTreeDepthCounter.Evaluate(expression) * 2;
@@ -30,6 +32,4 @@ namespace Calculator.Logic.Evaluation
             return mResult;
         }
     }
-
-    public interface IAggregateEvaluator : IEvaluator {}
 }

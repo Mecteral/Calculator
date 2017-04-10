@@ -3,7 +3,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Evaluation
 {
-    public abstract class AVisitingEvaluator : IEvaluator, IExpressionVisitor
+    public abstract class AVisitingEvaluator : IExpressionVisitor
     {
         protected int Result;
 
