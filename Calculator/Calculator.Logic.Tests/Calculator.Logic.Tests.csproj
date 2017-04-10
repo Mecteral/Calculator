@@ -78,6 +78,7 @@
     <Compile Include="Evaluation\AdditiveCounterTests.cs" />
     <Compile Include="Evaluation\ExpressionCounterTests.cs" />
     <Compile Include="Evaluation\ParenthesesCounterTests.cs" />
+    <Compile Include="Evaluation\TreeDepthCounterTests.cs" />
     <Compile Include="Simplifying\AdditionAndSubtractionMoverTests.cs" />
     <Compile Include="Facades\EvaluationFacadeTests.cs" />
     <Compile Include="Facades\SymbolicSimplificationFacadeTests.cs" />

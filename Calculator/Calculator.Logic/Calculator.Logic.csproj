@@ -71,6 +71,7 @@
     <Compile Include="Evaluation\AVisitingEvaluator.cs" />
     <Compile Include="Evaluation\ExpressionCounter.cs" />
     <Compile Include="Evaluation\ParenthesesCounter.cs" />
+    <Compile Include="Evaluation\TreeDepthCounter.cs" />
     <Compile Include="Simplifying\IAggregateSimplifier.cs" />
     <Compile Include="Evaluation\IEvaluator.cs" />
     <Compile Include="Simplifying\PowerSimplifier.cs" />

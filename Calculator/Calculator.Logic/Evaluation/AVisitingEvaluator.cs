@@ -1,15 +1,16 @@
-﻿using Calculator.Model;
+﻿using System.Collections.Generic;
+using Calculator.Model;
 
 namespace Calculator.Logic.Evaluation
 {
     public abstract class AVisitingEvaluator : IEvaluator, IExpressionVisitor
     {
-        int mResult;
+        public int Result;
 
         public int Evaluate(IExpression expression)
         {
             expression.Accept(this);
-            return mResult;
+            return Result;
         }
 
         public void Visit(ParenthesedExpression parenthesed)
@@ -80,12 +81,12 @@ namespace Calculator.Logic.Evaluation
 
         protected virtual void EvaluateSubtraction(Subtraction subtraction) { }
         
-                void VisitOperands(IArithmeticOperation operation)
+        protected virtual void VisitOperands(IArithmeticOperation operation)
         {
             operation.Left.Accept(this);
             operation.Right.Accept(this);
         }
 
-        protected void IncreaseCount() => mResult++;
+        protected void IncreaseCount() => Result++;
     }
 }

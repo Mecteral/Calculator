@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Calculator.Model
 {
     /// <summary>
-    /// Abstract Class for all Operators ( Multiply , Divide , Minus , Plus )
+    /// Abstract Class for all Operators ( Multiply , Divide , Minus , Plus , Power)
     /// </summary>
     public abstract class AnArithmeticOperation : AnExpression, IArithmeticOperation
     {
@@ -17,6 +17,7 @@ namespace Calculator.Model
             {
                 mLeft = value;
                 mLeft.Parent(this);
+                mLeft.TreeDepth();
             }
         }
         public IExpression Right
@@ -26,6 +27,7 @@ namespace Calculator.Model
             {
                 mRight = value;
                 mRight.Parent(this);
+                mRight.TreeDepth();
             }
         }
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)
@@ -34,11 +36,13 @@ namespace Calculator.Model
             {
                 oldChild.Parent(null);
                 Left = newChild;
+                newChild.TreeDepth();
             }
             else if (ReferenceEquals(oldChild, mRight))
             {
                 oldChild.Parent(null);
                 Right = newChild;
+                newChild.TreeDepth();
             }
             else throw new ArgumentException();
         }
