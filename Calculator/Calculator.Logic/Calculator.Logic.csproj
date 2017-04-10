@@ -72,9 +72,11 @@
     <Compile Include="Evaluation\ExpressionCounter.cs" />
     <Compile Include="Evaluation\ParenthesesCounter.cs" />
     <Compile Include="Evaluation\TreeDepthCounter.cs" />
+    <Compile Include="ITreeDepthSetter.cs" />
     <Compile Include="Simplifying\IAggregateSimplifier.cs" />
     <Compile Include="Evaluation\IEvaluator.cs" />
     <Compile Include="Simplifying\PowerSimplifier.cs" />
+    <Compile Include="TreeDepthSetter.cs" />
     <Compile Include="WpfApplicationProperties\AllSerializableSettings.cs" />
     <Compile Include="ArgumentParsing\IApplicationArguments.cs" />
     <Compile Include="CommandLineParser\ICommandLineParserCreator.cs" />

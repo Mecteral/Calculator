@@ -9,5 +9,6 @@ namespace Calculator.Model
         void Accept(IExpressionVisitor visitor);
         void ReplaceChild(IExpression oldChild, IExpression newChild);
         IEnumerable<IExpression> Children { get; }
+        int TreeDepth { get; set; }
     }
 }

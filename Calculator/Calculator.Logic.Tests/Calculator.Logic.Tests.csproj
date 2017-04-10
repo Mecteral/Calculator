@@ -89,6 +89,7 @@
     <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifierTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
     <Compile Include="Simplifying\PowerSimplifierTests.cs" />
+    <Compile Include="TreeDepthSetterTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
