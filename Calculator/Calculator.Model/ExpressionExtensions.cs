@@ -12,18 +12,6 @@ namespace Calculator.Model
         /// <param name="newParent"></param>
         public static void Parent(this IExpression self, IExpression newParent)
             => ((AnExpression) self).Parent = newParent;
-
-        public static void TreeDepth(this IExpression self)
-        {
-            if (self.HasParent)
-            {
-                ((AnExpression)self).TreeDepth = self.Parent.TreeDepth+1;
-            }
-            else
-            {
-                ((AnExpression)self).TreeDepth = 0;
-            }
-        }
         public static ParenthesedExpression Parenthesize(this IExpression self)
             => new ParenthesedExpression {Wrapped = self};
         public static bool IsZero(this IExpression self)

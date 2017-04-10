@@ -16,7 +16,6 @@ namespace Calculator.Model
             {
                 mWrapped = value;
                 mWrapped.Parent(this);
-                mWrapped.TreeDepth();
             }
         }
         public override IEnumerable<IExpression> Children => new[] {mWrapped};
@@ -28,7 +27,6 @@ namespace Calculator.Model
             {
                 Wrapped = newChild;
                 oldChild.Parent(null);
-                Wrapped.TreeDepth();
             }
             else throw new ArgumentException();
         }

@@ -17,7 +17,6 @@ namespace Calculator.Model
             {
                 mLeft = value;
                 mLeft.Parent(this);
-                mLeft.TreeDepth();
             }
         }
         public IExpression Right
@@ -27,7 +26,6 @@ namespace Calculator.Model
             {
                 mRight = value;
                 mRight.Parent(this);
-                mRight.TreeDepth();
             }
         }
         public override void ReplaceChild(IExpression oldChild, IExpression newChild)
@@ -36,13 +34,11 @@ namespace Calculator.Model
             {
                 oldChild.Parent(null);
                 Left = newChild;
-                newChild.TreeDepth();
             }
             else if (ReferenceEquals(oldChild, mRight))
             {
                 oldChild.Parent(null);
                 Right = newChild;
-                newChild.TreeDepth();
             }
             else throw new ArgumentException();
         }
