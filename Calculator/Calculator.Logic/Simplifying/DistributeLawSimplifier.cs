@@ -20,9 +20,10 @@ namespace Calculator.Logic.Simplifying
         {
             if (IsMultiplicationWithAtLeastOneSideBeingAParenthesedExpression(multiplication))
             {
-                return mIsParenthesesLeftSided != null
+                var result = mIsParenthesesLeftSided != null
                     ? ExecuteMultiplicationWithOneParentheses(multiplication)
                     : ExecuteMultiplicationWithTwoParentheses(multiplication);
+                return result;
             }
             return multiplication;
         }
@@ -50,6 +51,8 @@ namespace Calculator.Logic.Simplifying
                 var needsNegation = IsNegationNecessary(singleMultiplier);
                 foreach (var factor in mListOfFactors)
                 {
+                    if (factor is Variable)
+                        continue;
                     if (singleMultiplier is Constant)
                         ReplaceChildWithValue<Constant>(factor, valueHolder.Value, needsNegation);
                     if (singleMultiplier is Sinus)
