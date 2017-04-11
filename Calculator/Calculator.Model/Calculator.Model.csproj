@@ -48,6 +48,7 @@
     <Compile Include="Addition.cs" />
     <Compile Include="AnArithmeticOperation.cs" />
     <Compile Include="AnExpression.cs" />
+    <Compile Include="AnExpressionWithName.cs" />
     <Compile Include="AnExpressionWithValue.cs" />
     <Compile Include="ATrigonometricFunction.cs" />
     <Compile Include="Constant.cs" />
@@ -57,6 +58,7 @@
     <Compile Include="IArithmeticOperation.cs" />
     <Compile Include="IExpression.cs" />
     <Compile Include="IExpressionVisitor.cs" />
+    <Compile Include="IExpressionWithName.cs" />
     <Compile Include="IExpressionWithValue.cs" />
     <Compile Include="Multiplication.cs" />
     <Compile Include="ParenthesedExpression.cs" />

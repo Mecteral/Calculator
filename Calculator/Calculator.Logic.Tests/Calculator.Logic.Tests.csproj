@@ -86,6 +86,7 @@
     <Compile Include="SettingsSerializerTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Pipelines\EvaluationPipelineTests.cs" />
+    <Compile Include="Simplifying\DistributeLawSimplifierTests.cs" />
     <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifierTests.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifierTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />

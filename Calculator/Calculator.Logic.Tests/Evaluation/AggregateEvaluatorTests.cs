@@ -34,5 +34,15 @@ namespace Calculator.Logic.Tests.Evaluation
             var result = mUnderTest.Evaluate(input);
             result.Should().Be(31);
         }
+
+        [Test]
+        public void Simple_Comparative_Test()
+        {
+            var smallerInput = new Addition() {Left = new Constant(), Right = new Constant()};
+            var biggerInput = new Addition() {Left = new ParenthesedExpression() {Wrapped = new Constant()}, Right = new Constant()};
+            var smaller = mUnderTest.Evaluate(smallerInput);
+            var bigger = mUnderTest.Evaluate(biggerInput);
+            smaller.Should().BeLessThan(bigger);
+        }
     }
 }
