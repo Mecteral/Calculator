@@ -118,5 +118,44 @@ namespace Calculator.Logic.Tests.Simplifying
                 .Which.Right.Should()
                 .BeOfType<Constant>().Which.Value.Should().Be(2);
         }
+
+        [Test]
+        public void Simple_Two_Sided_Parentheses_Multiplication()
+        {
+            var input = new Multiplication
+            {
+                Left =
+                    new ParenthesedExpression
+                    {
+                        Wrapped = new Addition {Left = new Sinus {Value = 13}, Right = new Cosine {Value = 17}}
+                    },
+                Right =
+                    new ParenthesedExpression
+                    {
+                        Wrapped = new Subtraction {Left = new Tangent {Value = 19}, Right = new Variable {Name = "x"}}
+                    }
+            };
+            var result = mUnderTest.Simplify(input);
+            result.Should()
+                .BeOfType<Subtraction>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Tangent>()
+                .Which.Value.Should()
+                .Be(19);
+            result.Should()
+                .BeOfType<Subtraction>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Cosine>()
+                .Which.Value.Should()
+                .Be(17);
+        }
     }
 }

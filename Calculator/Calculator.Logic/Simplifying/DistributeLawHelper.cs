@@ -67,7 +67,7 @@ namespace Calculator.Logic.Simplifying
             operation.Right.Accept(this);
         }
 
-        public List<IExpression> GetAllUnderLyingMultipliableExpressions(IExpression multiplicatorRoot)
+        public List<IExpression> GetAllUnderLyingMultipliableExpressions(IExpression  multiplicatorRoot)
         {
             mListOfMultipliableExpressions = new List<IExpression>();
             var start = multiplicatorRoot as ParenthesedExpression;

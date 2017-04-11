@@ -8,7 +8,8 @@ namespace Calculator.Logic.Simplifying
     {
         readonly IDistributeLawHelper mHelper;
         bool? mIsParenthesesLeftSided;
-        List<IExpression> mListOfMultiplicators = new List<IExpression>();
+        List<IExpression> mListOfFactors = new List<IExpression>();
+        List<IExpression> mListOfMultipliers = new List<IExpression>();
 
         public DistributeLawSimplifier(IDistributeLawHelper helper)
         {
@@ -26,46 +27,83 @@ namespace Calculator.Logic.Simplifying
             return multiplication;
         }
 
-        IExpression ExecuteMultiplicationWithTwoParentheses(Multiplication multiplication)
-        {
-            return null;
-        }
+        IExpression ExecuteMultiplicationWithTwoParentheses(IArithmeticOperation multiplication)
+            => mHelper.GetAllUnderLyingMultipliableExpressions(multiplication.Left).Count <=
+               mHelper.GetAllUnderLyingMultipliableExpressions(multiplication.Right).Count
+                ? ReplaceMultiplication(multiplication.Left, multiplication.Right)
+                : ReplaceMultiplication(multiplication.Right, multiplication.Left);
 
         IExpression ExecuteMultiplicationWithOneParentheses(IArithmeticOperation multiplication)
-        {
-            return mIsParenthesesLeftSided != null && mIsParenthesesLeftSided.Value
-                ? ExecuteMultiplication(multiplication.Right, multiplication.Left)
-                : ExecuteMultiplication(multiplication.Left, multiplication.Right);
-        }
+            => mIsParenthesesLeftSided != null && mIsParenthesesLeftSided.Value
+                ? ReplaceMultiplication(multiplication.Right, multiplication.Left)
+                : ReplaceMultiplication(multiplication.Left, multiplication.Right);
 
-        IExpression ExecuteMultiplication(IExpression multiplicator, IExpression parentheses)
+        IExpression ReplaceMultiplication(IExpression multiplier, IExpression parenthesed)
         {
-            mListOfMultiplicators = mHelper.GetAllUnderLyingMultipliableExpressions(multiplicator);
-            foreach (var singleMultiplicator in mListOfMultiplicators)
+            mListOfMultipliers = mHelper.GetAllUnderLyingMultipliableExpressions(multiplier);
+            mListOfFactors = mHelper.GetAllUnderLyingMultipliableExpressions(parenthesed);
+
+            foreach (var singleMultiplier in mListOfMultipliers)
             {
-                var valueholder = singleMultiplicator as IExpressionWithValue;
-                var nameholder = singleMultiplicator as IExpressionWithName;
-                foreach (var expression in mHelper.GetAllUnderLyingMultipliableExpressions(parentheses))
+                var valueHolder = singleMultiplier as IExpressionWithValue;
+                var nameHolder = singleMultiplier as IExpressionWithName;
+                var needsNegation = IsNegationNecessary(singleMultiplier);
+                foreach (var factor in mListOfFactors)
                 {
-                    if (singleMultiplicator is Constant)
-                        expression.Parent.ReplaceChild(expression,
-                            new Multiplication {Left = expression, Right = new Constant {Value = valueholder.Value}});
-                    if (singleMultiplicator is Sinus)
-                        expression.Parent.ReplaceChild(expression,
-                            new Multiplication {Left = expression, Right = new Sinus {Value = valueholder.Value}});
-                    if (singleMultiplicator is Cosine)
-                        expression.Parent.ReplaceChild(expression,
-                            new Multiplication {Left = expression, Right = new Cosine {Value = valueholder.Value}});
-                    if (singleMultiplicator is Tangent)
-                        expression.Parent.ReplaceChild(expression,
-                            new Multiplication {Left = expression, Right = new Tangent {Value = valueholder.Value}});
-                    if (singleMultiplicator is Variable)
-                        expression.Parent.ReplaceChild(expression,
-                            new Multiplication {Left = expression, Right = new Variable {Name = nameholder.Name}});
+                    if (singleMultiplier is Constant)
+                        ReplaceChildWithValue<Constant>(factor, valueHolder.Value, needsNegation);
+                    if (singleMultiplier is Sinus)
+                        ReplaceChildWithValue<Sinus>(factor, valueHolder.Value, needsNegation);
+                    if (singleMultiplier is Cosine)
+                        ReplaceChildWithValue<Cosine>(factor, valueHolder.Value, needsNegation);
+                    if (singleMultiplier is Tangent)
+                        ReplaceChildWithValue<Tangent>(factor, valueHolder.Value, needsNegation);
+                    if (singleMultiplier is Variable)
+                        ReplaceChildWithName<Variable>(factor, nameHolder.Name, needsNegation);
                 }
             }
-            var result = (ParenthesedExpression) parentheses;
+            var result = (ParenthesedExpression) parenthesed;
             return ExpressionCloner.Clone(result.Wrapped);
+        }
+
+        static bool IsNegationNecessary(IExpression expression) => expression.HasParent && expression.Parent is Subtraction;
+
+        static void ReplaceChildWithValue<TSelf>(IExpression factor, decimal value, bool isNegationNecessary)
+            where TSelf : IExpressionWithValue, new()
+        {
+            var parentAsParenthesesExpression = factor.Parent as ParenthesedExpression;
+            var parentAsOperation = factor.Parent as IArithmeticOperation;
+            var replacement = isNegationNecessary
+                ? new Multiplication {Left = factor, Right = new TSelf {Value = value * -1}}
+                : new Multiplication {Left = factor, Right = new TSelf {Value = value}};
+
+            if (null != parentAsParenthesesExpression)
+                parentAsParenthesesExpression.Wrapped = replacement;
+            else if (parentAsOperation != null && parentAsOperation.Left == factor)
+                parentAsOperation.Left = replacement;
+            else if (parentAsOperation != null && parentAsOperation.Right == factor)
+                parentAsOperation.Right = replacement;
+        }
+
+        static void ReplaceChildWithName<TSelf>(IExpression multiplier, string name, bool isNegationNecessary)
+            where TSelf : IExpressionWithName, new()
+        {
+            var parentAsParenthesesExpression = multiplier.Parent as ParenthesedExpression;
+            var parentAsOperation = multiplier.Parent as IArithmeticOperation;
+            var replacement = isNegationNecessary
+                ? new Multiplication
+                {
+                    Left = new Multiplication {Left = multiplier, Right = new Constant {Value = -1}},
+                    Right = new TSelf {Name = name}
+                }
+                : new Multiplication {Left = multiplier, Right = new TSelf {Name = name}};
+
+            if (null != parentAsParenthesesExpression)
+                parentAsParenthesesExpression.Wrapped = replacement;
+            else if (parentAsOperation != null && parentAsOperation.Left == multiplier)
+                parentAsOperation.Left = replacement;
+            else if (parentAsOperation != null && parentAsOperation.Right == multiplier)
+                parentAsOperation.Right = replacement;
         }
 
         bool IsMultiplicationWithAtLeastOneSideBeingAParenthesedExpression(IArithmeticOperation multiplication)
