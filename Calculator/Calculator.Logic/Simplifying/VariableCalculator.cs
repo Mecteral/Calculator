@@ -72,6 +72,7 @@ namespace Calculator.Logic.Simplifying
 
         void CheckOperation(IArithmeticOperation operation)
         {
+            var checkDoubleVariableInMultiplication = operation.Left as Multiplication;
             if (operation.Right is Multiplication && (operation.Left is Addition || operation.Left is Subtraction))
             {
                 var multiplication = (IArithmeticOperation) operation.Right;
@@ -92,6 +93,9 @@ namespace Calculator.Logic.Simplifying
                 {
                     HandleDoubleMultiplicationInSubtraction(operation);
                 }
+            }
+            else if (checkDoubleVariableInMultiplication?.Left is Variable && checkDoubleVariableInMultiplication.Right is Variable)
+            {
             }
             else if (operation.Right is Constant && operation.Left is Multiplication && (operation is Multiplication || operation is Division))
             {

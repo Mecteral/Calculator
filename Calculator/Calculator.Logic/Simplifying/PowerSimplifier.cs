@@ -94,7 +94,8 @@ namespace Calculator.Logic.Simplifying
             return multiplication;
         }
 
-        static IExpression HandleExpressionsWithSameValuesInMultiplicationWithPower(IExpression powerBase, IExpression exponent,
+        static IExpression HandleExpressionsWithSameValuesInMultiplicationWithPower(IExpression powerBase,
+            IExpression exponent,
             IExpression multiplicator,
             IExpression multiplication)
         {
@@ -113,6 +114,7 @@ namespace Calculator.Logic.Simplifying
             result = CreatePowerFromMultiplicationWithPowerAndIExpression<Tangent>(powerBase,
                 exponent, multiplicator, multiplication);
             return result;
+
         }
 
         static IExpression CreatePowerFromMultiplicationWithPowerAndIExpression<TSelf>(IExpression powerBase,

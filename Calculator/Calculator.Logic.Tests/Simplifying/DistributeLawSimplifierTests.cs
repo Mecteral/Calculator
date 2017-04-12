@@ -1,4 +1,5 @@
 ﻿using Calculator.Logic.Simplifying;
+using Calculator.Logic.Utilities;
 using Calculator.Model;
 using FluentAssertions;
 using NUnit.Framework;
@@ -11,10 +12,12 @@ namespace Calculator.Logic.Tests.Simplifying
         [SetUp]
         public void SetUp()
         {
+            mChecker = new ExpressionEqualityChecker();
             mHelper = new DistributeLawHelper();
-            mUnderTest = new DistributeLawSimplifier(mHelper);
+            mUnderTest = new DistributeLawSimplifier(mHelper, mChecker);
         }
 
+        IExpressionEqualityChecker mChecker;
         DistributeLawHelper mHelper;
         DistributeLawSimplifier mUnderTest;
 
@@ -156,6 +159,23 @@ namespace Calculator.Logic.Tests.Simplifying
                 .BeOfType<Cosine>()
                 .Which.Value.Should()
                 .Be(17);
+            result.Should()
+                .BeOfType<Subtraction>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Right.Should()
+                .BeOfType<Sinus>()
+                .Which.Value.Should().Be(13);
+            result.Should()
+                .BeOfType<Subtraction>()
+                .Which.Right.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Multiplication>()
+                .Which.Left.Should()
+                .BeOfType<Variable>()
+                .Which.Name.Should()
+                .Be("x");
         }
     }
 }
