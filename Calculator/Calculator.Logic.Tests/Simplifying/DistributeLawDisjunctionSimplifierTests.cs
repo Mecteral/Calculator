@@ -7,17 +7,17 @@ using NUnit.Framework;
 namespace Calculator.Logic.Tests.Simplifying
 {
     [TestFixture]
-    public class DistributeLawSimplifierTests
+    public class DistributeLawDisjunctionSimplifierTests
     {
         [SetUp]
         public void SetUp()
         {
             mHelper = new DistributeLawHelper();
-            mUnderTest = new DistributeLawSimplifier(mHelper);
+            mUnderTest = new DistributeLawDisjunctionSimplifier(mHelper);
         }
 
         DistributeLawHelper mHelper;
-        DistributeLawSimplifier mUnderTest;
+        DistributeLawDisjunctionSimplifier mUnderTest;
 
         [Test]
         public void Multplication_Bound_In_Addition_Doesnt_Change_Addition()

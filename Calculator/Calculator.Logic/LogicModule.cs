@@ -50,7 +50,7 @@ namespace Calculator.Logic
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<MultiplicationByZeroRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<DistributeLawSimplifier>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<DistributeLawDisjunctionSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<AggregateSimplifier>().As<IAggregateSimplifier>();
             builder.RegisterType<DistributeLawHelper>().As<IDistributeLawHelper>();
 

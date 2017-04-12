@@ -5,14 +5,14 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class DistributeLawSimplifier : AVisitingTraversingReplacer
+    public class DistributeLawDisjunctionSimplifier : AVisitingTraversingReplacer
     {
         readonly IDistributeLawHelper mHelper;
         bool? mIsParenthesesLeftSided;
         List<IExpression> mListOfFactors = new List<IExpression>();
         List<IExpression> mListOfMultipliers = new List<IExpression>();
 
-        public DistributeLawSimplifier(IDistributeLawHelper helper)
+        public DistributeLawDisjunctionSimplifier(IDistributeLawHelper helper)
         {
             mHelper = helper;
         }
