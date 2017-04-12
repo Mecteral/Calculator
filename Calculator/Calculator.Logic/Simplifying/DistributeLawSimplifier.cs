@@ -7,17 +7,14 @@ namespace Calculator.Logic.Simplifying
 {
     public class DistributeLawSimplifier : AVisitingTraversingReplacer
     {
-        readonly IExpressionEqualityChecker mEqualityChecker;
         readonly IDistributeLawHelper mHelper;
         bool? mIsParenthesesLeftSided;
-        List<IExpression> mListOfEqualMultipliers = new List<IExpression>();
         List<IExpression> mListOfFactors = new List<IExpression>();
         List<IExpression> mListOfMultipliers = new List<IExpression>();
 
-        public DistributeLawSimplifier(IDistributeLawHelper helper, IExpressionEqualityChecker equalityChecker)
+        public DistributeLawSimplifier(IDistributeLawHelper helper)
         {
             mHelper = helper;
-            mEqualityChecker = equalityChecker;
         }
 
         protected override IExpression ReplaceMultiplication(Multiplication multiplication)
@@ -52,38 +49,39 @@ namespace Calculator.Logic.Simplifying
                 var variable = factor as Variable;
                 if (variable?.Parent is Multiplication)
                     continue;
-                CreateSingleFactorMultiplications(factor);
+                DistributeMultipliersOverFactors(factor);
             }
 
             var result = (ParenthesedExpression) parenthesed;
             return ExpressionCloner.Clone(result.Wrapped);
         }
 
-        void CreateSingleFactorMultiplications(IExpression factor)
+        void DistributeMultipliersOverFactors(IExpression factor)
         {
             foreach (var singleMultiplier in mListOfMultipliers)
             {
                 var valueHolder = singleMultiplier as IExpressionWithValue;
                 var nameHolder = singleMultiplier as IExpressionWithName;
-                var needsNegation = IsNegationNecessary(singleMultiplier);
+                var needsNegation = IsNegationOfMultiplierNecessary(singleMultiplier);
 
                 if (singleMultiplier is Constant)
-                    ReplaceChildWithValueExpression<Constant>(factor, valueHolder.Value, needsNegation);
+                    DistributeMutilpierOverValueExpression<Constant>(factor, valueHolder.Value, needsNegation);
                 if (singleMultiplier is Sinus)
-                    ReplaceChildWithValueExpression<Sinus>(factor, valueHolder.Value, needsNegation);
+                    DistributeMutilpierOverValueExpression<Sinus>(factor, valueHolder.Value, needsNegation);
                 if (singleMultiplier is Cosine)
-                    ReplaceChildWithValueExpression<Cosine>(factor, valueHolder.Value, needsNegation);
+                    DistributeMutilpierOverValueExpression<Cosine>(factor, valueHolder.Value, needsNegation);
                 if (singleMultiplier is Tangent)
-                    ReplaceChildWithValueExpression<Tangent>(factor, valueHolder.Value, needsNegation);
+                    DistributeMutilpierOverValueExpression<Tangent>(factor, valueHolder.Value, needsNegation);
                 if (singleMultiplier is Variable)
-                    ReplaceChildWithNameExpression<Variable>(factor, nameHolder.Name, needsNegation);
+                    DistributeMutilpierOverNameExpression<Variable>(factor, nameHolder.Name, needsNegation);
             }
         }
 
-        static bool IsNegationNecessary(IExpression expression)
+        static bool IsNegationOfMultiplierNecessary(IExpression expression)
             => expression.HasParent && expression.Parent is Subtraction;
 
-        static void ReplaceChildWithValueExpression<TSelf>(IExpression factor, decimal value, bool isNegationNecessary)
+        static void DistributeMutilpierOverValueExpression<TSelf>(IExpression factor, decimal value,
+            bool isNegationNecessary)
             where TSelf : IExpressionWithValue, new()
         {
             var parentAsParenthesesExpression = factor.Parent as ParenthesedExpression;
@@ -100,7 +98,8 @@ namespace Calculator.Logic.Simplifying
                 parentAsOperation.Right = replacement;
         }
 
-        static void ReplaceChildWithNameExpression<TSelf>(IExpression multiplier, string name, bool isNegationNecessary)
+        static void DistributeMutilpierOverNameExpression<TSelf>(IExpression multiplier, string name,
+            bool isNegationNecessary)
             where TSelf : IExpressionWithName, new()
         {
             var parentAsParenthesesExpression = multiplier.Parent as ParenthesedExpression;

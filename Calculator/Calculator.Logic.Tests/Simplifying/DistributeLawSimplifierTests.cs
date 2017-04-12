@@ -12,12 +12,10 @@ namespace Calculator.Logic.Tests.Simplifying
         [SetUp]
         public void SetUp()
         {
-            mChecker = new ExpressionEqualityChecker();
             mHelper = new DistributeLawHelper();
-            mUnderTest = new DistributeLawSimplifier(mHelper, mChecker);
+            mUnderTest = new DistributeLawSimplifier(mHelper);
         }
 
-        IExpressionEqualityChecker mChecker;
         DistributeLawHelper mHelper;
         DistributeLawSimplifier mUnderTest;
 
