@@ -79,9 +79,9 @@
     <Compile Include="Evaluation\ParenthesesCounter.cs" />
     <Compile Include="Evaluation\TreeDepthCounter.cs" />
     <Compile Include="ITreeDepthSetter.cs" />
-    <Compile Include="Simplifying\DistributeLawConjunctionSimplifier.cs" />
-    <Compile Include="Simplifying\DistributeLawHelper.cs" />
     <Compile Include="Simplifying\DistributeLawDisjunctionSimplifier.cs" />
+    <Compile Include="Simplifying\DistributeLawConjunctionHelper.cs" />
+    <Compile Include="Simplifying\DistributeLawConjunctionSimplifier.cs" />
     <Compile Include="Simplifying\IAggregateSimplifier.cs" />
     <Compile Include="Evaluation\IEvaluator.cs" />
     <Compile Include="Simplifying\IDistributeLawHelper.cs" />

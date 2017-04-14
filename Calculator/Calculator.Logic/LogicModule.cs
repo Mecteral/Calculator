@@ -50,9 +50,9 @@ namespace Calculator.Logic
             builder.RegisterType<VariableCalculator>().As<IVariableCalculator>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<NeutralElementEliminatingSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<MultiplicationByZeroRemovingSimplifier>().As<ISimplifier>().InstancePerDependency();
-            builder.RegisterType<DistributeLawDisjunctionSimplifier>().As<ISimplifier>().InstancePerDependency();
+            builder.RegisterType<DistributeLawConjunctionSimplifier>().As<ISimplifier>().InstancePerDependency();
             builder.RegisterType<AggregateSimplifier>().As<IAggregateSimplifier>();
-            builder.RegisterType<DistributeLawHelper>().As<IDistributeLawHelper>();
+            builder.RegisterType<DistributeLawConjunctionHelper>().As<IDistributeLawHelper>();
 
             builder.RegisterType<ExpressionEqualityChecker>().As<IExpressionEqualityChecker>();
             builder.RegisterType<EvaluatingExpressionVisitor>().As<IExpressionEvaluator>();
@@ -60,7 +60,6 @@ namespace Calculator.Logic
             builder.RegisterType<ApplicationArguments>().As<IApplicationArguments>().SingleInstance();
             builder.RegisterType<ConsoleToMetricDecider>().As<IConsoleToMetricDecider>();
             builder.RegisterType<ConfigFileWriter>().As<IConfigFileWriter>();
-            builder.RegisterType<TreeDepthSetter>().As<ITreeDepthSetter>();
             builder.RegisterType<ParenthesesCounter>().As<IParenthesesCounter>();
             builder.RegisterType<AdditiveCounter>().As<IAdditiveCounter>();
             builder.RegisterType<TreeDepthCounter>().As<ITreeDepthCounter>();

@@ -3,7 +3,7 @@ using Calculator.Model;
 
 namespace Calculator.Logic.Simplifying
 {
-    public class DistributeLawHelper : IExpressionVisitor, IDistributeLawHelper
+    public class DistributeLawConjunctionHelper : IExpressionVisitor, IDistributeLawHelper
     {
         List<IExpression> mListOfMultipliableExpressions = new List<IExpression>();
         public void Visit(ParenthesedExpression parenthesed)

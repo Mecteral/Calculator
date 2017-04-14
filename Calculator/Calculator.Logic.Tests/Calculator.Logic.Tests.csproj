@@ -86,13 +86,12 @@
     <Compile Include="SettingsSerializerTests.cs" />
     <Compile Include="Parsing\CalculationTokenizer\InputStringValidatorTests.cs" />
     <Compile Include="Pipelines\EvaluationPipelineTests.cs" />
-    <Compile Include="Simplifying\DistributeLawConjunctionSimplifierTests.cs" />
     <Compile Include="Simplifying\DistributeLawDisjunctionSimplifierTests.cs" />
+    <Compile Include="Simplifying\DistributeLawConjunctionSimplifierTests.cs" />
     <Compile Include="Simplifying\ExpressionsWithOnlyConstantChildrenSimplifierTests.cs" />
     <Compile Include="Simplifying\MultiplicationByZeroRemovingSimplifierTests.cs" />
     <Compile Include="Simplifying\NeutralElementEliminatingSimplifierTests.cs" />
     <Compile Include="Simplifying\PowerSimplifierTests.cs" />
-    <Compile Include="TreeDepthSetterTests.cs" />
     <Compile Include="UsingDispatcherTests.cs" />
     <Compile Include="Utilities\ExpressionEqualityCheckerTests.cs" />
     <Compile Include="ModelBuilderTests.cs" />
