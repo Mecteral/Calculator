@@ -12,6 +12,3 @@ The Calculator can calculate basic operations: +, -, /, *, ^, sqrt
 
 The Calculator is able to simplify equations with variables up to and including the distributive law
 
-## Why you should use this calculator
-
-The Calculator is written with good performance in mind and will be able to accept external input to extend the usability and to specify the perfect output for your needs.
